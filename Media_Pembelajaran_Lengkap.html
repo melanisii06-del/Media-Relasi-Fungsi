@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Media Pembelajaran — Relasi & Fungsi Lengkap</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --bg:#ffcb64;
+  --panel:#fff3d9;
+  --accent:#3e2723;
+  --muted:#6b4b3a;
+  --success:#2e7d32;
+  --danger:#c62828;
+  --info:#0284c7;
+  --warning:#f59e0b;
+}
+
+html,body{
+  height:100%;
+  margin:0;
+  font-family:'Bagel Fat One',cursive;
+  background:var(--bg);
+  color:var(--accent);
+}
+
+body {
+  background: linear-gradient(135deg, #ffcb64 0%, #ffc850 50%, #ffb84d 100%);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.08), transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+  box-sizing:border-box;
+}
+
+.card{
+  width:1100px;
+  max-width:98%;
+  background:linear-gradient(180deg,var(--panel),#fff7e6);
+  border-radius:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
+  overflow:visible;
+  position:relative;
+}
+
+.header{
+  text-align:center;
+  padding:40px 20px;
+}
+
+h1{
+  font-size:48px;
+  margin:10px 0;
+  color:var(--accent);
+  animation: fadeIn 0.8s ease-out;
+}
+
+h2{
+  font-size:32px;
+  color:var(--accent);
+  margin:20px 0;
+}
+
+h3{
+  font-size:24px;
+  color:var(--accent);
+  margin:15px 0;
+}
+
+.lead{
+  color:rgba(0,0,0,0.6);
+  margin-bottom:18px;
+  font-size:18px;
+}
+
+.slides{
+  min-height:60vh;
+  padding:28px 18px;
+}
+
+.slide{
+  display:none;
+  padding:10px 18px 20px 18px;
+  min-height:400px;
+}
+
+.slide.active{
+  display:block;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.center{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:20px;
+  padding-top:100px;
+}
+
+.btn{
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:16px 32px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:20px;
+  transition: all 0.3s ease;
+  font-family:'Bagel Fat One',cursive;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.btn.ghost{
+  background:transparent;
+  color:var(--accent);
+  border:2px solid var(--accent);
+}
+
+.btn:disabled{
+  opacity:0.5;
+  cursor:not-allowed;
+}
+
+/* Menu Grid untuk Pertemuan */
+.menu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:24px;
+  padding:40px 20px;
+  max-width:900px;
+  margin:0 auto;
+}
+
+.menu-card{
+  height:160px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fff 0%,#fff5e6 100%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  cursor:pointer;
+  border:3px solid rgba(0,0,0,0.04);
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.menu-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:6px;
+  background:linear-gradient(90deg, #ffcb64, #ffc850, #ffb84d);
+  transform:scaleX(0);
+  transition:transform 0.3s ease;
+}
+
+.menu-card:hover::before{
+  transform:scaleX(1);
+}
+
+.menu-card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.15);
+  border-color:var(--accent);
+}
+
+.menu-card-title{
+  font-size:24px;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+
+.menu-card-desc{
+  font-size:14px;
+  color:var(--muted);
+  text-align:center;
+  padding:0 20px;
+}
+
+/* Navigation */
+.nav{
+  display:flex;
+  justify-content:center;
+  gap:12px;
+  margin-top:20px;
+  padding:20px;
+}
+
+.footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 22px;
+  border-top:1px solid rgba(0,0,0,0.04);
+}
+
+/* Back to Menu Button */
+.back-to-menu{
+  position:fixed;
+  top:20px;
+  left:20px;
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:14px;
+  font-family:'Bagel Fat One',cursive;
+  z-index:1000;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  transition:all 0.3s ease;
+  display:none;
+}
+
+.back-to-menu.show{
+  display:block;
+}
+
+.back-to-menu:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Responsive */
+@media (max-width:920px){ 
+  .card{padding:12px} 
+  h1{font-size:36px}
+  .menu-grid{grid-template-columns:1fr; gap:16px;}
+}
+
+/* Hide pertemuan content initially */
+.pertemuan-container{
+  display:none;
+}
+
+.pertemuan-container.active{
+  display:block;
+}
+
+/* Modal overlay untuk Google Form */
+#gformModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  animation: fadeInModal 0.3s ease;
+}
+
+#gformModalContent {
+  position: relative;
+  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+  margin: 5% auto;
+  padding: 40px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  animation: slideDownModal 0.4s ease;
+  text-align: center;
+}
+
+#gformModalClose {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+#gformModalClose:hover {
+  color: #333;
+}
+
+.gform-title {
+  color: #2a2420;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.gform-message {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.gform-link-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  padding: 18px 40px;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(76,175,80,0.4);
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.gform-link-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+  box-shadow: 0 6px 20px rgba(76,175,80,0.5);
+  transform: translateY(-2px);
+}
+
+.gform-close-btn {
+  display: inline-block;
+  background: #ccc;
+  color: #333;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.2s;
+}
+
+.gform-close-btn:hover {
+  background: #bbb;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDownModal {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Modal Google Form -->
+<div id="gformModal">
+  <div id="gformModalContent">
+    <span id="gformModalClose">&times;</span>
+    <div class="gform-title">📝 Kirim Hasil Belajar Anda</div>
+    <div class="gform-message">
+      Anda akan diarahkan ke Google Form untuk mengisi hasil pembelajaran Anda.<br>
+      Pastikan semua materi sudah Anda selesaikan dengan baik!
+    </div>
+    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" 
+       target="_blank" 
+       class="gform-link-btn">
+      🚀 Buka Google Form
+    </a>
+    <div class="gform-close-btn" onclick="document.getElementById('gformModal').style.display='none'">
+      Tutup
+    </div>
+  </div>
+</div>
+
+<!-- Back to Menu Button -->
+<button class="back-to-menu" id="backToMenuBtn" onclick="showMenu()">
+  ← Kembali ke Menu
+</button>
+
+<div class="wrapper">
+  <div class="card">
+    
+    <!-- SLIDE WELCOME -->
+    <div class="slide active" id="welcome">
+      <div class="header">
+        <h1>🎓 Selamat Datang!</h1>
+        <p class="lead">Media Pembelajaran Interaktif</p>
+        <h2>Relasi & Fungsi</h2>
+        <p class="lead">Kelas VIII SMP</p>
+      </div>
+      <div class="center">
+        <p style="font-size:18px; text-align:center; max-width:600px; color:var(--muted);">
+          Pelajari konsep Relasi dan Fungsi dengan cara yang menyenangkan dan interaktif!
+        </p>
+        <button class="btn" onclick="showMenu()">
+          🚀 Mulai Belajar
+        </button>
+      </div>
+    </div>
+
+    <!-- SLIDE MENU PERTEMUAN -->
+    <div class="slide" id="menuPertemuan">
+      <div class="header">
+        <h2>📚 Pilih Pertemuan</h2>
+        <p class="lead">Silakan pilih pertemuan yang ingin Anda pelajari</p>
+      </div>
+      
+      <div class="menu-grid">
+        <div class="menu-card" onclick="showPertemuan(1)">
+          <div class="menu-card-title">📖 Pertemuan 1</div>
+          <div class="menu-card-desc">Konsep Dasar Himpunan & Operasi Himpunan</div>
+        </div>
+        
+        <div class="menu-card" onclick="showPertemuan(2)">
+          <div class="menu-card-title">🔗 Pertemuan 2</div>
+          <div class="menu-card-desc">Pengenalan Relasi & Representasi</div>
+        </div>
+        
+        <div class="menu-card" onclick="showPertemuan(3)">
+          <div class="menu-card-title">📊 Pertemuan 3</div>
+          <div class="menu-card-desc">Fungsi dan penyajiannya</div>
+        </div>
+        
+        <div class="menu-card" onclick="showPertemuan(4)">
+          <div class="menu-card-title">🧮 Pertemuan 4</div>
+          <div class="menu-card-desc">Nilai Fungsi & Bentuk Fungsi</div>
+        </div>
+        
+        <div class="menu-card" onclick="showPertemuan(5)">
+          <div class="menu-card-title">🔄 Pertemuan 5</div>
+          <div class="menu-card-desc">Korespondensi Satu-Satu & banyaknya korespondensi satu-satu</div>
+        </div>
+      </div>
+      
+      <div class="nav">
+        <button class="btn ghost" onclick="show('welcome')">← Kembali</button>
+      </div>
+    </div>
+
+    <!-- CONTAINER UNTUK SETIAP PERTEMUAN -->
+    <div class="pertemuan-container" id="pertemuan1">
+      <iframe src="himpunan/Media_pertemuan_1.html" 
+              style="width:100%; height:85vh; border:none; border-radius:12px;"
+              loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="pertemuan-container" id="pertemuan2">
+      <iframe src="Relasi/Media_Pembelajaran_pertemuan_2.html" 
+              style="width:100%; height:85vh; border:none; border-radius:12px;"
+              loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="pertemuan-container" id="pertemuan3">
+      <iframe src="Relasi/Media_Pembelajaran_pertemuan_3.html" 
+              style="width:100%; height:85vh; border:none; border-radius:12px;"
+              loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="pertemuan-container" id="pertemuan4">
+      <iframe src="Relasi/Media_Pembelajaran_Pertemuan_4.html" 
+              style="width:100%; height:85vh; border:none; border-radius:12px;"
+              loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="pertemuan-container" id="pertemuan5">
+      <iframe src="Relasi/Media_Pembelajaran_Pertemuan_5.html" 
+              style="width:100%; height:85vh; border:none; border-radius:12px;"
+              loading="lazy">
+      </iframe>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Navigation functions
+function show(id) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+  
+  // Hide all pertemuan containers
+  document.querySelectorAll('.pertemuan-container').forEach(p => p.classList.remove('active'));
+  
+  // Hide back button on welcome and menu
+  const backBtn = document.getElementById('backToMenuBtn');
+  if (id === 'welcome' || id === 'menuPertemuan') {
+    backBtn.classList.remove('show');
+  }
+  
+  window.scrollTo(0, 0);
+}
+
+function showMenu() {
+  show('menuPertemuan');
+}
+
+function showPertemuan(num) {
+  // Hide all slides
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  
+  // Hide all pertemuan containers
+  document.querySelectorAll('.pertemuan-container').forEach(p => p.classList.remove('active'));
+  
+  // Show selected pertemuan
+  const container = document.getElementById('pertemuan' + num);
+  if (container) {
+    container.classList.add('active');
+  }
+  
+  // Show back to menu button
+  document.getElementById('backToMenuBtn').classList.add('show');
+  
+  window.scrollTo(0, 0);
+}
+
+// Google Form Modal
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('gformModal');
+  const closeBtn = document.getElementById('gformModalClose');
+  
+  if (closeBtn) {
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+    };
+  }
+  
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  };
+});
+</script>
+
+<!-- Google Form Helper Script -->
+<script src="Relasi/google-form-helper.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,3793 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Media Pembelajaran — Relasi & Fungsi</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* --- CSS GLOBAL --- */
+:root{--bg:#ffcb64;--panel:#fff3d9;--accent:#3e2723;--muted:#6b4b3a;--success:#2e7d32;--danger:#c62828}
+html,body{
+  height:100%;
+  margin:0;
+  font-family:'Bagel Fat One',cursive;
+  background:var(--bg);
+  color:var(--accent);
+}
+
+/* Background warna kuning lembut */
+body {
+  background: linear-gradient(135deg, #ffcb64 0%, #ffc850 50%, #ffb84d 100%);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.08), transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:28px;
+  box-sizing:border-box;
+  position: relative;
+}
+
+.card{
+  width:1100px;
+  max-width:98%;
+  background:linear-gradient(180deg,var(--panel),#fff7e6);
+  border-radius:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
+  overflow:visible;
+  position:relative;
+}
+
+.card::after{
+  content:'';
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:160px;
+  height:200px;
+  background:url('https://cdn.pixabay.com/photo/2017/01/31/21/22/cartoon-children-2024079_1280.png') center/contain no-repeat;
+  border-radius:14px;
+  box-shadow:0 10px 24px rgba(0,0,0,0.14);
+  animation: float 4s ease-in-out infinite;
+  pointer-events:none;
+  opacity:1;
+  z-index:2;
+}
+
+.header{text-align:center;padding-top:10px}
+h1{font-size:44px;margin:6px 0;color:var(--accent);animation: fadeIn 0.8s ease-out, float 3s ease-in-out infinite;}
+.lead{color:rgba(0,0,0,0.6);margin-bottom:18px}
+.slides{min-height:60vh;padding:28px 18px;}
+.slide{display:none;padding:10px 18px 20px 18px;min-height:400px}
+.slide.active{display:block;animation: fadeIn 0.5s ease-out;}
+.center{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:100px}
+
+.btn{
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:16px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+
+.menu-grid{display:flex;gap:18px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.menu-card{
+  width:260px;
+  height:120px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#fff,#fff5e6);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 18px rgba(0,0,0,0.06);
+  cursor:pointer;
+  border:3px solid rgba(0,0,0,0.04);
+  font-size:18px;
+  color:var(--muted);
+  transition:all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: fadeIn 0.6s ease-out;
+}
+.menu-card:hover{
+  background:#ffebc6;
+  transform:translateY(-2px);
+  box-shadow:0 10px 20px rgba(0,0,0,0.1);
+  animation: pulse 0.6s ease-in-out;
+}
+
+.panel{padding:20px}
+.content{margin:20px 0}
+
+/* Form styling */
+input[type="text"], textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: 2px solid rgba(0,0,0,0.1);
+  background: #fff;
+  font-family: 'Bagel Fat One', cursive;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(62, 39, 35, 0.1);
+}
+
+.anggota-container {
+  margin: 16px 0;
+}
+
+.anggota-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.anggota-row input {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.anggota-row select {
+  margin-bottom: 0;
+}
+
+/* Animasi */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.card-lite{
+  background:#fffdf6;
+  border:2px dashed #ffd199;
+  border-radius:14px;
+  padding:14px;
+  margin:10px 0;
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Styling untuk pilihan penyajian */
+.penyajian-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.penyajian-option:hover {
+  background: #fffbf0;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.penyajian-option input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.penyajian-option input[type="radio"]:checked + span {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.penyajian-option span {
+  font-size: 16px;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+/* Styling untuk komentar */
+.komentar-item {
+  background: #f9f9f9;
+  border-left: 4px solid var(--accent);
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.komentar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.komentar-kelompok {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.komentar-waktu {
+  font-size: 12px;
+  color: #999;
+}
+
+.komentar-isi {
+  color: #333;
+  line-height: 1.5;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+img {
+  animation: fadeIn 0.8s ease-out;
+}
+
+/* Styling untuk simulasi fungsi */
+.nama-item, .goldar-item {
+  padding: 12px 16px;
+  background: #fff;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  font-weight: 600;
+}
+
+.nama-item:hover, .goldar-item:hover {
+  background: #fffbf0;
+  border-color: var(--accent);
+  transform: translateX(5px);
+}
+
+.nama-item.selected {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.goldar-item.selected {
+  background: #ffeb3b;
+  border-color: #f7d53b;
+  transform: scale(1.05);
+}
+
+.pasangan-badge {
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 6px;
+  background: linear-gradient(135deg, #fff3d9 0%, #ffe9b8 100%);
+  border: 2px solid #ffd199;
+  border-radius: 20px;
+  font-weight: 600;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.pasangan-badge.error {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border-color: var(--danger);
+}
+
+table {
+  font-family: sans-serif;
+  font-size: 14px;
+}
+
+/* Styling untuk Grid Kartesius */
+.split-container {
+  display: flex;
+  gap: 20px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.split-left, .split-right {
+  flex: 1;
+  min-width: 300px;
+}
+
+.cartesian-grid {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 400px;
+  background: linear-gradient(to right, #f0f0f0 1px, transparent 1px),
+              linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+  background-size: 50px 50px;
+  border: 3px solid var(--accent);
+  border-radius: 12px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.cartesian-grid::before {
+  content: 'Y (Goldar)';
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.cartesian-grid::after {
+  content: 'X (Nama)';
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.data-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background: var(--accent);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 3;
+}
+
+.data-point.new {
+  animation: pointPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pointPopIn {
+  0% { opacity: 0; transform: scale(0); }
+  70% { opacity: 1; transform: scale(1.3); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.data-point:hover {
+  transform: scale(1.5);
+  background: var(--success);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.data-point.invalid {
+  background: var(--danger);
+  animation: shake 0.5s ease;
+}
+
+.data-point-label {
+  position: absolute;
+  padding: 4px 8px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  font-size: 12px;
+  color: var(--accent);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transform: translate(-50%, -140%);
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 4;
+  animation: labelFadeSlide 0.5s ease-out forwards;
+}
+
+@keyframes labelFadeSlide {
+  0% { opacity: 0; transform: translate(-50%, -100%) scale(0.9); }
+  100% { opacity: 1; transform: translate(-50%, -140%) scale(1); }
+}
+
+.axis-line {
+  position: absolute;
+  background: rgba(62,39,35,0.3);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.axis-line.axis-x {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+}
+
+.axis-line.axis-y {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+}
+
+.axis-tick-label {
+  position: absolute;
+  background: rgba(255,255,255,0.85);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 3px 6px;
+  font-size: 11px;
+  color: var(--accent);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+  pointer-events: none;
+  animation: tickSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+.axis-tick-label.x {
+  bottom: 4px;
+  transform: translateX(-50%);
+}
+
+.axis-tick-label.x:nth-child(3) { animation-delay: 0.05s; }
+.axis-tick-label.x:nth-child(4) { animation-delay: 0.10s; }
+.axis-tick-label.x:nth-child(5) { animation-delay: 0.15s; }
+.axis-tick-label.x:nth-child(6) { animation-delay: 0.20s; }
+.axis-tick-label.x:nth-child(7) { animation-delay: 0.25s; }
+.axis-tick-label.x:nth-child(8) { animation-delay: 0.30s; }
+.axis-tick-label.x:nth-child(9) { animation-delay: 0.35s; }
+.axis-tick-label.x:nth-child(10) { animation-delay: 0.40s; }
+.axis-tick-label.x:nth-child(11) { animation-delay: 0.45s; }
+
+.axis-tick-label.y {
+  left: 4px;
+  transform: translateY(-50%);
+}
+
+.axis-tick-label.y:nth-child(12) { animation-delay: 0.05s; }
+.axis-tick-label.y:nth-child(13) { animation-delay: 0.10s; }
+.axis-tick-label.y:nth-child(14) { animation-delay: 0.15s; }
+.axis-tick-label.y:nth-child(15) { animation-delay: 0.20s; }
+
+@keyframes tickSlideIn {
+  0% { opacity: 0; transform: scale(0.6); }
+  70% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.draggable-item {
+  padding: 10px 16px;
+  margin: 6px;
+  background: #fff;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  cursor: grab;
+  display: inline-block;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.draggable-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.draggable-item.placed {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.axis-label {
+  position: absolute;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.verification-box {
+  padding: 16px;
+  background: linear-gradient(135deg, #fff9e6 0%, #fff3d9 100%);
+  border: 3px solid #ffd199;
+  border-radius: 12px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.verification-box.success {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border-color: var(--success);
+}
+
+.verification-box.error {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  border-color: var(--danger);
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.predictor-input {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.predictor-input input {
+  max-width: 200px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.solution-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  font-family: sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.messy-data-visual {
+  background: #fff;
+  border: 2px dashed #ffd199;
+  border-radius: 12px;
+  padding: 16px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.messy-data-item {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 4px;
+  background: #ffeb3b;
+  border-radius: 6px;
+  font-size: 13px;
+  transform: rotate(var(--rotation));
+  animation: messyFloat 3s ease-in-out infinite;
+}
+
+@keyframes messyFloat {
+  0%, 100% { transform: translateY(0) rotate(var(--rotation)); }
+  50% { transform: translateY(-8px) rotate(var(--rotation)); }
+}
+
+.organized-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.organized-table th,
+.organized-table td {
+  padding: 10px;
+  border: 2px solid #ffd199;
+  text-align: center;
+  font-size: 14px;
+}
+
+.organized-table th {
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+}
+
+.organized-table td {
+  background: #fff;
+}
+
+.chat-card {
+  background: #fff;
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.06);
+}
+
+.chat-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: linear-gradient(135deg,#fff9e6 0%,#fff3d9 100%);
+  margin-bottom: 8px;
+  border: 2px solid #ffd199;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+  animation: chatFloat 0.8s ease-out forwards;
+}
+
+.chat-item:nth-child(1) { animation-delay: 0.00s; }
+.chat-item:nth-child(2) { animation-delay: 0.05s; }
+.chat-item:nth-child(3) { animation-delay: 0.10s; }
+.chat-item:nth-child(4) { animation-delay: 0.15s; }
+.chat-item:nth-child(5) { animation-delay: 0.20s; }
+.chat-item:nth-child(6) { animation-delay: 0.25s; }
+.chat-item:nth-child(7) { animation-delay: 0.30s; }
+.chat-item:nth-child(8) { animation-delay: 0.35s; }
+
+@keyframes chatFloat {
+  0% { opacity: 0; transform: translateY(12px) scale(0.98); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.clue-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.clue-list li {
+  margin-bottom: 10px;
+  background: linear-gradient(180deg,#fffdf6 0%,#fff7e6 100%);
+  border: 1px solid #e0c78d;
+  padding: 12px 14px 14px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  position: relative;
+  box-shadow: 0 10px 18px rgba(0,0,0,0.08);
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.2s ease;
+}
+
+.clue-list li::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  width: 52px;
+  height: 18px;
+  background: rgba(255, 215, 128, 0.7);
+  border-radius: 4px;
+  transform: rotate(-4deg);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.clue-list li::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(0,0,0,0.08),
+    rgba(0,0,0,0.08) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+  opacity: 0.25;
+}
+
+.clue-list li:hover {
+  transform: rotate(0deg) translateY(-2px);
+}
+
+.clue-list li:nth-child(1) { --tilt: -2deg; }
+.clue-list li:nth-child(2) { --tilt: 1.5deg; }
+.clue-list li:nth-child(3) { --tilt: -1deg; }
+.clue-list li:nth-child(4) { --tilt: 2deg; }
+.clue-list li:nth-child(5) { --tilt: -1.5deg; }
+.clue-list li:nth-child(6) { --tilt: 1deg; }
+.clue-list li:nth-child(7) { --tilt: -2.5deg; }
+.clue-list li:nth-child(8) { --tilt: 1.8deg; }
+.clue-list li:nth-child(9) { --tilt: -1.2deg; }
+
+@media (max-width:920px){ 
+  .card{padding:12px} 
+  h1{font-size:32px}
+  .split-container {
+    flex-direction: column;
+  }
+  .cartesian-grid {
+    height: 300px;
+  }
+}
+
+/* Styling untuk Evaluasi & Refleksi Slide */
+.slider-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 16px 0;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.slider-comparison {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.slider-item {
+  text-align: center;
+  min-width: 160px;
+}
+
+.slider-item label {
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.slider-item input[type="range"] {
+  width: 160px;
+  cursor: pointer;
+}
+
+.slider-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--success);
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.concept-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.concept-card {
+  background: #fff;
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+}
+
+.concept-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+  border-color: var(--accent);
+}
+
+.concept-card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.concept-card-icon {
+  font-size: 24px;
+}
+
+.concept-card-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.concept-card.expanded .concept-card-content {
+  max-height: 200px;
+  margin-top: 8px;
+}
+
+.reflection-textarea {
+  width: 100%;
+  min-height: 140px;
+  padding: 14px;
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  font-family: sans-serif;
+  font-size: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.char-counter {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+  text-align: right;
+}
+
+.challenge-scenario {
+  background: linear-gradient(135deg, #fff9e6 0%, #fff3d9 100%);
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.challenge-question {
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.challenge-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.challenge-btn {
+  padding: 8px 16px;
+  background: #fff;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Bagel Fat One', cursive;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.challenge-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.challenge-btn.selected {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.challenge-feedback {
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.challenge-feedback.correct {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  color: var(--success);
+}
+
+.challenge-feedback.incorrect {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  color: var(--danger);
+}
+
+.achievement-badge {
+  text-align: center;
+  margin: 24px 0;
+}
+
+.badge-icon {
+  font-size: 80px;
+  margin-bottom: 12px;
+  animation: badgeUnlock 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes badgeUnlock {
+  0% { opacity: 0; transform: scale(0) rotate(-180deg); }
+  70% { opacity: 1; transform: scale(1.1) rotate(10deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.badge-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.badge-checklist {
+  display: inline-block;
+  text-align: left;
+  background: #fff;
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 12px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+}
+
+.badge-item {
+  padding: 8px 0;
+  font-size: 15px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.badge-item.completed {
+  color: var(--success);
+  font-weight: 700;
+}
+
+.next-steps-section {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border: 2px solid var(--success);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.next-steps-title {
+  font-weight: 700;
+  color: var(--success);
+  margin-bottom: 8px;
+}
+
+.next-steps-content {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* PBL Enhancements */
+.sticky-question {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(135deg, #fff9e6 0%, #fff3d9 100%);
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  padding: 12px 16px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+  margin-bottom: 12px;
+}
+
+.hypothesis-box {
+  background: #fff;
+  border: 2px dashed #ffd199;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 10px 0 16px 0;
+}
+
+.hypothesis-input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+}
+
+.evidence-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background: #fff;
+}
+
+.evidence-table th,
+.evidence-table td {
+  border: 2px solid #ffd199;
+  padding: 10px;
+  font-size: 13px;
+}
+
+.evidence-table th {
+  background: #fff3d9;
+  color: var(--accent);
+}
+
+.rubric-box {
+  background: #fff;
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 10px;
+}
+
+.rubric-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px dashed #ffd199;
+  font-size: 13px;
+}
+
+.rubric-row:last-child { border-bottom: none; }
+
+.checkpoint-box {
+  background: #fff9f0;
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 12px;
+}
+
+.alt-challenge {
+  margin-top: 12px;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+  border: 2px solid #8bc34a;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.question-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid var(--success);
+  border-radius: 8px;
+  margin-top: 8px;
+  font-family: sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.progress-arrow {
+  font-size: 28px;
+  color: var(--success);
+  text-align: center;
+  margin: 12px 0;
+}
+
+.slide-nav-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+.pdf-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: white;
+  z-index: 10000;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.pdf-container.visible {
+  display: block;
+}
+
+.pdf-content {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.pdf-cover {
+  text-align: center;
+  padding: 60px 0;
+  border-bottom: 3px solid #ffd199;
+  margin-bottom: 40px;
+}
+
+.pdf-cover h1 {
+  font-size: 36px;
+  color: #3e2723;
+  margin: 20px 0;
+}
+
+.pdf-cover p {
+  font-size: 16px;
+  color: #6b4b3a;
+  margin: 10px 0;
+}
+
+.pdf-section {
+  margin: 30px 0;
+  page-break-inside: avoid;
+}
+
+.pdf-section h2 {
+  color: #3e2723;
+  border-bottom: 2px solid #ffd199;
+  padding-bottom: 10px;
+  font-size: 20px;
+}
+
+.pdf-section h3 {
+  color: #6b4b3a;
+  margin-top: 15px;
+  font-size: 16px;
+}
+
+.pdf-data {
+  background: #fff9f0;
+  border-left: 4px solid #ffd199;
+  padding: 15px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.pdf-timeline {
+  list-style: none;
+  padding: 0;
+}
+
+.pdf-timeline li {
+  padding: 10px 0;
+  border-bottom: 1px solid #ffd199;
+}
+
+.pdf-timeline li:last-child {
+  border-bottom: none;
+}
+
+.pdf-badge {
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(135deg, #fff9e6 0%, #fff3d9 100%);
+  border: 2px solid #ffd199;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+.pdf-badge-icon {
+  font-size: 60px;
+  margin: 10px 0;
+}
+
+.pdf-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 15px 0;
+}
+
+.pdf-table th,
+.pdf-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.pdf-table th {
+  background-color: #ffd199;
+  color: #3e2723;
+  font-weight: bold;
+}
+
+.pdf-table td {
+  background-color: #fffdf6;
+}
+
+.pdf-footer {
+  text-align: center;
+  padding-top: 40px;
+  border-top: 2px solid #ffd199;
+  margin-top: 60px;
+  font-size: 12px;
+  color: #999;
+}
+
+.pdf-close-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 10001;
+}
+
+/* Modal overlay untuk Google Form */
+#gformModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  animation: fadeInModal 0.3s ease;
+}
+
+#gformModalContent {
+  position: relative;
+  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+  margin: 5% auto;
+  padding: 40px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  animation: slideDownModal 0.4s ease;
+  text-align: center;
+}
+
+#gformModalClose {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+#gformModalClose:hover {
+  color: #333;
+}
+
+.gform-title {
+  color: #2a2420;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.gform-message {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.gform-link-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  padding: 18px 40px;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(76,175,80,0.4);
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.gform-link-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+  box-shadow: 0 6px 20px rgba(76,175,80,0.5);
+  transform: translateY(-2px);
+}
+
+.gform-close-btn {
+  display: inline-block;
+  background: #ccc;
+  color: #333;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.2s;
+}
+
+.gform-close-btn:hover {
+  background: #bbb;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDownModal {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+h1, h2 {
+  animation: floating 3s ease-in-out infinite;
+}
+</style>
+</head>
+<body>
+
+<!-- Modal Google Form -->
+<div id="gformModal">
+  <div id="gformModalContent">
+    <span id="gformModalClose" onclick="closeGFormModal()">&times;</span>
+    <div class="gform-title">✅ PDF Berhasil Didownload!</div>
+    <div class="gform-message">
+      <p style="margin:10px 0;">File PDF hasil pembelajaran sudah tersimpan di komputer Anda.</p>
+      <p style="margin:10px 0;font-weight:700;color:#d32f2f;">Sekarang silakan upload ke Google Form:</p>
+    </div>
+    <a href="" id="gformLink" class="gform-link-btn" target="_blank">📝 BUKA GOOGLE FORM</a>
+    <div style="margin-top:25px;padding:20px;background:#fff9e6;border-radius:10px;text-align:left;">
+      <p style="font-size:14px;margin:8px 0;color:#333;"><strong>Instruksi:</strong></p>
+      <ol style="font-size:13px;line-height:1.8;color:#555;margin:8px 0;padding-left:20px;">
+        <li>Klik tombol hijau di atas untuk membuka Google Form</li>
+        <li>Isi nama kelompok Anda</li>
+        <li>Upload file PDF yang baru didownload</li>
+        <li>Klik Submit</li>
+      </ol>
+      <p style="font-size:12px;margin:10px 0;color:#777;font-style:italic;">💡 File akan otomatis masuk ke Google Drive guru!</p>
+    </div>
+    <div class="gform-close-btn" onclick="closeGFormModal()">Tutup</div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="card">
+    <div class="header">
+      <h1>Media Pembelajaran Relasi & Fungsi</h1>
+      <div class="lead">Interaktif — kerjakan dari Start → Permasalahan</div>
+    </div>
+
+    <main class="slides">
+      <!-- Slide 1: Start -->
+      <section class="slide active" id="start">
+        <div class="center">
+          <h2>Selamat Datang</h2>
+          <p class="lead">Media Pembelajaran: Relasi & Fungsi</p>
+          <button class="btn" data-go="menu">Mulai</button>
+        </div>
+      </section>
+
+      <!-- Slide 2: Menu -->
+      <section class="slide" id="menu">
+        <div class="center">
+          <h2>Menu Utama</h2>
+          <div class="menu-grid">
+            <div class="menu-card" data-go="permasalahan-foto">Permasalahan</div>
+          </div>
+          <div style="margin-top:18px">
+            <button class="btn" data-go="start">Kembali</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Permasalahan Foto -->
+      <section class="slide" id="permasalahan-foto">
+        <div class="panel">
+          <div class="header">
+            <h1>Orientasi Permasalahan</h1>
+            <h2>Permasalahan — Perhatikan Foto</h2>
+            <div class="lead">Amati gambar berikut lalu tekan "Selesaikan" untuk lanjut ke Data Kelompok.</div>
+          </div>
+
+          <div class="content" style="text-align:center">
+            <img src="../images/fungsiii.png" alt="Foto permasalahan donor darah" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
+            
+            <!-- Konteks Permasalahan -->
+            <div style="background:#fff3d9;border-left:4px solid #ffb84d;border-radius:8px;padding:14px;margin:14px auto;max-width:700px;text-align:left">
+              <div style="font-weight:700;color:var(--accent);margin-bottom:12px;font-size:18px">🩸 Konteks Permasalahan: UKS Perlu Data Donor Darah yang Valid</div>
+              <p style="color:var(--muted);font-size:15px;margin:10px 0;line-height:1.6">
+                <strong>Situasi:</strong> Sekolah sedang mengadakan program donor darah bersama PMI (Palang Merah Indonesia). Unit Kesehatan Sekolah (UKS) diminta mempersiapkan daftar calon donor dari 8 siswa pilihan.
+              </p>
+              <p style="color:var(--muted);font-size:15px;margin:10px 0;line-height:1.6">
+                <strong>Masalah:</strong> Formulir pendaftaran donor darah masih berantakan! Ada data yang tercampur, beberapa siswa muncul 2 kali dengan golongan darah berbeda, dan ada yang belum terisi.
+              </p>
+              <p style="color:var(--muted);font-size:15px;margin:10px 0;line-height:1.6">
+                <strong>Risiko:</strong> Data yang salah bisa fatal untuk kesehatan penerima darah. PMI memerlukan data yang <strong>akurat dan terpercaya</strong> — setiap donor harus memiliki TEPAT SATU golongan darah yang pasti!
+              </p>
+              <p style="color:var(--accent);font-weight:700;font-size:15px;margin:14px 0;line-height:1.6">
+                ❓ Pertanyaan Pemantik: "Bagaimana cara memastikan setiap siswa memiliki SATU golongan darah yang jelas dan SEMUA siswa tercakup?"
+              </p>
+            </div>
+
+            <p style="color:var(--accent);font-weight:700;margin:16px 0;font-size:20px">Misi Kalian:</p>
+            <p style="color:var(--muted);margin-bottom:10px;font-size:15px;line-height:1.6">Organisir data donor darah 8 siswa agar valid dan terverifikasi, sehingga bisa diserahkan ke PMI dengan percaya diri!</p>
+            <p style="color:var(--muted);margin-bottom:8px;font-size:15px;line-height:1.6">Sebelum memulai, silakan duduk bersama kelompok Anda masing-masing — permasalahan ini dikerjakan secara berkelompok! 👥</p>
+
+            <!-- Textarea untuk siswa menuliskan solusi -->
+            <div style="max-width:800px;margin:20px auto">
+              <label style="display:block;color:var(--accent);font-weight:700;font-size:16px;margin-bottom:10px">💡 Ide Solusi Awal Kalian:</label>
+              <p style="color:var(--muted);font-size:14px;margin-bottom:10px">Sebelum melanjutkan, tuliskan ide awal kalian tentang bagaimana cara memastikan data donor darah valid:</p>
+              <textarea id="solusiAwalPertemuan3" placeholder="Contoh: Saya akan memastikan setiap siswa hanya punya satu golongan darah, membuat diagram/tabel yang jelas..." style="width:100%;min-height:120px;padding:14px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+              <p style="color:var(--muted);font-size:12px;margin-top:8px;font-style:italic">💭 Tidak apa jika belum yakin, tuliskan saja apa yang terpikirkan saat ini!</p>
+            </div>
+
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+              <button class="btn ghost" data-go="menu">⟵ Kembali</button>
+              <button class="btn" data-go="identitas-kelompok">Selesaikan ⟶</button>
+            </div>
+          </div>
+
+          <div style="margin-top:14px;text-align:center">
+            <div style="font-size:14px;color:var(--muted)">Permasalahan — Foto</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Identitas Kelompok -->
+      <section class="slide" id="identitas-kelompok">
+        <div class="panel">
+          <h2>Identitas Kelompok</h2>
+          <p style="color:var(--muted)">Silakan isi data kelompok Anda sebelum melanjutkan ke tahap berikutnya.</p>
+
+          <div class="card-lite">
+            <label for="namaKelompok" style="display:block;margin-bottom:8px;color:var(--accent);font-weight:700">Nama Kelompok</label>
+            <input type="text" id="namaKelompok" placeholder="Contoh: Kelompok 1">
+          </div>
+
+          <div class="card-lite">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <label style="color:var(--accent);font-weight:700">Anggota Kelompok</label>
+              <button class="btn ghost" id="addAnggotaBtn" style="padding:6px 12px;font-size:14px">+ Tambah Anggota</button>
+            </div>
+            
+            <div id="anggotaContainer" class="anggota-container">
+              <div class="anggota-row">
+                <input type="text" class="anggota-input" placeholder="Nama anggota 1">
+                <select class="tanggung-jawab-select" style="padding:12px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:'Bagel Fat One',cursive;font-size:16px;min-width:150px">
+                  <option value="Ketua Kelompok">Ketua Kelompok</option>
+                  <option value="Wakil Ketua">Wakil Ketua</option>
+                  <option value="Sekretaris">Sekretaris</option>
+                  <option value="Anggota Aktif">Anggota Aktif</option>
+                  <option value="Anggota">Anggota</option>
+                </select>
+                <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px;padding:8px">−</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
+            <button class="btn ghost" data-go="permasalahan-foto">⟵ Kembali</button>
+            <button class="btn" id="lanjutTahap1Btn">Simpan & Lanjutkan ⟶</button>
+          </div>
+
+          <div id="feedbackKelompok" style="margin-top:12px;color:var(--success);font-weight:700;text-align:center"></div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Simulasi Aturan Mutlak (Analisis Karakteristik Fungsi) -->
+      <section class="slide" id="simulasi-fungsi">
+        <div class="panel">
+          <h2>🔬 Simulasi "Aturan Mutlak" - Penemuan Karakteristik Fungsi</h2>
+          <p style="color:var(--muted)"><strong>Instruksi:</strong> Pasangkan setiap nama siswa dengan golongan darahnya sesuai dengan pemikiranmu. Kamu bebas membuat pasangan apapun, tidak ada batasan! Setelah itu, analisis hasil pasangan yang telah kamu buat. 🔍</p>
+
+          <!-- Bot Assistant -->
+          <div id="botFeedback" style="display:none;margin:16px 0;padding:14px;background:#fff3cd;border-left:4px solid #ffb84d;border-radius:8px;animation:fadeIn 0.4s ease-out">
+            <div style="display:flex;align-items:flex-start;gap:12px">
+              <div style="font-size:32px">🤖</div>
+              <div>
+                <div style="font-weight:700;color:var(--accent);margin-bottom:4px">Asisten Virtual</div>
+                <div id="botMessage" style="color:var(--muted);font-size:14px"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PENGANTAR AKTIVITAS SIMULASI -->
+          <div style="margin-bottom:16px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
+            <strong style="display:block;margin-bottom:6px">📌 Mengapa Kegiatan Ini Penting?</strong>
+            <div class="small">Untuk memastikan data donor darah valid, setiap siswa HARUS memiliki TEPAT SATU golongan darah (tidak boleh 2 atau lebih). Aktivitas ini mengajarkan kalian berpikir seperti seorang "data validator" — menerapkan aturan logis untuk memvalidasi data. Dengan cara ini, kalian akan menemukan sendiri syarat-syarat FUNGSI dari pengalaman dunia nyata!</div>
+          </div>
+
+          <!-- Data Siswa & Golongan Darah -->
+          <div class="card-lite">
+            <h3 style="color:var(--accent);margin-bottom:12px">Data Siswa dan Golongan Darah</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Klik nama siswa, lalu klik golongan darah untuk membuat pasangan. Kamu bebas membuat kombinasi apapun! 💡</p>
+            
+            <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:16px">
+              <!-- Kolom Nama -->
+              <div style="flex:1;min-width:200px">
+                <div style="font-weight:700;margin-bottom:8px;color:var(--accent)">Nama Siswa (Domain)</div>
+                <div id="namaList" style="display:flex;flex-direction:column;gap:8px">
+                  <div class="nama-item" data-nama="Andi">Andi</div>
+                  <div class="nama-item" data-nama="Budi">Budi</div>
+                  <div class="nama-item" data-nama="Citra">Citra</div>
+                  <div class="nama-item" data-nama="Dina">Dina</div>
+                  <div class="nama-item" data-nama="Eka">Eka</div>
+                  <div class="nama-item" data-nama="Fatur">Fatur</div>
+                  <div class="nama-item" data-nama="Gita">Gita</div>
+                  <div class="nama-item" data-nama="Hendra">Hendra</div>
+                </div>
+              </div>
+
+              <!-- Kolom Golongan Darah -->
+              <div style="flex:1;min-width:200px">
+                <div style="font-weight:700;margin-bottom:8px;color:var(--accent)">Golongan Darah (Kodomain)</div>
+                <div id="goldarList" style="display:flex;flex-direction:column;gap:8px">
+                  <div class="goldar-item" data-goldar="A">A</div>
+                  <div class="goldar-item" data-goldar="B">B</div>
+                  <div class="goldar-item" data-goldar="AB">AB</div>
+                  <div class="goldar-item" data-goldar="O">O</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hasil Pasangan -->
+          <div class="card-lite">
+            <h3 style="color:var(--accent);margin-bottom:12px">📋 Daftar Pasangan yang Telah Dibuat</h3>
+            <div id="pasanganList" style="min-height:100px;padding:12px;background:#fff;border-radius:8px;border:2px dashed rgba(0,0,0,0.1)">
+              <p style="color:var(--muted);font-size:14px;text-align:center">Belum ada pasangan. Mulai dengan klik nama dan golongan darah.</p>
+            </div>
+            <button class="btn ghost" id="resetPasangan" style="margin-top:10px">Reset Semua</button>
+          </div>
+
+          <!-- 🔍 SECTION ANALISIS - Siswa Menemukan Sendiri -->
+          <div class="card-lite" id="analysisSectionStart" style="background:#fff9f0;border:3px solid #ffb84d;margin-top:20px;display:none">
+            <!-- PENGANTAR AKTIVITAS ANALISIS LOGIKA -->
+            <div style="margin-bottom:14px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
+              <strong style="display:block;margin-bottom:6px">📌 Mengapa Analisis Logika Penting?</strong>
+              <div class="small">Kalian akan menjawab pertanyaan berdasarkan pengalaman hidup sehari-hari, BUKAN rumus matematika. Tujuannya adalah menggali logika kalian sendiri tentang bagaimana setiap orang memiliki SATU golongan darah dan SEMUA orang pasti memiliki golongan darah. Logika inilah yang menjadi fondasi syarat-syarat FUNGSI dalam matematika!</div>
+            </div>
+
+            <h3 style="color:var(--accent);margin-bottom:12px">🔍 Aktivitas Analisis: Dari Dunia Nyata ke Konsep Fungsi</h3>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:16px">
+              <strong>Instruksi:</strong> Mari kita analisis pasangan yang telah kamu buat dengan cara berpikir sehari-hari terlebih dahulu!
+            </p>
+
+            <!-- Prompt sebelum clue -->
+            <p style="color:#8a6d3b;background:#fff3cd;border:1px solid #ffeeba;padding:10px;border-radius:8px;margin:0 0 12px 0">
+              <strong>Perhatikan:</strong> Perhatikan pasangan yang telah kamu buat di atas — apakah ada keanehan?
+            </p>
+            <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">
+              <button class="btn ghost" id="toggleClueBtn" style="padding:8px 12px">📎 Lihat Pertanyaan (Clue)</button>
+              <span style="font-size:12px;color:var(--muted)">Klik tombol untuk membuka pertanyaan pemantik.</span>
+            </div>
+
+            <!-- BAGIAN A: Pertanyaan Dunia Nyata -->
+            <div id="clueContainer" style="display:none;background:#fff;border:3px solid #ffb84d;border-radius:10px;padding:14px;margin-bottom:16px">
+              <h4 style="color:var(--accent);margin-bottom:12px">📍 BAGIAN A: Pemikiran Sehari-Hari (Logika Dunia Nyata)</h4>
+
+              <!-- Pertanyaan 1 - Konteks Nyata -->
+              <div style="background:#fffdf6;border:2px dashed #ffd199;border-radius:10px;padding:12px;margin-bottom:12px">
+                <div style="font-weight:700;color:#d4a574;margin-bottom:10px">❓ Pertanyaan 1: Golongan Darah dalam Tubuh Manusia</div>
+                <p style="color:var(--muted);font-size:13px;margin-bottom:10px;line-height:1.5">
+                  <strong>Konteks Nyata:</strong> Dalam kenyataan kehidupan, apakah seseorang bisa memiliki <strong>2 golongan darah atau lebih</strong> dalam satu tubuh mereka? 
+                </p>
+                <div style="margin:10px 0;display:flex;gap:10px;flex-wrap:wrap">
+                  <label style="font-size:14px"><input type="radio" name="q1Life" value="bisa"> Bisa, seseorang bisa punya 2+ golongan darah</label>
+                  <label style="font-size:14px"><input type="radio" name="q1Life" value="tidak"> Tidak, setiap orang hanya punya 1 golongan darah</label>
+                </div>
+                <label style="display:block;font-size:13px;color:var(--muted);margin-top:10px;margin-bottom:6px"><strong>Penjelasanmu:</strong> Mengapa kamu memilih jawaban tersebut?</label>
+                <textarea id="q1LifeDetail" placeholder="Contoh: Tidak, karena setiap orang lahir dengan satu jenis golongan darah tertentu (A, B, AB, atau O) dan itu tidak bisa berubah..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #ffd199;font-family:sans-serif;font-size:13px;min-height:70px"></textarea>
+              </div>
+
+              <!-- Pertanyaan 2 - Konteks Nyata -->
+              <div style="background:#fffdf6;border:2px dashed #ffd199;border-radius:10px;padding:12px;margin-bottom:16px">
+                <div style="font-weight:700;color:#d4a574;margin-bottom:10px">❓ Pertanyaan 2: Golongan Darah yang Tidak Ada</div>
+                <p style="color:var(--muted);font-size:13px;margin-bottom:10px;line-height:1.5">
+                  <strong>Konteks Nyata:</strong> Apakah ada kemungkinan seorang manusia <strong>tidak memiliki golongan darah sama sekali</strong> dalam tubuhnya?
+                </p>
+                <div style="margin:10px 0;display:flex;gap:10px;flex-wrap:wrap">
+                  <label style="font-size:14px"><input type="radio" name="q2Life" value="ada"> Ada, bisa ada orang yang tidak punya golongan darah</label>
+                  <label style="font-size:14px"><input type="radio" name="q2Life" value="tidak"> Tidak, semua orang pasti punya golongan darah</label>
+                </div>
+                <label style="display:block;font-size:13px;color:var(--muted);margin-top:10px;margin-bottom:6px"><strong>Penjelasanmu:</strong> Mengapa demikian?</label>
+                <textarea id="q2LifeDetail" placeholder="Contoh: Tidak, karena setiap manusia yang hidup pasti memiliki golongan darah. Golongan darah adalah bagian dari sistem biologi manusia..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #ffd199;font-family:sans-serif;font-size:13px;min-height:70px"></textarea>
+              </div>
+            </div>
+
+            <!-- BAGIAN B: Penguatan - Koneksi ke Konsep Fungsi -->
+            <div id="bagianBContainer" style="display:none;background:#fff9f0;border:3px solid #ffb84d;border-radius:10px;padding:14px;margin-bottom:16px">
+              <h4 style="color:var(--accent);margin-bottom:12px">🔗 BAGIAN B: Penguatan Konsep Fungsi</h4>
+              <p style="color:var(--muted);font-size:13px;margin-bottom:12px;line-height:1.6">
+                Sangat bagus! Logika yang kamu gunakan tadi <strong>sama persis dengan syarat-syarat fungsi dalam matematika!</strong><br><br>
+                <strong>Penjelasan:</strong>
+              </p>
+              
+              <div style="background:#fff;border-left:4px solid #ffb84d;padding:12px;margin-bottom:10px;border-radius:4px">
+                <p style="color:var(--accent);font-weight:700;margin:0 0 6px 0">➤ Dari jawaban Pertanyaan 1:</p>
+                <p style="color:var(--muted);font-size:13px;margin:6px 0">
+                  Kamu sudah tahu bahwa setiap orang hanya punya <strong>1 golongan darah</strong> (tidak boleh 2 atau lebih). <br>
+                  <strong>SAMA HALNYA DENGAN FUNGSI:</strong> Setiap anggota domain (nama/orang) hanya boleh dipasangkan dengan <strong>TEPAT SATU</strong> anggota kodomain (golongan darah). Tidak boleh lebih dari satu!
+                </p>
+              </div>
+
+              <div style="background:#fff;border-left:4px solid #ffb84d;padding:12px;margin-bottom:10px;border-radius:4px">
+                <p style="color:var(--accent);font-weight:700;margin:0 0 6px 0">➤ Dari jawaban Pertanyaan 2:</p>
+                <p style="color:var(--muted);font-size:13px;margin:6px 0">
+                  Kamu sudah tahu bahwa <strong>semua orang pasti punya golongan darah</strong> (tidak ada yang kosong). <br>
+                  <strong>SAMA HALNYA DENGAN FUNGSI:</strong> Setiap anggota domain (nama/orang) <strong>HARUS memiliki pasangan</strong> di kodomain (golongan darah). Tidak boleh ada yang tidak memiliki pasangan!
+                </p>
+              </div>
+
+              <div style="background:#e8f5e9;border-left:4px solid var(--success);padding:12px;border-radius:4px;margin-top:12px">
+                <p style="color:var(--success);font-weight:700;margin:0 0 6px 0">✨ Kesimpulan:</p>
+                <p style="color:var(--muted);font-size:13px;margin:6px 0">
+                  Dengan demikian, syarat-syarat fungsi adalah:
+                </p>
+                <ol style="color:var(--muted);font-size:13px;margin:8px 0;padding-left:20px">
+                  <li>✓ Setiap anggota domain HARUS memiliki pasangan (tidak boleh kosong)</li>
+                  <li>✓ Setiap anggota domain hanya memiliki TEPAT SATU pasangan (tidak boleh lebih dari satu)</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tombol Lanjut -->
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
+            <button class="btn ghost" data-go="identitas-kelompok">⟵ Kembali</button>
+            <button class="btn" id="btnSelesai">Mulai Analisis Data ⟶</button>
+            <button class="btn" data-go="simulator-populasi">Lanjut ke Skenario Populasi ⟶</button>
+          </div>
+
+          <div id="feedbackValidasi" style="margin-top:12px;font-weight:700;text-align:center"></div>
+        </div>
+      </section>
+
+      <!-- Slide: Simulator Skenario Populasi -->
+      <section class="slide" id="simulator-populasi">
+        <div class="panel">
+          <h2>Simulator Skenario Populasi</h2>
+          
+          <!-- PENGANTAR AKTIVITAS SIMULATOR -->
+          <div style="margin-bottom:16px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
+            <strong style="display:block;margin-bottom:6px">📌 Mengapa Kegiatan Ini Penting?</strong>
+            <div class="small">Aktivitas ini mengajarkan kalian cara berpikir KOMBINATORIK — berapa banyak fungsi yang bisa dibuat dari domain dan kodomain tertentu? Dengan memahami pola 2^n (atau n(B)^n(A)), kalian dapat memprediksi berapa banyak data valid yang mungkin ada tanpa harus menghitung satu per satu. Ini adalah kemampuan penting dalam data science!</div>
+          </div>
+
+          <div class="card-lite">
+            <h3 style="color:var(--accent);margin-bottom:8px">Skenario 1 — Hanya Dua Golongan Darah</h3>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:12px">Kodomain: {A, B}. Domain: {Andi, Budi, Citra}. Coba pasangkan manual.</p>
+
+            <div style="display:flex;gap:20px;flex-wrap:wrap">
+              <div style="flex:1;min-width:220px">
+                <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Nama (Domain)</div>
+                <div id="sim-nama" style="display:flex;flex-direction:column;gap:8px">
+                  <div class="nama-item" data-sim-nama="Andi">Andi</div>
+                  <div class="nama-item" data-sim-nama="Budi">Budi</div>
+                  <div class="nama-item" data-sim-nama="Citra">Citra</div>
+                </div>
+              </div>
+              <div style="flex:1;min-width:220px">
+                <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Golongan Darah (Kodomain)</div>
+                <div id="sim-goldar" style="display:flex;flex-direction:column;gap:8px">
+                  <div class="goldar-item" data-sim-goldar="A">A</div>
+                  <div class="goldar-item" data-sim-goldar="B">B</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-lite" style="margin-top:12px">
+              <h3 style="color:var(--accent);margin-bottom:8px">Pasangan Dibuat</h3>
+              <div id="sim-pasangan" style="min-height:72px;padding:10px;background:#fff;border-radius:8px;border:2px dashed rgba(0,0,0,0.1)"></div>
+            </div>
+
+            <div class="card-lite" style="margin-top:12px">
+              <h3 style="color:var(--accent);margin-bottom:8px">Analisis Logika</h3>
+              <p style="color:var(--muted);font-size:14px;margin-bottom:8px">Setiap 1 orang punya 2 pilihan golongan darah. Untuk 3 orang, total kombinasi: <span id="sim-formula" style="font-weight:700;color:var(--accent)">2 × 2 × 2 = 2^3 = 8 kemungkinan</span>.</p>
+            </div>
+          </div>
+
+          <div class="card-lite" style="margin-top:10px">
+            <h3 style="color:var(--accent);margin-bottom:8px">Tantangan Realitas</h3>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:8px">Jika ada 5 siswa dan 4 jenis golongan darah (A, B, AB, O), berapa total variasi data fungsi yang mungkin?</p>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+              <span style="font-weight:700;color:var(--accent)">Jawaban:</span>
+              <input id="sim-jawaban" type="text" placeholder="Masukkan angka" style="max-width:160px">
+              <button class="btn" id="sim-cek">Cek Jawaban</button>
+              <button class="btn ghost" id="sim-reset">Reset</button>
+            </div>
+            <div id="sim-feedback" style="margin-top:8px;font-weight:700"></div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
+            <button class="btn ghost" data-go="menu">⟵ Kembali</button>
+            <button class="btn ghost" data-go="simulasi-fungsi">⟵ Kembali ke Karakteristik Fungsi</button>
+            <button class="btn" data-go="verifikasi-diagram">Lanjut ke Diagram Kartesius ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide: Verifikasi Fungsi & Solusi - Diagram Kartesius -->
+      <section class="slide" id="verifikasi-diagram">
+        <div class="panel">
+          <h2>🎯 Verifikasi Fungsi & Solusi</h2>
+          <p style="color:var(--muted);margin-bottom:16px">
+            <strong>Misi:</strong> Rapikan data acak dari Tahap 1 menggunakan Diagram Kartesius Interaktif! 
+            Buktikan bahwa data ini memenuhi syarat fungsi.
+          </p>
+
+          <!-- Driving Question (Sticky) -->
+          <div class="sticky-question">
+            <strong>Pertanyaan Pemantik Utama:</strong> Bagaimana memastikan setiap data siswa membentuk <em>fungsi</em> yang valid (tidak ada cabang & tidak ada yang kosong)?
+          </div>
+
+          <!-- Hipotesis Awal -->
+          <div class="hypothesis-box">
+            <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Hipotesis Awal</div>
+            <p style="color:var(--muted);font-size:13px;margin:6px 0">Tuliskan dugaan awalmu sebelum menyusun titik di grid.</p>
+            <textarea id="inputHipotesis" class="hypothesis-input" placeholder="Contoh: Setiap nama hanya boleh satu goldar, dan semua nama harus terisi..."></textarea>
+            <div style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap">
+              <button class="btn" id="btnSaveHipotesis">💾 Simpan Hipotesis</button>
+              <span id="hipotesisStatus" style="font-size:13px;color:var(--muted)"></span>
+            </div>
+          </div>
+
+          <!-- Split Screen: Data Acak vs Grid Kartesius -->
+          <div style="margin-top:20px;margin-bottom:16px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
+            <strong style="display:block;margin-bottom:6px">📌 Mengapa Visualisasi Kartesian Penting?</strong>
+            <div class="small">Data yang acak dan tidak teratur sulit dipahami. Dengan mengubah data menjadi titik-titik di diagram kartesius, kalian dapat melihat POLA dengan jelas — mana siswa yang sudah punya pasangan goldar, mana yang belum, dan mana yang "double" (melanggar aturan fungsi). Visualisasi ini membantu kalian memahami syarat-syarat fungsi secara intuitif!</div>
+          </div>
+
+          <!-- Split Screen: Data Acak vs Grid Kartesius -->
+          <div class="split-container">
+            <!-- Sisi Kiri: Data Acak (Before) -->
+            <div class="split-left">
+              <div class="card-lite">
+                <h3 style="color:var(--accent);margin-bottom:12px">📋 Data Acak (Permasalahan Awal)</h3>
+                <div class="messy-data-visual" id="messyDataDisplay">
+                  <div class="messy-data-item" style="--rotation: 5deg;">Andi: ?</div>
+                  <div class="messy-data-item" style="--rotation: -8deg;">Budi: ?</div>
+                  <div class="messy-data-item" style="--rotation: 3deg;">Citra: ?</div>
+                  <div class="messy-data-item" style="--rotation: -5deg;">Dina: ?</div>
+                  <div class="messy-data-item" style="--rotation: 7deg;">Eka: ?</div>
+                  <div class="messy-data-item" style="--rotation: -3deg;">Fatur: ?</div>
+                  <div class="messy-data-item" style="--rotation: 6deg;">Gita: ?</div>
+                  <div class="messy-data-item" style="--rotation: -7deg;">Hendra: ?</div>
+                  <p style="margin-top:16px;color:var(--danger);font-weight:700;font-size:14px">
+                    ⚠️ Data belum terorganisir!
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sisi Kanan: Grid Kartesius Interaktif -->
+            <div class="split-right">
+              <div class="card-lite">
+                <h3 style="color:var(--accent);margin-bottom:12px">📊 Diagram Kartesius Interaktif</h3>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
+                  Klik pada grid untuk menambahkan titik koordinat (Nama, Goldar). 
+                  Setiap nama harus memiliki <strong>tepat satu</strong> golongan darah.
+                </p>
+
+                <!-- Grid Kartesius -->
+                <div class="cartesian-grid" id="cartesianGrid">
+                  <!-- Titik akan ditambahkan secara dinamis -->
+                </div>
+
+                <!-- Kontrol Input Manual -->
+                <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+                  <select id="selectNama" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive">
+                    <option value="">Pilih Nama...</option>
+                    <option value="Andi">Andi</option>
+                    <option value="Budi">Budi</option>
+                    <option value="Citra">Citra</option>
+                    <option value="Dina">Dina</option>
+                    <option value="Eka">Eka</option>
+                    <option value="Fatur">Fatur</option>
+                    <option value="Gita">Gita</option>
+                    <option value="Hendra">Hendra</option>
+                  </select>
+                  <select id="selectGoldar" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive">
+                    <option value="">Pilih Goldar...</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="AB">AB</option>
+                    <option value="O">O</option>
+                  </select>
+                  <button class="btn" id="btnAddPoint">➕ Tambah Titik</button>
+                  <button class="btn ghost" id="btnResetGrid">🔄 Reset Grid</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimoni & Clue -->
+          <div class="split-container">
+            <div class="split-left">
+              <div class="chat-card">
+                <h3 style="color:var(--accent);margin-bottom:10px">💬 Testimoni Chat Siswa</h3>
+                <p style="font-size:13px;color:var(--muted);margin-top:0">Baca obrolan singkat ini sebagai petunjuk — tidak ada jawaban langsung.</p>
+                <div class="chat-item"><div class="chat-avatar">A</div><div><strong>Andi:</strong> "Golongan darahku sama dengan Budi. Kita mirip banget!"</div></div>
+                <div class="chat-item"><div class="chat-avatar">B</div><div><strong>Budi:</strong> "Iya, aku dan Andi sama. Hurufnya satu aja."</div></div>
+                <div class="chat-item"><div class="chat-avatar">C</div><div><strong>Citra:</strong> "Aku gabungan dua huruf, jadi agak unik."</div></div>
+                <div class="chat-item"><div class="chat-avatar">D</div><div><strong>Dina:</strong> "Aku bukan A, dan bukan gabungan dua huruf. Masih ada huruf B-nya."</div></div>
+                <div class="chat-item"><div class="chat-avatar">E</div><div><strong>Eka:</strong> "Golongan darahku sama persis dengan Dina."</div></div>
+                <div class="chat-item"><div class="chat-avatar">F</div><div><strong>Fatur:</strong> "Aku satu-satunya yang berbeda sendiri di kelas ini."</div></div>
+                <div class="chat-item"><div class="chat-avatar">G</div><div><strong>Gita:</strong> "Aku juga gabungan, sama seperti Citra."</div></div>
+                <div class="chat-item"><div class="chat-avatar">H</div><div><strong>Hendra:</strong> "Golongan darahku sekelompok dengan Dina dan Eka."</div></div>
+              </div>
+            </div>
+
+            <div class="split-right">
+              <div class="card-lite">
+                <h3 style="color:var(--accent);margin-bottom:10px">🧩 Clue Logika (Puzzle)</h3>
+                <ul class="clue-list">
+                  <li>1) Andi dan Budi: sama persis.</li>
+                  <li>2) Ada 2 siswa bergolongan huruf tunggal A.</li>
+                  <li>3) Citra: gabungan dua huruf.</li>
+                  <li>4) Dina: mengandung B, tapi bukan gabungan.</li>
+                  <li>5) Eka: sama seperti Dina.</li>
+                  <li>6) Fatur: satu-satunya yang tidak berbagi dengan siapapun.</li>
+                  <li>7) Gita: sama seperti Citra.</li>
+                  <li>8) Hendra: sama seperti Dina dan Eka.</li>
+                  <li>9) Komposisi kelas: 2 A, 3 B, 2 AB, 1 O.</li>
+                </ul>
+                <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
+                  <button class="btn" id="btnCekKunci">🔎 Cek Dengan Kunci</button>
+                  <button class="btn ghost" id="btnRevealKunci">👀 Lihat Jawaban (Opsional)</button>
+                </div>
+                <div id="kunciResult" style="margin-top:10px;font-weight:700"></div>
+                <div id="kunciTabel" style="margin-top:12px;display:none">
+                  <table class="organized-table">
+                    <thead><tr><th>Nama</th><th>Gol. Darah (Kunci)</th></tr></thead>
+                    <tbody>
+                      <tr><td>Andi</td><td>A</td></tr>
+                      <tr><td>Budi</td><td>A</td></tr>
+                      <tr><td>Citra</td><td>AB</td></tr>
+                      <tr><td>Dina</td><td>B</td></tr>
+                      <tr><td>Eka</td><td>B</td></tr>
+                      <tr><td>Fatur</td><td>O</td></tr>
+                      <tr><td>Gita</td><td>AB</td></tr>
+                      <tr><td>Hendra</td><td>B</td></tr>
+                    </tbody>
+                  </table>
+                  <p style="font-size:12px;color:var(--muted);margin-top:6px">Gunakan hanya jika sudah mencoba menyusun sendiri.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tombol Verifikasi Fungsi -->
+          <div class="verification-box" id="verificationBox">
+            <h3 style="margin-bottom:12px;color:var(--accent)">🔍 Verifikasi Syarat Fungsi</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:12px">
+              Pastikan semua titik sudah diletakkan dengan benar, lalu tekan tombol verifikasi.
+            </p>
+            <button class="btn" id="btnVerifikasiFunc" style="font-size:18px;padding:12px 24px">
+              ✅ Verifikasi Fungsi
+            </button>
+            <div id="verificationResult" style="margin-top:12px;font-weight:700;font-size:15px"></div>
+            <button class="btn ghost" id="btnRevisi" style="margin-top:8px;display:none">🔄 Revisi Data</button>
+          </div>
+
+          <!-- Fitur Predictor (Banyak Fungsi) -->
+          <div class="card-lite" id="predictorSection" style="display:none">
+            <h3 style="color:var(--accent);margin-bottom:12px">🧮 Fitur "Predictor" - Banyak Fungsi</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:12px">
+              Berdasarkan diagram yang kamu buat, ini adalah <strong>1 dari berapa</strong> kemungkinan susunan yang bisa terjadi di kelas ini?
+            </p>
+            <div class="predictor-input">
+              <span style="font-weight:700;color:var(--accent)">Jumlah Fungsi yang Mungkin:</span>
+              <input type="text" id="inputPrediksi" placeholder="Contoh: 65536" />
+              <button class="btn" id="btnCekPrediksi">Cek Jawaban</button>
+            </div>
+            <div id="prediksiResult" style="margin-top:8px;font-weight:700;text-align:center"></div>
+            <p style="font-size:13px;color:var(--muted);margin-top:12px;text-align:center">
+              💡 <strong>Hint:</strong> Rumus = n(Kodomain)<sup>n(Domain)</sup> = 4<sup>8</sup>
+            </p>
+          </div>
+
+          <!-- Narasi Solusi (Analisis C4) -->
+          <div class="card-lite" id="solutionSection" style="display:none">
+            <h3 style="color:var(--accent);margin-bottom:12px">📝 Kesimpulan Solusi</h3>
+            <p style="font-size:14px;color:var(--muted);margin-bottom:12px">
+              <strong>Pertanyaan Pemantik:</strong> "Apakah mungkin kita mengelompokkan siswa berdasarkan golongan darahnya tanpa ada data yang tumpang tindih?"
+            </p>
+            <textarea 
+              class="solution-textarea" 
+              id="inputKesimpulan" 
+              placeholder="Tuliskan kesimpulan Anda di sini...&#10;&#10;Contoh: Ya, melalui konstruksi Fungsi dalam bentuk Diagram Kartesius ini, kita bisa melihat dengan jelas bahwa setiap siswa memiliki tepat satu golongan darah. Ini membuktikan bahwa hubungan ini adalah Fungsi, bukan sekadar Relasi biasa."
+            ></textarea>
+            <div style="margin-top:12px">
+              <button class="btn" id="btnFinalCheck">🎯 Final Check & Kirim</button>
+            </div>
+            <div id="finalCheckResult" style="margin-top:12px;font-weight:700;text-align:center"></div>
+          </div>
+
+          <!-- Catatan Bukti (Evidence Log) -->
+          <div class="card-lite" id="evidenceSection" style="margin-top:16px;display:none">
+            <h3 style="color:var(--accent);margin-bottom:8px">📑 Catatan Bukti</h3>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:6px">Tulis pernyataan, bukti, dan kesimpulanmu.</p>
+            <table class="evidence-table">
+              <thead>
+                <tr><th>Pernyataan</th><th>Bukti</th><th>Kesimpulan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><textarea id="evPernyataan" style="width:100%;height:60px;box-sizing:border-box"></textarea></td>
+                  <td><textarea id="evBukti" style="width:100%;height:60px;box-sizing:border-box"></textarea></td>
+                  <td><textarea id="evKesimpulan" style="width:100%;height:60px;box-sizing:border-box"></textarea></td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn" id="btnSaveEvidence" style="margin-top:10px">💾 Simpan Catatan Bukti</button>
+            <div id="evidenceFeedback" style="margin-top:8px;font-weight:700"></div>
+          </div>
+
+          <!-- Transformasi Visual (Tabel Rapi) -->
+          <div class="card-lite" id="organizedDataSection" style="display:none">
+            <h3 style="color:var(--success);margin-bottom:12px">✅ Data Terorganisir (Hasil Fungsi)</h3>
+            <table class="organized-table" id="organizedTable">
+              <thead>
+                <tr>
+                  <th>Nama Siswa</th>
+                  <th>Golongan Darah</th>
+                </tr>
+              </thead>
+              <tbody id="organizedTableBody">
+                <!-- Data akan diisi otomatis -->
+              </tbody>
+            </table>
+            <p style="margin-top:12px;text-align:center;color:var(--success);font-weight:700">
+              🎉 Selamat! Data acak telah berubah menjadi tabel yang rapi dan terorganisir!
+            </p>
+          </div>
+
+          <!-- Navigasi -->
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
+            <button class="btn ghost" data-go="simulator-populasi">⟵ Kembali ke Skenario</button>
+            <button class="btn ghost" data-go="menu">Kembali ke Menu</button>
+            <button class="btn" data-go="penyajian-karya">Lanjut ke Penyajian Hasil Karya ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide: Fase 4 - Penyajian Hasil Karya -->
+      <section class="slide" id="penyajian-karya">
+        <div class="panel">
+          <h2>🎨 Fase 4: Penyajian Hasil Karya (Gallery Walk)</h2>
+          <p style="color:var(--muted);margin-bottom:20px">
+            Presentasikan hasil investigasi kelompokmu! Pilih bentuk penyajian fungsi yang paling menarik menurutmu.
+          </p>
+
+          <!-- BAGIAN A: PILIH BENTUK PENYAJIAN -->
+          <div class="card-lite">
+            <h3 style="color:var(--accent);margin-bottom:12px">📊 A. Pilih Bentuk Penyajian Fungsi</h3>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:12px">
+              Kelompokmu sudah menemukan fungsi di Bagian A & B. Sekarang pilih cara terbaik untuk menyajikannya:
+            </p>
+            
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px">
+              <label class="penyajian-option">
+                <input type="radio" name="bentukPenyajian" value="tabel" checked>
+                <span>📋 Tabel</span>
+              </label>
+              <label class="penyajian-option">
+                <input type="radio" name="bentukPenyajian" value="grafik">
+                <span>📈 Grafik Kartesian</span>
+              </label>
+              <label class="penyajian-option">
+                <input type="radio" name="bentukPenyajian" value="diagram-panah">
+                <span>🎯 Diagram Panah</span>
+              </label>
+              <label class="penyajian-option">
+                <input type="radio" name="bentukPenyajian" value="pasangan-berurutan">
+                <span>📝 Himpunan Pasangan Berurutan</span>
+              </label>
+            </div>
+
+            <textarea id="deskripsiPenyajian" 
+              placeholder="Jelaskan mengapa kelompokmu memilih bentuk penyajian ini... (contoh: Kami pilih grafik karena lebih mudah melihat pola naik/turun)"
+              style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;font-family:Arial;min-height:80px"></textarea>
+
+            <button class="btn" id="btnSimpanPenyajian" style="margin-top:12px">💾 Simpan Penyajian Kami</button>
+            <div id="feedbackPenyajian" style="margin-top:12px"></div>
+          </div>
+
+          <!-- BAGIAN B: GALLERY WALK - KOMENTAR DARI KELOMPOK LAIN -->
+          <div class="card-lite" style="margin-top:20px">
+            <h3 style="color:var(--accent);margin-bottom:12px">👥 B. Gallery Walk: Berikan Komentar</h3>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:12px">
+              Kunjungi hasil karya kelompok lain dan berikan saran/komentar yang membangun!
+            </p>
+
+            <div style="display:flex;gap:12px;margin-bottom:16px">
+              <input type="text" id="namaKelompokKomentar" 
+                placeholder="Nama Kelompokmu (contoh: Kelompok 1)"
+                style="flex:1;padding:10px;border-radius:8px;border:2px solid #ddd">
+            </div>
+
+            <textarea id="komentarPeerReview" 
+              placeholder="Tulis komentar/saran untuk kelompok ini... (contoh: Penyajian kalian jelas, tapi coba tambahkan label di grafik supaya lebih mudah dipahami)"
+              style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;font-family:Arial;min-height:100px"></textarea>
+
+            <button class="btn" id="btnKirimKomentar" style="margin-top:12px">💬 Kirim Komentar</button>
+
+            <!-- DAFTAR KOMENTAR -->
+            <div id="daftarKomentar" style="margin-top:20px">
+              <h4 style="color:var(--accent);margin-bottom:12px">📝 Komentar dari Kelompok Lain:</h4>
+              <div id="komentarList" style="max-height:300px;overflow-y:auto">
+                <p style="color:var(--muted);font-style:italic">Belum ada komentar. Jadilah yang pertama!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- NAVIGASI -->
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:24px">
+            <button class="btn ghost" data-go="bagian-B">⟵ Kembali ke Bagian B</button>
+            <button class="btn" data-go="evaluasi-refleksi">Lanjut ke Evaluasi & Refleksi ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide: Evaluasi & Refleksi -->
+      <section class="slide" id="evaluasi-refleksi">
+        <div class="panel">
+          <h2>🎓 Fase 5: Evaluasi & Refleksi</h2>
+          <p style="color:var(--muted);margin-bottom:20px">
+            Evaluasi pemahaman Anda tentang Relasi & Fungsi melalui berbagai aktivitas reflektif.
+          </p>
+
+          <!-- SECTION A: Quick Self-Check -->
+          <div class="card-lite">
+            <h3 style="color:var(--accent);margin-bottom:12px">📊 A. Tingkat Pemahaman: Sebelum vs Sesudah</h3>
+            <div class="slider-comparison">
+              <div class="slider-item">
+                <label>Sebelum ⬅️</label>
+                <input type="range" id="sliderBefore" min="1" max="10" value="2">
+                <div class="slider-value" id="valueBefore">2</div>
+              </div>
+              <div style="font-size:24px;color:var(--accent)">➜</div>
+              <div class="slider-item">
+                <label>Sesudah ➡️</label>
+                <input type="range" id="sliderAfter" min="1" max="10" value="7">
+                <div class="slider-value" id="valueAfter">7</div>
+              </div>
+            </div>
+            <p style="text-align:center;color:var(--success);font-weight:700;margin-top:12px">
+              📈 Progress: <span id="progressText">+5</span> poin!
+            </p>
+          </div>
+
+          <!-- SECTION B: Concept Gallery -->
+          <div class="card-lite" style="margin-top:16px">
+            <h3 style="color:var(--accent);margin-bottom:12px">📚 B. Galeri Konsep (Klik untuk Expand)</h3>
+            <div class="concept-gallery" id="conceptGallery">
+              <!-- Cards akan dibuat by JS -->
+            </div>
+          </div>
+
+          <!-- SECTION C: Reflection Journal -->
+          <div class="card-lite" style="margin-top:16px">
+            <h3 style="color:var(--accent);margin-bottom:12px">✍️ C. Jurnal Refleksi</h3>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:10px">
+              Pilih salah satu pertanyaan dan tuliskan jawaban Anda:
+            </p>
+            <select id="reflectionPrompt" style="width:100%;padding:10px;border-radius:8px;border:2px solid #ffd199;font-family:'Bagel Fat One',cursive;margin-bottom:10px">
+              <option value="">-- Pilih Pertanyaan --</option>
+              <option value="sulit">Apa yang paling sulit dalam pembelajaran ini?</option>
+              <option value="strategi">Bagaimana strategimu mengatasi kesulitan tersebut?</option>
+              <option value="aplikasi">Bagaimana fungsi digunakan dalam kehidupan nyata?</option>
+              <option value="bangga">Apa yang paling membuatmu bangga dari pembelajaran ini?</option>
+            </select>
+            <textarea id="reflectionText" class="reflection-textarea" placeholder="Tuliskan jawaban Anda di sini..."></textarea>
+            <div class="char-counter"><span id="charCount">0</span>/300 karakter</div>
+            <button class="btn" id="btnSaveReflection" style="margin-top:10px">💾 Simpan Refleksi</button>
+            <div id="reflectionFeedback" style="margin-top:8px;font-weight:700;text-align:center"></div>
+          </div>
+
+          <!-- SECTION G: Refleksi Individu Mendalam -->
+          <div class="card-lite" style="margin-top:16px;border-top:3px solid #ffcb64;padding-top:16px">
+            <h3 style="color:var(--accent);margin-bottom:10px">🤔 G. Refleksi Individu Mendalam</h3>
+            <p style="color:var(--muted);margin-bottom:12px;font-size:14px">Jawab pertanyaan berikut dengan jujur untuk memahami pembelajaran kalian dengan lebih dalam:</p>
+            
+            <div style="margin-bottom:14px">
+              <div style="font-weight:600;color:var(--accent);margin-bottom:6px">1️⃣ Bagian mana dari konsep relasi dan fungsi yang paling membingungkan bagimu?</div>
+              <textarea id="refleksi7" placeholder="Jelaskan mana yang masih membuat kalian bingung (contoh: perbedaan relasi vs fungsi, syarat fungsi, dll)..." style="width:100%;height:100px;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);font-size:14px;box-sizing:border-box"></textarea>
+            </div>
+            
+            <div style="margin-bottom:14px">
+              <div style="font-weight:600;color:var(--accent);margin-bottom:6px">2️⃣ Kesalahan atau hambatan apa yang sempat kalian alami saat membuat validasi data?</div>
+              <textarea id="refleksi8" placeholder="Ceritakan kesalahan atau masalah yang dihadapi (contoh: awalnya berpikir satu orang boleh punya 2 goldar, tapi kemudian menyadari hal itu tidak logis)..." style="width:100%;height:100px;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);font-size:14px;box-sizing:border-box"></textarea>
+            </div>
+            
+            <div style="margin-bottom:14px">
+              <div style="font-weight:600;color:var(--accent);margin-bottom:6px">3️⃣ Mengapa menurutmu konsep fungsi ini belum sepenuhnya kalian kuasai? Apa yang masih perlu dipelajari lagi?</div>
+              <textarea id="refleksi9" placeholder="Jelaskan aspek apa yang masih perlu diperdalam untuk memahami fungsi dengan lebih baik..." style="width:100%;height:100px;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);font-size:14px;box-sizing:border-box"></textarea>
+            </div>
+          </div>
+
+          <!-- SECTION D: Challenge Scenario -->
+          <div class="card-lite" style="margin-top:16px">
+            <h3 style="color:var(--accent);margin-bottom:12px">🎯 D. Challenge: Scenario Baru</h3>
+            <div class="challenge-scenario">
+              <div class="challenge-question">
+                📍 <strong>Scenario: Restoran "Cita Rasa"</strong><br>
+                Di restoran ini, setiap menu memiliki harga tertentu. Apakah relasi antara Menu (Domain) dan Harga (Kodomain) adalah fungsi?
+              </div>
+              <div class="challenge-options">
+                <button class="challenge-btn" data-answer="ya">Ya, itu Fungsi</button>
+                <button class="challenge-btn" data-answer="bukan">Bukan, itu Relasi Biasa</button>
+                <button class="challenge-btn" data-answer="tidak-tahu">Tidak Tahu</button>
+              </div>
+              <div id="challengeFeedback"></div>
+              <div style="margin-top:12px">
+                <label style="font-weight:700;color:var(--accent);margin-bottom:8px;display:block">Jelaskan alasanmu:</label>
+                <textarea id="challengeExplanation" placeholder="Tuliskan penjelasan Anda..." style="width:100%;padding:10px;border:2px solid #ffd199;border-radius:8px;font-family:sans-serif;font-size:13px;min-height:80px;box-sizing:border-box"></textarea>
+              </div>
+            </div>
+
+            <!-- Alt Challenge (Transfer Konsep) -->
+            <div class="alt-challenge">
+              <div style="font-weight:700;color:var(--accent);margin-bottom:6px">🔁 Tantangan Transfer Konsep</div>
+              <p style="font-size:13px;color:var(--muted);margin:6px 0">
+                Scenario: Jadwal Dokter → Ruang Praktik. Apakah relasi ini fungsi? Jelaskan singkat.
+              </p>
+              <textarea id="altChallengeAnswer" placeholder="Jawaban singkatmu..." style="width:100%;padding:10px;border:2px solid #8bc34a;border-radius:8px;font-family:sans-serif;font-size:13px;min-height:70px;box-sizing:border-box"></textarea>
+              <button class="btn ghost" id="btnSaveAltChallenge" style="margin-top:8px">💾 Simpan Jawaban Alternatif</button>
+              <div id="altChallengeFeedback" style="margin-top:6px;font-weight:700"></div>
+            </div>
+          </div>
+
+          <!-- SECTION E: Achievement Badge -->
+          <div class="card-lite" style="margin-top:16px">
+            <h3 style="color:var(--accent);margin-bottom:12px">🏆 E. Achievement Badge</h3>
+            <div class="achievement-badge">
+              <div class="badge-icon" id="badgeIcon">🎓</div>
+              <div class="badge-title" id="badgeTitle">Ahli Fungsi</div>
+              <p style="color:var(--muted);margin:8px 0">Kamu telah menguasai konsep relasi dan fungsi!</p>
+              <div class="badge-checklist">
+                <div class="badge-item completed">✅ Mengidentifikasi Relasi & Fungsi</div>
+                <div class="badge-item completed">✅ Membuat Diagram Kartesius</div>
+                <div class="badge-item completed">✅ Menghitung Banyak Fungsi (n(B)^n(A))</div>
+                <div class="badge-item completed">✅ Analisis Kritis & Reasoning</div>
+                <div class="badge-item completed">✅ Refleksi Pembelajaran</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION F: Next Steps -->
+          <div class="card-lite" style="margin-top:16px">
+            <div class="next-steps-section">
+              <div class="next-steps-title">🚀 F. Langkah Selanjutnya</div>
+              <div class="next-steps-content">
+                <p style="margin:8px 0">
+                  <strong>Topik Berikutnya:</strong> Pemetaan (Mapping) & Komposisi Fungsi<br>
+                  Sekarang kamu sudah paham definisi fungsi, kita akan belajar bagaimana menggabungkan dua fungsi untuk membuat fungsi baru!
+                </p>
+                <p style="margin:12px 0;font-size:13px">
+                  <strong>📝 Ada pertanyaan sebelum melanjutkan?</strong>
+                </p>
+                <input type="text" id="studentQuestion" class="question-input" placeholder="Ketik pertanyaanmu di sini (opsional)...">
+                <button class="btn" id="btnSubmitQuestion" style="margin-top:8px">✉️ Kirim Pertanyaan ke Guru</button>
+                <div id="questionFeedback" style="margin-top:8px;font-weight:700;text-align:center"></div>
+              </div>
+            </div>
+
+            <div class="rubric-box">
+              <div style="font-weight:700;color:var(--accent);margin-bottom:6px">Rubrik Singkat (Guru/Siswa)</div>
+              <div class="rubric-row"><span>Ketepatan Fungsi (data valid)</span><span>✓</span></div>
+              <div class="rubric-row"><span>Alasan & Bukti</span><span>✓</span></div>
+              <div class="rubric-row"><span>Representasi (Diagram/Tabel)</span><span>✓</span></div>
+              <div class="rubric-row"><span>Refleksi</span><span>✓</span></div>
+            </div>
+
+            <div class="checkpoint-box">
+              <div style="font-weight:700;color:var(--accent);margin-bottom:6px">Checkpoint Guru</div>
+              <p style="font-size:13px;color:var(--muted);margin:4px 0">Klik untuk tandai status review guru.</p>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button class="btn ghost" id="btnGuruPending">⏳ Pending</button>
+                <button class="btn" id="btnGuruApproved">✅ Disetujui</button>
+              </div>
+              <div id="guruStatusText" style="margin-top:6px;font-weight:700"></div>
+            </div>
+          </div>
+
+          <!-- Navigation & Final Summary -->
+          <div class="slide-nav-btns">
+            <button class="btn ghost" data-go="verifikasi-diagram">⟵ Kembali ke Diagram</button>
+            <button class="btn" onclick="generatePDFReport()" style="font-size:16px;padding:12px 24px;">
+              📤 Kirim Hasil ke Guru
+            </button>
+          </div>
+
+          <div style="margin-top:16px;text-align:center;padding:16px;background:#fff9e6;border-radius:10px;">
+            <p style="font-size:13px;color:#666;margin:0;">
+              💡 Hasil pembelajaran akan dikirim sebagai PDF melalui Google Form
+            </p>
+          </div>
+
+          <div id="completionMessage" style="margin-top:16px;text-align:center;font-weight:700;font-size:16px"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- PDF Container (Hidden, untuk preview sebelum download) -->
+  <div class="pdf-container" id="pdfContainer">
+    <button class="pdf-close-btn" onclick="closePdfPreview()">Close Preview ✕</button>
+    <div class="pdf-content" id="pdfContent">
+      <!-- Content generated by JS -->
+    </div>
+  </div>
+</div>
+
+<script>
+// Fungsi navigasi antar slide
+function show(id) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+  document.querySelector('.card')?.scrollTo(0,0);
+}
+
+// Event listener untuk tombol navigasi
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-go]').forEach(el => {
+    el.addEventListener('click', function() {
+      const target = this.getAttribute('data-go');
+      if (target) {
+        show(target);
+      }
+    });
+  });
+
+  // Tambah anggota
+  document.getElementById('addAnggotaBtn')?.addEventListener('click', () => {
+    const container = document.getElementById('anggotaContainer');
+    if(!container) return;
+    const count = container.querySelectorAll('.anggota-input').length;
+    if (count >= 5) {
+      alert('Maksimal 5 anggota per kelompok.');
+      return;
+    }
+    const newRow = document.createElement('div');
+    newRow.className = 'anggota-row';
+    newRow.innerHTML = `
+      <input type="text" class="anggota-input" placeholder="Nama anggota ${count + 1}">
+      <select class="tanggung-jawab-select" style="padding:12px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:'Bagel Fat One',cursive;font-size:16px;min-width:150px">
+        <option value="Ketua Kelompok">Ketua Kelompok</option>
+        <option value="Wakil Ketua">Wakil Ketua</option>
+        <option value="Sekretaris">Sekretaris</option>
+        <option value="Anggota Aktif">Anggota Aktif</option>
+        <option value="Anggota">Anggota</option>
+      </select>
+      <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px;padding:8px">−</button>
+    `;
+    container.appendChild(newRow);
+  });
+
+  // Simpan kelompok
+  document.getElementById('lanjutTahap1Btn')?.addEventListener('click', () => {
+    const namaKelompok = document.getElementById('namaKelompok')?.value.trim();
+    const anggotaRows = document.querySelectorAll('.anggota-row');
+    const anggota = Array.from(anggotaRows).map(row => {
+      const namaInput = row.querySelector('.anggota-input');
+      const tanggungJawabSelect = row.querySelector('.tanggung-jawab-select');
+      const nama = namaInput?.value.trim();
+      const tanggungJawab = tanggungJawabSelect?.value || 'Anggota';
+      return nama ? { nama, tanggungJawab } : null;
+    }).filter(x => x);
+
+    if (!namaKelompok) {
+      alert('Mohon isi nama kelompok.');
+      return;
+    }
+
+    if (anggota.length === 0) {
+      alert('Mohon isi minimal 1 nama anggota.');
+      return;
+    }
+
+    const kelompokData = { nama: namaKelompok, anggota: anggota };
+    localStorage.setItem('kelompokData', JSON.stringify(kelompokData));
+
+    // Simpan solusi awal jika ada
+    const solusiAwal = document.getElementById('solusiAwalPertemuan3')?.value.trim();
+    if (solusiAwal) {
+      localStorage.setItem('solusiAwalPertemuan3', solusiAwal);
+    }
+
+    const feedback = document.getElementById('feedbackKelompok');
+    if (feedback) {
+      feedback.textContent = `✓ Kelompok "${namaKelompok}" berhasil disimpan dengan ${anggota.length} anggota!`;
+      feedback.style.display = 'block';
+    }
+
+    alert(`Data kelompok berhasil disimpan!\n\nKelompok: ${namaKelompok}\nJumlah Anggota: ${anggota.length}\n\nSiap melanjutkan ke tahap berikutnya!`);
+    show('simulasi-fungsi');
+  });
+
+  // === LOGIKA SIMULASI FUNGSI ===
+  let selectedNama = null;
+  let pasanganData = {}; // {nama: [goldar1, goldar2, ...]}
+  
+  const botFeedback = document.getElementById('botFeedback');
+  const botMessage = document.getElementById('botMessage');
+  const pasanganList = document.getElementById('pasanganList');
+  const discoverySection = document.getElementById('discoverySection');
+  const btnValidasiData = document.getElementById('btnValidasiData');
+
+  function showBot(message) {
+    if (botMessage && botFeedback) {
+      botMessage.textContent = message;
+      botFeedback.style.display = 'block';
+      setTimeout(() => {
+        botFeedback.style.display = 'none';
+      }, 8000);
+    }
+  }
+
+  function updatePasanganDisplay() {
+    if (!pasanganList) return;
+    
+    if (Object.keys(pasanganData).length === 0) {
+      pasanganList.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center">Belum ada pasangan. Mulai dengan klik nama dan golongan darah.</p>';
+      return;
+    }
+
+    let html = '';
+    for (let nama in pasanganData) {
+      const gol = pasanganData[nama];
+      const hasError = gol.length > 1;
+      const badgeClass = hasError ? 'pasangan-badge error' : 'pasangan-badge';
+      
+      gol.forEach(g => {
+        html += `<span class="${badgeClass}">${nama} → ${g}</span>`;
+      });
+    }
+    pasanganList.innerHTML = html;
+  }
+
+  // Event listener untuk nama siswa (khusus slide simulasi fungsi)
+  document.querySelectorAll('#namaList .nama-item').forEach(item => {
+    item.addEventListener('click', function() {
+      document.querySelectorAll('#namaList .nama-item').forEach(n => n.classList.remove('selected'));
+      this.classList.add('selected');
+      selectedNama = this.dataset.nama;
+    });
+  });
+
+  // Event listener untuk golongan darah (khusus slide simulasi fungsi)
+  document.querySelectorAll('#goldarList .goldar-item').forEach(item => {
+    item.addEventListener('click', function() {
+      if (!selectedNama) {
+        showBot('Pilih nama siswa terlebih dahulu ya! 😊');
+        return;
+      }
+
+      const goldar = this.dataset.goldar;
+      
+      // Inisialisasi array jika belum ada
+      if (!pasanganData[selectedNama]) {
+        pasanganData[selectedNama] = [];
+      }
+
+      // Cek apakah sudah ada pasangan yang sama
+      if (pasanganData[selectedNama].includes(goldar)) {
+        showBot(`${selectedNama} sudah dipasangkan dengan ${goldar}.`);
+        return;
+      }
+
+      // ✅ PERUBAHAN: HAPUS VALIDASI ANTI-CABANG
+      // Siswa DIIZINKAN membuat pasangan apapun, sesuai pemikirannya
+      // Tidak ada peringatan atau pembatasan di sini!
+
+      // Tambahkan pasangan
+      pasanganData[selectedNama].push(goldar);
+      updatePasanganDisplay();
+      
+      // Reset selection
+      document.querySelectorAll('#namaList .nama-item').forEach(n => n.classList.remove('selected'));
+      selectedNama = null;
+    });
+  });
+
+  // Tombol Selesai & Validasi → Mulai Analisis
+  document.getElementById('btnSelesai')?.addEventListener('click', () => {
+    const analysisSectionStart = document.getElementById('analysisSectionStart');
+    
+    // Cek apakah ada pasangan yang telah dibuat
+    if (Object.keys(pasanganData).length === 0) {
+      showBot('Kamu belum membuat pasangan apapun! Mulai dengan membuat pasangan nama dan golongan darah. 😊');
+      return;
+    }
+
+    // ✅ PERUBAHAN: Langsung tampilkan section analisis tanpa validasi ketat
+    // Siswa akan menganalisis data mereka sendiri dan menemukan masalahnya
+    if (analysisSectionStart) {
+      analysisSectionStart.style.display = 'block';
+      analysisSectionStart.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    showBot('Bagus! Sekarang amati pasangan yang telah kamu buat dan jawab pertanyaan-pertanyaan analisis di bawah. Kamu akan menemukan karakteristik fungsi sendiri! 🔍');
+  });
+
+  // Enable tombol validasi jika kesimpulan sudah diisi
+  document.getElementById('kesimpulanFungsi')?.addEventListener('input', function() {
+    if (this.value.trim().length >= 20 && btnValidasiData) {
+      btnValidasiData.disabled = false;
+      btnValidasiData.style.opacity = '1';
+      btnValidasiData.style.cursor = 'pointer';
+    }
+  });
+
+  // (Bagian C dihapus; tidak ada penyimpanan analisis awal di sini)
+
+  // ✅ Toggle tampil/sempunyi pertanyaan (Clue)
+  document.getElementById('toggleClueBtn')?.addEventListener('click', () => {
+    const clueEl = document.getElementById('clueContainer');
+    const btn = document.getElementById('toggleClueBtn');
+    if (!clueEl || !btn) return;
+    const willShow = clueEl.style.display === '' || clueEl.style.display === 'none';
+    clueEl.style.display = willShow ? 'block' : 'none';
+    btn.textContent = willShow ? '🔽 Sembunyikan Pertanyaan' : '📎 Lihat Pertanyaan (Clue)';
+  });
+
+  // ✅ Gating: Tampilkan BAGIAN B hanya setelah BAGIAN A dijawab
+  function checkBagianACompleted() {
+    const q1 = document.querySelector('input[name="q1Life"]:checked');
+    const q2 = document.querySelector('input[name="q2Life"]:checked');
+    const bagianB = document.getElementById('bagianBContainer');
+    if (!bagianB) return;
+    const completed = !!q1 && !!q2;
+    const wasHidden = bagianB.style.display === '' || bagianB.style.display === 'none';
+    bagianB.style.display = completed ? 'block' : 'none';
+    if (completed && wasHidden) {
+      showBot('Sip! Kamu sudah menjawab Bagian A. Sekarang baca penguatan di Bagian B.');
+      bagianB.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Dengarkan perubahan jawaban di Bagian A
+  document.querySelectorAll('input[name="q1Life"], input[name="q2Life"]').forEach(el => {
+    el.addEventListener('change', checkBagianACompleted);
+  });
+
+  // Inisialisasi status saat pertama kali masuk ke section analisis
+  checkBagianACompleted();
+
+  // Tombol Validasi Data
+  document.getElementById('btnValidasiData')?.addEventListener('click', () => {
+    const kesimpulan = document.getElementById('kesimpulanFungsi')?.value.trim();
+    const feedbackValidasi = document.getElementById('feedbackValidasi');
+    
+    if (!kesimpulan || kesimpulan.length < 20) {
+      if (feedbackValidasi) {
+        feedbackValidasi.textContent = '⚠️ Kesimpulan terlalu pendek. Jelaskan lebih detail!';
+        feedbackValidasi.style.color = 'var(--danger)';
+      }
+      return;
+    }
+
+    // Simpan data
+    const validasiData = {
+      pasangan: pasanganData,
+      kesimpulan: kesimpulan,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('validasiFungsi', JSON.stringify(validasiData));
+
+    if (feedbackValidasi) {
+      feedbackValidasi.textContent = '✅ Data tervalidasi! Kesimpulan Anda sangat baik!';
+      feedbackValidasi.style.color = 'var(--success)';
+    }
+
+    setTimeout(() => {
+      alert('Selamat! Anda telah berhasil memahami konsep fungsi.\n\nData telah tersimpan dan siap untuk tahap berikutnya.');
+    }, 500);
+  });
+
+  // === LOGIKA SIMPAN KESIMPULAN KELOMPOK ===
+  document.getElementById('btnSimpanKesimpulanKelompok')?.addEventListener('click', () => {
+    const alasan1 = document.getElementById('alasanKelompok1')?.value.trim();
+    const alasan2 = document.getElementById('alasanKelompok2')?.value.trim();
+    const alasan3 = document.getElementById('alasanKelompok3')?.value.trim();
+    const kesimpulan = document.getElementById('kesimpulanAnalisisKelompok')?.value.trim();
+    const feedbackEl = document.getElementById('feedbackKesimpulanKelompok');
+
+    // Validasi minimal input
+    if (!alasan1 || alasan1.length < 20) {
+      if (feedbackEl) {
+        feedbackEl.textContent = '⚠️ Alasan untuk Kelompok 1 terlalu pendek atau kosong!';
+        feedbackEl.style.color = 'var(--danger)';
+      }
+      return;
+    }
+
+    if (!alasan2 || alasan2.length < 20) {
+      if (feedbackEl) {
+        feedbackEl.textContent = '⚠️ Alasan untuk Kelompok 2 terlalu pendek atau kosong!';
+        feedbackEl.style.color = 'var(--danger)';
+      }
+      return;
+    }
+
+    if (!alasan3 || alasan3.length < 20) {
+      if (feedbackEl) {
+        feedbackEl.textContent = '⚠️ Alasan untuk Kelompok 3 terlalu pendek atau kosong!';
+        feedbackEl.style.color = 'var(--danger)';
+      }
+      return;
+    }
+
+    if (!kesimpulan || kesimpulan.length < 30) {
+      if (feedbackEl) {
+        feedbackEl.textContent = '⚠️ Kesimpulan akhir terlalu pendek. Jelaskan lebih detail!';
+        feedbackEl.style.color = 'var(--danger)';
+      }
+      return;
+    }
+
+    // Simpan data ke localStorage
+    const analisisKelompokData = {
+      kelompok1: { pernyataan: 'Andi, Budi, Citra', alasan: alasan1 },
+      kelompok2: { pernyataan: 'Dina, Eka, Fatur', alasan: alasan2 },
+      kelompok3: { pernyataan: 'Hendra, Gita, Citra', alasan: alasan3 },
+      kesimpulanAkhir: kesimpulan,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('analisisKelompok', JSON.stringify(analisisKelompokData));
+
+    // Tampilkan feedback sukses
+    if (feedbackEl) {
+      feedbackEl.textContent = '✅ Analisis Anda telah tersimpan! Luar biasa!';
+      feedbackEl.style.color = 'var(--success)';
+    }
+
+    // Tampilkan alert konfirmasi
+    setTimeout(() => {
+      alert('🎉 Selamat!\n\nAnalisis Anda sangat baik. Anda telah berhasil mengidentifikasi perbedaan antara relasi dan fungsi.\n\nData telah disimpan dan Anda dapat melanjutkan ke tahap berikutnya.');
+    }, 500);
+  });
+
+  // === LOGIKA SIMULATOR POPULASI ===
+  let simSelectedNama = null;
+  const simPairs = { Andi: [], Budi: [], Citra: [] };
+  const simPasanganEl = document.getElementById('sim-pasangan');
+  const simFeedbackEl = document.getElementById('sim-feedback');
+
+  function updateSimPasangan() {
+    if (!simPasanganEl) return;
+    const entries = Object.entries(simPairs).filter(([_, arr]) => Array.isArray(arr) && arr.length > 0);
+    if (entries.length === 0) {
+      simPasanganEl.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center">Belum ada pasangan. Klik nama lalu pilih A atau B.</p>';
+      return;
+    }
+    let html = '';
+    entries.forEach(([nama, arr]) => {
+      arr.forEach(goldar => {
+        html += `<span class="pasangan-badge">${nama} → ${goldar}</span>`;
+      });
+    });
+    simPasanganEl.innerHTML = html;
+  }
+
+  // Nama di simulator
+  document.querySelectorAll('#sim-nama .nama-item').forEach(item => {
+    item.addEventListener('click', function() {
+      document.querySelectorAll('#sim-nama .nama-item').forEach(n => n.classList.remove('selected'));
+      this.classList.add('selected');
+      simSelectedNama = this.getAttribute('data-sim-nama');
+    });
+  });
+
+  // Goldar di simulator
+  document.querySelectorAll('#sim-goldar .goldar-item').forEach(item => {
+    item.addEventListener('click', function() {
+      if (!simSelectedNama) {
+        if (simFeedbackEl) {
+          simFeedbackEl.textContent = 'Pilih nama siswa terlebih dahulu.';
+          simFeedbackEl.style.color = 'var(--danger)';
+        }
+        return;
+      }
+      const goldar = this.getAttribute('data-sim-goldar');
+      // Inisialisasi array jika perlu
+      if (!Array.isArray(simPairs[simSelectedNama])) {
+        simPairs[simSelectedNama] = [];
+      }
+      // Cegah duplikasi, tambahkan agar akumulatif (2 pilihan per nama)
+      if (!simPairs[simSelectedNama].includes(goldar)) {
+        simPairs[simSelectedNama].push(goldar);
+      }
+      updateSimPasangan();
+      document.querySelectorAll('#sim-nama .nama-item').forEach(n => n.classList.remove('selected'));
+      simSelectedNama = null;
+      if (simFeedbackEl) {
+        simFeedbackEl.textContent = 'Pasangan ditambahkan.';
+        simFeedbackEl.style.color = 'var(--success)';
+      }
+    });
+  });
+
+  // Reset simulator
+  document.getElementById('sim-reset')?.addEventListener('click', () => {
+    simPairs.Andi = []; simPairs.Budi = []; simPairs.Citra = [];
+    simSelectedNama = null;
+    updateSimPasangan();
+    document.querySelectorAll('#sim-nama .nama-item').forEach(n => n.classList.remove('selected'));
+    if (simFeedbackEl) {
+      simFeedbackEl.textContent = 'Simulator di-reset.';
+      simFeedbackEl.style.color = 'var(--muted)';
+    }
+  });
+
+  // Cek jawaban tantangan 4^5
+  document.getElementById('sim-cek')?.addEventListener('click', () => {
+    const inp = document.getElementById('sim-jawaban');
+    const val = (inp?.value || '').trim();
+    const isNumber = /^\d+$/.test(val);
+    if (!isNumber) {
+      if (simFeedbackEl) {
+        simFeedbackEl.textContent = 'Masukkan angka yang valid.';
+        simFeedbackEl.style.color = 'var(--danger)';
+      }
+      return;
+    }
+    if (parseInt(val, 10) === 1024) {
+      if (simFeedbackEl) {
+        simFeedbackEl.textContent = 'Luar biasa! Ternyata ada 1024 variasi data yang mungkin. Sekarang, pilih satu kombinasi yang paling sesuai untuk Diagram Kartesius!';
+        simFeedbackEl.style.color = 'var(--success)';
+      }
+    } else {
+      if (simFeedbackEl) {
+        simFeedbackEl.textContent = 'Belum tepat. Ingat, jumlah jenis golongan darah^jumlah siswa = 4^5.';
+        simFeedbackEl.style.color = 'var(--danger)';
+      }
+    }
+  });
+
+  // Inisialisasi tampilan simulator saat halaman dimuat
+  updateSimPasangan();
+
+  // === LOGIKA DIAGRAM KARTESIUS INTERAKTIF ===
+  const cartesianData = {}; // {nama: goldar}
+  const namaList = ['Andi', 'Budi', 'Citra', 'Dina', 'Eka', 'Fatur', 'Gita', 'Hendra'];
+  const goldarList = ['A', 'B', 'AB', 'O'];
+  const truthMapping = {
+    Andi: 'A',
+    Budi: 'A',
+    Citra: 'AB',
+    Dina: 'B',
+    Eka: 'B',
+    Fatur: 'O',
+    Gita: 'AB',
+    Hendra: 'B'
+  };
+
+  function renderCartesianPoints() {
+    const grid = document.getElementById('cartesianGrid');
+    if (!grid) return;
+    
+    grid.innerHTML = '';
+    // garis sumbu
+    const axisX = document.createElement('div');
+    axisX.className = 'axis-line axis-x';
+    const axisY = document.createElement('div');
+    axisY.className = 'axis-line axis-y';
+    grid.appendChild(axisX);
+    grid.appendChild(axisY);
+
+    // label kategori sumbu X (Nama)
+    namaList.forEach((nama, xIndex) => {
+      const xPos = ((xIndex + 1) / (namaList.length + 1)) * 100;
+      const tick = document.createElement('div');
+      tick.className = 'axis-tick-label x';
+      tick.textContent = nama;
+      tick.style.left = `${xPos}%`;
+      grid.appendChild(tick);
+    });
+
+    // label kategori sumbu Y (Golongan Darah)
+    goldarList.forEach((goldar, yIndex) => {
+      const yPos = 100 - ((yIndex + 1) / (goldarList.length + 1)) * 100;
+      const tick = document.createElement('div');
+      tick.className = 'axis-tick-label y';
+      tick.textContent = goldar;
+      tick.style.top = `${yPos}%`;
+      grid.appendChild(tick);
+    });
+    
+    namaList.forEach((nama, xIndex) => {
+      if (cartesianData[nama]) {
+        const goldar = cartesianData[nama];
+        const yIndex = goldarList.indexOf(goldar);
+        
+        const point = document.createElement('div');
+        point.className = 'data-point';
+        point.title = `${nama} → ${goldar}`;
+        
+        // Posisi titik (8 nama di x, 4 goldar di y)
+        const xPos = ((xIndex + 1) / (namaList.length + 1)) * 100;
+        const yPos = 100 - ((yIndex + 1) / (goldarList.length + 1)) * 100;
+        
+        point.style.left = `${xPos}%`;
+        point.style.top = `${yPos}%`;
+        
+        // Hapus titik saat diklik
+        point.addEventListener('click', () => {
+          delete cartesianData[nama];
+          renderCartesianPoints();
+          updateMessyData();
+        });
+        
+        grid.appendChild(point);
+
+        // label titik
+        const label = document.createElement('div');
+        label.className = 'data-point-label';
+        label.textContent = `(${nama}, ${goldar})`;
+        label.style.left = `${xPos}%`;
+        label.style.top = `${yPos}%`;
+        grid.appendChild(label);
+      }
+    });
+    
+    // trigger reflow untuk animasi pada elemen baru
+    grid.offsetHeight;
+  }
+
+  function checkWithTruth() {
+    const resultEl = document.getElementById('kunciResult');
+    const missing = namaList.filter(nama => !cartesianData[nama]);
+    if (missing.length) {
+      if (resultEl) {
+        resultEl.textContent = `⚠️ Masih ada yang kosong: ${missing.join(', ')}`;
+        resultEl.style.color = 'var(--danger)';
+      }
+      return;
+    }
+    const wrong = namaList.filter(nama => cartesianData[nama] !== truthMapping[nama]);
+    if (wrong.length === 0) {
+      if (resultEl) {
+        resultEl.textContent = '✅ Semua pasangan sesuai kunci! Keren!';
+        resultEl.style.color = 'var(--success)';
+      }
+    } else {
+      if (resultEl) {
+        resultEl.textContent = `❌ Masih ada yang berbeda: ${wrong.join(', ')}`;
+        resultEl.style.color = 'var(--danger)';
+      }
+    }
+  }
+
+  function updateMessyData() {
+    const messyDisplay = document.getElementById('messyDataDisplay');
+    if (!messyDisplay) return;
+    
+    const unplacedNames = namaList.filter(nama => !cartesianData[nama]);
+    
+    if (unplacedNames.length === 0) {
+      messyDisplay.innerHTML = `
+        <p style="color:var(--success);font-weight:700;font-size:16px">
+          ✅ Semua data sudah dipindahkan ke grid!
+        </p>
+      `;
+    } else {
+      let html = '';
+      unplacedNames.forEach((nama, i) => {
+        const rotations = [5, -8, 3, -5, 7, -3, 6, -7];
+        html += `<div class="messy-data-item" style="--rotation: ${rotations[i % 8]}deg;">${nama}: ?</div>`;
+      });
+      html += `<p style="margin-top:16px;color:var(--danger);font-weight:700;font-size:14px">⚠️ ${unplacedNames.length} data belum terorganisir!</p>`;
+      messyDisplay.innerHTML = html;
+    }
+  }
+
+  // Tambah titik manual
+  document.getElementById('btnAddPoint')?.addEventListener('click', () => {
+    const selectNama = document.getElementById('selectNama');
+    const selectGoldar = document.getElementById('selectGoldar');
+    
+    const nama = selectNama?.value;
+    const goldar = selectGoldar?.value;
+    
+    if (!nama || !goldar) {
+      alert('Pilih nama dan golongan darah terlebih dahulu!');
+      return;
+    }
+    
+    if (cartesianData[nama]) {
+      alert(`${nama} sudah memiliki golongan darah ${cartesianData[nama]}. Hapus dulu jika ingin mengubah.`);
+      return;
+    }
+    
+    cartesianData[nama] = goldar;
+    renderCartesianPoints();
+    updateMessyData();
+    
+    // Reset select
+    if (selectNama) selectNama.value = '';
+    if (selectGoldar) selectGoldar.value = '';
+  });
+
+  // Reset grid
+  document.getElementById('btnResetGrid')?.addEventListener('click', () => {
+    if (confirm('Yakin ingin mereset semua titik?')) {
+      Object.keys(cartesianData).forEach(key => delete cartesianData[key]);
+      renderCartesianPoints();
+      updateMessyData();
+      
+      // Reset semua section
+      const verificationBox = document.getElementById('verificationBox');
+      const predictorSection = document.getElementById('predictorSection');
+      const solutionSection = document.getElementById('solutionSection');
+      const organizedDataSection = document.getElementById('organizedDataSection');
+      const verificationResult = document.getElementById('verificationResult');
+      
+      if (verificationBox) verificationBox.className = 'verification-box';
+      if (predictorSection) predictorSection.style.display = 'none';
+      if (solutionSection) solutionSection.style.display = 'none';
+      if (organizedDataSection) organizedDataSection.style.display = 'none';
+      if (verificationResult) verificationResult.textContent = '';
+    }
+  });
+
+  // Verifikasi Fungsi
+  document.getElementById('btnVerifikasiFunc')?.addEventListener('click', () => {
+    const verificationBox = document.getElementById('verificationBox');
+    const verificationResult = document.getElementById('verificationResult');
+    const predictorSection = document.getElementById('predictorSection');
+    const evidenceSection = document.getElementById('evidenceSection');
+    const btnRevisi = document.getElementById('btnRevisi');
+    
+    // Validasi 1: Semua nama harus punya pasangan
+    const unplacedNames = namaList.filter(nama => !cartesianData[nama]);
+    if (unplacedNames.length > 0) {
+      if (verificationBox) verificationBox.className = 'verification-box error';
+      if (verificationResult) {
+        verificationResult.textContent = `❌ Gagal! Masih ada ${unplacedNames.length} siswa tanpa golongan darah: ${unplacedNames.join(', ')}`;
+        verificationResult.style.color = 'var(--danger)';
+      }
+      if (evidenceSection) evidenceSection.style.display = 'none';
+      if (btnRevisi) btnRevisi.style.display = 'none';
+      return;
+    }
+    
+    // Validasi 2: Tidak ada nama yang punya lebih dari 1 goldar (sudah dijamin oleh struktur data)
+    
+    // Sukses!
+    if (verificationBox) verificationBox.className = 'verification-box success';
+    if (verificationResult) {
+      verificationResult.innerHTML = `
+        ✅ <strong>VALID!</strong> Data memenuhi syarat fungsi:<br>
+        1️⃣ Setiap siswa memiliki golongan darah (tidak ada yang kosong)<br>
+        2️⃣ Setiap siswa hanya punya 1 golongan darah (tidak ada percabangan)
+      `;
+      verificationResult.style.color = 'var(--success)';
+    }
+    
+    // Tampilkan predictor section
+    if (predictorSection) {
+      predictorSection.style.display = 'block';
+      predictorSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Tampilkan evidence log & tombol revisi
+    if (evidenceSection) evidenceSection.style.display = 'block';
+    if (btnRevisi) btnRevisi.style.display = 'inline-block';
+  });
+
+  // Cek dengan kunci (clue)
+  document.getElementById('btnCekKunci')?.addEventListener('click', () => {
+    checkWithTruth();
+  });
+
+  // Reveal kunci jawaban
+  document.getElementById('btnRevealKunci')?.addEventListener('click', () => {
+    const table = document.getElementById('kunciTabel');
+    if (table) {
+      table.style.display = table.style.display === 'none' ? 'block' : 'none';
+    }
+  });
+
+  // Cek Prediksi
+  document.getElementById('btnCekPrediksi')?.addEventListener('click', () => {
+    const input = document.getElementById('inputPrediksi');
+    const result = document.getElementById('prediksiResult');
+    const solutionSection = document.getElementById('solutionSection');
+    
+    const value = input?.value.trim();
+    const correctAnswer = Math.pow(4, 8); // 4^8 = 65536
+    
+    if (!value || !/^\d+$/.test(value)) {
+      if (result) {
+        result.textContent = '⚠️ Masukkan angka yang valid!';
+        result.style.color = 'var(--danger)';
+      }
+      return;
+    }
+    
+    if (parseInt(value, 10) === correctAnswer) {
+      if (result) {
+        result.innerHTML = `✅ <strong>Benar!</strong> Ada ${correctAnswer.toLocaleString()} kemungkinan fungsi yang bisa terbentuk!`;
+        result.style.color = 'var(--success)';
+      }
+      
+      // Tampilkan solution section
+      if (solutionSection) {
+        solutionSection.style.display = 'block';
+        solutionSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    } else {
+      if (result) {
+        result.textContent = `❌ Belum tepat. Coba hitung lagi: 4^8 = ?`;
+        result.style.color = 'var(--danger)';
+      }
+    }
+  });
+
+  // Final Check
+  document.getElementById('btnFinalCheck')?.addEventListener('click', () => {
+    const inputKesimpulan = document.getElementById('inputKesimpulan');
+    const finalCheckResult = document.getElementById('finalCheckResult');
+    const organizedDataSection = document.getElementById('organizedDataSection');
+    const organizedTableBody = document.getElementById('organizedTableBody');
+    const messyDataDisplay = document.getElementById('messyDataDisplay');
+    
+    const kesimpulan = inputKesimpulan?.value.trim();
+    
+    if (!kesimpulan || kesimpulan.length < 30) {
+      if (finalCheckResult) {
+        finalCheckResult.textContent = '⚠️ Kesimpulan terlalu pendek! Jelaskan dengan lebih detail (minimal 30 karakter).';
+        finalCheckResult.style.color = 'var(--danger)';
+      }
+      return;
+    }
+    
+    // Simpan data
+    const finalData = {
+      cartesianData: cartesianData,
+      kesimpulan: kesimpulan,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('diagramKartesiusData', JSON.stringify(finalData));
+    
+    // Sukses!
+    if (finalCheckResult) {
+      finalCheckResult.innerHTML = '✅ <strong>Data tervalidasi!</strong> Kesimpulan Anda sangat baik!';
+      finalCheckResult.style.color = 'var(--success)';
+    }
+    
+    // Transformasi visual: Ubah data acak jadi tabel rapi
+    if (organizedTableBody) {
+      let tableHTML = '';
+      namaList.forEach(nama => {
+        if (cartesianData[nama]) {
+          tableHTML += `
+            <tr>
+              <td>${nama}</td>
+              <td>${cartesianData[nama]}</td>
+            </tr>
+          `;
+        }
+      });
+      organizedTableBody.innerHTML = tableHTML;
+    }
+    
+    // Update messy data jadi sukses
+    if (messyDataDisplay) {
+      messyDataDisplay.innerHTML = `
+        <div style="text-align:center">
+          <div style="font-size:64px;margin-bottom:12px">🎉</div>
+          <p style="color:var(--success);font-weight:700;font-size:18px;margin:0">
+            Data Berhasil Terorganisir!
+          </p>
+          <p style="color:var(--muted);font-size:14px;margin-top:8px">
+            Lihat tabel di bawah untuk hasil akhir
+          </p>
+        </div>
+      `;
+    }
+    
+    // Tampilkan tabel terorganisir
+    if (organizedDataSection) {
+      organizedDataSection.style.display = 'block';
+      organizedDataSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    // Alert final
+    setTimeout(() => {
+      alert('🎉 Selamat!\n\nAnda telah berhasil:\n✅ Merapikan data acak dengan Diagram Kartesius\n✅ Membuktikan data memenuhi syarat fungsi\n✅ Menghitung banyak fungsi yang mungkin\n✅ Menulis kesimpulan analisis\n\nData telah tersimpan!');
+    }, 800);
+  });
+
+  // Inisialisasi saat pertama load
+  renderCartesianPoints();
+  updateMessyData();
+
+  // === LOGIKA EVALUASI & REFLEKSI ===
+  const conceptData = [
+    { icon: '📌', title: 'Relasi', desc: 'Hubungan antara elemen dari dua himpunan. Satu elemen domain boleh berpasangan dengan banyak elemen kodomain.' },
+    { icon: '🎯', title: 'Fungsi', desc: 'Jenis relasi khusus di mana setiap elemen domain memiliki TEPAT SATU pasangan di kodomain. Tidak ada cabang, tidak ada kosong.' },
+    { icon: '🔄', title: 'Syarat Fungsi', desc: '1) Setiap domain harus punya pasangan. 2) Setiap domain hanya punya satu pasangan. Ini yang membedakan fungsi dari relasi biasa.' },
+    { icon: '📊', title: 'Diagram Kartesius', desc: 'Visualisasi relasi atau fungsi dengan titik-titik koordinat (x,y). Memudahkan identifikasi apakah itu fungsi (tidak ada tumpukan vertikal).' },
+    { icon: '🧮', title: 'Banyak Fungsi', desc: 'Rumus: n(Kodomain)^n(Domain). Contoh: 8 siswa dan 4 golongan darah = 4^8 = 65,536 kemungkinan fungsi berbeda.' }
+  ];
+
+  // Render concept gallery
+  const conceptGallery = document.getElementById('conceptGallery');
+  if (conceptGallery) {
+    conceptData.forEach((concept, index) => {
+      const card = document.createElement('div');
+      card.className = 'concept-card';
+      card.innerHTML = `
+        <div class="concept-card-header">
+          <div class="concept-card-icon">${concept.icon}</div>
+          <div>${concept.title}</div>
+        </div>
+        <div class="concept-card-content">${concept.desc}</div>
+      `;
+      card.addEventListener('click', function() {
+        this.classList.toggle('expanded');
+      });
+      conceptGallery.appendChild(card);
+    });
+  }
+
+  // Slider logic
+  const sliderBefore = document.getElementById('sliderBefore');
+  const sliderAfter = document.getElementById('sliderAfter');
+  const valueBefore = document.getElementById('valueBefore');
+  const valueAfter = document.getElementById('valueAfter');
+  const progressText = document.getElementById('progressText');
+
+  // Restore saved self-assessment if available
+  const savedSelf = JSON.parse(localStorage.getItem('selfAssessment') || '{}');
+  if (sliderBefore && savedSelf.before) sliderBefore.value = savedSelf.before;
+  if (sliderAfter && savedSelf.after) sliderAfter.value = savedSelf.after;
+
+  function updateProgress() {
+    const before = parseInt(sliderBefore?.value || 2);
+    const after = parseInt(sliderAfter?.value || 7);
+    const progress = after - before;
+    
+    if (valueBefore) valueBefore.textContent = before;
+    if (valueAfter) valueAfter.textContent = after;
+    if (progressText) {
+      progressText.textContent = progress >= 0 ? `+${progress}` : `${progress}`;
+      progressText.style.color = progress > 0 ? 'var(--success)' : 'var(--danger)';
+    }
+
+    // Persist self-assessment
+    localStorage.setItem('selfAssessment', JSON.stringify({ before, after }));
+  }
+
+  sliderBefore?.addEventListener('input', updateProgress);
+  sliderAfter?.addEventListener('input', updateProgress);
+  updateProgress();
+
+  // Reflection textarea
+  const reflectionText = document.getElementById('reflectionText');
+  const charCount = document.getElementById('charCount');
+
+  reflectionText?.addEventListener('input', function() {
+    const count = this.value.length;
+    if (charCount) charCount.textContent = count;
+    if (count > 300) {
+      this.value = this.value.substring(0, 300);
+      if (charCount) charCount.textContent = '300';
+    }
+  });
+
+  document.getElementById('btnSaveReflection')?.addEventListener('click', () => {
+    const prompt = document.getElementById('reflectionPrompt')?.value;
+    const text = reflectionText?.value.trim();
+    const feedback = document.getElementById('reflectionFeedback');
+
+    if (!prompt) {
+      if (feedback) {
+        feedback.textContent = '⚠️ Pilih pertanyaan dulu!';
+        feedback.style.color = 'var(--danger)';
+      }
+      return;
+    }
+
+    if (!text || text.length < 20) {
+      if (feedback) {
+        feedback.textContent = '⚠️ Jawaban terlalu pendek (minimal 20 karakter)!';
+        feedback.style.color = 'var(--danger)';
+      }
+      return;
+    }
+
+    const reflectionData = {
+      prompt: prompt,
+      answer: text,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('reflectionData', JSON.stringify(reflectionData));
+
+    if (feedback) {
+      feedback.textContent = '✅ Refleksi Anda telah disimpan!';
+      feedback.style.color = 'var(--success)';
+    }
+  });
+
+  // Challenge scenario
+  let selectedAnswer = null;
+  document.querySelectorAll('.challenge-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.challenge-btn').forEach(b => b.classList.remove('selected'));
+      this.classList.add('selected');
+      selectedAnswer = this.getAttribute('data-answer');
+      validateChallenge();
+      saveChallengeData();
+    });
+  });
+
+  // Validate challenge answer
+  function validateChallenge() {
+    const feedback = document.getElementById('challengeFeedback');
+    if (!selectedAnswer) {
+      if (feedback) {
+        feedback.textContent = '⚠️ Pilih jawaban dulu!';
+        feedback.className = 'challenge-feedback';
+        feedback.style.color = 'var(--danger)';
+      }
+      return;
+    }
+
+    // Jawaban benar: Ya (itu Fungsi)
+    const isCorrect = selectedAnswer === 'ya';
+    if (feedback) {
+      if (isCorrect) {
+        feedback.textContent = '✅ BENAR! Menu & Harga = Fungsi karena setiap menu memiliki SATU harga tertentu. Tidak ada menu dengan dua harga berbeda.';
+        feedback.className = 'challenge-feedback correct';
+      } else {
+        feedback.textContent = '❌ Belum tepat. Pikirkan: Apakah menu bisa punya dua harga berbeda? Jika tidak, maka itu adalah fungsi!';
+        feedback.className = 'challenge-feedback incorrect';
+      }
+    }
+  }
+
+  // Tombol validasi challenge (bisa ditambah jika ada button)
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.challenge-scenario')) {
+      // Optional: validate on click dalam scenario
+    }
+  });
+
+  // Challenge explanation auto-save
+  document.getElementById('challengeExplanation')?.addEventListener('blur', function() {
+    saveChallengeData();
+  });
+
+  function saveChallengeData() {
+    const explanation = document.getElementById('challengeExplanation')?.value.trim() || '';
+    if (!selectedAnswer && !explanation) return;
+    const challengeData = {
+      answer: selectedAnswer,
+      explanation: explanation,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('challengeData', JSON.stringify(challengeData));
+  }
+
+  // Hipotesis awal
+  const hipotesisInput = document.getElementById('inputHipotesis');
+  const hipotesisStatus = document.getElementById('hipotesisStatus');
+  const savedHypo = localStorage.getItem('hipotesisAwal');
+  if (hipotesisInput && savedHypo) {
+    hipotesisInput.value = savedHypo;
+    if (hipotesisStatus) hipotesisStatus.textContent = 'Tersimpan sebelumnya.';
+  }
+  document.getElementById('btnSaveHipotesis')?.addEventListener('click', () => {
+    const val = hipotesisInput?.value.trim();
+    if (!val) {
+      if (hipotesisStatus) hipotesisStatus.textContent = '⚠️ Hipotesis kosong.';
+      return;
+    }
+    localStorage.setItem('hipotesisAwal', val);
+    if (hipotesisStatus) hipotesisStatus.textContent = '✅ Hipotesis disimpan.';
+  });
+
+  // Evidence log
+  const evP = document.getElementById('evPernyataan');
+  const evB = document.getElementById('evBukti');
+  const evK = document.getElementById('evKesimpulan');
+  const evFeedback = document.getElementById('evidenceFeedback');
+  const savedEv = JSON.parse(localStorage.getItem('evidenceLog') || '{}');
+  if (evP && savedEv.pernyataan) evP.value = savedEv.pernyataan;
+  if (evB && savedEv.bukti) evB.value = savedEv.bukti;
+  if (evK && savedEv.kesimpulan) evK.value = savedEv.kesimpulan;
+
+  document.getElementById('btnSaveEvidence')?.addEventListener('click', () => {
+    const data = {
+      pernyataan: evP?.value.trim() || '',
+      bukti: evB?.value.trim() || '',
+      kesimpulan: evK?.value.trim() || ''
+    };
+    localStorage.setItem('evidenceLog', JSON.stringify(data));
+    if (evFeedback) {
+      evFeedback.textContent = '✅ Catatan bukti disimpan.';
+      evFeedback.style.color = 'var(--success)';
+    }
+  });
+
+  // Revisi button
+  const btnRevisi = document.getElementById('btnRevisi');
+  btnRevisi?.addEventListener('click', () => {
+    const verificationBox = document.getElementById('verificationBox');
+    const predictorSection = document.getElementById('predictorSection');
+    const solutionSection = document.getElementById('solutionSection');
+    const organizedDataSection = document.getElementById('organizedDataSection');
+    const evidenceSection = document.getElementById('evidenceSection');
+    const verificationResult = document.getElementById('verificationResult');
+    if (verificationBox) verificationBox.className = 'verification-box';
+    if (predictorSection) predictorSection.style.display = 'none';
+    if (solutionSection) solutionSection.style.display = 'none';
+    if (organizedDataSection) organizedDataSection.style.display = 'none';
+    if (evidenceSection) evidenceSection.style.display = 'none';
+    if (verificationResult) verificationResult.textContent = '';
+  });
+
+  // Alt challenge save
+  document.getElementById('btnSaveAltChallenge')?.addEventListener('click', () => {
+    const ans = document.getElementById('altChallengeAnswer')?.value.trim();
+    const fb = document.getElementById('altChallengeFeedback');
+    if (!ans) {
+      if (fb) { fb.textContent = '⚠️ Jawaban kosong.'; fb.style.color = 'var(--danger)'; }
+      return;
+    }
+    localStorage.setItem('altChallenge', ans);
+    if (fb) { fb.textContent = '✅ Disimpan!'; fb.style.color = 'var(--success)'; }
+  });
+
+  // Restore alt challenge answer if exists
+  const savedAlt = localStorage.getItem('altChallenge');
+  if (savedAlt && document.getElementById('altChallengeAnswer')) {
+    document.getElementById('altChallengeAnswer').value = savedAlt;
+  }
+
+  // Guru checkpoint
+  const guruStatusText = document.getElementById('guruStatusText');
+  const savedGuru = localStorage.getItem('guruCheckpoint');
+  if (guruStatusText && savedGuru) guruStatusText.textContent = `Status: ${savedGuru}`;
+  document.getElementById('btnGuruPending')?.addEventListener('click', () => {
+    localStorage.setItem('guruCheckpoint', 'Pending');
+    if (guruStatusText) guruStatusText.textContent = 'Status: Pending';
+  });
+  document.getElementById('btnGuruApproved')?.addEventListener('click', () => {
+    localStorage.setItem('guruCheckpoint', 'Disetujui');
+    if (guruStatusText) guruStatusText.textContent = 'Status: Disetujui ✅';
+  });
+
+  // === PDF GENERATION ===
+  function generatePdfContent() {
+    const kelompok = JSON.parse(localStorage.getItem('kelompokData') || '{"nama":"Kelompok Tanpa Nama","anggota":[]}');
+    const diagram = JSON.parse(localStorage.getItem('diagramKartesiusData') || '{"cartesianData":{}}');
+    const reflection = JSON.parse(localStorage.getItem('reflectionData') || '{}');
+    const challenge = JSON.parse(localStorage.getItem('challengeData') || '{}');
+    const hipotesis = localStorage.getItem('hipotesisAwal') || '-';
+    const evidence = JSON.parse(localStorage.getItem('evidenceLog') || '{}');
+    const altChallenge = localStorage.getItem('altChallenge') || '';
+    const guruCheckpoint = localStorage.getItem('guruCheckpoint') || 'Belum ada';
+    const selfAssessment = JSON.parse(localStorage.getItem('selfAssessment') || '{"before":2,"after":8}');
+
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+
+    const namaList = ['Andi', 'Budi', 'Citra', 'Dina', 'Eka', 'Fatur', 'Gita', 'Hendra'];
+    const totalFilled = namaList.filter(n => diagram.cartesianData && diagram.cartesianData[n]).length;
+    const statusLabel = totalFilled === namaList.length
+      ? 'Data valid sebagai Fungsi'
+      : `Perlu dicek: ${namaList.length - totalFilled} nama belum terisi`;
+    
+    let html = `
+      <div class="pdf-cover">
+        <h1>📚 LAPORAN PEMBELAJARAN</h1>
+        <h2>Relasi & Fungsi</h2>
+        <p style="font-size:14px;margin-top:30px"><strong>Kelompok:</strong> ${kelompok.nama}</p>
+        <p style="font-size:14px"><strong>Tanggal:</strong> ${dateStr}</p>
+      </div>
+
+      <div class="pdf-section">
+        <h2>📋 Data Kelompok</h2>
+        <div class="pdf-data">
+          <strong>Nama Kelompok:</strong> ${kelompok.nama}<br>
+          <strong>Anggota:</strong> ${kelompok.anggota.join(', ')}<br>
+          <strong>Jumlah Anggota:</strong> ${kelompok.anggota.length} orang
+        </div>
+      </div>
+
+      <div class="pdf-section">
+        <h2>🎯 Perjalanan Belajar</h2>
+        <ul class="pdf-timeline">
+          <li>✅ <strong>Fase 1:</strong> Orientasi Permasalahan - Memahami konteks & permasalahan awal</li>
+          <li>✅ <strong>Fase 2:</strong> Simulasi Fungsi - Analisis karakteristik fungsi</li>
+          <li>✅ <strong>Fase 3:</strong> Skenario Populasi - Menghitung banyak fungsi</li>
+          <li>✅ <strong>Fase 4:</strong> Diagram Kartesius - Membuat & memverifikasi fungsi</li>
+          <li>✅ <strong>Fase 5:</strong> Evaluasi & Refleksi - Refleksi pembelajaran</li>
+        </ul>
+      </div>
+
+      <div class="pdf-section">
+        <h2>📊 Hasil Diagram Kartesius</h2>
+        <p><strong>Data Siswa & Golongan Darah yang Disusun:</strong></p>
+        <table class="pdf-table">
+          <thead>
+            <tr>
+              <th>Nama Siswa</th>
+              <th>Golongan Darah</th>
+            </tr>
+          </thead>
+          <tbody>
+    `;
+
+    // Add cartesian data rows
+    namaList.forEach(nama => {
+      const gol = diagram.cartesianData[nama] || '-';
+      html += `<tr><td>${nama}</td><td>${gol}</td></tr>`;
+    });
+
+    html += `
+          </tbody>
+        </table>
+        <div class="pdf-data">
+          <strong>Status:</strong> ${statusLabel}<br>
+          <strong>Catatan:</strong> Isi lengkap 8/8 nama agar sah sebagai fungsi.
+        </div>
+      </div>
+
+      <div class="pdf-section">
+        <h2>🎯 Challenge Scenario</h2>
+        <h3>Scenario: Restoran "Cita Rasa"</h3>
+        <p>Pertanyaan: Apakah relasi antara Menu dan Harga adalah Fungsi?</p>
+        <div class="pdf-data">
+          <strong>Jawaban Siswa:</strong> ${challenge.answer === 'ya' ? 'Ya, itu Fungsi' : challenge.answer === 'bukan' ? 'Bukan, itu Relasi Biasa' : 'Tidak Tahu'}<br>
+          <strong>Penjelasan:</strong> ${challenge.explanation || '(Tidak ada penjelasan)'}<br>
+          <strong>Hasil:</strong> ${challenge.answer === 'ya' ? '✅ BENAR' : '❌ Belum Tepat'}
+        </div>
+      </div>
+
+      <div class="pdf-section">
+        <h2>✍️ Refleksi Pembelajaran</h2>
+        <p><strong>Pertanyaan:</strong> ${reflection.prompt ? reflection.prompt.replace('sulit', 'Apa yang paling sulit dalam pembelajaran ini?').replace('strategi', 'Bagaimana strategimu mengatasi kesulitan tersebut?').replace('aplikasi', 'Bagaimana fungsi digunakan dalam kehidupan nyata?').replace('bangga', 'Apa yang paling membuatmu bangga dari pembelajaran ini?') : '-'}</p>
+        <div class="pdf-data">
+          <p style="margin:0;font-style:italic">"${reflection.answer || '(Tidak ada refleksi)'}"</p>
+        </div>
+      </div>
+
+      <div class="pdf-section">
+        <h2>📈 Self-Assessment: Tingkat Pemahaman</h2>
+        <div class="pdf-data">
+          <strong>Sebelum Pembelajaran:</strong> ${selfAssessment.before || 2}/10 ⬅️ Progress ➡️ <strong>Sesudah Pembelajaran:</strong> ${selfAssessment.after || 8}/10<br>
+          <strong>Peningkatan:</strong> ${((selfAssessment.after || 8) - (selfAssessment.before || 2)) >= 0 ? '+' : ''}${(selfAssessment.after || 8) - (selfAssessment.before || 2)} poin 📊
+        </div>
+      </div>
+
+      <div class="pdf-section">
+        <h2>🧠 Hipotesis Awal</h2>
+        <div class="pdf-data">${hipotesis || '-'}</div>
+      </div>
+
+      <div class="pdf-section">
+        <h2>📑 Catatan Bukti</h2>
+        <table class="pdf-table">
+          <thead><tr><th>Pernyataan</th><th>Bukti</th><th>Kesimpulan</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>${evidence.pernyataan || '-'}</td>
+              <td>${evidence.bukti || '-'}</td>
+              <td>${evidence.kesimpulan || '-'}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pdf-section">
+        <h2>🔁 Tantangan Transfer Konsep</h2>
+        <div class="pdf-data">${altChallenge || '(Belum diisi)'}</div>
+      </div>
+
+      <div class="pdf-section">
+        <h2>🧭 Checkpoint Guru</h2>
+        <div class="pdf-data">Status: ${guruCheckpoint}</div>
+      </div>
+
+      <div class="pdf-section">
+        <div class="pdf-badge">
+          <div style="font-size:48px">🎓</div>
+          <h3 style="color:#3e2723;margin:10px 0">AHLI FUNGSI</h3>
+          <p style="color:#6b4b3a;margin:10px 0">Kamu telah menguasai semua kompetensi!</p>
+          <div style="text-align:left;display:inline-block;font-size:13px;">
+            <p style="margin:6px 0">✅ Mengidentifikasi Relasi & Fungsi</p>
+            <p style="margin:6px 0">✅ Membuat Diagram Kartesius</p>
+            <p style="margin:6px 0">✅ Menghitung Banyak Fungsi (4<sup>8</sup> = 65,536)</p>
+            <p style="margin:6px 0">✅ Analisis Kritis & Reasoning</p>
+            <p style="margin:6px 0">✅ Refleksi Pembelajaran</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdf-section">
+        <h2>🚀 Langkah Selanjutnya</h2>
+        <p>Selamat! Anda telah menyelesaikan modul Relasi & Fungsi. Topik berikutnya akan membahas <strong>Pemetaan (Mapping) & Komposisi Fungsi</strong>. Bersiaplah untuk mempelajari bagaimana menggabungkan dua fungsi untuk membuat fungsi baru yang lebih kompleks!</p>
+      </div>
+
+      <div class="pdf-footer">
+        <p>📅 Laporan ini dibuat pada ${dateStr}</p>
+        <p>© 2025 Media Pembelajaran Relasi & Fungsi | Skripsi Melani Sintawati</p>
+      </div>
+    `;
+
+    return html;
+  }
+
+  function closePdfPreview() {
+    const container = document.getElementById('pdfContainer');
+    if (container) {
+      container.classList.remove('visible');
+    }
+  }
+
+  // Download PDF Button
+  document.getElementById('btnDownloadPDF')?.addEventListener('click', () => {
+    const kelompok = JSON.parse(localStorage.getItem('kelompokData') || '{"nama":"Kelompok_Tanpa_Nama"}');
+    const htmlContent = generatePdfContent();
+    
+    // Display preview
+    const pdfContainer = document.getElementById('pdfContainer');
+    const pdfContent = document.getElementById('pdfContent');
+    if (pdfContent) pdfContent.innerHTML = htmlContent;
+    if (pdfContainer) pdfContainer.classList.add('visible');
+
+    // Generate PDF
+    const element = document.getElementById('pdfContent');
+    const opt = {
+      margin: 10,
+      filename: `Laporan_Relasi_Fungsi_${kelompok.nama}_${new Date().toISOString().split('T')[0]}.pdf`,
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+    };
+
+    // Auto-download setelah delay
+    setTimeout(() => {
+      html2pdf().set(opt).from(element).save();
+    }, 500);
+  });
+
+  // Complete learning
+  document.getElementById('btnCompleteLearning')?.addEventListener('click', () => {
+    const completionMsg = document.getElementById('completionMessage');
+    const hasReflection = localStorage.getItem('reflectionData');
+    const hasDiagram = localStorage.getItem('diagramKartesiusData');
+
+    if (!hasReflection) {
+      alert('⚠️ Mohon isi jurnal refleksi sebelum menyelesaikan pembelajaran!');
+      return;
+    }
+
+    const completionData = {
+      completedAt: new Date().toISOString(),
+      hasReflection: !!hasReflection,
+      hasDiagram: !!hasDiagram,
+      reflection: hasReflection ? JSON.parse(hasReflection) : null,
+      diagram: hasDiagram ? JSON.parse(hasDiagram) : null
+    };
+    localStorage.setItem('completionData', JSON.stringify(completionData));
+
+    if (completionMsg) {
+      completionMsg.innerHTML = `
+        <div style="animation: fadeIn 0.8s ease-out">
+          <div style="font-size:64px;margin-bottom:12px">🎉</div>
+          <div style="font-size:20px;color:var(--success);margin-bottom:8px">SELAMAT!</div>
+          <div style="color:var(--muted);line-height:1.8">
+            Anda telah menyelesaikan pembelajaran Relasi & Fungsi!<br>
+            Data telah tersimpan dan siap dievaluasi oleh guru.<br>
+            <strong style="color:var(--accent)">Sampai jumpa di materi berikutnya! 🚀</strong>
+          </div>
+        </div>
+      `;
+    }
+
+    alert('🎓 Pembelajaran selesai! Semua data telah tersimpan.\n\nSilakan tunggu instruksi dari guru untuk materi selanjutnya.');
+  });
+});
+;
+
+// Fungsi hapus anggota
+function removeAnggota(btn) {
+  const container = document.getElementById('anggotaContainer');
+  if(!container) return;
+  if (container.querySelectorAll('.anggota-input').length <= 1) {
+    alert('Minimal ada 1 anggota.');
+    return;
+  }
+  btn.parentElement.remove();
+}
+
+// Screenshot-based PDF generation
+window.generatePDFReport = async function(){
+  const { jsPDF } = window.jspdf;
+  if(!jsPDF) throw new Error('jsPDF library belum dimuat');
+  
+  const namaKelompok = document.getElementById('namaKelompok')?.value || 'Kelompok';
+  console.log('🎬 Mulai screenshot semua slide...');
+  
+  try {
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgWidth = 210;
+    const pageHeight = 297;
+    let pageCount = 0;
+    
+    const slides = document.querySelectorAll('.slide');
+    console.log('📄 Total slides ditemukan:', slides.length);
+    
+    for (let i = 0; i < slides.length; i++) {
+      const slide = slides[i];
+      slide.style.display = 'block';
+      slide.classList.add('active');
+      
+      await new Promise(r => setTimeout(r, 150));
+      
+      try {
+        const canvas = await html2canvas(slide, {
+          scale: 4,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          windowHeight: slide.scrollHeight,
+          imageTimeout: 8000,
+          removeContainer: true,
+          proxy: null
+        });
+        
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i+1];
+          const b = data[i+2];
+          const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+          
+          if (lum < 0.7) {
+            data[i] = Math.max(0, r - 40);
+            data[i+1] = Math.max(0, g - 40);
+            data[i+2] = Math.max(0, b - 40);
+          } else {
+            data[i] = Math.min(255, r + 15);
+            data[i+1] = Math.min(255, g + 15);
+            data[i+2] = Math.min(255, b + 15);
+          }
+        }
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i+1];
+          const b = data[i+2];
+          const max = Math.max(r, g, b);
+          const min = Math.min(r, g, b);
+          const l = (max + min) / 2;
+          
+          if (max !== min) {
+            let s = l > 128 ? (max - min) / (510 - max - min) : (max - min) / (max + min);
+            s = Math.min(1, s * 1.4);
+            
+            const h = max === r ? (((g - b) / (max - min)) % 6) / 6 :
+                      max === g ? ((b - r) / (max - min) + 2) / 6 :
+                      ((r - g) / (max - min) + 4) / 6;
+            
+            const c = (1 - Math.abs(2 * l / 255 - 1)) * s * 255;
+            const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+            const m = l / 2 - c / 2;
+            
+            let nr = 0, ng = 0, nb = 0;
+            if (h < 1/6) { nr = c; ng = x; }
+            else if (h < 2/6) { nr = x; ng = c; }
+            else if (h < 3/6) { ng = c; nb = x; }
+            else if (h < 4/6) { ng = x; nb = c; }
+            else if (h < 5/6) { nr = x; nb = c; }
+            else { nr = c; nb = x; }
+            
+            data[i] = Math.round((nr + m) * 1.1);
+            data[i+1] = Math.round((ng + m) * 1.1);
+            data[i+2] = Math.round((nb + m) * 1.1);
+          }
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+        
+        const slideHeight = (canvas.height * imgWidth) / canvas.width;
+        const scaleToFit = pageHeight / slideHeight;
+        
+        let finalWidth = imgWidth;
+        let finalHeight = slideHeight;
+        
+        if (slideHeight > pageHeight - 5) {
+          finalWidth = imgWidth * scaleToFit;
+          finalHeight = slideHeight * scaleToFit;
+        }
+        
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        
+        if (pageCount > 0) {
+          pdf.addPage();
+        }
+        
+        const xPos = (imgWidth - finalWidth) / 2;
+        const yPos = (pageHeight - finalHeight) / 2;
+        
+        pdf.addImage(imgData, 'JPEG', xPos, yPos, finalWidth, finalHeight);
+        pageCount++;
+        
+        console.log(`✅ Slide ${i + 1}/${slides.length} → Halaman ${pageCount}`);
+      } catch(slideErr) {
+        console.warn(`⚠️ Slide ${i + 1} error:`, slideErr.message);
+      }
+      
+      slide.style.display = 'none';
+      slide.classList.remove('active');
+    }
+    
+    const filename = `Hasil_Pertemuan_${namaKelompok.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+    pdf.save(filename);
+    console.log('✅ PDF berhasil dibuat:', filename, `(${pageCount} halaman)`);
+    return filename;
+  } catch(err) {
+    console.error('❌ Error saat screenshot:', err);
+    throw err;
+  }
+};
+
+// ======== FASE 4: PENYAJIAN HASIL KARYA (GALLERY WALK) ========
+const btnSimpanPenyajian = document.getElementById('btnSimpanPenyajian');
+const btnKirimKomentar = document.getElementById('btnKirimKomentar');
+const feedbackPenyajian = document.getElementById('feedbackPenyajian');
+const komentarList = document.getElementById('komentarList');
+
+// Load komentar dari localStorage
+let daftarKomentarGlobal = JSON.parse(localStorage.getItem('komentarPeerReview') || '[]');
+
+function tampilkanKomentar() {
+  if (daftarKomentarGlobal.length === 0) {
+    komentarList.innerHTML = '<p style="color:var(--muted);font-style:italic">Belum ada komentar. Jadilah yang pertama!</p>';
+    return;
+  }
+  
+  komentarList.innerHTML = daftarKomentarGlobal.map((k, idx) => `
+    <div class="komentar-item">
+      <div class="komentar-header">
+        <span class="komentar-kelompok">👥 ${k.kelompok}</span>
+        <span class="komentar-waktu">${k.waktu}</span>
+      </div>
+      <div class="komentar-isi">${k.komentar}</div>
+    </div>
+  `).join('');
+}
+
+// Simpan pilihan penyajian
+btnSimpanPenyajian?.addEventListener('click', () => {
+  const bentukPenyajian = document.querySelector('input[name="bentukPenyajian"]:checked')?.value;
+  const deskripsi = document.getElementById('deskripsiPenyajian')?.value.trim();
+  
+  if (!deskripsi || deskripsi.length < 20) {
+    feedbackPenyajian.innerHTML = '<div class="feedback-box warning">⚠️ Jelaskan dulu mengapa memilih bentuk penyajian ini (minimal 20 karakter)!</div>';
+    return;
+  }
+  
+  const penyajian = {
+    bentuk: bentukPenyajian,
+    deskripsi: deskripsi,
+    timestamp: new Date().toLocaleString('id-ID')
+  };
+  
+  localStorage.setItem('penyajianKelompok', JSON.stringify(penyajian));
+  
+  feedbackPenyajian.innerHTML = `
+    <div class="feedback-box success">
+      ✅ Penyajian tersimpan! Kelompokmu memilih: <strong>${bentukPenyajian}</strong>
+      <br><small>Sekarang kelompok lain bisa memberikan komentar di Gallery Walk!</small>
+    </div>
+  `;
+});
+
+// Kirim komentar
+btnKirimKomentar?.addEventListener('click', () => {
+  const namaKelompok = document.getElementById('namaKelompokKomentar')?.value.trim();
+  const komentar = document.getElementById('komentarPeerReview')?.value.trim();
+  
+  if (!namaKelompok) {
+    alert('⚠️ Tulis nama kelompokmu dulu!');
+    return;
+  }
+  
+  if (!komentar || komentar.length < 15) {
+    alert('⚠️ Komentar terlalu singkat! Berikan saran yang membangun (minimal 15 karakter)');
+    return;
+  }
+  
+  const komentarBaru = {
+    kelompok: namaKelompok,
+    komentar: komentar,
+    waktu: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+  };
+  
+  daftarKomentarGlobal.push(komentarBaru);
+  localStorage.setItem('komentarPeerReview', JSON.stringify(daftarKomentarGlobal));
+  
+  // Reset input
+  document.getElementById('komentarPeerReview').value = '';
+  
+  // Tampilkan komentar
+  tampilkanKomentar();
+  
+  // Notifikasi sukses
+  alert(`✅ Komentar dari "${namaKelompok}" berhasil dikirim!`);
+});
+
+// Load komentar saat halaman dibuka
+if (komentarList) {
+  tampilkanKomentar();
+}
+
+</script>
+
+<!-- Google Form Helper Script -->
+<script src="google-form-helper.js"></script>
+
+</body>
+</html>

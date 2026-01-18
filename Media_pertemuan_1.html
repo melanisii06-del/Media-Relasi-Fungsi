@@ -1,0 +1,3404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Media Pembelajaran — Relasi &amp; Fungsi (Menu)</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#ffcb64;--panel:#fff3d9;--accent:#3e2723;--muted:#6b4b3a;--success:#2e7d32;--danger:#c62828;--warning:#fbc02d}
+html,body{height:100%;margin:0;font-family:'Bagel Fat One',cursive;background:var(--bg);color:var(--accent)}
+.wrapper{min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:28px;box-sizing:border-box}
+.card{width:100%;max-width:1100px;background:linear-gradient(180deg,var(--panel),#fff7e6);border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.12);overflow:auto;position:relative}
+.header{text-align:center;padding:18px;display:block}
+.slide:not(#start):not(#menu):not(#permasalahan-gambar):not(#identitas-kelompok) ~ .header{display:none}
+h1{font-size:28px;margin:0 !important;color:var(--accent)}
+.lead{color:rgba(0,0,0,0.6);margin:0 !important}
+.slides{padding:20px}.slide{display:none}.slide.active{display:block}
+#slides-t2{width:100% !important;position:relative !important;min-height:auto !important;background:#fff !important;padding:20px 18px 18px 18px !important;border-radius:0 0 12px 12px !important;box-shadow:0 6px 18px rgba(0,0,0,0.04) !important;margin:0 !important}
+#slides-t2 .slide{display:none;width:100%;padding:0;box-sizing:border-box}#slides-t2 .slide.active{display:block}
+.btn{background:var(--accent);color:white;border:none;padding:10px 14px;border-radius:12px;cursor:pointer;font-size:15px;transition:all 0.2s ease;user-select:none}
+.btn:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
+.btn:active{transform:translateY(0);box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.menu-grid{display:flex;gap:18px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.menu-card{width:260px;height:80px;border-radius:12px;background:linear-gradient(180deg,#fff,#fff6e6);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,0.06);cursor:pointer;border:2px solid rgba(0,0,0,0.04);font-size:15px;color:var(--muted);padding:8px;text-align:center}
+.menu-card:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(0,0,0,0.1)}
+.center{display:flex;flex-direction:column;align-items:center;gap:12px;padding:100px 20px}
+.nav{display:flex;justify-content:center;gap:12px;margin-top:18px}
+.footer{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-top:1px solid rgba(0,0,0,0.04)}
+.progress{font-size:14px;color:var(--muted)}
+.small{font-size:13px;color:#444}
+
+/* TAHAP 1 */
+.container{min-height:100vh;display:flex;align-items:flex-start;justify-content:flex-start;padding:0;width:100%}
+.panel{background:#fff;padding:16px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+.row{display:flex;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.left{flex:1;min-width:320px}.right{width:360px}
+.kartu{background:linear-gradient(180deg,#fff8e6,#fff3d9);padding:10px;border-radius:10px;border:2px dashed rgba(0,0,0,0.04)}
+.kartu .title{font-size:15px;color:var(--accent);margin-bottom:6px}
+.kartu .meta{font-size:13px;color:var(--muted)}
+.grid{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.card-item{width:160px;height:auto;border-radius:10px;background:#fff;padding:8px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,0.06);cursor:grab;font-size:14px;text-align:center;user-select:none;-webkit-user-drag:element}
+.card-item.selected{outline:3px solid #4caf50;box-shadow:0 8px 16px rgba(76,175,80,0.18);transform:translateY(-2px)}
+.dropzone{min-height:60px;border-radius:10px;border:3px dashed rgba(0,0,0,0.06);background:#fff;padding:12px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;pointer-events:auto;position:relative}
+.dropzone .small{pointer-events:none;user-select:none;position:relative;z-index:-1}
+.dropzone .card-item{pointer-events:auto;position:relative;z-index:1}
+#quizZoneYes{min-height:150px;background:#e8f5e9;border:4px dashed #4caf50;padding:12px;border-radius:8px;transition:all 0.3s}
+#quizZoneNo{min-height:150px;background:#ffebee;border:4px dashed #c62828;padding:12px;border-radius:8px;transition:all 0.3s}
+#quizZoneYes:hover,#quizZoneNo:hover{transform:scale(1.02);box-shadow:0 4px 8px rgba(0,0,0,0.15)}
+.dropzone.correct{border-color:var(--success);box-shadow:0 10px 20px rgba(46,125,50,0.06)}
+.dropzone.wrong{border-color:var(--danger);box-shadow:0 10px 20px rgba(183,28,28,0.06);animation:shake .4s}
+.feedback{margin-top:12px;min-height:40px;display:none;align-items:center;justify-content:center;font-weight:bold}
+.feedback.ok{color:var(--success)}.feedback.no{color:var(--danger)}.feedback.err{color:var(--danger)}
+.tiny{font-size:12px;color:#666;margin-top:8px}
+.tips{background:#fff8f0;padding:10px;border-radius:10px;border:2px dashed #ffd199;margin-top:12px}
+.mission{background:linear-gradient(90deg,#fff8e6,#fff3d9);padding:12px;border-radius:10px;border:2px dashed rgba(0,0,0,0.04);margin-bottom:10px}
+.row-between{display:flex;justify-content:space-between;align-items:center}
+.bonus{margin-top:10px;display:flex;gap:8px;align-items:center}
+.input{padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);width:160px}
+.modal{position:fixed;left:0;top:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.35);z-index:999;opacity:0;pointer-events:none;transition:all .18s}
+.modal.open{opacity:1;pointer-events:auto}
+.modal .box{width:520px;max-width:94%;background:#fff;padding:18px;border-radius:12px}
+
+/* TAHAP 2 */
+.assembly-area{display:flex;justify-content:center;margin-top:8px}
+.assembly{min-height:64px;padding:12px}
+.input-large{width:100%;min-height:100px;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06);font-family:inherit}
+.books .menu-card.book{width:220px;height:70px;cursor:pointer}
+.books .menu-card.book.selected{border:2px solid var(--success);box-shadow:0 10px 20px rgba(46,125,50,0.06)}
+.final-row{display:flex;gap:12px;justify-content:space-between;margin-top:12px}
+.dropzone.target{width:32%;min-height:80px}
+.explain{color:var(--muted);font-size:14px;margin:12px 0;padding:8px;background:#fff8f0;border-left:4px solid var(--accent);border-radius:4px}
+#slides-t2 h2{font-size:20px;margin:12px 0 8px 0;color:var(--accent)}
+#slides-t2 .menu-grid{margin-top:16px}
+#slides-t2 .menu-card{width:280px;height:auto;min-height:60px;padding:12px}
+#slides-t2 .nav{margin-top:18px;justify-content:center}
+
+/* TAHAP 3 */
+.venn-wrapper{background:#fff;padding:18px;border-radius:12px;margin:18px auto;max-width:760px}
+.venn-rect{width:680px;height:360px;border:3px solid var(--accent);border-radius:12px;margin:8px auto;position:relative;background:#fffef8;overflow:hidden}
+.circle-a,.circle-b{width:300px;height:220px;border:4px solid var(--accent);border-radius:12px;position:absolute;top:56px;background:rgba(255,243,217,0.55);display:flex;align-items:center;justify-content:center;font-weight:bold;color:var(--accent);mix-blend-mode:multiply}
+.circle-a{left:60px}.circle-b{right:60px}
+.zone{position:absolute;border-radius:10px;display:flex;flex-wrap:wrap;font-weight:bold;color:#444;overflow:hidden}
+.drop-a{left:115px;top:75px;width:160px;height:160px;background:transparent}
+.drop-b{right:115px;top:75px;width:160px;height:160px;background:transparent}
+.drop-ab{left:260px;top:75px;width:160px;height:160px;background:transparent}
+.drop-out{position:absolute;left:20px;right:20px;bottom:10px;height:70px;margin:auto;border:2px dashed rgba(0,0,0,0.12);border-radius:10px;background:#fffef8;color:var(--muted);font-size:13px;align-items:center;justify-content:center;display:flex}
+.zone.highlight{box-shadow:0 0 18px rgba(46,125,50,0.2);border-radius:10px}
+.zone.wrong{animation:shake .4s}
+.book{width:150px;padding:10px;background:#fff;border-radius:10px;border:2px solid rgba(0,0,0,0.06);box-shadow:0 6px 16px rgba(0,0,0,0.06);cursor:grab;text-align:center;transition:all 0.3s ease}
+.book strong{display:block;margin-bottom:6px}
+.book.dragging{opacity:0.6;transform:scale(.98)}
+.book.locked{opacity:0.85;cursor:default;border-color:var(--success)}
+.book.in-venn{width:35px !important;height:35px !important;padding:0 !important;font-size:16px;line-height:35px;text-align:center;position:absolute !important;box-shadow:0 3px 8px rgba(0,0,0,0.1);border-radius:50%;background:var(--success);color:white;font-weight:900;border:2px solid white !important;overflow:hidden}
+.book.in-venn strong,.book.in-venn div{display:none}
+.notation-panel{margin-top:30px;padding:20px;border:2px solid var(--accent);border-radius:12px;background:#fff8e6}
+.notation-panel h3{text-align:left;color:var(--accent);margin-top:0}
+.notation-q{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;padding:5px 0}
+.notation-q label{font-weight:bold;font-size:14px;width:60%;min-width:250px}
+.notation-q select{padding:8px;border-radius:8px;border:1px solid var(--muted)}
+.q-result{font-weight:bold;margin-left:auto}
+.q-result.correct{color:var(--success)}.q-result.wrong{color:var(--danger)}
+.controls{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:8px;flex-wrap:wrap}
+.status{padding:10px 12px;border-radius:10px;background:#fff3d9;border-left:6px solid var(--accent);font-weight:700}
+.info{margin-top:12px;text-align:center;color:var(--muted);font-size:13px}
+
+/* TAHAP 4 - Tabel & Rak styling */
+.wrap{width:100%;margin:0;padding:28px}
+#tahap4 .panel{width:100%;background:#fff;padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,0.04)}
+.table-container{overflow:auto;margin-bottom:18px}
+#inputTable{width:100%;border-collapse:collapse;background:transparent}
+#inputTable th, #inputTable td{padding:12px 10px;border:1px solid rgba(0,0,0,0.06);text-align:left}
+#inputTable thead th{background:var(--accent);color:#fff;font-weight:700}
+.rack-area{margin-top:18px}
+.rack-row{display:flex;gap:18px;margin-bottom:12px}
+.rack{flex:1;background:#f6fff7;border-radius:10px;padding:12px;border:2px dashed rgba(0,0,0,0.04);min-height:110px}
+.rack strong{display:block;margin-bottom:8px;color:var(--accent)}
+.rack-content{min-height:48px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.book-badge{background:linear-gradient(180deg,#fff3e0,#ffdca6);padding:8px 10px;border-radius:8px;border:2px solid rgba(0,0,0,0.06);font-weight:700;color:var(--accent)}
+.status-box{margin-top:14px;padding:12px;border-radius:10px;background:#fff8e6;border-left:6px solid var(--accent);font-weight:700;color:var(--accent)}
+.status-box.correct{background:#e8f5e9;border-left-color:var(--success);color:var(--success)}
+.status-box.wrong{background:#ffebee;border-left-color:var(--danger);color:var(--danger)}
+#kardinalitasInputTable{width:100%;border-collapse:collapse;margin-top:12px}
+#kardinalitasInputTable th, #kardinalitasInputTable td{padding:10px;border:1px solid rgba(0,0,0,0.06);text-align:left}
+#kardinalitasInputTable thead th{background:var(--accent);color:#fff;font-weight:700}
+.hidden-info{display:none;background:#fff;padding:12px;border-radius:8px;border:1px solid rgba(0,0,0,0.04);margin-top:12px}
+.kardinalitas-input{padding:8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);width:80px}
+#inputTable td[id^="feedback_"]{padding:10px;font-weight:700;font-size:13px;text-align:center;white-space:nowrap}
+#inputTable td[id^="feedback_"].correct{background:#e8f5e9;color:var(--success)}
+#inputTable td[id^="feedback_"].wrong{background:#ffebee;color:var(--danger)}
+
+:root{
+  --bg:#ffcb64;
+  --panel:#fff3d9;
+  --accent:#3e2723;
+  --muted:#6b4b3a;
+}
+
+body{
+  margin:0;
+  padding:0;
+  font-family:'Bagel Fat One', cursive;
+  background:var(--bg);
+  color:var(--accent);
+}
+
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:30px;
+}
+
+.card{
+  width:1000px;
+  background:var(--panel);
+  border-radius:20px;
+  padding:30px 35px;
+  box-shadow:0 18px 40px rgba(0,0,0,0.18);
+}
+
+h1{
+  text-align:center;
+  margin-top:0;
+}
+
+.section{
+  margin-top:25px;
+  padding:18px;
+  background:white;
+  border-radius:16px;
+  box-shadow:0 6px 16px rgba(0,0,0,0.08);
+}
+
+.section h2{
+  margin-top:0;
+}
+
+.button{
+  background:var(--accent);
+  color:white;
+  padding:12px 22px;
+  border-radius:14px;
+  border:none;
+  cursor:pointer;
+  font-size:18px;
+  margin-top:12px;
+}
+
+.nav{
+  display:flex;
+  justify-content:space-between;
+  margin-top:28px;
+}
+
+textarea{
+  width:100%;
+  height:90px;
+  border-radius:12px;
+  border:2px solid rgba(0,0,0,0.15);
+  padding:8px;
+  font-family:'Bagel Fat One';
+  font-size:16px;
+  background:#fffdf8;
+}
+
+@keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
+@media (max-width:780px){.venn-rect{width:94%;height:340px}.circle-a,.circle-b{width:230px;height:190px;top:32px;border-radius:10px}.circle-a{left:26px}.circle-b{right:26px}}
+
+/* Modal overlay untuk Google Form */
+#gformModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  animation: fadeInModal 0.3s ease;
+}
+
+#gformModalContent {
+  position: relative;
+  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+  margin: 5% auto;
+  padding: 40px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  animation: slideDownModal 0.4s ease;
+  text-align: center;
+}
+
+#gformModalClose {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+#gformModalClose:hover {
+  color: #333;
+}
+
+.gform-title {
+  color: #2a2420;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.gform-message {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.gform-link-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  padding: 18px 40px;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(76,175,80,0.4);
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.gform-link-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+  box-shadow: 0 6px 20px rgba(76,175,80,0.5);
+  transform: translateY(-2px);
+}
+
+.gform-close-btn {
+  display: inline-block;
+  background: #ccc;
+  color: #333;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.2s;
+}
+
+.gform-close-btn:hover {
+  background: #bbb;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDownModal {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* FASE 4 - Penyajian & Gallery Walk */
+.penyajian-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 8px;
+}
+
+.penyajian-option:hover {
+  background: #fffbf0;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.penyajian-option input[type="radio"]:checked + span {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.komentar-item {
+  background: #f9f9f9;
+  border-left: 4px solid var(--accent);
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  animation: slideInKomentar 0.5s ease-out;
+}
+
+.komentar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.komentar-kelompok {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.komentar-waktu {
+  font-size: 12px;
+  color: #999;
+}
+
+.komentar-isi {
+  color: #333;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+@keyframes slideInKomentar {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+h1, h2 {
+  animation: floating 3s ease-in-out infinite;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<!-- Modal Google Form -->
+<div id="gformModal">
+  <div id="gformModalContent">
+    <span id="gformModalClose" onclick="closeGFormModal()">&times;</span>
+    <div class="gform-title">✅ PDF Berhasil Didownload!</div>
+    <div class="gform-message">
+      <p style="margin:10px 0;">File PDF hasil pembelajaran sudah tersimpan di komputer Anda.</p>
+      <p style="margin:10px 0;font-weight:700;color:#d32f2f;">Sekarang silakan upload ke Google Form:</p>
+    </div>
+    <a href="" id="gformLink" class="gform-link-btn" target="_blank">📝 BUKA GOOGLE FORM</a>
+    <div style="margin-top:25px;padding:20px;background:#fff9e6;border-radius:10px;text-align:left;">
+      <p style="font-size:14px;margin:8px 0;color:#333;"><strong>Instruksi:</strong></p>
+      <ol style="font-size:13px;line-height:1.8;color:#555;margin:8px 0;padding-left:20px;">
+        <li>Klik tombol hijau di atas untuk membuka Google Form</li>
+        <li>Isi nama kelompok Anda</li>
+        <li>Upload file PDF yang baru didownload</li>
+        <li>Klik Submit</li>
+      </ol>
+      <p style="font-size:12px;margin:10px 0;color:#777;font-style:italic;">💡 File akan otomatis masuk ke Google Drive guru!</p>
+    </div>
+    <div class="gform-close-btn" onclick="closeGFormModal()">Tutup</div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="card">
+    
+    <div class="header">
+      <h1>Media Pembelajaran Relasi &amp; Fungsi</h1>
+      <div class="lead">Interaktif — kerjakan dari Start → Permasalahan</div>
+    </div>
+
+    <main class="slides">
+      
+      <section class="slide active" id="start">
+        <div class="center">
+          <h2>Selamat Datang</h2>
+          <p class="lead">Media Pembelajaran: Relasi &amp; Fungsi</p>
+          <button class="btn" data-go="menu">Mulai</button>
+        </div>
+      </section>
+
+      <section class="slide" id="menu">
+        <div class="center">
+          <h2>Menu Utama</h2>
+          <div class="menu-grid">
+            <div class="menu-card" data-go="permasalahan-gambar">Permasalahan</div>
+          </div>
+          <div style="margin-top:18px">
+            <button class="btn" data-go="start">Kembali</button>
+          </div>
+        </div>
+      </section>
+      
+       <section class="slide" id="permasalahan-gambar">
+      <div class="panel">
+        <div class="header">
+           <h1>Orientasi Permasalahan </h1>
+          <h1>Permasalahan — Perhatikan Foto</h1>
+          <div class="lead">Amati gambar berikut lalu tekan "Selesaikan" untuk lanjut ke Data Kelompok.</div>
+        </div>
+
+        <div class="content" style="text-align:center">
+          <img src="../images/permasalahan.png" alt="Foto permasalahan" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
+          <p style="color:var(--muted);margin-bottom:8px">Dapatkah kalian membantu pustakawan untuk memilah buku sesuai dengan kriteria, dan menempatkan buku sesuai dengan raknya masing-masing?</p>
+          <p style="color:var(--muted);margin-bottom:8px">Pustakawan membutuhkan bantuan kalian untuk menentukan cara menempatkan buku agar tidak terjadi kesalahan.</p>
+          <p style="color:var(--muted);margin-bottom:8px">Kalian diminta untuk menganalisis data buku dan rak yang tersedia serta menentukan aturan penempatannya.</p>
+
+          <!-- Textarea untuk siswa menuliskan solusi -->
+          <div style="max-width:800px;margin:20px auto">
+            <label style="display:block;color:var(--accent);font-weight:700;font-size:16px;margin-bottom:10px">💡 Ide Solusi Awal Kalian:</label>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:10px">Sebelum melanjutkan, tuliskan ide awal kalian tentang bagaimana cara membantu pustakawan:</p>
+            <textarea id="solusiAwalPertemuan1" placeholder="Contoh: Saya akan mengelompokkan buku berdasarkan kriteria tertentu, membuat daftar buku untuk setiap rak..." style="width:100%;min-height:120px;padding:14px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+            <p style="color:var(--muted);font-size:12px;margin-top:8px;font-style:italic">💭 Tidak apa jika belum yakin, tuliskan saja apa yang terpikirkan saat ini!</p>
+          </div>
+
+          <p style="color:var(--muted);margin-bottom:8px">Sebelum kalian membantu pustakawan, silahkan untuk duduk bersama kelompoknya masing-masing, karena permasalahan ini dikerjakan secara berkelompok!!!</p>
+
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+            <button class="btn ghost" data-go="menu">⟵ Kembali</button>
+            <button class="btn" data-go="identitas-kelompok">Selesaikan ⟶</button>
+          </div>
+        </div>
+
+        <div class="footer" style="margin-top:14px">
+          <div class="progress">Permasalahan — Foto</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" id="identitas-kelompok">
+      <div class="panel">
+        <div class="header">
+          <h1>Diskusi Kelompok – Menyelesaikan Masalah Pustakawan</h1>
+          <h1>Data Kelompok</h1>
+          <div class="lead">Isi nama kelompok dan anggota kelompok Anda sebelum memulai.</div>
+        </div>
+
+        <div class="content" style="max-width:600px;margin:0 auto">
+          <div style="background:#fff8e6;padding:16px;border-radius:10px;margin-bottom:18px">
+            <p style="margin-top:0;font-weight:bold;color:var(--accent)">Pembagian Tugas Kelompok:</p>
+            <p style="margin:8px 0;color:var(--muted);font-size:14px;line-height:1.6">Setiap kelompok bertugas membantu pustakawan dengan menyusun cara memilah dan menempatkan buku ke dalam rak berdasarkan data yang diberikan.</p>
+            <ul style="margin:8px 0;color:var(--muted);font-size:13px;line-height:1.6">
+              <li><strong>Ketua Kelompok:</strong> Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</li>
+              <li><strong>Wakil Ketua:</strong> Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</li>
+              <li><strong>Sekretaris:</strong> Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses pemilahan buku</li>
+              <li><strong>Anggota Aktif:</strong> Aktif memberikan ide, melakukan drag-drop buku ke diagram, mengerjakan soal</li>
+              <li><strong>Anggota:</strong> Turut serta dalam diskusi dan mengerjakan tugas kelompok</li>
+            </ul>
+          </div>
+
+          <div style="background:#fff8e6;padding:16px;border-radius:10px;margin-bottom:18px">
+            <p style="margin-top:0;font-weight:bold;color:var(--accent)">Petunjuk:</p>
+            <ul style="margin:8px 0;color:var(--muted)">
+              <li>Isi nama kelompok (contoh: Kelompok A, Regu 1, dll)</li>
+              <li>Masukkan nama setiap anggota (minimal 1, maksimal 5 anggota)</li>
+              <li>Pilih tanggung jawab untuk setiap anggota sesuai peran mereka</li>
+              <li>Tekan "Lanjut ke Tahap 1" setelah selesai</li>
+            </ul>
+          </div>
+
+          <div class="panel" style="background:#fff;padding:14px;border-radius:10px">
+            <label style="display:block;margin-bottom:8px;font-weight:bold">Nama Kelompok:</label>
+            <input type="text" id="namaKelompok" class="input" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)" placeholder="Contoh: Kelompok Avengers">
+
+            <div style="height:16px"></div>
+
+            <label style="display:block;margin-bottom:8px;font-weight:bold">Nama Anggota Kelompok:</label>
+            <div id="anggotaContainer">
+              <div style="display:flex;gap:8px;margin-bottom:8px">
+                <input type="text" class="anggota-input" placeholder="Nama anggota 1" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
+                <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
+                  <option value="Ketua Kelompok">Ketua Kelompok</option>
+                  <option value="Wakil Ketua">Wakil Ketua</option>
+                  <option value="Sekretaris">Sekretaris</option>
+                  <option value="Anggota Aktif">Anggota Aktif</option>
+                  <option value="Anggota">Anggota</option>
+                </select>
+                <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px">−</button>
+              </div>
+            </div>
+
+            <button class="btn ghost" id="addAnggotaBtn" style="width:100%;margin-bottom:12px">+ Tambah Anggota</button>
+
+            <div style="height:12px"></div>
+
+            <div style="display:flex;gap:8px;justify-content:center">
+              <button class="btn ghost" data-go="permasalahan-gambar">⟵ Kembali</button>
+              <button class="btn" id="lanjutTahap1Btn">Lanjut ke Tahap 1 ⟶</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer" style="margin-top:14px">
+          <div class="progress">Data Identitas Kelompok</div>
+        </div>
+      </div>
+    </section>
+ 
+      <section class="slide" id="permasalahan"> 
+        <div class="container">
+  <div class="panel" role="application" aria-label="Tahap 1 Interaktif">
+    <div class="header">
+      <h1>🔍 Membimbing Penyelidikan</h1>
+      <div class="lead">Misi: Tentukan kriteria yang termasuk HIMPUNAN dan yang BUKAN</div>
+    </div>
+
+    <div class="content">
+      <!-- MISI CARD -->
+      <div class="panel mission" id="missionCard" style="background:#fff8e6;border:2px solid #ffd199;margin-bottom:16px">
+        <div class="row-between">
+          <div>
+            <div style="font-size:16px;font-weight:bold;color:var(--accent)">📌 Misi: Tentukan Kriteria HIMPUNAN</div>
+            <div class="tiny" style="color:#666">Tarik setiap kartu kriteria ke kotak yang sesuai berdasarkan pemahamanmu.</div>
+          </div>
+          <div>
+            <button class="btn" id="startBtn">Mulai Misi</button>
+          </div>
+        </div>
+        <div id="countdown" style="margin-top:10px" class="tiny"></div>
+      </div>
+
+      <!-- KARTU KRITERIA -->
+      <div class="panel" style="margin-bottom:16px">
+        <div style="font-weight:bold;margin-bottom:12px;color:var(--accent);font-size:15px">📋 Kartu Kriteria (Seret ke area yang sesuai):</div>
+        <div class="grid" id="cardsArea" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+          <div class="card-item kartu-draggable" draggable="true" data-id="A" tabindex="0" aria-grabbed="false">
+            <div class="kartu">
+              <div class="title">Kriteria A</div>
+              <div class="meta">Buku dengan halaman > 100</div>
+            </div>
+          </div>
+
+          <div class="card-item kartu-draggable" draggable="true" data-id="B" tabindex="0" aria-grabbed="false">
+            <div class="kartu">
+              <div class="title">Kriteria B</div>
+              <div class="meta">Buku yang paling menarik</div>
+            </div>
+          </div>
+
+          <div class="card-item kartu-draggable" draggable="true" data-id="C" tabindex="0" aria-grabbed="false">
+            <div class="kartu">
+              <div class="title">Kriteria C</div>
+              <div class="meta">Buku terbit setelah 2018</div>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:#666;text-align:center">💡 Klik kartu untuk melihat penjelasan</div>
+      </div>
+
+      <!-- DROPZONES -->
+      <div class="panel" style="margin-bottom:16px">
+        <div style="font-weight:bold;margin-bottom:12px;color:var(--accent);font-size:15px">✅ Seret Kartu Ke Area yang Tepat:</div>
+        <div class="row" style="gap:12px;display:flex">
+          <div style="flex:1">
+            <div style="font-weight:bold;margin-bottom:8px;color:#2e7d32;font-size:14px">✅ HIMPUNAN (kriteria jelas)</div>
+            <div class="dropzone" id="zoneYes" data-accept="yes" aria-dropeffect="move" style="min-height:120px;background:#e8f5e9;border:3px dashed #4caf50">
+              <div class="small" style="color:#666">⬇️ Seret kartu di sini</div>
+            </div>
+            <div id="fbYes" class="feedback" aria-hidden="true" style="display:none;margin-top:8px"></div>
+          </div>
+          <div style="flex:1">
+            <div style="font-weight:bold;margin-bottom:8px;color:#c62828;font-size:14px">❌ BUKAN HIMPUNAN (kriteria tidak jelas)</div>
+            <div class="dropzone" id="zoneNo" data-accept="no" aria-dropeffect="move" style="min-height:120px;background:#ffebee;border:3px dashed #c62828">
+              <div class="small" style="color:#666">⬇️ Seret kartu di sini</div>
+            </div>
+            <div id="fbNo" class="feedback" aria-hidden="true" style="display:none;margin-top:8px"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PEMBAHASAN -->
+      <div class="panel" style="background:#fff3d9;border:2px solid #ffd199;padding:16px;border-radius:12px;margin-bottom:16px">
+        <div style="font-weight:bold;margin-bottom:14px;color:var(--accent);font-size:15px">📚 Pembahasan: Apa Itu Himpunan?</div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+          <!-- BUKAN HIMPUNAN -->
+          <div style="background:#ffebee;padding:14px;border-radius:8px;border-left:5px solid #c62828">
+            <div style="font-weight:bold;color:#c62828;margin-bottom:10px;font-size:13px">❌ BUKAN HIMPUNAN</div>
+            <div style="font-weight:bold;margin-bottom:8px;color:#333;font-size:12px">Contoh: "Buku yang paling menarik"</div>
+            <ul style="font-size:12px;margin:0 0 0 20px;line-height:1.6;color:#555;padding:0">
+              <li>Kriteria TIDAK jelas</li>
+              <li>Setiap orang berbeda pendapat</li>
+              <li>Tidak bisa diverifikasi objektif</li>
+            </ul>
+          </div>
+
+          <!-- HIMPUNAN -->
+          <div style="background:#e8f5e9;padding:14px;border-radius:8px;border-left:5px solid #2e7d32">
+            <div style="font-weight:bold;color:#2e7d32;margin-bottom:10px;font-size:13px">✅ HIMPUNAN</div>
+            <div style="font-weight:bold;margin-bottom:8px;color:#333;font-size:12px">Contoh: "Buku dengan halaman > 100"</div>
+            <ul style="font-size:12px;margin:0 0 0 20px;line-height:1.6;color:#555;padding:0">
+              <li>Kriteria JELAS dan pasti</li>
+              <li>Semua orang hasil sama</li>
+              <li>Bisa diverifikasi objektif</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="background:#fffbea;padding:12px;border-radius:8px;border-left:4px solid #ff9800;font-size:12px;color:#555">
+          <strong style="color:var(--accent)">💡 Kesimpulan:</strong> Himpunan adalah kumpulan yang anggotanya <strong>terdefinisi dengan jelas dan pasti</strong>, tidak tergantung pada pendapat pribadi.
+        </div>
+      </div>
+
+      <!-- UJI PEMAHAMAN -->
+      <div class="panel" style="background:#e8f5e9;border:2px solid #4caf50;padding:16px;border-radius:12px;margin-bottom:16px;position:relative;z-index:1">
+        <div style="font-weight:bold;margin-bottom:14px;color:#2e7d32;font-size:15px">🎯 Uji Pemahamanmu!</div>
+        
+        <div style="background:#fff8e6;padding:12px;border-radius:8px;margin-bottom:14px;border-left:4px solid #f57c00;font-size:12px">
+          <div style="font-weight:bold;color:#e65100;margin-bottom:8px">💡 Ingat:</div>
+          <ul style="font-size:12px;margin:0 0 0 20px;line-height:1.6;color:#555;padding:0">
+            <li><strong>Himpunan:</strong> Kriteria JELAS & PASTI (contoh: bilangan genap, huruf vokal)</li>
+            <li><strong>Bukan Himpunan:</strong> Kriteria SUBJEKTIF & tergantung pendapat (contoh: siswa pandai, film bagus)</li>
+          </ul>
+        </div>
+
+        <div style="background:#fff;padding:14px;border-radius:8px;border:1px solid #ddd">
+          <div style="font-size:13px;margin-bottom:14px;color:var(--accent);font-weight:bold">📝 Pilih kategori untuk setiap pernyataan:</div>
+              
+              <!-- Q1 -->
+              <div style="background:#f9f9f9;padding:12px;border-radius:8px;margin-bottom:12px;border:2px solid #e0e0e0 !important;transition:all 0.2s ease;position:relative;z-index:10" id="quiz-card-Q1">
+                <div style="font-weight:bold;color:#333;margin-bottom:4px">1. Bilangan genap antara 1 dan 20</div>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <button class="btn" onclick="selectQuizAnswer('Q1','yes')" style="flex:1;background:#4caf50;color:white;font-size:13px;pointer-events:auto;position:relative;z-index:100">✅ Himpunan</button>
+                  <button class="btn ghost" onclick="selectQuizAnswer('Q1','no')" style="flex:1;border-color:#c62828;color:#c62828;font-size:13px;pointer-events:auto;position:relative;z-index:100">❌ Bukan Himpunan</button>
+                </div>
+                <div id="quiz-result-Q1" style="margin-top:8px;font-size:12px;display:none"></div>
+              </div>
+
+              <!-- Q2 -->
+              <div style="background:#f9f9f9;padding:12px;border-radius:8px;margin-bottom:12px;border:2px solid #e0e0e0 !important;transition:all 0.2s ease;position:relative;z-index:10" id="quiz-card-Q2">
+                <div style="font-weight:bold;color:#333;margin-bottom:4px">2. Siswa yang pandai di kelas ini</div>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <button class="btn" onclick="selectQuizAnswer('Q2','yes')" style="flex:1;background:#4caf50;color:white;font-size:13px;pointer-events:auto;position:relative;z-index:100">✅ Himpunan</button>
+                  <button class="btn ghost" onclick="selectQuizAnswer('Q2','no')" style="flex:1;border-color:#c62828;color:#c62828;font-size:13px;pointer-events:auto;position:relative;z-index:100">❌ Bukan Himpunan</button>
+                </div>
+                <div id="quiz-result-Q2" style="margin-top:8px;font-size:12px;display:none"></div>
+              </div>
+
+              <!-- Q3 -->
+              <div style="background:#f9f9f9;padding:12px;border-radius:8px;margin-bottom:12px;border:2px solid #e0e0e0 !important;transition:all 0.2s ease;position:relative;z-index:10" id="quiz-card-Q3">
+                <div style="font-weight:bold;color:#333;margin-bottom:4px">3. Huruf vokal dalam kata "HIMPUNAN"</div>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <button class="btn" onclick="selectQuizAnswer('Q3','yes')" style="flex:1;background:#4caf50;color:white;font-size:13px;pointer-events:auto;position:relative;z-index:100">✅ Himpunan</button>
+                  <button class="btn ghost" onclick="selectQuizAnswer('Q3','no')" style="flex:1;border-color:#c62828;color:#c62828;font-size:13px;pointer-events:auto;position:relative;z-index:100">❌ Bukan Himpunan</button>
+                </div>
+                <div id="quiz-result-Q3" style="margin-top:8px;font-size:12px;display:none"></div>
+              </div>
+
+              <!-- Q4 -->
+              <div style="background:#f9f9f9;padding:12px;border-radius:8px;margin-bottom:12px;border:2px solid #e0e0e0 !important;transition:all 0.2s ease;position:relative;z-index:10" id="quiz-card-Q4">
+                <div style="font-weight:bold;color:#333;margin-bottom:4px">4. Film yang paling bagus menurut pendapatmu</div>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <button class="btn" onclick="selectQuizAnswer('Q4','yes')" style="flex:1;background:#4caf50;color:white;font-size:13px;pointer-events:auto;position:relative;z-index:100">✅ Himpunan</button>
+                  <button class="btn ghost" onclick="selectQuizAnswer('Q4','no')" style="flex:1;border-color:#c62828;color:#c62828;font-size:13px;pointer-events:auto;position:relative;z-index:100">❌ Bukan Himpunan</button>
+                </div>
+                <div id="quiz-result-Q4" style="margin-top:8px;font-size:12px;display:none"></div>
+              </div>
+
+              <!-- Q5 -->
+              <div style="background:#f9f9f9;padding:12px;border-radius:8px;margin-bottom:12px;border:2px solid #e0e0e0 !important;transition:all 0.2s ease;position:relative;z-index:10" id="quiz-card-Q5">
+                <div style="font-weight:bold;color:#333;margin-bottom:4px">5. Negara di Asia Tenggara</div>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <button class="btn" onclick="selectQuizAnswer('Q5','yes')" style="flex:1;background:#4caf50;color:white;font-size:13px;pointer-events:auto;position:relative;z-index:100">✅ Himpunan</button>
+                  <button class="btn ghost" onclick="selectQuizAnswer('Q5','no')" style="flex:1;border-color:#c62828;color:#c62828;font-size:13px;pointer-events:auto;position:relative;z-index:100">❌ Bukan Himpunan</button>
+                </div>
+                <div id="quiz-result-Q5" style="margin-top:8px;font-size:12px;display:none"></div>
+              </div>
+            </div>
+
+            <div style="background:#fff;padding:12px;border-radius:8px;margin-bottom:12px">
+              <div id="quizFeedback" style="font-size:13px;color:#666;min-height:30px">
+                <div style="color:var(--muted)">Pilih jawaban untuk semua pernyataan di atas...</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-bottom:16px">
+              <button class="btn ghost" id="quizResetBtn">Reset Semua</button>
+              <button class="btn" id="quizCheckBtn" style="display:none">Cek Jawaban</button>
+            </div>
+            
+            <!-- TEXTAREA KESIMPULAN -->
+            <div style="background:#e3f2fd;padding:16px;border-radius:10px;border-left:4px solid #1976d2;margin-top:20px">
+              <div style="font-weight:bold;color:#1565c0;margin-bottom:10px;font-size:14px">📝 Tulis Kesimpulanmu!</div>
+              <p style="font-size:12px;color:#555;margin:0 0 12px 0;line-height:1.5">
+                Berdasarkan kegiatan di atas, tuliskan pemahamanmu tentang:
+              </p>
+              <ul style="font-size:12px;color:#555;margin:0 0 12px 20px;line-height:1.6">
+                <li>Apa itu <strong>himpunan</strong>?</li>
+                <li>Apa ciri-ciri kumpulan yang <strong>bisa disebut himpunan</strong>?</li>
+                <li>Mengapa ada kumpulan yang <strong>bukan himpunan</strong>?</li>
+              </ul>
+              <textarea 
+                id="kesimpulanHimpunan" 
+                placeholder="Contoh: Menurut saya, himpunan adalah kumpulan objek yang memiliki kriteria jelas dan pasti. Misalnya bilangan genap, karena semua orang sepakat angka mana saja yang genap. Berbeda dengan 'siswa pandai' yang subjektif..."
+                style="width:100%;min-height:120px;padding:12px;border:2px solid #90caf9;border-radius:8px;font-family:inherit;font-size:13px;line-height:1.6;resize:vertical;box-sizing:border-box"
+              ></textarea>
+              <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+                <button class="btn" onclick="simpanKesimpulan()" style="background:#1976d2">💾 Simpan Kesimpulan</button>
+                <span id="feedbackKesimpulan" style="font-size:12px;color:#555"></span>
+              </div>
+            </div>
+          </div>
+
+      </div>
+
+      <!-- KONTROL BUTTON -->
+      <div style="margin-top:18px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button class="btn ghost" id="resetBtn" style="min-width:150px">🔄 Reset</button>
+        <button class="btn" id="doneBtn" style="min-width:150px">✅ Tandai Selesai</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NAVIGASI TAHAP 1 -->
+  <div class="nav" style="display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap">
+    <button class="btn ghost" data-go="identitas-kelompok">⟵ Kembali</button>
+    <button class="btn" id="goto-tahap2" data-go="tahap2">Lanjut Tahap 2 ⟶</button>
+  </div>
+
+
+<!-- Modal penjelasan -->
+<div class="modal" id="modalExplain" role="dialog" aria-hidden="true">
+  <div class="box">
+    <div class="row-between">
+      <div style="font-weight:bold" id="modalTitle">Judul</div>
+      <div><button class="btn ghost" id="closeModal">Tutup</button></div>
+    </div>
+    <div id="modalBody" style="margin-top:10px;color:#333"></div>
+  </div>
+</div>
+
+
+<!-- audio kecil: success + error (dataURI short beeps) -->
+<audio id="sndOk" src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA="></audio>
+<audio id="sndBad" src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAIA+AAACABAAZGF0YQAAAAA="></audio>
+    </section>
+    <section class="slide" id="soal"></section>
+    <section class="slide" id="materi-pengertian"></section>
+
+     <!-- TAHAP 2 - LEVELING GAME -->
+     <section class="slide" id="tahap2">
+       <div class="panel">
+         <div class="header">
+           <h1>Tahap 2 — Leveling Game: Representasi Himpunan</h1>
+           <p class="lead">Kriteria A: <strong>Buku dengan halaman &gt; 100</strong></p>
+         </div>
+         
+         <div class="topnav" style="display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px; background:#fff3d9; border-radius:8px; margin-bottom:16px;">
+           <button class="btn ghost" id="prevBtn-t2" disabled>⟵ Kembali</button>
+           <div id="levelLabel-t2" style="font-size:14px; font-weight:bold; color:#6b4b3a; text-align:center;">Level 1 dari 5</div>
+           <button class="btn ghost" id="nextBtn-t2">Lanjut ⟶</button>
+         </div>
+
+         <div class="content" id="slides-t2">
+           <!-- LEVEL 1 -->
+           <div class="slide active" id="level-1">
+             <h2>Level 1 — Pilih Representasi yang Benar</h2>
+             <p class="explain">Pilih bentuk <strong>Deskripsi</strong> untuk: <em>Buku dengan halaman lebih dari 100</em></p>
+             <div class="menu-grid lvl1">
+               <div class="menu-card option" data-correct="true" data-explain="Deskripsi: menjelaskan karakteristik (kalimat) mis. 'Buku yang jumlah halamannya lebih dari 100' — ini bentuk deskripsi yang tepat.">
+                 Buku yang jumlah halamannya lebih dari 100
+               </div>
+               <div class="menu-card option" data-correct="false" data-explain="Enumerasi: menuliskan anggota himpunan (contoh: {Buku A, Buku C}) — ini bukan Deskripsi sehingga kurang tepat untuk soal ini.">
+                 {Buku A, Buku C, …}
+               </div>
+               <div class="menu-card option" data-correct="false" data-explain="Notasi/pembentuk himpunan: A = {x | …} adalah notasi formal, bukan kalimat deskripsi. Jadi bukan jawaban Deskripsi.">
+                 A = {x}
+               </div>
+             </div>
+             <div class="feedback" id="fb1-t2"></div>
+             <button id="goto2-t2" disabled class="btn">Lanjut ke Level 2</button>
+           </div>
+
+           <!-- LEVEL 2 -->
+           <div class="slide" id="level-2">
+             <h2>Level 2 — Susun Kalimat Deskripsi</h2>
+             <p class="explain">Susun potongan menjadi kalimat deskripsi yang benar.</p>
+             <div class="assembly-area" id="assembly-t2">Tarik potongan di sini</div>
+             <div class="grid pieces" id="pieces-t2">
+               <div class="card-item piece" draggable="true">Buku</div>
+               <div class="card-item piece" draggable="true">dengan jumlah</div>
+               <div class="card-item piece" draggable="true">halaman</div>
+               <div class="card-item piece" draggable="true">lebih dari</div>
+               <div class="card-item piece" draggable="true">100</div>
+             </div>
+             <div class="feedback" id="fb2-t2"></div>
+             <button id="goto3-t2" disabled class="btn">Lanjut ke Level 3</button>
+           </div>
+
+           <!-- LEVEL 3 -->
+           <div class="slide" id="level-3">
+             <h2>Level 3 — Buat Enumerasi</h2>
+             <p class="explain">Klik hanya buku yang memenuhi syarat &gt; 100 halaman.</p>
+             <div class="grid books">
+               <div class="menu-card book" data-valid="true" data-name="Buku A">Buku A — 120 hal</div>
+               <div class="menu-card book" data-valid="false" data-name="Buku B">Buku B — 88 hal</div>
+               <div class="menu-card book" data-valid="true" data-name="Buku C">Buku C — 200 hal</div>
+               <div class="menu-card book" data-valid="false" data-name="Buku D">Buku D — 60 hal</div>
+             </div>
+             <div style="background:#fff3d9; padding:12px; border-radius:8px; margin:12px 0;">
+               <div style="font-weight:bold; margin-bottom:8px;">Hasil Enumerasi:</div>
+               <div class="dropzone" id="resultEnum-t2">{  }</div>
+             </div>
+             <div class="feedback" id="fb3-t2"></div>
+             <button id="goto4-t2" disabled class="btn">Lanjut ke Level 4</button>
+           </div>
+
+           <!-- LEVEL 4 -->
+           <div class="slide" id="level-4">
+             <h2>Level 4 — Tulis Notasi Pembentuk Himpunan</h2>
+             <p class="explain">Gunakan Deskripsi & Enumerasi sebagai petunjuk. Tulis notasi lengkap.</p>
+             <textarea id="notasiInput-t2" class="input-large" placeholder="Contoh: A = { x | x adalah buku dengan halaman > 100 }"></textarea>
+             <div class="feedback" id="fb4-t2"></div>
+             <div class="nav">
+               <button class="btn" id="checkNotasi-t2">Cek Notasi</button>
+               <button id="goto5-t2" disabled class="btn">Lanjut ke Level 5</button>
+             </div>
+           </div>
+
+           <!-- LEVEL 5 -->
+           <div class="slide" id="level-5">
+             <h2>Level 5 — Final Challenge</h2>
+             <p class="explain">Tarik potongan jawaban ke kotak target yang sesuai (Deskripsi, Enumerasi, Notasi).</p>
+             <div class="row final-row">
+               <div class="dropzone target" data-type="deskripsi">Deskripsi</div>
+               <div class="dropzone target" data-type="enumerasi">Enumerasi</div>
+               <div class="dropzone target" data-type="notasi">Notasi</div>
+             </div>
+             <div class="grid finalpieces" id="finalPieces-t2">
+               <div class="card-item piece" draggable="true" data-type="deskripsi">Buku dengan halaman lebih dari 100</div>
+               <div class="card-item piece" draggable="true" data-type="enumerasi">{Buku A, Buku C}</div>
+               <div class="card-item piece" draggable="true" data-type="notasi">A = { x | x halaman &gt; 100 }</div>
+               <div class="card-item piece" draggable="true">Buku dengan halaman kurang dari 100</div>
+               <div class="card-item piece" draggable="true">{Buku B, Buku D}</div>
+               <div class="card-item piece" draggable="true">A = {(Buku,120),(Buku,200)}</div>
+             </div>
+             <div class="feedback" id="fb5-t2"></div>
+             <button id="finishBtn-t2" disabled class="btn">Selesai</button>
+           </div>
+         </div>
+         
+         <!-- NAVIGASI TAHAP 2 -->
+         <div class="nav" style="display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap">
+           <button class="btn ghost" data-go="permasalahan">⟵ Kembali</button>
+           <button class="btn" data-go="tahap3">Lanjut Tahap 3 ⟶</button>
+         </div>
+       </div>
+     </section>
+
+     <section class="slide" id="tahap3">
+        <div class="panel">
+          <div class="header">
+            <h1>Menyajikan Hasil Karya</h1>
+            <div class="lead">Seret buku ke area yang sesuai dalam diagram Venn.</div>
+          </div>
+
+          <div class="content">
+            <div style="background:#fff3cd;padding:14px;border-radius:10px;margin-bottom:18px;border-left:5px solid #ffc107;">
+              <p style="margin:0;color:var(--accent);font-weight:700">📌 Tujuan Aktivitas</p>
+              <p style="margin:8px 0 0 0;color:var(--muted);font-size:14px;line-height:1.6">Gunakan aktivitas berikut untuk menguji apakah cara penempatan buku yang kalian pilih sudah membantu pustakawan atau justru menimbulkan masalah baru.</p>
+            </div>
+
+            <p style="text-align:center;color:var(--muted)">A = halaman >100 | B = tahun >2018</p>
+
+            <div class="venn-wrapper" aria-label="Diagram Venn">
+              <div class="venn-rect" id="vennRect">
+                <div class="circle-a" aria-hidden="true"></div>
+                <div class="circle-b" aria-hidden="true"></div>
+                <div class="zone drop-a" data-zone="A" id="zoneA"></div>
+                <div class="zone drop-b" data-zone="B" id="zoneB"></div>
+                <div class="zone drop-ab" data-zone="AB" id="zoneAB"></div>
+                <div class="drop-out zone" data-zone="OUT" id="zoneOUT">Bukan A atau B</div>
+              </div>
+            </div>
+
+            <div class="book-list" id="bookList" aria-live="polite" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px;padding:12px;border-radius:10px;background:#f9f7f4">
+              <div class="book" draggable="true" data-halaman="120" data-tahun="2020" data-id="A"><strong>Buku A</strong><div>120 hal, 2020</div></div>
+              <div class="book" draggable="true" data-halaman="88" data-tahun="2021" data-id="B"><strong>Buku B</strong><div>88 hal, 2021</div></div>
+              <div class="book" draggable="true" data-halaman="200" data-tahun="2016" data-id="C"><strong>Buku C</strong><div>200 hal, 2016</div></div>
+              <div class="book" draggable="true" data-halaman="60" data-tahun="2015" data-id="D"><strong>Buku D</strong><div>60 hal, 2015</div></div>
+              <div class="book" draggable="true" data-halaman="150" data-tahun="2022" data-id="E"><strong>Buku E</strong><div>150 hal, 2022</div></div>
+              <div class="book" draggable="true" data-halaman="72" data-tahun="2022" data-id="F"><strong>Buku F</strong><div>72 hal, 2022</div></div>
+            </div>
+
+            <div class="controls" style="margin-top:18px">
+              <button class="btn ghost" id="resetBtn">Reset Posisi</button>
+              <div class="status" id="statusBox">Tarik buku ke area yang sesuai.</div>
+            </div>
+
+            <div class="notation-panel" id="notationPanel" style="display:none;margin-top:20px">
+              <h3>✅ Konfirmasi Operasi Himpunan</h3>
+              <p>Jawab dua pertanyaan berikut:</p>
+              <div class="notation-q">
+                <label for="q-irisan">1. Anggota yang memenuhi <strong>KEDUA syarat</strong> (A DAN B):</label>
+                <select id="q-irisan">
+                  <option value="">Pilih...</option>
+                  <option value="AUBC">Gabungan (A ∪ B)</option>
+                  <option value="AMBC">Selisih (A - B)</option>
+                  <option value="ANBC">Irisan (A ∩ B)</option>
+                </select>
+                <span class="q-result" id="res-irisan"></span>
+              </div>
+              <div class="notation-q">
+                <label for="q-gabungan">2. Anggota yang memenuhi <strong>SETIDAKNYA SATU syarat</strong> (A ATAU B):</label>
+                <select id="q-gabungan">
+                  <option value="">Pilih...</option>
+                  <option value="AUBC">Gabungan (A ∪ B)</option>
+                  <option value="AMBC">Selisih (A - B)</option>
+                  <option value="ANBC">Irisan (A ∩ B)</option>
+                </select>
+                <span class="q-result" id="res-gabungan"></span>
+              </div>
+              <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
+                <button class="btn ghost" data-go="tahap1">Kembali</button>
+                <button class="btn" id="finishT3Btn">Selesaikan Tahap 3</button>
+                <button class="btn" id="goto-tahap4" data-go="tahap4">Lanjut Tahap 4 ⟶</button>
+              </div>
+            </div>
+
+            <div class="info" style="margin-top:12px">Hint: Tarik Buku A, C, E ke area yang sesuai dalam diagram Venn.</div>
+          </div>
+
+          <div class="footer">
+            <div class="progress">Tahap 3 — Relasi Himpunan</div>
+          </div>
+        </div>
+      </section>
+
+<section class="slide" id="tahap4">
+        <div class="panel">
+          <div class="header">
+            <h1>Solusi Kelompok untuk Membantu Pustakawan</h1>
+            <p class="lead">Analisis Kardinalitas dan Penyajian Solusi</p>
+          </div>
+
+          <div class="content">
+            <div style="background:#fff8f0;padding:14px;border-radius:10px;border-left:5px solid #ff9800;margin-bottom:18px;">
+              <p style="margin:0;color:var(--muted);font-size:14px;line-height:1.6">Tuliskan solusi kelompok kalian berupa aturan penempatan buku ke rak beserta alasannya.</p>
+            </div>
+        <table id="inputTable">
+          <thead>
+            <tr><th>Buku</th><th>Halaman</th><th>Tahun</th><th>Pilih Rak</th><th style="width:120px;">Status</th></tr>
+          </thead>
+          <tbody>
+            <tr data-id="booka" data-hal="120" data-thn="2020"><td>Buku A</td><td>120</td><td>2020</td><td><select data-book="A"><option value="">-- Pilih Rak --</option></select></td><td id="feedback_A"></td></tr>
+            <tr data-id="bookb" data-hal="88" data-thn="2021"><td>Buku B</td><td>88</td><td>2021</td><td><select data-book="B"><option value="">-- Pilih Rak --</option></select></td><td id="feedback_B"></td></tr>
+            <tr data-id="bookc" data-hal="200" data-thn="2016"><td>Buku C</td><td>200</td><td>2016</td><td><select data-book="C"><option value="">-- Pilih Rak --</option></select></td><td id="feedback_C"></td></tr>
+            <tr data-id="bookd" data-hal="60" data-thn="2015"><td>Buku D</td><td>60</td><td>2015</td><td><select data-book="D"><option value="">-- Pilih Rak --</option></select></td><td id="feedback_D"></td></tr>
+            <tr data-id="booke" data-hal="150" data-thn="2022"><td>Buku E</td><td>150</td><td>2022</td><td><select data-book="E"><option value="">-- Pilih Rak --</option></select></td><td id="feedback_E"></td></tr>
+            <tr data-id="bookf" data-hal="72" data-thn="2022"><td>Buku F</td><td>72</td><td>2022</td><td><select data-book="F"><option value="">-- Pilih Rak --</option></select></td><td id="feedback_F"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="rack-area">
+        <p style="text-align:center;font-weight:bold;color:var(--accent);">HASIL PEMILAHAN BUKU</p>
+        <div class="rack-row">
+          <div class="rack" id="rakA"><strong>Rak A (Hanya A: A - B)</strong><div class="rack-content"></div></div>
+          <div class="rack" id="rakB"><strong>Rak B (Hanya B: B - A)</strong><div class="rack-content"></div></div>
+        </div>
+        <div class="rack-row">
+          <div class="rack" id="rakAB"><strong>Rak AB (Irisan: A &cap; B)</strong><div class="rack-content"></div></div>
+          <div class="rack" id="rakLUAR"><strong>Rak LUAR (Komplemen: Bukan A &amp; Bukan B)</strong><div class="rack-content"></div></div>
+        </div>
+      </div>
+
+      <div id="kardinalitasArea">
+        <button class="btn ghost" id="kardinalitasToggle" style="margin-bottom:15px; width: 100%;">🤔 Apa itu Kardinalitas? (Klik untuk Bantuan)</button>
+        
+        <div id="hiddenKardinalitasInfo" class="hidden-info">
+          <h3>Pengertian Kardinalitas Himpunan</h3>
+          <p><strong>Kardinalitas</strong> adalah jumlah anggota (buku) yang ada dalam suatu himpunan atau operasi himpunan. Dilambangkan dengan <strong>n(Himpunan)</strong>.</p>
+          <p>Hitunglah Kardinalitas (<strong>n(X)</strong>) berdasarkan Rak yang sudah terisi:</p>
+        </div>
+
+         <table id="kardinalitasInputTable">
+          <thead>
+            <tr><th>Operasi</th><th>Anggota (Benar)</th><th>Anggota Siswa Isi</th><th>Hitung Kardinalitas (n(X))</th><th style="width:150px;">Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A ∩ B</strong> (Irisan / Rak AB)</td><td id="nAB_anggota">...</td><td><input type="text" class="kardinalitas-input" id="input_nAB_anggota" placeholder="Contoh: A, C"></td><td><input type="text" class="kardinalitas-input" id="input_nAB"></td><td id="status_nAB"></td></tr>
+            <tr><td><strong>A ∪ B</strong> (Gabungan)</td><td id="nAU_anggota">...</td><td><input type="text" class="kardinalitas-input" id="input_nAU_anggota" placeholder="Contoh: A, B, C"></td><td><input type="text" class="kardinalitas-input" id="input_nAU"></td><td id="status_nAU"></td></tr>
+            <tr><td><strong>(A ∪ B)<sup>c</sup></strong> (Luar / Rak LUAR)</td><td id="nLuar_anggota">...</td><td><input type="text" class="kardinalitas-input" id="input_nLuar_anggota" placeholder="Contoh: D, F"></td><td><input type="text" class="kardinalitas-input" id="input_nLuar"></td><td id="status_nLuar"></td></tr>
+          </tbody>
+        </table>
+      
+      <div class="status-box" id="statusBox">Isi tabel di atas untuk memilah buku.</div>
+
+      <!-- GALLERY WALK TAHAP 4 -->
+      <div style="background:#fff8f0;padding:16px;border-radius:10px;border-left:4px solid #ff9800;margin-top:20px">
+        <h3 style="color:#e65100;margin-top:0;font-size:16px">🎨 Gallery Walk - Beri Komentar Antar Kelompok</h3>
+        <p style="font-size:13px;color:#555;margin:8px 0">Kunjungi hasil pekerjaan kelompok lain dan berikan komentar konstruktif:</p>
+        
+        <div style="margin:12px 0">
+          <label style="display:block;margin-bottom:6px;font-weight:bold;font-size:13px">Nama Kelompok Anda:</label>
+          <input type="text" id="namaKelompokT4" placeholder="Contoh: Kelompok A, Regu 1" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ffb74d;font-family:sans-serif;font-size:13px;box-sizing:border-box">
+        </div>
+
+        <div style="margin:12px 0">
+          <label style="display:block;margin-bottom:6px;font-weight:bold;font-size:13px">Komentar untuk Kelompok Lain:</label>
+          <textarea id="komentarKelompokT4" placeholder="Tuliskan komentar/saran untuk kelompok lain tentang analisis kardinalitas mereka..." style="width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px solid #ffb74d;font-family:sans-serif;font-size:13px;resize:vertical;box-sizing:border-box"></textarea>
+        </div>
+
+        <button class="btn" id="btnKirimKomentarT4" style="background:#ff9800;width:100%">💬 Kirim Komentar</button>
+        <div id="feedbackKomentarT4" style="margin-top:10px;font-size:13px"></div>
+
+        <div style="background:#f5f5f5;padding:12px;border-radius:8px;margin-top:16px;max-height:250px;overflow-y:auto">
+          <div style="font-weight:bold;margin-bottom:8px;font-size:13px">📝 Komentar yang Masuk:</div>
+          <div id="daftarKomentarT4" style="font-size:12px;color:#666">
+            <p style="margin:0;font-style:italic">Belum ada komentar masuk...</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer" style="margin-top:18px;">
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:8px">
+          <button class="btn ghost" data-go="tahap3">⟵ Kembali ke Tahap 3</button>
+          <button class="btn" data-go="tahap5">Lanjut Tahap 5 ⟶</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="fase4-penyajian">
+  <div class="wrap">
+    <div class="panel">
+      <h1>🎨 Fase 4: Penyajian Hasil Karya</h1>
+      <p class="lead">Presentasikan hasil investigasi kelompokmu! Pilih bentuk penyajian yang terbaik.</p>
+
+      <div style="background:#fff8f0;padding:14px;border-radius:10px;margin-bottom:16px;border-left:5px solid #ff9800;">
+        <p style="margin:0;font-weight:700;color:var(--accent)">Langkah Penyajian:</p>
+        <p style="margin:6px 0 0 0;font-size:14px;color:#666">Kelompokmu sudah menyelesaikan investigasi. Sekarang pilih bentuk penyajian hasil pekerjaan dengan cara yang paling menarik!</p>
+      </div>
+
+      <div class="card-lite" style="background:#fffdf6;border:2px dashed #ffd199;padding:16px;margin:16px 0;border-radius:10px">
+        <h3 style="color:var(--accent);margin-top:0">A. Pilih Bentuk Penyajian</h3>
+        
+        <div style="margin:12px 0;display:flex;flex-wrap:wrap;gap:8px">
+          <label class="penyajian-option">
+            <input type="radio" name="bentukPenyajianH1" value="diagram-venn" checked>
+            <span>🔵 Diagram Venn + Penjelasan</span>
+          </label>
+          <label class="penyajian-option">
+            <input type="radio" name="bentukPenyajianH1" value="notasi-himpunan">
+            <span>🔤 Notasi Himpunan {A, B, ...}</span>
+          </label>
+          <label class="penyajian-option">
+            <input type="radio" name="bentukPenyajianH1" value="tabel-lengkap">
+            <span>📋 Tabel Lengkap (hasil pemilahan)</span>
+          </label>
+          <label class="penyajian-option">
+            <input type="radio" name="bentukPenyajianH1" value="cerita-visual">
+            <span>📖 Cerita + Visual Kreatif</span>
+          </label>
+        </div>
+
+        <p style="color:#666;margin:12px 0;font-weight:700">Mengapa memilih bentuk penyajian ini?</p>
+        <textarea id="alasanPenyajianH1" placeholder="Jelaskan alasan memilih bentuk penyajian ini..." style="width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+
+        <button class="btn" id="btnSimpanPenyajianH1" style="width:100%;margin-top:12px">💾 Simpan Bentuk Penyajian</button>
+        <div id="feedbackPenyajianH1" style="margin:12px 0"></div>
+      </div>
+
+      <div class="card-lite" style="background:#fffdf6;border:2px dashed #ffd199;padding:16px;margin:16px 0;border-radius:10px">
+        <h3 style="color:var(--accent);margin-top:0">B. Gallery Walk - Beri Saran Antar Kelompok</h3>
+        <p style="color:#666;margin:8px 0">Kunjungi penyajian kelompok lain dan berikan saran konstruktif untuk meningkatkan pemahaman mereka:</p>
+        
+        <div style="margin:12px 0">
+          <label style="display:block;margin-bottom:6px;font-weight:700;font-size:14px">Nama Kelompok Pemberi Saran (kelompokmu):</label>
+          <input type="text" id="namaKelompokSaran" placeholder="Contoh: Kelompok A, Regu 1" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:sans-serif;font-size:14px;box-sizing:border-box">
+        </div>
+
+        <div style="margin:12px 0">
+          <label style="display:block;margin-bottom:6px;font-weight:700;font-size:14px">Saran untuk Kelompok Lain:</label>
+          <textarea id="komentarSaranH1" placeholder="Saran kalian: Penyajiannya bagus! Coba tambahkan... atau Kami kurang paham dengan..." style="width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+        </div>
+
+        <button class="btn" id="btnKirimSaranH1" style="width:100%;margin-top:12px">💬 Kirim Saran</button>
+        <div id="feedbackKirimSaran" style="margin:12px 0"></div>
+
+        <div style="background:#f5f5f5;padding:14px;border-radius:8px;margin-top:16px;max-height:300px;overflow-y:auto">
+          <h4 style="color:var(--accent);margin-top:0;margin-bottom:12px">📬 Saran dari Kelompok Lain:</h4>
+          <div id="daftarSaranH1">
+            <p style="color:#999;font-style:italic;text-align:center;margin:0">Belum ada saran. Jadilah yang pertama memberikan masukan!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls" style="margin-top:18px;display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap">
+        <button class="btn ghost" style="display:none">⟵ Kembali</button>
+        <button class="btn" style="display:none">Lanjut Refleksi & Evaluasi ⟶</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="slide" id="tahap5">
+  <div class="panel">
+<h1>🎓 Fase 5: Refleksi & Evaluasi</h1>
+<p class="lead">Renungkan apa yang sudah dipelajari dan evaluasi pemahaman tentang himpunan.</p>
+<!-- ===================== -->
+<!-- BAGIAN A: EVALUASI -->
+<!-- ===================== -->
+<div class="section">
+<h2>A. Evaluasi Pemahaman</h2>
+
+<p><b>1. Apa itu himpunan?</b></p>
+<label><input type="radio" name="q1"> A. Kumpulan objek dengan kriteria jelas </label><br>
+<label><input type="radio" name="q1"> B. Semua benda yang terlihat</label><br>
+<label><input type="radio" name="q1"> C. Kumpulan acak</label>
+
+<br><br>
+
+<p><b>2. Jika pustakawan ingin buku yang memenuhi dua kriteria sekaligus, operasi yang digunakan adalah...</b></p>
+<label><input type="radio" name="q2"> A ∩ B </label><br>
+<label><input type="radio" name="q2"> A ∪ B</label><br>
+<label><input type="radio" name="q2"> A − B</label><br>
+<label><input type="radio" name="q2"> B − A</label>
+</div>
+
+<!-- ===================== -->
+<!-- BAGIAN B: REFLEKSI PEMBELAJARAN -->
+<!-- ===================== -->
+<div class="section">
+<h2>B. Refleksi Pembelajaran</h2>
+
+<p><b>3. Bagian mana dari pembelajaran hari ini yang paling membantu kamu memahami konsep himpunan?</b></p>
+<textarea placeholder="Tuliskan pendapatmu…"></textarea>
+
+<p><b>4. Apa langkah yang kamu lakukan ketika menentukan apakah sebuah buku masuk A atau B?</b></p>
+<textarea placeholder="Contoh: Saya melihat jumlah halaman…"></textarea>
+</div>
+
+<!-- ===================== -->
+<!-- BAGIAN C: JAWABAN AKHIR -->
+<!-- ===================== -->
+<div class="section">
+<h2>C. Jawaban Akhir Permasalahan</h2>
+<p><b>5. Buku mana saja yang harus dimasukkan ke rak A ∩ B? Jelaskan secara singkat.</b></p>
+<textarea placeholder="Contoh: Buku H dan I karena memenuhi dua kriteria…"></textarea>
+</div>
+
+<!-- ===================== -->\n<!-- BAGIAN E: REFLEKSI INDIVIDU -->
+<!-- ===================== -->
+<div class="section">
+<h2>E. Refleksi Individu</h2>
+<p style="margin-bottom:12px;color:var(--muted);font-style:italic;">Jawab pertanyaan-pertanyaan berikut secara jujur dan mendalam:</p>
+
+<p><b>7. Bagian mana dari masalah pustakawan yang paling membingungkan?</b></p>
+<textarea id="refleksi7" placeholder="Tuliskan bagian mana yang paling sulit atau membingungkan bagi kamu..." style="width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:sans-serif;font-size:14px;resize:vertical;box-sizing:border-box;margin-bottom:16px"></textarea>
+
+<p><b>8. Kesalahan apa yang sempat dibuat kelompokmu?</b></p>
+<textarea id="refleksi8" placeholder="Jelaskan kesalahan atau hambatan apa yang dihadapi kelompok saat mengerjakan tugas..." style="width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:sans-serif;font-size:14px;resize:vertical;box-sizing:border-box;margin-bottom:16px"></textarea>
+
+<p><b>9. Mengapa masalah ini belum sepenuhnya selesai hari ini?</b></p>
+<textarea id="refleksi9" placeholder="Apa yang masih perlu dipelajari atau dikembangkan lebih lanjut?" style="width:100%;min-height:80px;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+</div>
+
+<!-- ===================== -->
+<!-- BAGIAN D: REFLEKSI PERASAAN -->
+<!-- ===================== -->
+<div class="section">
+<h2>D. Refleksi Perasaan</h2>
+<p><b>6. Bagaimana perasaan kamu tentang pembelajaran hari ini?</b></p>
+<textarea placeholder="Senang, cukup mudah, bingung, atau bagaimana?"></textarea>
+</div>
+
+<!-- ===================== -->
+<!-- NAVIGASI & DOWNLOAD -->
+<!-- ===================== -->
+<div class="nav">
+  <button class="button" style="display:none">⟵ Kembali</button>
+  <button id="downloadPdfBtn" class="button" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);width:100%;padding:12px;font-size:16px;cursor:pointer">📥 Download Hasil Pembelajaran (PDF)</button>
+</div> 
+<div style="display:flex;gap:8px;justify-content:center;margin-top:12px;font-size:12px;color:#666;">
+  💡 Hasil pembelajaran akan diunduh sebagai file PDF ke perangkat Anda
+</div>
+  </div>
+</div>
+</section>
+
+<script>
+
+// ===== INISIALISASI GLOBAL AWAL =====
+window.quizAnswers = {};
+window.quizData = {
+  Q1: { text: "Bilangan genap antara 1 dan 20", correct: "yes", reason: "✅ Kriteria jelas: bilangan genap, batas pasti 1-20. Anggotanya: {2,4,6,8,10,12,14,16,18}" },
+  Q2: { text: "Siswa yang pandai di kelas ini", correct: "no", reason: "❌ Siapa yang 'pandai'? Tidak ada ukuran objektif. Setiap orang punya pendapat berbeda." },
+  Q3: { text: "Huruf vokal dalam kata 'HIMPUNAN'", correct: "yes", reason: "✅ Kriteria jelas: huruf vokal. Anggotanya: {I, U, A}" },
+  Q4: { text: "Film yang paling bagus menurut pendapatmu", correct: "no", reason: "❌ Bersifat subjektif. 'Bagus' berbeda-beda menurut orang. Tidak ada standar objektif." },
+  Q5: { text: "Negara di Asia Tenggara", correct: "yes", reason: "✅ Kriteria jelas: geografis dan pasti. Anggotanya: {Indonesia, Malaysia, Singapura, Thailand, Vietnam, dll}" }
+};
+
+// ===== QUIZ ANSWER HANDLER (MOVED EARLY - NEEDED BY ONCLICK) =====
+window.selectQuizAnswer = function(quizId, answer) {
+  try {
+    console.log('🔵 selectQuizAnswer called:', quizId, answer);
+    
+    if(!window.quizAnswers) {
+      window.quizAnswers = {};
+    }
+    window.quizAnswers[quizId] = answer;
+    
+    // Find card element
+    const card = document.getElementById('quiz-card-' + quizId);
+    if(!card) {
+      console.error('❌ Card not found:', 'quiz-card-' + quizId);
+      return;
+    }
+    
+    // Get quiz data untuk penjelasan
+    const quizInfo = window.quizData[quizId];
+    if(!quizInfo) {
+      console.error('❌ Quiz data not found for:', quizId);
+      return;
+    }
+    
+    // Change styling
+    if(answer === 'yes') {
+      card.style.borderColor = '#4caf50';
+      card.style.backgroundColor = '#e8f5e9';
+      card.style.border = '2px solid #4caf50';
+    } else {
+      card.style.borderColor = '#c62828';
+      card.style.backgroundColor = '#ffebee';
+      card.style.border = '2px solid #c62828';
+    }
+    
+    // Tampilkan PENJELASAN LANGSUNG di bawah kartu
+    const resultDiv = document.getElementById('quiz-result-' + quizId);
+    if(resultDiv) {
+      if(answer === quizInfo.correct) {
+        // BENAR - Tampilkan penjelasan kenapa benar
+        resultDiv.innerHTML = `<div style="padding:10px;background:#e8f5e9;border-left:4px solid #4caf50;border-radius:6px;color:#2e7d32;margin-top:8px">
+          <div style="font-weight:bold;margin-bottom:4px">✅ Pilihan Tepat!</div>
+          <div style="font-size:12px;line-height:1.5">${quizInfo.reason}</div>
+        </div>`;
+      } else {
+        // SALAH - Tampilkan penjelasan kenapa salah
+        resultDiv.innerHTML = `<div style="padding:10px;background:#fff3e0;border-left:4px solid #ff9800;border-radius:6px;color:#e65100;margin-top:8px">
+          <div style="font-weight:bold;margin-bottom:4px">💭 Perhatikan Lagi...</div>
+          <div style="font-size:12px;line-height:1.5">${quizInfo.reason}</div>
+        </div>`;
+      }
+      resultDiv.style.display = 'block';
+    }
+    
+    // Update progress counter
+    const answered = Object.keys(window.quizAnswers).length;
+    const feedback = document.getElementById('quizFeedback');
+    const checkBtn = document.getElementById('quizCheckBtn');
+    
+    if(!feedback) {
+      console.error('❌ Feedback element not found');
+      return;
+    }
+    
+    // Update feedback
+    if(answered === 5) {
+      feedback.innerHTML = `<div style="color:#2e7d32;font-weight:bold;padding:12px;background:#e8f5e9;border:2px solid #4caf50;border-radius:8px;text-align:center">
+        <div style="font-size:18px;margin-bottom:4px">✅ Semua Pertanyaan Sudah Dijawab!</div>
+        <div style="font-size:13px;color:#555;margin-top:4px">Klik "Cek Jawaban" untuk melihat skor akhir</div>
+      </div>`;
+      if(checkBtn) {
+        checkBtn.style.display = 'inline-block';
+      }
+    } else {
+      feedback.innerHTML = `<div style="color:#f57c00;font-weight:bold;padding:10px;background:#fff8e6;border:2px solid #ff9800;border-radius:6px;text-align:center">
+        📝 Sudah dijawab: ${answered}/5 pertanyaan
+      </div>`;
+    }
+    
+    console.log('✅ selectQuizAnswer complete\n');
+    
+  } catch(e) {
+    console.error('❌ ERROR in selectQuizAnswer:', e);
+  }
+}
+
+ window.safeOn = function(selOrId, ev, fn){
+   const el = typeof selOrId === 'string'
+     ? (document.getElementById(selOrId) || document.querySelector(selOrId))
+     : selOrId;
+   if(!el){ console.debug('safeOn: element not found', selOrId); return null; }
+   el.addEventListener(ev, fn);
+   return el;
+ };
+
+ // show: tampilkan slide top-level (main.slides > .slide) berdasarkan id
+ function show(id){
+   const topMain = document.querySelector('main.slides');
+   if(topMain){
+     // hide only direct child slides
+     topMain.querySelectorAll(':scope > .slide').forEach(s=>s.classList.remove('active'));
+   }
+   const target = document.getElementById(id);
+   if(target) target.classList.add('active');
+   const card = document.querySelector('.card');
+   if(card) card.scrollTop = 0;
+   
+   // Hide/show header berdasarkan slide
+   const headerEl = document.querySelector('.card > .header');
+   const shouldShowHeader = ['start', 'menu', 'permasalahan-gambar', 'identitas-kelompok'].includes(id);
+   if(headerEl) {
+     headerEl.style.display = shouldShowHeader ? 'block' : 'none';
+   }
+ }
+ window.show = show;
+
+ // Delegasi global: tangani tombol [data-go] di mana pun berada
+ document.body.addEventListener('click', (ev) => {
+   const btn = ev.target.closest('[data-go]');
+   if(!btn) return;
+   ev.preventDefault();
+   const targetId = btn.getAttribute('data-go');
+   if(!targetId) return;
+   try { window.show(targetId); } catch(e){ console.error('Navigasi gagal ke', targetId, e); }
+ });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize header visibility (start slide should show header)
+  const headerEl = document.querySelector('.card > .header');
+  if(headerEl) {
+    headerEl.style.display = 'block';
+  }
+
+window.safeOn = function(selOrId, ev, fn){
+  const el = typeof selOrId === 'string'
+    ? (document.getElementById(selOrId) || document.querySelector(selOrId))
+    : selOrId;
+  if(!el){ console.warn('safeOn: element not found', selOrId); return; }
+  el.addEventListener(ev, fn);
+  return el;
+};
+    // =========================================================
+    // 1. LOGIKA GLOBAL DAN NAVIGASI
+    // =========================================================
+
+    /**
+     * Fungsi untuk menampilkan slide berdasarkan ID dan menyembunyikan yang lain.
+     */
+    // ...existing code...
+  // --- LOGIKA INPUT IDENTITAS KELOMPOK ---
+  document.getElementById('addAnggotaBtn').addEventListener('click', () => {
+    const container = document.getElementById('anggotaContainer');
+    const count = container.querySelectorAll('.anggota-input').length;
+    
+    if (count >= 5) {
+      alert('Maksimal 5 anggota per kelompok.');
+      return;
+    }
+    
+    const newRow = document.createElement('div');
+    newRow.style.display = 'flex';
+    newRow.style.gap = '8px';
+    newRow.style.marginBottom = '8px';
+    newRow.innerHTML = `
+      <input type="text" class="anggota-input" placeholder="Nama anggota ${count + 1}" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
+      <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
+        <option value="Ketua Kelompok">Ketua Kelompok</option>
+        <option value="Wakil Ketua">Wakil Ketua</option>
+        <option value="Sekretaris">Sekretaris</option>
+        <option value="Anggota Aktif">Anggota Aktif</option>
+        <option value="Anggota">Anggota</option>
+      </select>
+      <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px">−</button>
+    `;
+    container.appendChild(newRow);
+  });
+
+  window.removeAnggota = function(btn) {
+    const container = document.getElementById('anggotaContainer');
+    if (container.querySelectorAll('.anggota-input').length <= 1) {
+      alert('Minimal ada 1 anggota.');
+      return;
+    }
+    btn.parentElement.remove();
+  };
+
+  document.getElementById('lanjutTahap1Btn').addEventListener('click', () => {
+    const namaKelompok = document.getElementById('namaKelompok').value.trim();
+    const anggotaRows = document.querySelectorAll('#anggotaContainer > div');
+    const anggota = Array.from(anggotaRows).map(row => {
+      const namaInput = row.querySelector('.anggota-input');
+      const tanggungJawabSelect = row.querySelector('.tanggung-jawab-select');
+      const nama = namaInput?.value.trim();
+      const tanggungJawab = tanggungJawabSelect?.value || 'Anggota';
+      return nama ? { nama, tanggungJawab } : null;
+    }).filter(x => x);
+
+    if (!namaKelompok) {
+      alert('Mohon isi nama kelompok.');
+      return;
+    }
+
+    if (anggota.length === 0) {
+      alert('Mohon isi minimal 1 nama anggota.');
+      return;
+    }
+
+    // Simpan data (opsional: ke localStorage atau global var)
+    const kelompokData = { nama: namaKelompok, anggota: anggota };
+    console.log('Data Kelompok:', kelompokData);
+    localStorage.setItem('kelompokData', JSON.stringify(kelompokData));
+
+    // Simpan solusi awal jika ada
+    const solusiAwal = document.getElementById('solusiAwalPertemuan1')?.value.trim();
+    if (solusiAwal) {
+      localStorage.setItem('solusiAwalPertemuan1', solusiAwal);
+    }
+
+    // Lanjut ke Tahap 1
+    alert(`Kelompok "${namaKelompok}" terdaftar dengan ${anggota.length} anggota. Selamat mengerjakan!`);
+    show('permasalahan'); // navigasi ke Tahap 1
+  });
+    function show(id) {
+        // hanya non-aktifkan direct children dari main.slides pertama (top-level)
+        const topMain = document.querySelector('main.slides');
+        if (topMain) {
+            topMain.querySelectorAll(':scope > .slide').forEach(s => s.classList.remove('active'));
+        }
+        const target = document.getElementById(id);
+        if (target) target.classList.add('active');
+        const card = document.querySelector('.card');
+        if (card) card.scrollTop = 0;
+    }
+
+window.show = show;
+    // Status penyelesaian: Hanya melacak 'materi' untuk demo ini
+    const completion = { materi: 0, k1: 0, k2: 0, k3: 0, k4: 0, k5: 0 };
+    const progressCountEl = document.getElementById('progressCount');
+    
+    /**
+     * Fungsi untuk memperbarui tampilan progress bar di footer.
+     */
+    function updateProgress() {
+        let done = 0;
+        ['materi', 'k1', 'k2', 'k3', 'k4', 'k5'].forEach(k => done += completion[k]);
+        if (progressCountEl) progressCountEl.innerText = done + '/6';
+    }
+
+    // Listener untuk semua tombol navigasi
+    document.querySelectorAll('[data-go]').forEach(el => el.addEventListener('click', function() {
+        const targetId = this.getAttribute('data-go');
+        show(targetId);
+        
+        // Tandai materi selesai jika pengguna mengunjungi slide materi
+        if (targetId.startsWith('materi') && targetId !== 'materi') {
+            completion.materi = 1;
+            updateProgress();
+        }
+    }));
+    
+    // Inisialisasi progress
+    updateProgress();
+});
+(function(){
+  // --- state ---
+  const cards = document.querySelectorAll('.kartu-draggable');
+  const zoneYes = document.getElementById('zoneYes');
+  const zoneNo = document.getElementById('zoneNo');
+  
+  // Early return if these elements don't exist (we're not on this slide)
+  if(!zoneYes || !zoneNo) return;
+  
+  const summary = document.getElementById('summaryArea');
+  const progressText = document.getElementById('progressText');
+  const doneBtn = document.getElementById('doneBtn');
+  const resetBtn = document.getElementById('resetBtn');
+  const applyCustom = document.getElementById('applyCustom');
+  const customInput = document.getElementById('customInput');
+  const startBtn = document.getElementById('startBtn');
+  const modal = document.getElementById('modalExplain');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalBody = document.getElementById('modalBody');
+  const closeModal = document.getElementById('closeModal');
+  const sndOk = document.getElementById('sndOk');
+  const sndBad = document.getElementById('sndBad');
+
+  // true mapping: A -> yes, B -> no, C -> yes
+  const correctMap = { A: 'yes', B: 'no', C: 'yes' };
+  const placed = {}; // id -> zone ('yes'/'no')
+
+  // start animation simple
+  startBtn.addEventListener('click', () => {
+    let n=3;
+    const cd = document.getElementById('countdown');
+    cd.innerText = "Misi dimulai dalam 3...";
+    const t = setInterval(()=> {
+      n--;
+      if(n>0) cd.innerText = `Misi dimulai dalam ${n}...`;
+      else { cd.innerText = ''; clearInterval(t); startBtn.disabled = true; startBtn.innerText='Misi Dimulai'; }
+    },700);
+  });
+
+  // Drag handlers
+  cards.forEach(card => {
+    // ensure draggable in case attribute stripped by DOM edits
+    card.setAttribute('draggable','true');
+    card.addEventListener('dragstart', ev => {
+      ev.dataTransfer.effectAllowed = 'move';
+      ev.dataTransfer.setData('text/plain', card.dataset.id);
+      setTimeout(()=> card.classList.add('dragging'), 10);
+      card.setAttribute('aria-grabbed','true');
+    });
+    card.addEventListener('dragend', ev => {
+      card.classList.remove('dragging');
+      card.setAttribute('aria-grabbed','false');
+    });
+
+    // also support keyboard "select then press Y/N" for accessibility
+    card.addEventListener('keydown', ev => {
+      if(ev.key === 'y' || ev.key === 'Y'){
+        placeCard(card.dataset.id, 'yes', card);
+      } else if(ev.key === 'n' || ev.key === 'N'){
+        placeCard(card.dataset.id, 'no', card);
+      } else if(ev.key === 'Enter'){
+        // open explanation
+        showExplain(card.dataset.id);
+      }
+    });
+
+    card.addEventListener('click', ()=> showExplain(card.dataset.id));
+  });
+
+  [zoneYes, zoneNo].forEach(z=>{
+    z.addEventListener('dragover', ev=> { ev.preventDefault(); try{ ev.dataTransfer.dropEffect = 'move'; }catch(e){} z.classList.add('hover'); });
+    z.addEventListener('dragleave', ev=> { z.classList.remove('hover'); });
+    z.addEventListener('drop', ev=> {
+      ev.preventDefault();
+      z.classList.remove('hover');
+      const id = ev.dataTransfer.getData('text/plain');
+      if(!id) return;
+      const cardEl = document.querySelector(`.kartu-draggable[data-id="${id}"]`);
+      placeCard(id, z === zoneYes ? 'yes' : 'no', cardEl);
+    });
+  });
+
+  function placeCard(id, zone, cardEl){
+    if(!id) return;
+    if(!cardEl) cardEl = document.querySelector(`.kartu-draggable[data-id="${id}"]`);
+    if(!cardEl) return;
+    // move visual: append as small chip
+    const target = zone === 'yes' ? zoneYes : zoneNo;
+    // if already placed elsewhere, remove previous
+    Object.keys(placed).forEach(k => {
+      if(k === id && placed[k] === zone) return;
+      if(k === id && placed[k] !== zone){
+        // move: remove old chip
+        const oldChip = target.parentElement.querySelector(`.chip-${id}`);
+        if(oldChip) oldChip.remove();
+      }
+    });
+    // create chip to show in dropzone
+    const chip = document.createElement('div');
+    chip.className = 'kartu chip-'+id;
+    chip.style.marginTop = '6px';
+    chip.innerHTML = `<div style="font-weight:bold">${id}</div><div style="font-size:12px;color:#6b4b3a">${cardEl.querySelector('.meta').innerText}</div>`;
+    // remove previous chip in other zone
+    const otherZone = zone === 'yes' ? zoneNo : zoneYes;
+    const prev = otherZone.querySelector(`.chip-${id}`);
+    if(prev) prev.remove();
+    // append if not exists
+    if(!target.querySelector(`.chip-${id}`)) target.appendChild(chip);
+
+    placed[id] = zone;
+    evaluatePlacement(id, zone, chip);
+    updateSummary();
+  }
+
+  function evaluatePlacement(id, zone, chip) {
+    const correct = correctMap[id] === zone;
+    // flash zone color briefly
+    const zoneEl = zone === 'yes' ? zoneYes : zoneNo;
+    zoneEl.classList.remove('correct','wrong');
+    zoneEl.classList.add(correct ? 'correct' : 'wrong');
+    setTimeout(()=> zoneEl.classList.remove('correct','wrong'), 900);
+
+    // feedback text blocks
+    const fb = zone === 'yes' ? document.getElementById('fbYes') : document.getElementById('fbNo');
+    fb.style.display = 'flex';
+    if(correct){
+      fb.className = 'feedback ok';
+      fb.innerText = 'Benar — kriteria ini dapat dijadikan himpunan.';
+      try{ sndOk.play(); }catch(e){}
+    } else {
+      fb.className = 'feedback no';
+      fb.innerText = 'Kurang tepat — periksa lagi definisi himpunan.';
+      try{ sndBad.play(); }catch(e){}
+    }
+    // attach little explain toggle to chip
+    chip.addEventListener('click', ()=> showExplain(id, correct));
+  }
+
+  function updateSummary(){
+    const placedIds = Object.keys(placed);
+    if(placedIds.length === 0) summary.innerText = 'Belum ada kartu yang ditempatkan.';
+    else {
+      let lines = placedIds.map(id => {
+        const zone = placed[id] === 'yes' ? 'Himpunan' : 'Bukan Himpunan';
+        return `Kriteria ${id}: ${zone}`;
+      });
+      summary.innerHTML = lines.join('<br>');
+    }
+    // update progress text
+    const correctCount = Object.keys(placed).filter(k => correctMap[k] === placed[k]).length;
+    if(Object.keys(placed).length === 3 && correctCount === 3) {
+      progressText.innerText = 'Semua kartu ditempatkan dengan benar! Tahap 1 selesai.';
+    } else {
+      progressText.innerText = `Terdapat ${Object.keys(placed).length} kartu ditempatkan, benar ${correctCount}/3.`;
+    }
+  }
+
+  // modal explain logic
+  function showExplain(id, isCorrectOverride){
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+    let title='', body='';
+    if(id === 'A'){
+      title = 'Kriteria A — Buku dengan halaman > 100';
+      body = `<p>Ini adalah kriteria <strong>objektif</strong>: setiap buku memiliki jumlah halaman, sehingga kita dapat memeriksa secara pasti apakah sebuah buku masuk kriteria.</p>
+              <p>Oleh karena itu <strong>kriteria A memenuhi syarat sebagai himpunan</strong>.</p>`;
+    } else if(id === 'B'){
+      title = 'Kriteria B — Buku yang paling menarik';
+      body = `<p>Ini adalah kriteria <strong>subjektif</strong>. "Paling menarik" tergantung penilai (preference) dan tidak ada aturan pasti untuk memutuskan anggota.</p>
+              <p>Maka <strong>kriteria B tidak memenuhi syarat himpunan</strong>.</p>`;
+    } else if(id === 'C'){
+      title = 'Kriteria C — Buku terbit setelah 2018';
+      body = `<p>Ini juga objektif: tahun terbit adalah data yang terukur. Sangat tepat dijadikan kriteria himpunan.</p>`;
+    } else {
+      title = 'Kriteria Kustom';
+      body = `<p>Ulasan: ${id}</p>`;
+    }
+    if(typeof isCorrectOverride !== 'undefined'){
+      body += `<p style="margin-top:8px"><strong>Status penempatan saat ini:</strong> ${isCorrectOverride ? 'Benar' : 'Perlu perbaikan'}</p>`;
+    }
+    modalTitle.innerText = title;
+    modalBody.innerHTML = body;
+  }
+  if(closeModal) closeModal.addEventListener('click', ()=> { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); });
+
+  // apply custom check (bonus)
+  if(applyCustom) applyCustom.addEventListener('click', ()=>{
+    const txt = customInput.value.trim();
+    if(!txt){ alert('Isi kriteria kustom terlebih dahulu.'); return; }
+    // simple heuristic: if contains number or year or '>' or 'tahun' => objective
+    const lower = txt.toLowerCase();
+    const likelyObjective = /\d|tahun|tahun|>|<|lebih|kurang|rating|score/.test(lower);
+    const message = likelyObjective ? 'Kriteria ini cenderung objektif → dapat menjadi himpunan.' : 'Kriteria ini tampak subjektif → sebaiknya bukan himpunan.';
+    modal.classList.add('open');
+    modalTitle.innerText = 'Hasil Cek Kustom';
+    modalBody.innerHTML = `<p>${message}</p><p style="margin-top:8px;font-style:italic">${txt}</p>`;
+  });
+
+  // done: require all placed and all correct
+  if(doneBtn) doneBtn.addEventListener('click', ()=>{
+    const totalPlaced = Object.keys(placed).length;
+    if(totalPlaced < 3){ alert('Tempatkan semua kartu terlebih dahulu.'); return; }
+    const allCorrect = Object.keys(placed).every(k => correctMap[k] === placed[k]);
+    if(!allCorrect){ if(!confirm('Beberapa jawaban belum benar. Tandai selesai tetap dilakukan?')) return; }
+    // mark completed: attempt to integrate with existing page progress if exists
+    // If host page defines a global completion object, try to update; otherwise show message
+    try {
+      if(window.completion) {
+        window.completion.k1 = 1;
+        if(typeof updateProgress === 'function') updateProgress();
+      }
+    } catch(e){}
+    
+    alert('Tahap 1 ditandai selesai. Lanjut ke Tahap 2!');
+    progressText.innerText = 'Tahap 1: selesai (ditandai).';
+  });
+
+  if(resetBtn) resetBtn.addEventListener('click', ()=>{
+    // remove chips and placed
+    if(zoneYes && zoneNo) {
+      zoneYes.querySelectorAll('.kartu').forEach(n => { if(n.classList.contains('chip-A')||n.classList.contains('chip-B')||n.classList.contains('chip-C')) n.remove(); });
+      zoneNo.querySelectorAll('.kartu').forEach(n => { if(n.classList.contains('chip-A')||n.classList.contains('chip-B')||n.classList.contains('chip-C')) n.remove(); });
+    }
+    Object.keys(placed).forEach(k => delete placed[k]);
+    summary.innerText = 'Belum ada aksi.';
+    progressText.innerText = 'Tahap 1 belum selesai.';
+    document.getElementById('fbYes').style.display='none';
+    document.getElementById('fbNo').style.display='none';
+  });
+
+  // accessible close modal on Escape
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape') {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+    }
+  });
+
+})();
+  <!-- JS -->
+// tahap2.js
+// Basic interactive logic for Level 1-5
+document.addEventListener('DOMContentLoaded', () => {
+  // slide control
+  const slides = Array.from(document.querySelectorAll('#slides-t2 .slide'));
+  let idx = 0;
+  const updateSlide = () => {
+    slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
+    document.getElementById('levelLabel').textContent = `Level ${idx+1} dari ${slides.length}`;
+    document.getElementById('prevBtn').disabled = idx===0;
+    document.getElementById('nextBtn').disabled = true;
+  };
+
+  // prev/next top buttons (prev goes back)
+  document.getElementById('prevBtn').addEventListener('click', ()=>{ if(idx>0){ idx--; updateSlide(); }});
+  document.getElementById('nextBtn').addEventListener('click', ()=>{ if(idx<slides.length-1){ idx++; updateSlide(); }});
+
+  // NAV buttons inside levels
+  const goto2 = document.getElementById('goto2');
+  const goto3 = document.getElementById('goto3');
+  const goto4 = document.getElementById('goto4');
+  const goto5 = document.getElementById('goto5');
+
+  // Level 1 logic (multiple choice)
+// ...existing code...
+(function level1(){
+  const options = document.querySelectorAll('#level-1 .option');
+  const fb = document.getElementById('fb1');
+  let done = false;
+
+  // pastikan fb awalnya tersembunyi
+  if(fb){ fb.style.display = 'none'; fb.setAttribute('aria-hidden','true'); }
+
+  options.forEach(opt=>{
+    const click = ()=>{
+      if(done) return;
+      const correct = opt.dataset.correct === 'true';
+      const explain = opt.dataset.explain || '';
+
+      // tampilkan area feedback
+      if(fb){ fb.style.display = 'block'; fb.setAttribute('aria-hidden','false'); }
+
+      if(correct){
+        fb.innerHTML = `<div style="font-weight:700;color:var(--success)">✅ Tepat!</div>
+                        <div style="margin-top:6px;color:#264d14">${explain}</div>`;
+        fb.className = 'feedback ok';
+        done = true;
+        const goto2 = document.getElementById('goto2');
+        if(goto2) goto2.disabled = false;
+        opt.style.border = '2px solid var(--success)';
+        setTimeout(()=>{ const el = document.getElementById('goto2'); if(el) el.focus(); }, 120);
+      } else {
+        fb.innerHTML = `<div style="font-weight:700;color:var(--danger)">❌ Kurang tepat</div>
+                        <div style="margin-top:6px;color:#4a2b2a">${explain}</div>`;
+        fb.className = 'feedback err';
+        opt.classList.add('invalid');
+        setTimeout(()=>opt.classList.remove('invalid'),500);
+      }
+    };
+
+    opt.addEventListener('click', click);
+    opt.addEventListener('keydown', e=>{ if(e.key === 'Enter' || e.key === ' ') click(); });
+  });
+
+  const goto2 = document.getElementById('goto2');
+  if(goto2) goto2.addEventListener('click', ()=>{ if(!goto2.disabled){ idx = 1; updateSlide(); }});
+})();
+
+
+  // Level 2 logic (drag & drop assembly)
+  // ...existing code...
+(function level2(){
+  const pieces = document.querySelectorAll('#level-2 .piece');
+  const assembly = document.getElementById('assembly');
+  const fb = document.getElementById('fb2');
+  const correctOrder = ['Buku','dengan jumlah','halaman','lebih dari','100'];
+  let assembled = [];
+
+  // helper: render feedback area
+  function showFeedback(html, type){
+    if(!fb) return;
+    fb.style.display = 'block';
+    fb.setAttribute('aria-hidden','false');
+    fb.innerHTML = html;
+    fb.className = 'feedback ' + (type === 'ok' ? 'ok' : 'err');
+  }
+
+  // reset assembly area
+  function resetAssembly(){
+    assembled = [];
+    while(assembly.firstChild) assembly.removeChild(assembly.firstChild);
+    fb.style.display = 'none';
+    // re-enable pieces if any were removed
+    document.querySelectorAll('#level-2 .piece').forEach(p => p.style.opacity = '');
+  }
+
+  // add piece node into assembly
+  function appendPieceNode(text){
+    const node = document.createElement('div');
+    node.className = 'card-item';
+    node.textContent = text;
+    node.setAttribute('data-text', text);
+    // allow click to remove
+    node.addEventListener('click', () => {
+      assembly.removeChild(node);
+      assembled = assembled.filter(x=>x!==text);
+      // make original piece visible again
+      const src = Array.from(document.querySelectorAll('#level-2 .piece')).find(x=>x.textContent.trim()===text.trim());
+      if(src) src.style.opacity = '';
+      // clear feedback when changed
+      if(fb) { fb.style.display = 'none'; fb.innerHTML = ''; fb.className = 'feedback'; }
+    });
+    assembly.appendChild(node);
+  }
+
+  // check assembled order and give detailed feedback
+  function validateAssembly(){
+    if(assembled.length !== correctOrder.length) return;
+    const mismatches = [];
+    for(let i=0;i<correctOrder.length;i++){
+      if(assembled[i].trim() !== correctOrder[i].trim()){
+        mismatches.push({pos: i+1, got: assembled[i], want: correctOrder[i]});
+      }
+    }
+
+    if(mismatches.length === 0){
+      showFeedback(`<div style="font-weight:700;color:var(--success)">✅ Sempurna!</div>
+                    <div style="margin-top:6px;color:#264d14">Kalimat deskripsi sudah benar: <em>${assembled.join(' ')}</em></div>`, 'ok');
+      // enable navigation to next level if button exists
+      const goto3btn = document.getElementById('goto3');
+      if(goto3btn) goto3btn.disabled = false;
+    } else {
+      // highlight incorrect nodes visually
+      const nodes = Array.from(assembly.querySelectorAll('.card-item'));
+      nodes.forEach((n, idx) => {
+        const wrong = mismatches.some(m => m.pos === idx+1);
+        n.classList.toggle('invalid', wrong);
+      });
+
+      // build a helpful reason message: show first mismatch and tips
+      const first = mismatches[0];
+      let msg = `<div style="font-weight:700;color:var(--danger)">❌ Susunan belum tepat</div>`;
+      msg += `<div style="margin-top:6px;color:#4a2b2a">Bagian ke-${first.pos} salah: Anda menaruh "<strong>${first.got}</strong>" tetapi seharusnya "<strong>${first.want}</strong>".</div>`;
+      msg += `<div style="margin-top:8px;color:#5b3f32">Tip: Mulai susunan dengan subjek utama <strong>"Buku"</strong>, lalu informasi jumlah halaman secara berurutan.</div>`;
+      msg += `<div style="margin-top:10px"><button id="retryAssembly" class="btn ghost">Coba Lagi</button> <button id="showAnswer" class="btn">Tunjukkan Susunan Benar</button></div>`;
+      showFeedback(msg, 'err');
+
+      // attach handlers for retry / show answer
+      document.getElementById('retryAssembly').addEventListener('click', ()=>{
+        resetAssembly();
+      });
+      document.getElementById('showAnswer').addEventListener('click', ()=>{
+        // fill assembly with correct order (guided reveal)
+        resetAssembly();
+        correctOrder.forEach(item=>{
+          assembled.push(item);
+          appendPieceNode(item);
+        });
+        showFeedback(`<div style="font-weight:700;color:var(--success)">🔎 Susunan Benar Ditampilkan</div>
+                      <div style="margin-top:6px;color:#264d14">${correctOrder.join(' ')}</div>`, 'ok');
+        const goto3btn = document.getElementById('goto3');
+        if(goto3btn) goto3btn.disabled = false;
+      });
+    }
+  }
+
+  // piece drag support + keyboard
+  pieces.forEach(p=>{
+    p.addEventListener('dragstart', e=>{
+      e.dataTransfer.setData('text/plain', p.textContent);
+      p.classList.add('dragging');
+    });
+    p.addEventListener('dragend', ()=> p.classList.remove('dragging'));
+    p.addEventListener('click', ()=>{
+      // append only if not already used
+      const text = p.textContent.trim();
+      if(assembled.includes(text)) return;
+      assembled.push(text);
+      appendPieceNode(text);
+      // hide/gray source piece to indicate used
+      p.style.opacity = '0.4';
+      validateAssembly();
+    });
+    p.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' ') p.click(); });
+  });
+
+  assembly.addEventListener('dragover', e=> e.preventDefault());
+  assembly.addEventListener('drop', e=>{
+    e.preventDefault();
+    const text = e.dataTransfer.getData('text/plain');
+    if(!text) return;
+    // prevent duplicates
+    if(assembled.includes(text)) return;
+    assembled.push(text);
+    appendPieceNode(text);
+    // gray the piece
+    const src = Array.from(document.querySelectorAll('#level-2 .piece')).find(x=>x.textContent.trim()===text.trim());
+    if(src) src.style.opacity = '0.4';
+    validateAssembly();
+  });
+
+  // allow goto3 if present
+  if(goto3) goto3.addEventListener('click', ()=>{ if(!goto3.disabled){ idx = 2; updateSlide(); }});
+})();
+
+
+  // Level 3 logic (click books)
+  (function level3(){
+    const resultEnum = document.getElementById('resultEnum');
+    if(!resultEnum) return;
+    
+    const books = document.querySelectorAll('#level-3 .book');
+    const fb = document.getElementById('fb3');
+    let selected = [];
+    books.forEach(b=>{
+      b.addEventListener('click', ()=>{
+        const valid = b.dataset.valid === 'true';
+        const name = b.dataset.name;
+        if(valid){
+          if(!selected.includes(name)){
+            selected.push(name);
+            b.classList.add('selected');
+            resultEnum.textContent = `{ ${selected.join(', ')} }`;
+          } else {
+            // deselect
+            selected = selected.filter(x=>x!==name);
+            b.classList.remove('selected');
+            resultEnum.textContent = selected.length? `{ ${selected.join(', ')} }` : '{  }';
+          }
+        } else {
+          b.classList.add('invalid');
+          fb.textContent = 'Buku ini tidak memenuhi syarat > 100 halaman.';
+          fb.className = 'feedback err';
+          setTimeout(()=>{ b.classList.remove('invalid'); fb.textContent=''; },700);
+        }
+        // check success
+        // correct set = Buku A, Buku C
+        const ok = selected.includes('Buku A') && selected.includes('Buku C') && selected.length===2;
+        if(ok){
+          fb.textContent = 'Bagus! Enumerasi benar.';
+          fb.className = 'feedback ok';
+          document.getElementById('goto4').disabled = false;
+        }
+      });
+    });
+
+    goto4.addEventListener('click', ()=>{ if(!goto4.disabled){ idx=3; updateSlide(); }});
+  })();
+
+  // Level 4 logic (notasi check)
+  (function level4(){
+    const input = document.getElementById('notasiInput');
+    if(!input) return;
+    
+    const fb = document.getElementById('fb4');
+    const goto5btn = document.getElementById('goto5');
+    const checkBtn = document.getElementById('checkNotasi');
+
+    function validate(text){
+      const t = text.trim();
+      const hasCurly = t.includes('{') && t.includes('}');
+      const hasPipe = t.includes('|') || t.includes('∣');
+      const hasAequals = /^A\s*=\s*/i.test(t);
+      const hasGT100 = />\s*100/.test(t);
+      return {hasCurly,hasPipe,hasAequals,hasGT100};
+    }
+
+    if(checkBtn) {
+      checkBtn.addEventListener('click', ()=>{
+        const t = input.value;
+        const res = validate(t);
+        if(!res.hasAequals){
+          fb.textContent = "Hint: Notasi harus dimulai dengan 'A ='";
+          fb.className = 'feedback err';
+          return;
+        }
+        if(!res.hasCurly){
+        fb.textContent = "Hint: Notasi harus mengandung kurung kurawal { }.";
+        fb.className = 'feedback err';
+        return;
+      }
+      if(!res.hasPipe){
+        fb.textContent = "Hint: Notasi harus mengandung tanda pembentuk '|' atau '∣'.";
+        fb.className = 'feedback err';
+        return;
+      }
+      if(!res.hasGT100){
+        fb.textContent = "Hint: Notasi harus menyertakan syarat kuantitatif seperti '> 100'.";
+        fb.className = 'feedback err';
+        return;
+      }
+      fb.textContent = 'Luar biasa! Notasi Anda sudah benar dan lengkap.';
+      fb.className = 'feedback ok';
+      goto5btn.disabled = false;
+      });
+    }
+
+    if(goto5btn) {
+      goto5btn.addEventListener('click', ()=>{ if(!goto5btn.disabled){ idx=4; updateSlide(); }});
+    }
+  })();
+
+  // Level 5 logic (final drag & drop)
+  (function level5(){
+    const fb = document.getElementById('fb5');
+    if(!fb) return;
+    
+    const pieces = document.querySelectorAll('#level-5 .piece');
+    const targets = document.querySelectorAll('#level-5 .target');
+    const finishBtn = document.getElementById('finishBtn');
+    let placed = {};
+    pieces.forEach(p=>{
+      p.addEventListener('dragstart', e=>{
+        p.classList.add('dragging');
+        e.dataTransfer.setData('text/plain', p.textContent);
+        e.dataTransfer.setData('type', p.dataset.type || '');
+      });
+      p.addEventListener('dragend', ()=>p.classList.remove('dragging'));
+    });
+
+    targets.forEach(t=>{
+      t.addEventListener('dragover', e=>e.preventDefault());
+      t.addEventListener('drop', e=>{
+        e.preventDefault();
+        const text = e.dataTransfer.getData('text/plain');
+        const type = e.dataTransfer.getData('type');
+        const targetType = t.dataset.type;
+        // check
+        if(type && targetType && type === targetType){
+          // create locked node
+          const node = document.createElement('div');
+          node.className = 'card-item';
+          node.textContent = text;
+          node.style.cursor = 'default';
+          t.appendChild(node);
+          t.classList.add('correct');
+          placed[targetType] = true;
+          // remove source piece
+          // find and remove first piece with same text
+          const src = Array.from(document.querySelectorAll('#finalPieces .piece')).find(x=>x.textContent===text);
+          if(src) src.remove();
+          fb.textContent = 'Benar!';
+          fb.className = 'feedback ok';
+        } else {
+          fb.textContent = 'Salah — potongan kembali ke daftar.';
+          fb.className = 'feedback err';
+          t.classList.add('wrong');
+          setTimeout(()=>t.classList.remove('wrong'),500);
+        }
+        // check finish
+        if(placed.deskripsi && placed.enumerasi && placed.notasi){
+          finishBtn.disabled = false;
+          fb.textContent = 'Semua benar — kamu menyelesaikan Leveling Game Tahap 2!';
+          fb.className = 'feedback ok';
+        }
+      });
+    });
+
+    finishBtn.addEventListener('click', ()=>{
+      alert('Selamat! Kamu menyelesaikan Tahap 2 (Representasi Himpunan).');
+      // optionally navigate to previous/main
+    });
+  })();
+
+  // "Back to main" button (just a placeholder to go to earlier page)
+  const backToMain = document.getElementById('backToMain');
+  if(backToMain) {
+    backToMain.addEventListener('click', ()=>{
+      // if you want to navigate to your main page, replace below:
+      // location.href = 'index.html' or your main file.
+      alert('Tekan OK untuk kembali (ganti tombol ini agar menuju halaman utama).');
+    });
+  }
+
+  // final update
+  updateSlide();
+});
+// ...existing code...
+(function(){
+  // scope semua selector ke dalam slide #tahap3 agar tidak mengacaukan elemen di slide lain
+  const container = document.getElementById('tahap3');
+  if(!container) return;
+  const books = Array.from(container.querySelectorAll('#bookList .book'));
+  const zones = Array.from(container.querySelectorAll('.zone'));
+  const statusBox = container.querySelector('#statusBox');
+  const notationPanel = container.querySelector('#notationPanel');
+  const qIrisan = container.querySelector('#q-irisan');
+  const qGabungan = container.querySelector('#q-gabungan');
+  const resIrisan = container.querySelector('#res-irisan');
+  const resGabungan = container.querySelector('#res-gabungan');
+  
+  // Early return if required elements missing
+  if(books.length === 0 || zones.length === 0 || !statusBox) return;
+  const finishBtn = container.querySelector('#finishT3Btn');
+  const resetBtn = container.querySelector('#resetBtn');
+
+  // Return if essential elements don't exist
+  if(!statusBox || books.length === 0 || zones.length === 0) return;
+
+  let dragging = null;
+  books.forEach(b => b.dataset.initialContent = b.innerHTML);
+
+  function computeZone(bookEl){
+    const halaman = Number(bookEl.dataset.halaman);
+    const tahun = Number(bookEl.dataset.tahun);
+    const inA = halaman > 100;
+    const inB = tahun > 2018;
+    if(inA && inB) return 'AB';
+    if(inA && !inB) return 'A';
+    if(!inA && inB) return 'B';
+    return 'OUT';
+  }
+
+  function checkCompletion(){
+    const allLocked = books.every(b => b.classList.contains('locked'));
+    if(allLocked){
+      statusBox.textContent = '🥳 Semua buku dipetakan dengan benar! Lanjutkan ke Konfirmasi Notasi.';
+      notationPanel.style.display = 'block';
+      // optional: add labels
+    } else {
+      notationPanel.style.display = 'none';
+    }
+  }
+
+  books.forEach(b=>{
+    b.addEventListener('dragstart', e=>{
+      dragging = b; b.classList.add('dragging'); b.setAttribute('aria-grabbed','true'); b._origParent = b.parentElement;
+    });
+    b.addEventListener('dragend', ()=>{ if(dragging){ dragging.classList.remove('dragging'); dragging.setAttribute('aria-grabbed','false'); } dragging = null; });
+    b.addEventListener('click', ()=>{ if(b.classList.contains('locked')) return; books.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); statusBox.textContent = b.querySelector('strong').textContent + ' dipilih. Ketuk area untuk menaruh.'; });
+  });
+
+  zones.forEach(z=>{
+    z.addEventListener('dragover', e=>{ e.preventDefault(); z.classList.add('highlight'); });
+    z.addEventListener('dragleave', e=>{ z.classList.remove('highlight'); });
+    z.addEventListener('drop', e=>{ e.preventDefault(); z.classList.remove('highlight'); const book = dragging || container.querySelector('.book.selected'); if(!book || book.classList.contains('locked')) return; handleDrop(book, z); book.classList.remove('selected'); });
+    z.addEventListener('click', ()=>{ const book = container.querySelector('.book.selected'); if(book && !book.classList.contains('locked')){ handleDrop(book, z); book.classList.remove('selected'); } });
+  });
+
+  function handleDrop(book, zone){
+    const correctZone = computeZone(book);
+    const targetZone = zone.dataset.zone;
+    if(correctZone === targetZone){
+      zone.appendChild(book);
+      book.classList.add('locked','in-venn');
+      book.draggable = false;
+      book.style.position = 'absolute';
+      // position simple: append at 8px increments
+      const idx = zone.querySelectorAll('.book').length - 1;
+      const cols = targetZone === 'OUT' ? 6 : 3;
+      book.style.left = `${8 + (idx % cols) * 40}px`;
+      book.style.top = `${8 + Math.floor(idx / cols) * 40}px`;
+      book.innerHTML = `<span class="book-badge-content">${book.dataset.id}</span>`;
+      statusBox.textContent = 'Benar: Buku ' + book.dataset.id + ' ditempatkan.';
+      zone.classList.add('highlight'); setTimeout(()=>zone.classList.remove('highlight'),700);
+      checkCompletion();
+    } else {
+      zone.classList.add('wrong'); setTimeout(()=>zone.classList.remove('wrong'),500);
+      statusBox.textContent = 'Salah. Petunjuk: ' + hintForZone(correctZone);
+      // return to list
+      const list = container.querySelector('#bookList');
+      list.appendChild(book);
+      book.classList.remove('in-venn');
+      book.innerHTML = book.dataset.initialContent;
+      book.style.position=''; book.style.left=''; book.style.top='';
+      checkCompletion();
+    }
+  }
+
+  function hintForZone(zone){
+    switch(zone){
+      case 'A': return 'Periksa jumlah halaman (>100) dan tahun terbit (≤2018).';
+      case 'B': return 'Periksa tahun terbit (>2018) dan jumlah halaman (≤100).';
+      case 'AB': return 'Buku ini memenuhi DUA syarat (halaman >100 DAN tahun >2018).';
+      case 'OUT': return 'Buku ini TIDAK memenuhi A maupun B.';
+      default: return '';
+    }
+  }
+
+  if(resetBtn) {
+    resetBtn.addEventListener('click', ()=>{
+      const list = container.querySelector('#bookList');
+      books.forEach(b=>{
+        list.appendChild(b);
+        b.style.position=''; b.style.left=''; b.style.top=''; b.classList.remove('locked','selected','dragging','in-venn'); b.innerHTML = b.dataset.initialContent; b.draggable = true;
+      });
+      statusBox.textContent = 'Semua buku dikembalikan.';
+      checkCompletion();
+    });
+  }
+
+  if(qIrisan) {
+    qIrisan.addEventListener('change', ()=>{
+      if(qIrisan.value === 'ANBC'){ resIrisan.textContent = 'Tepat! A ∩ B adalah DAN.'; resIrisan.className = 'q-result correct'; }
+      else { resIrisan.textContent = 'Salah. IRISAN berarti KEDUA syarat terpenuhi.'; resIrisan.className = 'q-result wrong'; }
+    });
+  }
+
+  if(qGabungan) {
+    qGabungan.addEventListener('change', ()=>{
+      if(qGabungan.value === 'AUBC'){ resGabungan.textContent = 'Tepat! A ∪ B adalah ATAU.'; resGabungan.className = 'q-result correct'; }
+      else { resGabungan.textContent = 'Salah. GABUNGAN berarti SETIDAKNYA SATU syarat terpenuhi.'; resGabungan.className = 'q-result wrong'; }
+    });
+  }
+
+  if(finishBtn) {
+    finishBtn.addEventListener('click', ()=>{
+      if(qIrisan && qGabungan && qIrisan.value === 'ANBC' && qGabungan.value === 'AUBC'){
+        statusBox.textContent = '🎉 Tahap 3 Selesai! Pemahaman Notasi sudah Kuat.';
+        finishBtn.disabled = true; finishBtn.innerHTML = 'Tahap 3 Selesai!';
+      } else {
+        alert('Mohon jawab kedua pertanyaan notasi dengan benar sebelum menyelesaikan tahap.');
+      }
+    });
+  }
+
+  // Gallery Walk Tahap 4
+  const btnKirimKomentarT4 = document.getElementById('btnKirimKomentarT4');
+  const namaKelompokT4 = document.getElementById('namaKelompokT4');
+  const komentarKelompokT4 = document.getElementById('komentarKelompokT4');
+  const feedbackKomentarT4 = document.getElementById('feedbackKomentarT4');
+  const daftarKomentarT4 = document.getElementById('daftarKomentarT4');
+
+  if(btnKirimKomentarT4 && namaKelompokT4 && komentarKelompokT4) {
+    btnKirimKomentarT4.addEventListener('click', () => {
+      const nama = namaKelompokT4.value.trim();
+      const komentar = komentarKelompokT4.value.trim();
+      
+      if(!nama || !komentar) {
+        feedbackKomentarT4.innerHTML = '<span style="color:#c62828">❌ Nama kelompok dan komentar harus diisi!</span>';
+        return;
+      }
+
+      // Simpan ke localStorage
+      const komentarList = JSON.parse(localStorage.getItem('komentarT4') || '[]');
+      komentarList.push({
+        nama: nama,
+        komentar: komentar,
+        timestamp: new Date().toLocaleString()
+      });
+      localStorage.setItem('komentarT4', JSON.stringify(komentarList));
+
+      // Tampilkan feedback
+      feedbackKomentarT4.innerHTML = '<span style="color:#2e7d32">✅ Komentar berhasil dikirim!</span>';
+      
+      // Reset form
+      komentarKelompokT4.value = '';
+      
+      // Refresh tampilan komentar
+      tampilkanKomentarT4();
+
+      setTimeout(() => {
+        feedbackKomentarT4.innerHTML = '';
+      }, 2000);
+    });
+  }
+
+  function tampilkanKomentarT4() {
+    if(!daftarKomentarT4) return;
+    const komentarList = JSON.parse(localStorage.getItem('komentarT4') || '[]');
+    
+    if(komentarList.length === 0) {
+      daftarKomentarT4.innerHTML = '<p style="margin:0;font-style:italic">Belum ada komentar masuk...</p>';
+      return;
+    }
+
+    let html = '';
+    komentarList.forEach((item, idx) => {
+      html += `
+        <div style="background:#fff;padding:10px;border-radius:6px;margin-bottom:8px;border-left:3px solid #ff9800">
+          <div style="font-weight:bold;color:#e65100;font-size:12px">${item.nama}</div>
+          <div style="color:#333;margin:4px 0;font-size:12px">${item.komentar}</div>
+          <div style="color:#999;font-size:11px;font-style:italic">${item.timestamp}</div>
+        </div>
+      `;
+    });
+    daftarKomentarT4.innerHTML = html;
+  }
+
+  // Tampilkan komentar saat load
+  tampilkanKomentarT4();
+
+})();
+ // ...existing code...
+ (function(){
+  // Early return if Tahap 4 elements don't exist
+  const inputTable = document.getElementById('inputTable');
+  if(!inputTable) return;
+  
+  const BOOKS_DATA = [
+    { id: 'A', hal: 120, thn: 2020 },
+    { id: 'B', hal: 88, thn: 2021 },
+    { id: 'C', hal: 200, thn: 2016 },
+    { id: 'D', hal: 60, thn: 2015 },
+    { id: 'E', hal: 150, thn: 2022 },
+    { id: 'F', hal: 72, thn: 2022 },
+  ];
+
+  // Fungsi untuk menentukan jawaban Rak yang benar
+  function getCorrectRak(book) {
+    const inA = book.hal > 100;
+    const inB = book.thn > 2018;
+    if (inA && inB) return 'AB'; 
+    if (inA && !inB) return 'A'; 
+    if (!inA && inB) return 'B'; 
+    return 'LUAR'; 
+  }
+
+  // Pilihan Rak
+  const RAK_OPTIONS = {
+    A: 'Rak A (Hanya A)',
+    B: 'Rak B (Hanya B)',
+    AB: 'Rak AB (Irisan A & B)',
+    LUAR: 'Rak LUAR (Komplemen)'
+  };
+  
+  const allSelects = document.querySelectorAll('#inputTable select');
+  
+  allSelects.forEach(select => {
+    // Isi opsi dropdown
+    for (const key in RAK_OPTIONS) {
+      const option = document.createElement('option');
+      option.value = key;
+      option.textContent = RAK_OPTIONS[key];
+      select.appendChild(option);
+    }
+    
+    // Event listener: Memindahkan buku saat dropdown diubah
+    select.addEventListener('change', (e) => {
+      const bookId = e.target.dataset.book;
+      const targetRakKey = e.target.value;
+      moveBookBadge(bookId, targetRakKey);
+      document.getElementById('statusBox').textContent = `Buku ${bookId} dipindahkan ke ${RAK_OPTIONS[targetRakKey] || 'Tumpukan'}.`;
+      document.getElementById('statusBox').classList.remove('feedback', 'correct', 'wrong');
+      // Reset status kardinalitas
+      document.querySelectorAll('[id^="status_n"]').forEach(el => el.textContent = '');
+    });
+  });
+  
+  // Fungsi untuk memindahkan badge buku secara visual di Rak
+  function moveBookBadge(bookId, rakKey) {
+    document.querySelectorAll(`.book-badge[data-book-id="${bookId}"]`).forEach(b => b.remove());
+    if (rakKey && RAK_OPTIONS[rakKey]) {
+      const targetRackContent = document.getElementById('rak' + rakKey).querySelector('.rack-content');
+      const newBadge = document.createElement('div');
+      newBadge.classList.add('book-badge');
+      newBadge.textContent = bookId;
+      newBadge.dataset.bookId = bookId;
+      targetRackContent.appendChild(newBadge);
+    }
+  }
+    // Fungsi untuk mengecek input Kardinalitas siswa (update dengan validasi anggota)
+  function checkKardinalitas(correctAnswers) {
+    let allCorrect = true;
+    const anggotaGabungan = [...correctAnswers.A, ...correctAnswers.B, ...correctAnswers.AB];
+    
+    const correctN = {
+        nAB: correctAnswers.AB.length,
+        nAU: anggotaGabungan.length,
+        nLuar: correctAnswers.LUAR.length
+    };
+
+    const correctAnggota = {
+        nAB: correctAnswers.AB.sort(),
+        nAU: anggotaGabungan.sort(),
+        nLuar: correctAnswers.LUAR.sort()
+    };
+
+    const inputsAnggota = {
+        nAB: document.getElementById('input_nAB_anggota'),
+        nAU: document.getElementById('input_nAU_anggota'),
+        nLuar: document.getElementById('input_nLuar_anggota')
+    };
+
+    const inputsKardinal = {
+        nAB: document.getElementById('input_nAB'),
+        nAU: document.getElementById('input_nAU'),
+        nLuar: document.getElementById('input_nLuar')
+    };
+    
+    const statusEls = {
+        nAB: document.getElementById('status_nAB'),
+        nAU: document.getElementById('status_nAU'),
+        nLuar: document.getElementById('status_nLuar')
+    };
+
+    for (const key in inputsAnggota) {
+        // Parse anggota siswa: split by comma dan trim
+        const siswaAnggotaStr = inputsAnggota[key].value.trim();
+        const siswaAnggota = siswaAnggotaStr ? siswaAnggotaStr.split(',').map(x => x.trim().toUpperCase()).sort() : [];
+        
+        // Parse anggota benar
+        const correctStr = correctAnggota[key].map(x => x.toUpperCase());
+        
+        // Cek kecocokan anggota
+        const anggotaMatch = JSON.stringify(siswaAnggota) === JSON.stringify(correctStr);
+        
+        // Cek kardinalitas
+        const inputValKardinal = Number(inputsKardinal[key].value.trim());
+        const correctValKardinal = correctN[key];
+        const kardinalMatch = inputValKardinal === correctValKardinal;
+        
+        const statusEl = statusEls[key];
+
+        if (anggotaMatch && kardinalMatch) {
+            statusEl.textContent = '✅ Tepat!';
+            statusEl.style.color = 'var(--success)';
+        } else if (!anggotaMatch && !kardinalMatch) {
+            statusEl.textContent = '❌ Anggota & Kardinalitas salah';
+            statusEl.style.color = 'var(--danger)';
+            allCorrect = false;
+        } else if (!anggotaMatch) {
+            statusEl.textContent = '❌ Anggota salah';
+            statusEl.style.color = 'var(--danger)';
+            allCorrect = false;
+        } else {
+            statusEl.textContent = '❌ Kardinalitas salah';
+            statusEl.style.color = 'var(--danger)';
+            allCorrect = false;
+        }
+    }
+    return allCorrect;
+  }
+ // ...existing code...
+
+    // --- LOGIKA CEK HASIL ---
+  document.getElementById('checkBtn').addEventListener('click', () => {
+    let allPemilahanCorrect = true;
+    const correctAnswers = { A: [], B: [], AB: [], LUAR: [] };
+    let feedbackHTML = '<p style="margin: 0 0 12px 0; font-size: 14px; font-weight:bold;"><strong>Penjelasan Pemilahan:</strong></p>';
+
+    // 1. Cek Pemilahan Buku & tampilkan feedback di kolom tabel
+    BOOKS_DATA.forEach(book => {
+      const select = document.querySelector(`select[data-book="${book.id}"]`);
+      const feedbackCell = document.getElementById(`feedback_${book.id}`);
+      const studentRak = select.value;
+      const correctRak = getCorrectRak(book);
+      const isCorrect = studentRak === correctRak;
+      
+      correctAnswers[correctRak].push(book.id);
+
+      // Tampilkan feedback di kolom tabel
+      if (!isCorrect) {
+        allPemilahanCorrect = false;
+        feedbackCell.textContent = '❌ Salah';
+        feedbackCell.classList.add('wrong');
+        feedbackCell.classList.remove('correct');
+        
+        // Alasan di statusBox (bawah tabel)
+        feedbackHTML += `<p style="margin: 6px 0; padding: 8px; background:#ffebee; border-left:4px solid var(--danger); border-radius:4px;"><strong>Buku ${book.id}:</strong> Seharusnya di <strong>${RAK_OPTIONS[correctRak]}</strong> (hal: ${book.hal}, tahun: ${book.thn}), tetapi Anda memilih ${studentRak ? RAK_OPTIONS[studentRak] : '<em>kosong</em>'}</p>`;
+        
+        // Koreksi otomatis
+        moveBookBadge(book.id, correctRak); 
+        select.value = correctRak; 
+      } else {
+        feedbackCell.textContent = '✅ Tepat';
+        feedbackCell.classList.add('correct');
+        feedbackCell.classList.remove('wrong');
+        
+        // Alasan di statusBox
+        feedbackHTML += `<p style="margin: 6px 0; padding: 8px; background:#e8f5e9; border-left:4px solid var(--success); border-radius:4px;"><strong>Buku ${book.id}:</strong> Benar di <strong>${RAK_OPTIONS[correctRak]}</strong> (hal: ${book.hal} &gt; 100, tahun: ${book.thn} ${book.thn > 2018 ? '&gt;' : '&le;'} 2018)</p>`;
+      }
+    });
+
+    // Perbarui Tampilan Anggota Kardinalitas
+    updateAnggotaKardinalitas(correctAnswers);
+
+    // 2. Cek Kardinalitas
+    let allKardinalitasCorrect = checkKardinalitas(correctAnswers);
+    let finalStatusText;
+
+    if (!allPemilahanCorrect) {
+       finalStatusText = '⚠️ <strong>PEMILAHAN DIKOREKSI.</strong> Lihat kolom Status di tabel & penjelasan di bawah. Silakan hitung ulang Kardinalitas.';
+    } else if (!allKardinalitasCorrect) {
+       finalStatusText = '🚨 <strong>PEMILAHAN TEPAT</strong>, namun perhitungan Kardinalitas Anda <strong>BELUM TEPAT</strong>. Silakan koreksi angkanya.';
+    } else {
+       finalStatusText = '🎉 <strong>SEMUA TEPAT!</strong> Pemilahan Buku dan Analisis Kardinalitas Anda Sempurna.';
+    }
+    
+    // Set status Box
+    const statusBox = document.getElementById('statusBox');
+    statusBox.classList.add('feedback');
+    
+    if (allPemilahanCorrect && allKardinalitasCorrect) {
+        statusBox.classList.remove('wrong', 'no');
+        statusBox.classList.add('correct', 'ok');
+        statusBox.style.background = '#e8f5e9';
+        statusBox.style.borderLeftColor = 'var(--success)';
+        statusBox.style.color = 'var(--success)';
+    } else {
+        statusBox.classList.remove('correct', 'ok');
+        statusBox.classList.add('wrong', 'no');
+        statusBox.style.background = '#fff8e6';
+        statusBox.style.borderLeftColor = '#ff9800';
+        statusBox.style.color = '#e65100';
+    }
+    
+    statusBox.innerHTML = finalStatusText + '<br><br>' + feedbackHTML;
+    statusBox.style.display = 'block';
+  });
+ // ...existing code...
+
+  // Fungsi untuk mengisi kolom Anggota Kardinalitas
+  function updateAnggotaKardinalitas(correctAnswers) {
+    const anggotaGabungan = [...correctAnswers.A, ...correctAnswers.B, ...correctAnswers.AB];
+    
+    document.getElementById('nAB_anggota').textContent = `{${correctAnswers.AB.join(', ')}}`;
+    document.getElementById('nAU_anggota').textContent = `{${anggotaGabungan.join(', ')}}`;
+    document.getElementById('nLuar_anggota').textContent = `{${correctAnswers.LUAR.join(', ')}}`;
+  }
+
+  // Fungsi untuk mengecek input Kardinalitas siswa
+  function checkKardinalitas(correctAnswers) {
+    let allCorrect = true;
+    const anggotaGabungan = [...correctAnswers.A, ...correctAnswers.B, ...correctAnswers.AB];
+    
+    const correctN = {
+        nAB: correctAnswers.AB.length,
+        nAU: anggotaGabungan.length,
+        nLuar: correctAnswers.LUAR.length
+    };
+
+    const inputs = {
+        nAB: document.getElementById('input_nAB'),
+        nAU: document.getElementById('input_nAU'),
+        nLuar: document.getElementById('input_nLuar')
+    };
+    
+    const statusEls = {
+        nAB: document.getElementById('status_nAB'),
+        nAU: document.getElementById('status_nAU'),
+        nLuar: document.getElementById('status_nLuar')
+    };
+
+    for (const key in inputs) {
+        const inputVal = Number(inputs[key].value.trim());
+        const correctVal = correctN[key];
+        const statusEl = statusEls[key];
+
+        if (inputVal === correctVal) {
+            statusEl.textContent = 'Tepat!';
+            statusEl.style.color = 'var(--success)';
+        } else {
+            statusEl.textContent = 'Salah!';
+            statusEl.style.color = 'var(--danger)';
+            allCorrect = false;
+        }
+    }
+    return allCorrect;
+  }
+
+  // --- LOGIKA TOGGLE KARDINALITAS ---
+  document.getElementById('kardinalitasToggle').addEventListener('click', () => {
+    const infoArea = document.getElementById('hiddenKardinalitasInfo');
+    if (infoArea.style.display === 'none' || infoArea.style.display === '') {
+      infoArea.style.display = 'block';
+      document.getElementById('kardinalitasToggle').textContent = '💡 Sembunyikan Bantuan Kardinalitas';
+    } else {
+      infoArea.style.display = 'none';
+      document.getElementById('kardinalitasToggle').textContent = '🤔 Apa itu Kardinalitas? (Klik untuk Bantuan)';
+    }
+  });
+  
+})();
+// ...existing code...
+// Fungsi untuk menyimpan progress siswa
+function simpanProgress() {
+  const kelompokData = JSON.parse(localStorage.getItem('kelompokData')) || {};
+  const progressData = {
+    kelompok: kelompokData.nama || 'Tanpa Nama',
+    anggota: kelompokData.anggota || [],
+    tahap1: { status: 'selesai', timestamp: new Date().toLocaleString() },
+    tahap2: { status: completion.k2 ? 'selesai' : 'belum' },
+    tahap3: { status: completion.k3 ? 'selesai' : 'belum' },
+    tahap4: { 
+      status: 'selesai',
+      hasilPemilahan: document.getElementById('statusBox')?.textContent || '',
+      timestamp: new Date().toLocaleString()
+    },
+    tahap5: { status: 'selesai', timestamp: new Date().toLocaleString() }
+  };
+  localStorage.setItem('progressData', JSON.stringify(progressData));
+  console.log('Progress disimpan:', progressData);
+}
+
+// Panggil saat tombol cek diklik (Tahap 4)
+document.getElementById('checkBtn').addEventListener('click', () => {
+  // ... kode cek yang sudah ada ...
+  simpanProgress(); // tambah baris ini
+});
+
+// Panggil saat tombol selesaikan Tahap 5 diklik
+document.querySelector('[data-go="tahap5"]')?.addEventListener('click', () => {
+  simpanProgress();
+});
+// ...existing code...
+// ========== DOWNLOAD PDF HANDLER ==========
+const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+if (downloadPdfBtn) {
+  downloadPdfBtn.addEventListener('click', () => {
+    const { jsPDF } = window.jspdf;
+    
+    if (!jsPDF) {
+      alert('⚠️ Library PDF tidak siap. Tunggu sebentar dan coba lagi.');
+      console.error('jsPDF library not available');
+      return;
+    }
+
+    // Ambil data dari localStorage
+    const namaKelompok = document.getElementById('namaKelompok')?.value || 'Kelompok';
+    const progressData = JSON.parse(localStorage.getItem('progressData') || '{}');
+    
+    // Buat dokumen PDF
+    const doc = new jsPDF('p', 'mm', 'a4');
+    let yPos = 20;
+    const lineHeight = 7;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 15;
+    
+    // Fungsi untuk menambah halaman baru jika perlu
+    const checkNewPage = (height) => {
+      if (yPos + height > pageHeight - 15) {
+        doc.addPage();
+        yPos = margin;
+      }
+    };
+    
+    // Title
+    doc.setFontSize(16);
+    doc.setTextColor(62, 39, 35); // warna accent
+    doc.text('LAPORAN HASIL PEMBELAJARAN', margin, yPos);
+    yPos += 12;
+    
+    doc.setFontSize(12);
+    doc.text('Pembelajaran Himpunan & Relasi', margin, yPos);
+    yPos += 15;
+    
+    // Data Kelompok
+    doc.setFontSize(11);
+    doc.setTextColor(62, 39, 35);
+    doc.text('DATA KELOMPOK', margin, yPos);
+    yPos += 8;
+    
+    doc.setFontSize(10);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Nama Kelompok: ${namaKelompok}`, margin + 5, yPos);
+    yPos += 6;
+    
+    const anggota = progressData.anggota ? progressData.anggota.join(', ') : '-';
+    doc.text(`Anggota: ${anggota}`, margin + 5, yPos);
+    yPos += 6;
+    
+    const tanggal = progressData.tahap4?.timestamp || new Date().toLocaleString('id-ID');
+    doc.text(`Tanggal: ${tanggal}`, margin + 5, yPos);
+    yPos += 12;
+    
+    // Progress Pembelajaran
+    doc.setFontSize(11);
+    doc.setTextColor(62, 39, 35);
+    doc.text('PROGRESS PEMBELAJARAN', margin, yPos);
+    yPos += 8;
+    
+    doc.setFontSize(9);
+    doc.setTextColor(0, 0, 0);
+    const stages = [
+      { name: 'Tahap 1: Orientasi Masalah', key: 'tahap1' },
+      { name: 'Tahap 2: Representasi Himpunan', key: 'tahap2' },
+      { name: 'Tahap 3: Relasi Himpunan', key: 'tahap3' },
+      { name: 'Tahap 4: Analisis Kardinalitas', key: 'tahap4' },
+      { name: 'Tahap 5: Refleksi & Evaluasi', key: 'tahap5' }
+    ];
+    
+    stages.forEach(stage => {
+      const status = progressData[stage.key]?.status === 'selesai' ? '✓' : '⏳';
+      doc.text(`${status} ${stage.name}`, margin + 5, yPos);
+      yPos += 6;
+    });
+    
+    yPos += 6;
+    
+    // Hasil Tahap 4
+    checkNewPage(20);
+    doc.setFontSize(11);
+    doc.setTextColor(62, 39, 35);
+    doc.text('HASIL ANALISIS KARDINALITAS (TAHAP 4)', margin, yPos);
+    yPos += 8;
+    
+    doc.setFontSize(9);
+    doc.setTextColor(0, 0, 0);
+    const hasilTahap4 = progressData.tahap4?.hasilPemilahan || 'Data tidak tersedia';
+    const lines = doc.splitTextToSize(hasilTahap4, 170);
+    doc.text(lines, margin + 5, yPos);
+    yPos += lines.length * 5 + 5;
+    
+    // Footer
+    checkNewPage(15);
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    doc.text(`Laporan dibuat: ${new Date().toLocaleString('id-ID')}`, margin, pageHeight - 10);
+    
+    // Simpan PDF
+    const filename = `Hasil_Pembelajaran_${namaKelompok.replace(/\s/g, '_')}_${Date.now()}.pdf`;
+    doc.save(filename);
+    
+    console.log('✅ PDF berhasil diunduh:', filename);
+    alert('✅ PDF hasil pembelajaran berhasil diunduh!');
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const kirimBtn = document.getElementById('kirimJawabanBtn');
+  if (kirimBtn) {
+    kirimBtn.addEventListener('click', () => {
+      try { if (typeof simpanProgress === 'function') simpanProgress(); } catch(e){}
+      alert('Jawaban kamu sudah direkam!');
+      // navigasi kembali atau tampilkan pesan; kalau mau langsung kembali ke menu, uncomment:
+      // document.querySelector('[data-go="menu"]').click();
+    });
+  }
+});
+function saveProgress() {
+  const data = {
+    level1: selectedAnswerLevel1,
+    level2: assembledPieces,
+    level3: selectedBooks,
+    level4: inputNotasi,
+    level5: finalMatches
+  };
+  localStorage.setItem("progressTahap2", JSON.stringify(data));
+}
+
+function loadProgress() {
+  const data = JSON.parse(localStorage.getItem("progressTahap2"));
+  if (!data) return;
+
+  // restore setiap level
+}
+
+// Setup check button
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('🟢 DOMContentLoaded fired');
+  console.log('  → window.quizAnswers:', window.quizAnswers);
+  console.log('  → window.quizData exists:', !!window.quizData);
+  
+  // Verify all quiz cards exist
+  console.log('📋 Checking for quiz card elements:');
+  ['Q1', 'Q2', 'Q3', 'Q4', 'Q5'].forEach(qId => {
+    const card = document.getElementById('quiz-card-' + qId);
+    console.log(`  → quiz-card-${qId}:`, !!card, card ? 'FOUND' : 'MISSING');
+  });
+  
+  // Verify feedback and button exist
+  const quizFeedback = document.getElementById('quizFeedback');
+  const quizCheckBtn = document.getElementById('quizCheckBtn');
+  const quizResetBtn = document.getElementById('quizResetBtn');
+  console.log('🎛️ Checking for control elements:');
+  console.log('  → quizFeedback:', !!quizFeedback, quizFeedback ? 'FOUND' : 'MISSING');
+  console.log('  → quizCheckBtn:', !!quizCheckBtn, quizCheckBtn ? 'FOUND' : 'MISSING');
+  console.log('  → quizResetBtn:', !!quizResetBtn, quizResetBtn ? 'FOUND' : 'MISSING');
+  
+  const checkBtn = document.getElementById('quizCheckBtn');
+  const resetBtn = document.getElementById('quizResetBtn');
+  
+  if(checkBtn) {
+    checkBtn.addEventListener('click', () => {
+      console.log('✔️ Check button clicked');
+      let correct = 0;
+      
+      if(!window.quizData) {
+        console.error('❌ quizData is not defined');
+        return;
+      }
+      
+      Object.keys(window.quizData).forEach(qId => {
+        const expected = window.quizData[qId].correct;
+        const userAnswer = window.quizAnswers[qId];
+        const resultDiv = document.getElementById('quiz-result-' + qId);
+        const card = document.getElementById('quiz-card-' + qId);
+        
+        console.log(`  Checking ${qId}: expected="${expected}", got="${userAnswer}"`);
+        
+        if(!resultDiv || !card) {
+          console.warn(`Result div or card not found for ${qId}`);
+          return;
+        }
+        
+        if(userAnswer === expected) {
+          correct++;
+          resultDiv.innerHTML = `<div style="padding:8px;background:#e8f5e9;border-left:4px solid #4caf50;border-radius:4px;color:#2e7d32"><strong>✅ BENAR!</strong><br>${window.quizData[qId].reason}</div>`;
+          card.style.borderColor = '#4caf50';
+        } else {
+          resultDiv.innerHTML = `<div style="padding:8px;background:#ffebee;border-left:4px solid #c62828;border-radius:4px;color:#c62828"><strong>❌ KURANG TEPAT</strong><br>${window.quizData[qId].reason}</div>`;
+          card.style.borderColor = '#c62828';
+        }
+        resultDiv.style.display = 'block';
+      });
+      
+      const score = Math.round((correct / 5) * 100);
+      const feedback = document.getElementById('quizFeedback');
+      
+      if(!feedback) {
+        console.warn('quizFeedback not found');
+        return;
+      }
+      
+      if(score === 100) {
+        feedback.innerHTML = `<div style="padding:12px;background:#e8f5e9;border:2px solid #4caf50;border-radius:8px;text-align:center">
+          <div style="font-size:24px;margin-bottom:8px">🎉</div>
+          <div style="font-weight:bold;color:#2e7d32;font-size:16px">SEMPURNA! Skor: ${correct}/5 (${score}%)</div>
+          <div style="color:#555;margin-top:6px;font-size:13px">Kamu sudah memahami perbedaan himpunan dan bukan himpunan!</div>
+        </div>`;
+      } else if(score >= 60) {
+        feedback.innerHTML = `<div style="padding:12px;background:#fff8e6;border:2px solid #f57c00;border-radius:8px;text-align:center">
+          <div style="font-size:20px;margin-bottom:8px">👍</div>
+          <div style="font-weight:bold;color:#f57c00;font-size:16px">BAGUS! Skor: ${correct}/5 (${score}%)</div>
+          <div style="color:#555;margin-top:6px;font-size:13px">Perhatikan penjelasan untuk soal yang kurang tepat ya!</div>
+        </div>`;
+      } else {
+        feedback.innerHTML = `<div style="padding:12px;background:#ffebee;border:2px solid #c62828;border-radius:8px;text-align:center">
+          <div style="font-size:20px;margin-bottom:8px">💪</div>
+          <div style="font-weight:bold;color:#c62828;font-size:16px">COBA LAGI! Skor: ${correct}/5 (${score}%)</div>
+          <div style="color:#555;margin-top:6px;font-size:13px">Baca kembali petunjuk dan penjelasan di atas!</div>
+        </div>`;
+      }
+    });
+    console.log('✔️ Check button listener attached');
+  }
+  
+  if(resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      console.log('🔄 Reset button clicked');
+      window.quizAnswers = {};
+      
+      Object.keys(window.quizData || {}).forEach(qId => {
+        const card = document.getElementById('quiz-card-' + qId);
+        const resultDiv = document.getElementById('quiz-result-' + qId);
+        if(card) {
+          card.style.borderColor = '#e0e0e0';
+          card.style.background = '#f9f9f9';
+        }
+        if(resultDiv) {
+          resultDiv.style.display = 'none';
+          resultDiv.innerHTML = '';
+        }
+      });
+      
+      const quizFeedback = document.getElementById('quizFeedback');
+      const quizCheckBtn = document.getElementById('quizCheckBtn');
+      
+      if(quizFeedback) {
+        quizFeedback.innerHTML = '<div style="color:var(--muted)">Pilih jawaban untuk semua pernyataan di atas...</div>';
+      }
+      if(quizCheckBtn) {
+        quizCheckBtn.style.display = 'none';
+      }
+    });
+    console.log('🔄 Reset button listener attached');
+  }
+  
+  console.log('🟢 DOMContentLoaded setup complete\n');
+});
+
+// Function untuk simpan kesimpulan
+window.simpanKesimpulan = function() {
+  const textarea = document.getElementById('kesimpulanHimpunan');
+  const feedback = document.getElementById('feedbackKesimpulan');
+  
+  if(!textarea || !feedback) return;
+  
+  const kesimpulan = textarea.value.trim();
+  
+  if(kesimpulan.length < 20) {
+    feedback.innerHTML = '<span style="color:#f44336">❌ Kesimpulan terlalu singkat! Minimal 20 karakter.</span>';
+    return;
+  }
+  
+  // Simpan ke localStorage
+  localStorage.setItem('kesimpulanHimpunan', kesimpulan);
+  localStorage.setItem('kesimpulanHimpunan_timestamp', new Date().toLocaleString('id-ID'));
+  
+  feedback.innerHTML = '<span style="color:#4caf50;font-weight:bold">✅ Kesimpulan tersimpan!</span>';
+  
+  setTimeout(() => {
+    feedback.innerHTML = '';
+  }, 3000);
+  
+  console.log('Kesimpulan disimpan:', kesimpulan);
+};
+
+// Load kesimpulan saat page load
+document.addEventListener('DOMContentLoaded', () => {
+  const textarea = document.getElementById('kesimpulanHimpunan');
+  if(textarea) {
+    const saved = localStorage.getItem('kesimpulanHimpunan');
+    if(saved) {
+      textarea.value = saved;
+      const timestamp = localStorage.getItem('kesimpulanHimpunan_timestamp');
+      const feedback = document.getElementById('feedbackKesimpulan');
+      if(feedback && timestamp) {
+        feedback.innerHTML = `<span style="color:#666;font-style:italic">Tersimpan: ${timestamp}</span>`;
+      }
+    }
+  }
+});
+
+window.generatePDFReport = async function(){
+  const { jsPDF } = window.jspdf;
+  if(!jsPDF) throw new Error('jsPDF library belum dimuat');
+  
+  const namaKelompok = document.getElementById('namaKelompok')?.value || 'Kelompok';
+  console.log('🎬 Mulai screenshot semua slide...');
+  
+  try {
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgWidth = 210;
+    const pageHeight = 297;
+    let pageCount = 0;
+    
+    const slides = document.querySelectorAll('.slide');
+    console.log('📄 Total slides ditemukan:', slides.length);
+    
+    for (let i = 0; i < slides.length; i++) {
+      const slide = slides[i];
+      slide.style.display = 'block';
+      slide.classList.add('active');
+      
+      await new Promise(r => setTimeout(r, 150));
+      
+      try {
+        const canvas = await html2canvas(slide, {
+          scale: 4,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          windowHeight: slide.scrollHeight,
+          imageTimeout: 8000,
+          removeContainer: true,
+          proxy: null
+        });
+        
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i+1];
+          const b = data[i+2];
+          const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+          
+          if (lum < 0.7) {
+            data[i] = Math.max(0, r - 40);
+            data[i+1] = Math.max(0, g - 40);
+            data[i+2] = Math.max(0, b - 40);
+          } else {
+            data[i] = Math.min(255, r + 15);
+            data[i+1] = Math.min(255, g + 15);
+            data[i+2] = Math.min(255, b + 15);
+          }
+        }
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i+1];
+          const b = data[i+2];
+          const max = Math.max(r, g, b);
+          const min = Math.min(r, g, b);
+          const l = (max + min) / 2;
+          
+          if (max !== min) {
+            let s = l > 128 ? (max - min) / (510 - max - min) : (max - min) / (max + min);
+            s = Math.min(1, s * 1.4);
+            
+            const h = max === r ? (((g - b) / (max - min)) % 6) / 6 :
+                      max === g ? ((b - r) / (max - min) + 2) / 6 :
+                      ((r - g) / (max - min) + 4) / 6;
+            
+            const c = (1 - Math.abs(2 * l / 255 - 1)) * s * 255;
+            const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+            const m = l / 2 - c / 2;
+            
+            let nr = 0, ng = 0, nb = 0;
+            if (h < 1/6) { nr = c; ng = x; }
+            else if (h < 2/6) { nr = x; ng = c; }
+            else if (h < 3/6) { ng = c; nb = x; }
+            else if (h < 4/6) { ng = x; nb = c; }
+            else if (h < 5/6) { nr = x; nb = c; }
+            else { nr = c; nb = x; }
+            
+            data[i] = Math.round((nr + m) * 1.1);
+            data[i+1] = Math.round((ng + m) * 1.1);
+            data[i+2] = Math.round((nb + m) * 1.1);
+          }
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+        
+        const slideHeight = (canvas.height * imgWidth) / canvas.width;
+        const scaleToFit = pageHeight / slideHeight;
+        
+        let finalWidth = imgWidth;
+        let finalHeight = slideHeight;
+        
+        if (slideHeight > pageHeight - 5) {
+          finalWidth = imgWidth * scaleToFit;
+          finalHeight = slideHeight * scaleToFit;
+        }
+        
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        
+        if (pageCount > 0) {
+          pdf.addPage();
+        }
+        
+        const xPos = (imgWidth - finalWidth) / 2;
+        const yPos = (pageHeight - finalHeight) / 2;
+        
+        pdf.addImage(imgData, 'JPEG', xPos, yPos, finalWidth, finalHeight);
+        pageCount++;
+        
+        console.log(`✅ Slide ${i + 1}/${slides.length} → Halaman ${pageCount}`);
+      } catch(slideErr) {
+        console.warn(`⚠️ Slide ${i + 1} error:`, slideErr.message);
+      }
+      
+      slide.style.display = 'none';
+      slide.classList.remove('active');
+    }
+    
+    const filename = `Hasil_Pertemuan_${namaKelompok.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+    pdf.save(filename);
+    console.log('✅ PDF berhasil dibuat:', filename, `(${pageCount} halaman)`);
+    return filename;
+  } catch(err) {
+    console.error('❌ Error saat screenshot:', err);
+    throw err;
+  }
+};
+
+// ============ FASE 4 - PENYAJIAN & GALLERY WALK ============
+let daftarSaranH1 = JSON.parse(localStorage.getItem('saranHimpunan1') || '[]');
+
+function tampilkanSaranH1() {
+  const listDiv = document.getElementById('daftarSaranH1');
+  if (!listDiv) return;
+  
+  if (daftarSaranH1.length === 0) {
+    listDiv.innerHTML = '<p style="color:#999;font-style:italic;text-align:center;margin:0">Belum ada saran. Jadilah yang pertama memberikan masukan!</p>';
+    return;
+  }
+  
+  listDiv.innerHTML = daftarSaranH1.map(s => `
+    <div class="komentar-item">
+      <div class="komentar-header">
+        <span class="komentar-kelompok">👥 ${s.kelompok}</span>
+        <span class="komentar-waktu">${s.waktu}</span>
+      </div>
+      <div class="komentar-isi">${s.saran}</div>
+    </div>
+  `).join('');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const btnSimpanPenyajian = document.getElementById('btnSimpanPenyajianH1');
+  const btnKirimSaran = document.getElementById('btnKirimSaranH1');
+  
+  // Tampilkan saran awal
+  tampilkanSaranH1();
+  
+  // Handler: Simpan bentuk penyajian
+  if (btnSimpanPenyajian) {
+    btnSimpanPenyajian.addEventListener('click', () => {
+      const bentuk = document.querySelector('input[name="bentukPenyajianH1"]:checked');
+      const alasan = document.getElementById('alasanPenyajianH1');
+      const feedback = document.getElementById('feedbackPenyajianH1');
+      
+      if (!bentuk || !alasan) return;
+      
+      const bentukValue = bentuk.value;
+      const alasanValue = alasan.value.trim();
+      
+      if (!alasanValue || alasanValue.length < 10) {
+        feedback.innerHTML = '<div class="status-box wrong">⚠️ Jelaskan alasan minimal 10 karakter!</div>';
+        return;
+      }
+      
+      const penyajianData = {
+        bentuk: bentukValue,
+        alasan: alasanValue,
+        timestamp: new Date().toLocaleString('id-ID')
+      };
+      
+      localStorage.setItem('penyajianHimpunan1', JSON.stringify(penyajianData));
+      feedback.innerHTML = `<div class="status-box correct">✅ Bentuk penyajian tersimpan! Pilihan: ${bentukValue}</div>`;
+    });
+  }
+  
+  // Handler: Kirim saran
+  if (btnKirimSaran) {
+    btnKirimSaran.addEventListener('click', () => {
+      const namaKelompok = document.getElementById('namaKelompokSaran');
+      const saran = document.getElementById('komentarSaranH1');
+      const feedback = document.getElementById('feedbackKirimSaran');
+      
+      if (!namaKelompok || !saran) return;
+      
+      const nama = namaKelompok.value.trim();
+      const saranText = saran.value.trim();
+      
+      if (!nama) {
+        alert('⚠️ Tulis nama kelompok dulu!');
+        return;
+      }
+      
+      if (!saranText || saranText.length < 10) {
+        feedback.innerHTML = '<div class="status-box wrong">⚠️ Saran minimal 10 karakter!</div>';
+        return;
+      }
+      
+      const saranBaru = {
+        kelompok: nama,
+        saran: saranText,
+        waktu: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+      };
+      
+      daftarSaranH1.push(saranBaru);
+      localStorage.setItem('saranHimpunan1', JSON.stringify(daftarSaranH1));
+      
+      namaKelompok.value = '';
+      saran.value = '';
+      feedback.innerHTML = '<div class="status-box correct">✅ Saran dikirim!</div>';
+      
+      tampilkanSaranH1();
+      
+      setTimeout(() => {
+        feedback.innerHTML = '';
+      }, 2000);
+    });
+  }
+});
+
+// ========================================
+// TAHAP 2 - LEVELING GAME JAVASCRIPT
+// ========================================
+(function() {
+  if (!document.getElementById('tahap2')) return;
+  
+  let currentLevel = 1;
+  const totalLevels = 5;
+
+  function updateSlide() {
+    const slides = document.querySelectorAll('#slides-t2 > .slide');
+    slides.forEach((slide, idx) => {
+      slide.classList.toggle('active', idx + 1 === currentLevel);
+    });
+    document.getElementById('levelLabel-t2').textContent = `Level ${currentLevel} dari ${totalLevels}`;
+    document.getElementById('prevBtn-t2').disabled = currentLevel === 1;
+    document.getElementById('nextBtn-t2').disabled = currentLevel === totalLevels;
+  }
+
+  const prevBtn = document.getElementById('prevBtn-t2');
+  const nextBtn = document.getElementById('nextBtn-t2');
+  
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      if (currentLevel > 1) { currentLevel--; updateSlide(); }
+    });
+  }
+  
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      if (currentLevel < totalLevels) { currentLevel++; updateSlide(); }
+    });
+  }
+
+  // Level 1: Pilihan
+  document.querySelectorAll('.lvl1 .option').forEach(option => {
+    option.addEventListener('click', () => {
+      const correct = option.dataset.correct === 'true';
+      const explain = option.dataset.explain;
+      const fb = document.getElementById('fb1-t2');
+      
+      fb.classList.add('show', correct ? 'success' : 'error');
+      fb.innerHTML = `<strong>${correct ? '✓ Benar!' : '✗ Salah'}</strong><br>${explain}`;
+      
+      if (correct) {
+        document.getElementById('goto2-t2').disabled = false;
+      }
+    });
+  });
+
+  // Level 1: Button
+  const goto2Btn = document.getElementById('goto2-t2');
+  if (goto2Btn) {
+    goto2Btn.addEventListener('click', () => {
+      currentLevel = 2; updateSlide();
+    });
+  }
+
+  // Level 2: Drag & Drop
+  let draggedPiece = null;
+  document.querySelectorAll('#pieces-t2 .piece').forEach(piece => {
+    piece.addEventListener('dragstart', (e) => {
+      draggedPiece = e.target.cloneNode(true);
+      e.dataTransfer.effectAllowed = 'move';
+    });
+  });
+
+  const assembly = document.getElementById('assembly-t2');
+  if (assembly) {
+    assembly.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+
+    assembly.addEventListener('drop', (e) => {
+      e.preventDefault();
+      if (draggedPiece) {
+        assembly.appendChild(draggedPiece);
+        draggedPiece = null;
+        checkAssembly();
+      }
+    });
+  }
+
+  function checkAssembly() {
+    const assembled = Array.from(document.getElementById('assembly-t2').querySelectorAll('.piece'))
+      .map(p => p.textContent.trim())
+      .join(' ');
+    const correct = assembled === 'Buku dengan jumlah halaman lebih dari 100';
+    const fb = document.getElementById('fb2-t2');
+    
+    fb.classList.add('show', correct ? 'success' : 'error');
+    fb.innerHTML = correct 
+      ? '<strong>✓ Benar!</strong> Kalimat deskripsi yang sempurna.'
+      : '<strong>✗ Coba lagi</strong> Susun urutan yang benar.';
+    
+    if (correct) {
+      document.getElementById('goto3-t2').disabled = false;
+    }
+  }
+
+  // Level 2: Button
+  const goto3Btn = document.getElementById('goto3-t2');
+  if (goto3Btn) {
+    goto3Btn.addEventListener('click', () => {
+      currentLevel = 3; updateSlide();
+    });
+  }
+
+  // Level 3: Book selection
+  document.querySelectorAll('.book').forEach(book => {
+    book.addEventListener('click', () => {
+      book.classList.toggle('selected');
+      
+      const selected = Array.from(document.querySelectorAll('.book.selected'))
+        .filter(b => b.dataset.valid === 'true').length;
+      
+      if (selected === 2) {
+        const enumResult = document.getElementById('resultEnum-t2');
+        enumResult.textContent = '{Buku A, Buku C}';
+        const fb = document.getElementById('fb3-t2');
+        fb.classList.add('show', 'success');
+        fb.innerHTML = '<strong>✓ Benar!</strong> Enumerasi yang sempurna.';
+        document.getElementById('goto4-t2').disabled = false;
+      }
+    });
+  });
+
+  // Level 3: Button
+  const goto4Btn = document.getElementById('goto4-t2');
+  if (goto4Btn) {
+    goto4Btn.addEventListener('click', () => {
+      currentLevel = 4; updateSlide();
+    });
+  }
+
+  // Level 4: Notation check
+  const checkNotasiBtn = document.getElementById('checkNotasi-t2');
+  if (checkNotasiBtn) {
+    checkNotasiBtn.addEventListener('click', () => {
+      const input = document.getElementById('notasiInput-t2').value.toLowerCase();
+      const correct = input.includes('x') && input.includes('>') && input.includes('100');
+      const fb = document.getElementById('fb4-t2');
+      
+      fb.classList.add('show', correct ? 'success' : 'error');
+      fb.innerHTML = correct 
+        ? '<strong>✓ Benar!</strong> Notasi pembentuk himpunan yang tepat.'
+        : '<strong>✗ Coba lagi</strong> Gunakan format A = {x | ...}';
+      
+      if (correct) {
+        document.getElementById('goto5-t2').disabled = false;
+      }
+    });
+  }
+
+  // Level 4: Button
+  const goto5Btn = document.getElementById('goto5-t2');
+  if (goto5Btn) {
+    goto5Btn.addEventListener('click', () => {
+      currentLevel = 5; updateSlide();
+    });
+  }
+
+  // Level 5: Final drag & drop
+  document.querySelectorAll('#finalPieces-t2 .piece').forEach(piece => {
+    piece.addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData('text/plain', piece.textContent);
+      e.dataTransfer.setData('data-type', piece.dataset.type || '');
+      e.dataTransfer.effectAllowed = 'move';
+    });
+  });
+
+  document.querySelectorAll('.target').forEach(target => {
+    target.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    });
+    
+    target.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const text = e.dataTransfer.getData('text/plain');
+      target.innerHTML = text;
+    });
+  });
+
+  const finishBtn = document.getElementById('finishBtn-t2');
+  if (finishBtn) {
+    finishBtn.addEventListener('click', () => {
+      const fb = document.getElementById('fb5-t2');
+      fb.classList.add('show', 'success');
+      fb.innerHTML = '<strong>✓ Selesai!</strong> Anda telah menyelesaikan Tahap 2!';
+      
+      // Mark tahap2 as completed in navigation
+      setTimeout(() => {
+        showSlide('tahap3');
+      }, 2000);
+    });
+  }
+
+  // Initialize
+  updateSlide();
+})();
+
+</script>
+
+<!-- Google Form Helper Script -->
+<script src="../Relasi/google-form-helper.js"></script>
+
+</body></html>

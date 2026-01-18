@@ -1,0 +1,2766 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE LOGIC LAB — Interactive Function Investigation</title>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{
+  --bg:#ffcb64;
+  --panel:#fff3d9;
+  --accent:#3e2723;
+  --muted:#6b4b3a;
+  --success:#2e7d32;
+  --danger:#c62828;
+  --info:#0284c7;
+  --warning:#f59e0b;
+}
+
+html,body{
+  height:100%;
+  margin:0;
+  font-family:'Bagel Fat One',cursive;
+  background:var(--bg);
+  color:var(--accent);
+}
+
+body {
+  background: linear-gradient(135deg, #ffcb64 0%, #ffc850 50%, #ffb84d 100%);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.08), transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.wrapper{
+  min-height:100vh;
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding:28px;
+  box-sizing:border-box;
+}
+
+.card{
+  width:1100px;
+  max-width:98%;
+  background:linear-gradient(180deg,var(--panel),#fff7e6);
+  border-radius:18px;
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
+  overflow:visible;
+  position:relative;
+}
+
+.header{text-align:center;padding-top:10px}
+h1{font-size:44px;margin:6px 0;color:var(--accent)}
+h2{font-size:28px;color:var(--accent);margin:12px 0}
+h3{font-size:20px;color:var(--accent);margin:10px 0}
+
+.lead{color:rgba(0,0,0,0.6);margin-bottom:18px}
+.slides{min-height:60vh;padding:28px 18px;}
+.slide{display:none;padding:10px 18px 20px 18px;min-height:400px}
+.slide.active{display:block;animation: fadeIn 0.5s ease-out;}
+.center{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:100px}
+
+.btn{
+  background:var(--accent);
+  color:white;
+  border:none;
+  padding:10px 20px;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:16px;
+  transition: all 0.3s ease;
+  font-family:'Bagel Fat One',cursive;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+
+.card-lite{
+  background:#fffdf6;
+  border:2px dashed #ffd199;
+  border-radius:14px;
+  padding:14px;
+  margin:10px 0;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.scenario-box{
+  background:#fff;
+  border-left:4px solid var(--info);
+  padding:16px;
+  margin:12px 0;
+  border-radius:8px;
+}
+
+.scratchpad{
+  background:#f9fafb;
+  border:2px solid #e5e7eb;
+  border-radius:8px;
+  padding:16px;
+  margin:12px 0;
+}
+
+.scratchpad-row{
+  display:flex;
+  gap:12px;
+  align-items:center;
+  margin-bottom:12px;
+  flex-wrap:wrap;
+}
+
+.scratchpad-row input{
+  padding:8px 12px;
+  border:2px solid #d1d5db;
+  border-radius:6px;
+  font-family:Arial,sans-serif;
+  font-size:14px;
+}
+
+.scratchpad-row input:focus{
+  outline:none;
+  border-color:var(--info);
+  box-shadow:0 0 0 3px rgba(2,132,199,0.1);
+}
+
+.formula-display{
+  background:#f3f4f6;
+  padding:12px;
+  border-radius:6px;
+  margin:8px 0;
+  text-align:center;
+  font-weight:700;
+  font-family:monospace;
+  font-size:16px;
+  color:var(--accent);
+}
+
+.drag-zone{
+  background:#fef3c7;
+  border:2px dashed #f59e0b;
+  border-radius:8px;
+  padding:16px;
+  min-height:80px;
+  margin:12px 0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:flex-start;
+  justify-content:flex-start;
+}
+
+.drag-item{
+  background:#fff;
+  border:2px solid #f59e0b;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:grab;
+  user-select:none;
+  transition:all 0.3s ease;
+  font-weight:600;
+}
+
+.drag-item:hover{
+  transform:scale(1.05);
+  box-shadow:0 4px 8px rgba(245,158,11,0.3);
+}
+
+.drag-item.dragging{
+  opacity:0.7;
+  cursor:grabbing;
+}
+
+.target-zone{
+  background:#f0f9ff;
+  border:2px dashed var(--info);
+  border-radius:8px;
+  padding:12px;
+  min-height:60px;
+  margin:8px 0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:flex-start;
+}
+
+.target-zone h4{
+  width:100%;
+  margin:0 0 8px 0;
+  font-size:14px;
+  color:var(--muted);
+}
+
+.feedback-box{
+  padding:12px;
+  border-radius:8px;
+  margin:12px 0;
+  display:none;
+  font-weight:600;
+}
+
+.feedback-box.success{
+  display:block;
+  background:#d1fae5;
+  border-left:4px solid var(--success);
+  color:#065f46;
+}
+
+.feedback-box.error{
+  display:block;
+  background:#fee2e2;
+  border-left:4px solid var(--danger);
+  color:#7f1d1d;
+}
+
+.feedback-box.warning{
+  display:block;
+  background:#fef3c7;
+  border-left:4px solid var(--warning);
+  color:#78350f;
+}
+
+/* Styling untuk pilihan penyajian */
+.penyajian-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.penyajian-option:hover {
+  background: #fffbf0;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.penyajian-option input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.penyajian-option input[type="radio"]:checked + span {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.penyajian-option span {
+  font-size: 16px;
+  color: var(--muted);
+  transition: all 0.2s ease;
+}
+
+/* Styling untuk komentar */
+.komentar-item {
+  background: #f9f9f9;
+  border-left: 4px solid var(--accent);
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.komentar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.komentar-kelompok {
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+.komentar-waktu {
+  font-size: 12px;
+  color: #999;
+}
+
+.komentar-isi {
+  color: #333;
+  line-height: 1.5;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.data-table{
+  width:100%;
+  border-collapse:collapse;
+  margin:12px 0;
+  background:#fff;
+}
+
+.data-table th{
+  background:#fff3d9;
+  border:1px solid #ffd199;
+  padding:10px;
+  text-align:left;
+  font-weight:700;
+  color:var(--accent);
+}
+
+.data-table td{
+  border:1px solid #ffd199;
+  padding:10px;
+}
+
+.data-table input{
+  width:90%;
+  padding:6px 8px;
+  border:1px solid #d1d5db;
+  border-radius:4px;
+  font-family:Arial,sans-serif;
+}
+
+.status-icon{
+  font-size:18px;
+  font-weight:700;
+}
+
+.calculation-steps{
+  background:#f3f4f6;
+  padding:12px;
+  border-radius:8px;
+  margin:8px 0;
+  font-family:monospace;
+  font-size:13px;
+  color:#374151;
+  line-height:1.6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width:920px){ 
+  .card{padding:12px} 
+  h1{font-size:32px} 
+  .scratchpad-row{flex-direction:column}
+}
+
+/* Modal overlay untuk Google Form */
+#gformModal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  animation: fadeInModal 0.3s ease;
+}
+
+#gformModalContent {
+  position: relative;
+  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
+  margin: 5% auto;
+  padding: 40px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  animation: slideDownModal 0.4s ease;
+  text-align: center;
+}
+
+#gformModalClose {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+#gformModalClose:hover {
+  color: #333;
+}
+
+.gform-title {
+  color: #2a2420;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.gform-message {
+  color: #555;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.gform-link-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  padding: 18px 40px;
+  font-size: 20px;
+  font-weight: 700;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(76,175,80,0.4);
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.gform-link-btn:hover {
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+  box-shadow: 0 6px 20px rgba(76,175,80,0.5);
+  transform: translateY(-2px);
+}
+
+.gform-close-btn {
+  display: inline-block;
+  background: #ccc;
+  color: #333;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.2s;
+}
+
+.gform-close-btn:hover {
+  background: #bbb;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideDownModal {
+  from {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+h1, h2 {
+  animation: floating 3s ease-in-out infinite;
+}
+</style>
+</head>
+<body>
+
+<!-- Modal Google Form -->
+<div id="gformModal">
+  <div id="gformModalContent">
+    <span id="gformModalClose" onclick="closeGFormModal()">&times;</span>
+    <div class="gform-title">✅ PDF Berhasil Didownload!</div>
+    <div class="gform-message">
+      <p style="margin:10px 0;">File PDF hasil pembelajaran sudah tersimpan di komputer Anda.</p>
+      <p style="margin:10px 0;font-weight:700;color:#d32f2f;">Sekarang silakan upload ke Google Form:</p>
+    </div>
+    <a href="" id="gformLink" class="gform-link-btn" target="_blank">📝 BUKA GOOGLE FORM</a>
+    <div style="margin-top:25px;padding:20px;background:#fff9e6;border-radius:10px;text-align:left;">
+      <p style="font-size:14px;margin:8px 0;color:#333;"><strong>Instruksi:</strong></p>
+      <ol style="font-size:13px;line-height:1.8;color:#555;margin:8px 0;padding-left:20px;">
+        <li>Klik tombol hijau di atas untuk membuka Google Form</li>
+        <li>Isi nama kelompok Anda</li>
+        <li>Upload file PDF yang baru didownload</li>
+        <li>Klik Submit</li>
+      </ol>
+      <p style="font-size:12px;margin:10px 0;color:#777;font-style:italic;">💡 File akan otomatis masuk ke Google Drive guru!</p>
+    </div>
+    <div class="gform-close-btn" onclick="closeGFormModal()">Tutup</div>
+  </div>
+</div>
+
+<div class="wrapper">
+  <div class="card">
+    <div class="header">
+      <h1>Media Pembelajaran</h1>
+
+    </div>
+
+    <main class="slides">
+      <!-- Slide 1: Start -->
+      <section class="slide active" id="start">
+        <div class="center">
+          <h2>Selamat Datang di Media Pembelajaran</h2>
+          <p class="lead">Investigasi Mandiri: Dari Masalah Nyata ke Pemahaman Fungsi</p>
+          <p style="color:var(--muted);max-width:600px;text-align:center">
+            Dalam lab ini, Anda akan menganalisis masalah nyata, menemukan pola, dan memvalidasi rumus dengan sistem feedback real-time.
+          </p>
+          <button class="btn" onclick="show('permasalahan-foto')">Mulai Pembelajaran ⟶</button>
+        </div>
+      </section>
+
+      <!-- Slide Baru: Latihan Menghitung Jarak Lainnya -->
+      <section class="slide" id="latihan-hitung-jarak">
+        <div class="card-lite">
+          <h2>📊 Latihan: Hitung Tarif untuk Berbagai Jarak</h2>
+          <p style="color:var(--muted);margin-bottom:16px">Sekarang giliran kalian! Gunakan rumus yang sudah kalian pahami untuk menghitung tarif perjalanan ojek online untuk jarak-jarak berikut. Isi tabel di bawah ini dengan perhitungan kalian.</p>
+
+          <div style="margin:20px 0">
+            <h3 style="color:var(--accent);margin-bottom:12px">📝 Tabel Perhitungan Siswa</h3>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Jarak (km)</th>
+                  <th>Perhitungan (tulis di sini)</th>
+                  <th>Tarif (Rp)</th>
+                  <th>Validasi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:center"><strong>2</strong></td>
+                  <td><input type="text" id="calc2" placeholder="Contoh: 4.000 × 2 + 5.000" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td><input type="number" id="tarif2" placeholder="0" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td style="text-align:center"><span id="status2">—</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align:center"><strong>5</strong></td>
+                  <td><input type="text" id="calc5" placeholder="Tulis perhitunganmu" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td><input type="number" id="tarif5" placeholder="0" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td style="text-align:center"><span id="status5">—</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align:center"><strong>7</strong></td>
+                  <td><input type="text" id="calc7" placeholder="Tulis perhitunganmu" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td><input type="number" id="tarif7" placeholder="0" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td style="text-align:center"><span id="status7">—</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align:center"><strong>10</strong></td>
+                  <td><input type="text" id="calc10" placeholder="Tulis perhitunganmu" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td><input type="number" id="tarif10" placeholder="0" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td style="text-align:center"><span id="status10">—</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align:center"><strong>12</strong></td>
+                  <td><input type="text" id="calc12" placeholder="Tulis perhitunganmu" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td><input type="number" id="tarif12" placeholder="0" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td style="text-align:center"><span id="status12">—</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align:center"><strong>15</strong></td>
+                  <td><input type="text" id="calc15" placeholder="Tulis perhitunganmu" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td><input type="number" id="tarif15" placeholder="0" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td style="text-align:center"><span id="status15">—</span></td>
+                </tr>
+                <tr>
+                  <td style="text-align:center"><strong>20</strong></td>
+                  <td><input type="text" id="calc20" placeholder="Tulis perhitunganmu" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td><input type="number" id="tarif20" placeholder="0" style="width:100%;padding:6px;border:1px solid #d1d5db;border-radius:4px"></td>
+                  <td style="text-align:center"><span id="status20">—</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+              <button class="btn" id="btnCekJawaban" style="flex:1;min-width:200px">✓ Cek Semua Jawaban</button>
+              <button class="btn ghost" id="btnResetTabel">🔄 Reset Tabel</button>
+            </div>
+
+            <div id="feedbackLatihan" class="feedback-box" style="margin-top:16px"></div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="show('skenario')">⟵ Kembali</button>
+            <button class="btn" id="btnLanjutKeScratchpadDariLatihan" onclick="show('scratchpad')">Lanjut Validasi Rumus ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Permasalahan Foto (Parkir Nadia) -->
+      <section class="slide" id="permasalahan-foto">
+        <div class="card-lite">
+          <h2>📸 Fase 1: Orientasi Permasalahan</h2>
+          <h3 style="text-align:center;margin:16px 0">Permasalahan — Menentukan Tarif Ojek Online</h3>
+          <p style="color:var(--muted);text-align:center;margin-bottom:20px">Baca konteks singkat berikut, identifikasi yang diketahui dan ditanyakan, lalu bantu menyajikan tarif dalam diagram panah dan rumus fungsi.</p>
+
+          <div style="text-align:center;margin:20px 0">
+            <img src="../images/gojek.png" alt="Ilustrasi tarif parkir" style="max-width:100%;height:auto;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.1)">
+          </div>
+
+          <!-- Cerita Permasalahan Ojek + Diketahui + Ditanyakan dipindah ke bawah foto -->
+          <div class="scenario-box" style="max-width:800px;margin:20px auto">
+            <h4 style="color:var(--accent);margin:0 0 12px 0">🏍️ Cerita Permasalahan</h4>
+            <p style="margin:0 0 12px 0;color:var(--muted);font-size:15px;line-height:1.8">
+              Pak Budi adalah seorang driver ojek online yang bekerja di aplikasi <strong>"GoRide Express"</strong>. Setiap hari, banyak penumpang yang bertanya tentang tarif perjalanan mereka sebelum memesan. Pak Budi ingin membuat diagram panah atau tabel yang jelas agar penumpang dapat langsung mengetahui tarif berdasarkan jarak yang ditempuh.
+            </p>
+
+            <div style="background:#fff3cd;border-left:4px solid #ffc107;padding:12px;border-radius:6px;margin:12px 0">
+              <p style="margin:0 0 8px 0;color:var(--accent);font-weight:700">📌 Yang Diketahui:</p>
+              <ul style="margin:0;padding-left:20px;color:var(--muted);line-height:1.8">
+                <li><strong>Tarif 1 km pertama:</strong> Rp5.000 (tarif dasar/minimum)</li>
+                <li><strong>Tarif km tambahan:</strong> Rp4.000 per km (mulai dari km ke-2 dan seterusnya)</li>
+              </ul>
+            </div>
+
+            <div style="background:#e0f2fe;border-left:4px solid var(--info);padding:12px;border-radius:6px;margin:12px 0">
+              <p style="margin:0 0 8px 0;color:var(--accent);font-weight:700">❓ Ditanyakan:</p>
+              <p style="margin:0;color:var(--muted);line-height:1.8">
+                Seorang penumpang ingin pergi ke tempat yang berjarak <strong>9 km</strong> dari lokasi penjemputan. Berapakah tarif yang harus dibayar oleh penumpang tersebut?
+              </p>
+            </div>
+          </div>
+
+          <!-- Textarea untuk siswa menuliskan solusi -->
+          <div style="max-width:800px;margin:24px auto">
+            <label style="display:block;color:var(--accent);font-weight:700;font-size:16px;margin-bottom:10px">💡 Ide Solusi Awal Kalian:</label>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:10px">Sebelum melanjutkan, tuliskan ide awal kalian tentang bagaimana cara menyelesaikan permasalahan ini:</p>
+            <textarea id="solusiAwalPertemuan4" placeholder="Contoh: Saya akan membuat diagram/tabel yang menghubungkan jarak dengan tarif, atau membuat rumus untuk menghitung tarif berdasarkan jarak..." style="width:100%;min-height:120px;padding:14px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+            <p style="color:var(--muted);font-size:12px;margin-top:8px;font-style:italic">💭 Tidak apa jika belum yakin, tuliskan saja apa yang terpikirkan saat ini!</p>
+          </div>
+
+          
+
+          <p style="text-align:center;color:var(--muted);margin:20px 0;font-size:15px">
+            ⚠️ Sebelum memulai, silakan duduk bersama kelompok Anda — permasalahan ini dikerjakan secara berkelompok!
+          </p>
+
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:30px">
+            <button class="btn ghost" onclick="show('start')">⟵ Kembali</button>
+            <button class="btn" onclick="show('identitas-kelompok')">Lanjut ke Identitas Kelompok ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Identitas Kelompok -->
+      <section class="slide" id="identitas-kelompok">
+        <div class="card-lite">
+          <h2>👥 Fase 2: Mengorganisasi Siswa untuk Belajar</h2>
+          <p style="color:var(--muted);margin-bottom:20px">Silakan isi data kelompok Anda sebelum melanjutkan ke tahap penyelidikan.</p>
+
+          <div class="scenario-box" style="max-width:700px;margin:20px auto">
+            <label for="namaKelompok" style="display:block;margin-bottom:8px;color:var(--accent);font-weight:700;font-size:16px">📝 Nama Kelompok</label>
+            <input type="text" id="namaKelompok" placeholder="Contoh: Kelompok Hemat Cerdas" style="width:100%;padding:12px;border-radius:8px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:15px;box-sizing:border-box">
+          </div>
+
+          <div class="scenario-box" style="max-width:700px;margin:20px auto">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+              <label style="color:var(--accent);font-weight:700;font-size:16px">👤 Anggota Kelompok</label>
+              <button class="btn ghost" id="addAnggotaBtn" style="padding:8px 16px;font-size:14px">+ Tambah Anggota</button>
+            </div>
+            
+            <div id="anggotaContainer" style="display:flex;flex-direction:column;gap:10px">
+              <div class="anggota-row" style="display:flex;gap:8px">
+                <input type="text" class="anggota-input" placeholder="Nama anggota 1" style="flex:1;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px">
+                <select class="tanggung-jawab-select" style="padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
+                  <option value="Ketua Kelompok">Ketua Kelompok</option>
+                  <option value="Wakil Ketua">Wakil Ketua</option>
+                  <option value="Sekretaris">Sekretaris</option>
+                  <option value="Anggota Aktif">Anggota Aktif</option>
+                  <option value="Anggota">Anggota</option>
+                </select>
+                <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:50px;padding:8px">✖</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="feedbackKelompok" style="margin:20px auto;max-width:700px;padding:12px;border-radius:8px;text-align:center;display:none"></div>
+
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:30px">
+            <button class="btn ghost" onclick="show('permasalahan-foto')">⟵ Kembali</button>
+            <button class="btn" onclick="show('skenario')">Lanjut ke Penyelidikan ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: FASE 3 - Membimbing Penyelidikan -->
+      <section class="slide" id="skenario">
+        <div class="card-lite">
+          <h2>🔬 Fase 3: Membimbing Penyelidikan - Investigasi Pola Tarif</h2>
+          
+          <!-- PENGANTAR AKTIVITAS INVESTIGASI -->
+          <div style="margin-bottom:16px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
+            <strong style="display:block;margin-bottom:6px">📌 Mengapa Kegiatan Ini Penting?</strong>
+            <div class="small">Dalam kehidupan nyata, data sering kali tampak acak dan membingungkan. Tugas kalian adalah seperti seorang data scientist — menemukan POLA tersembunyi di balik data. Dengan menemukan pola, kalian dapat membuat RUMUS FUNGSI yang bisa memprediksi tarif untuk jarak berapa saja tanpa harus tanya-tanya ke aplikasi!</div>
+          </div>
+
+          <p style="color:var(--muted);margin-bottom:16px">
+            <strong>Tugas Kelompok:</strong> Analisis data tarif dari aplikasi GoRide Express, temukan polanya, dan buat rumus untuk menghitung tarif jarak berapa saja!
+          </p>
+
+          <!-- Data Real dari Aplikasi -->
+          <div class="scenario-box">
+            <p style="margin:12px 0;color:var(--accent);font-weight:700">📊 Data Real dari Aplikasi GoRide Express:</p>
+            <table class="data-table" style="margin:12px 0">
+              <thead>
+                <tr>
+                  <th>Jarak Perjalanan (km)</th>
+                  <th>Tarif yang Dikenakan (Rp)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="text-align:center"><strong>2 km</strong></td>
+                  <td style="text-align:center"><strong>Rp 13.000</strong></td>
+                </tr>
+                <tr>
+                  <td style="text-align:center"><strong>3 km</strong></td>
+                  <td style="text-align:center"><strong>Rp 17.000</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- STEP 1: Observasi Data -->
+          <div class="scenario-box" style="border-left-color:#3b82f6;background:#eff6ff;margin-top:16px">
+            <p style="margin:0;color:#1e40af;font-weight:700">📝 STEP 1: Amati Data</p>
+            <div style="margin-top:12px;font-size:14px;color:var(--muted);line-height:1.8">
+              <p style="font-weight:700;color:#2563eb">Pertanyaan Pembimbing:</p>
+              <p>▸ Apa yang kamu lihat dari kedua data ini?</p>
+              <p>▸ Jika jarak bertambah dari 2 km menjadi 3 km (bertambah <strong>1 km</strong>), bagaimana dengan tarifnya?</p>
+              
+              <label style="display:block;margin-top:12px;margin-bottom:6px;color:#1e40af;font-weight:700">Tuliskan pengamatanmu:</label>
+              <textarea id="observasiData" placeholder="Contoh: Saya lihat ketika jarak bertambah 1 km, tarif juga naik dari 13.000 menjadi 17.000..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #93c5fd;font-family:sans-serif;font-size:13px;min-height:70px;background:#fff"></textarea>
+            </div>
+          </div>
+
+          <!-- STEP 2: Analisis Pola -->
+          <div class="scenario-box" style="border-left-color:#f59e0b;background:#fffbf0;margin-top:16px">
+            <p style="margin:0;color:#92400e;font-weight:700">🔍 STEP 2: Cari Pola Penambahan Tarif</p>
+            <div style="margin-top:12px;font-size:14px;color:var(--muted);line-height:1.8">
+              <p style="font-weight:700;color:#d97706">Pertanyaan Pembimbing:</p>
+              <p>▸ Berapa selisih tarif antara 3 km dan 2 km? (Hitung: 17.000 - 13.000 = ?)</p>
+              <p>▸ Jika pola ini TETAP BERLANJUT, berapa kira-kira tarif untuk <strong>4 km</strong>?</p>
+              <p>▸ Bagaimana dengan tarif untuk <strong>5 km</strong>?</p>
+              
+              <label style="display:block;margin-top:12px;margin-bottom:6px;color:#92400e;font-weight:700">Hipotesismu (Tebakan berdasarkan pola):</label>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:8px">
+                <label style="font-size:13px;color:#78350f">Selisih tarif per km:</label>
+                <input type="number" id="hipotesisTarifPerKm" placeholder="Berapa?" style="max-width:150px;padding:8px;border:2px solid #fcd34d;border-radius:6px;background:#fff">
+                <span style="font-size:13px;color:#78350f">Rupiah</span>
+              </div>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                <label style="font-size:13px;color:#78350f">Prediksi tarif 4 km:</label>
+                <input type="number" id="prediksi4km" placeholder="Berapa?" style="max-width:150px;padding:8px;border:2px solid #fcd34d;border-radius:6px;background:#fff">
+                <span style="font-size:13px;color:#78350f">Rupiah</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3: Temukan Biaya Awal -->
+          <div class="scenario-box" style="border-left-color:#10b981;background:#f0fdf4;margin-top:16px">
+            <p style="margin:0;color:#065f46;font-weight:700">💡 STEP 3: Investigasi Biaya Awal</p>
+            <div style="margin-top:12px;font-size:14px;color:var(--muted);line-height:1.8">
+              <p style="font-weight:700;color:#059669">Pertanyaan Pembimbing:</p>
+              <p>▸ Jika setiap km tambahan tarifnya naik <strong>[angka dari step 2]</strong>, berapa tarif untuk <strong>1 km pertama</strong>?</p>
+              <p>▸ <em>Hint:</em> Untuk 2 km tarifnya Rp 13.000. Kalau 1 km sebelumnya (km ke-1) dihitung mundur, berapa?</p>
+              <p style="font-size:12px;color:#059669;font-style:italic">📌 Logika: Tarif 1 km = Tarif 2 km - (Tarif per km tambahan)</p>
+              
+              <label style="display:block;margin-top:12px;margin-bottom:6px;color:#065f46;font-weight:700">Hipotesismu untuk Biaya Awal (tarif 1 km):</label>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+                <input type="number" id="hipotesisBiayaAwal" placeholder="Berapa?" style="max-width:150px;padding:8px;border:2px solid #86efac;border-radius:6px;background:#fff">
+                <span style="font-size:13px;color:#065f46">Rupiah</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4: Formulasikan Rumus -->
+          <div class="scenario-box" style="border-left-color:#8b5cf6;background:#faf5ff;margin-top:16px">
+            <p style="margin:0;color:#6b21a8;font-weight:700">📐 STEP 4: Susun Rumus Berdasarkan Temuanmu</p>
+            <div style="margin-top:12px;font-size:14px;color:var(--muted);line-height:1.8">
+              <p style="font-weight:700;color:#7c3aed">Pertanyaan Pembimbing:</p>
+              <p>▸ Jika kamu sudah tahu: <strong>Tarif per km</strong> dan <strong>Biaya awal</strong>, bisakah kamu buat RUMUS untuk menghitung tarif jarak berapa saja?</p>
+              <p>▸ Rumusnya seperti apa? (Format: Tarif = ___ × Jarak + ___)</p>
+              
+              <label style="display:block;margin-top:12px;margin-bottom:6px;color:#6b21a8;font-weight:700">Rumus yang kamu temukan:</label>
+              <div style="background:#fff;padding:12px;border:2px solid #c4b5fd;border-radius:8px;font-family:monospace;font-size:15px;color:var(--accent)">
+                Tarif = 
+                <input type="number" id="rumusKoef" placeholder="?" style="max-width:100px;padding:6px;border:2px solid #a78bfa;border-radius:4px;text-align:center;margin:0 4px">
+                × Jarak + 
+                <input type="number" id="rumusKonst" placeholder="?" style="max-width:100px;padding:6px;border:2px solid #a78bfa;border-radius:4px;text-align:center;margin:0 4px">
+              </div>
+            </div>
+          </div>
+
+          <!-- Bot Assistant Feedback -->
+          <div id="botInvestigasi" style="display:none;margin:16px 0;padding:14px;background:#fff3d9;border-left:4px solid #ffb84d;border-radius:8px;animation:fadeIn 0.4s ease-out">
+            <div style="display:flex;align-items:flex-start;gap:12px">
+              <div style="font-size:32px">🤖</div>
+              <div>
+                <div style="font-weight:700;color:var(--accent);margin-bottom:4px">Asisten Pembimbing</div>
+                <div id="botMsgInvestigasi" style="color:var(--muted);font-size:14px"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="feedbackEksplorasi" class="feedback-box"></div>
+
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="show('identitas-kelompok')">⟵ Kembali</button>
+            <button class="btn" id="btnValidasiInvestigasi" style="flex:1;min-width:200px">✓ Validasi Hasil Investigasi</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Formula Discovery & Validation -->
+      <section class="slide" id="scratchpad">
+        <div class="card-lite">
+          <h2>📝 Rumus Tarif yang Kamu Temukan</h2>
+          <p style="color:var(--muted)">Berdasarkan eksplorasi, tuliskan rumus yang kamu temukan, lalu validasi dengan data tambahan.</p>
+
+          <div class="scratchpad">
+            <p style="margin:0;color:var(--accent);font-weight:700">Rumus Penemuanmu:</p>
+            <div style="margin:12px 0;padding:12px;background:#f9fafb;border-left:4px solid var(--info);border-radius:6px">
+              <div style="font-family:monospace;font-size:14px;color:var(--accent);margin-bottom:12px">
+                f(x) = <input type="number" id="koefInput" placeholder="Koefisien" style="max-width:120px"> × x + <input type="number" id="konstInput" placeholder="Konstanta" style="max-width:120px">
+              </div>
+              
+            </div>
+
+            <p style="margin:16px 0 8px 0;color:var(--accent);font-weight:700">🧪 Validasi Rumusmu dengan Data Lain:</p>
+            <p style="font-size:14px;color:var(--muted);margin:8px 0">Aplikasi GoRide memberikan informasi tarif tambahan. Cek apakah rumusmu sesuai:</p>
+            
+            <table class="data-table" style="margin:12px 0">
+              <thead>
+                <tr>
+                  <th>x (Jarak, km)</th>
+                  <th>Tarif Sebenarnya (dari Aplikasi)</th>
+                  <th>Tarif Menurut Rumusmu</th>
+                  <th>Cocok?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-x="4">
+                  <td style="text-align:center"><strong>4</strong></td>
+                  <td style="text-align:center"><strong>21.000</strong></td>
+                  <td style="text-align:center"><span class="rumusHasil" data-x="4">—</span></td>
+                  <td style="text-align:center"><span class="statusCokok" data-x="4">?</span></td>
+                </tr>
+                <tr data-x="5">
+                  <td style="text-align:center"><strong>5</strong></td>
+                  <td style="text-align:center"><strong>25.000</strong></td>
+                  <td style="text-align:center"><span class="rumusHasil" data-x="5">—</span></td>
+                  <td style="text-align:center"><span class="statusCokok" data-x="5">?</span></td>
+                </tr>
+                <tr data-x="10">
+                  <td style="text-align:center"><strong>10</strong></td>
+                  <td style="text-align:center"><strong>45.000</strong></td>
+                  <td style="text-align:center"><span class="rumusHasil" data-x="10">—</span></td>
+                  <td style="text-align:center"><span class="statusCokok" data-x="10">?</span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <button class="btn" id="btnHitungRumus" style="padding:10px 16px;margin-top:12px">Cek Rumusmu</button>
+            <button class="btn ghost" id="btnResetRumus" style="padding:10px 16px;margin-left:8px">Reset</button>
+
+            <div id="feedbackRumus" class="feedback-box"></div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="show('skenario')">⟵ Kembali</button>
+            <button class="btn" onclick="show('analisisKomponen')">Lanjut: Penjelasan Bagian-Bagian Rumus ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Penjelasan Bagian-Bagian Rumus -->
+      <section class="slide" id="analisisKomponen">
+        <div class="card-lite">
+          <h2>🔍 Penjelasan Bagian-Bagian Rumus</h2>
+          <p style="color:var(--muted)">Mari kita pahami apa arti setiap bagian rumusmu dalam konteks bisnis ojek online.</p>
+
+          <div class="scenario-box">
+            <strong>Rumusmu: <span id="rumusKomponen">—</span></strong>
+          </div>
+
+          <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px">
+            <div style="flex:1;min-width:280px;background:#e0f2fe;border-left:4px solid var(--info);padding:14px;border-radius:8px">
+              <h4 style="margin:0 0 8px 0;color:var(--info)">📌 Koefisien (Angka didepan x)</h4>
+              <div style="background:#fff;padding:10px;border-radius:6px;margin:8px 0;font-weight:700;color:var(--accent)">
+                <span id="nilaiKoef">—</span> Rupiah/km
+              </div>
+              <p style="margin:0;font-size:13px;color:#0c4a6e">Ini adalah <strong>tarif tambahan untuk setiap kilometer</strong> perjalanan. Semakin jauh jarak, semakin besar tarif ini.</p>
+            </div>
+
+            <div style="flex:1;min-width:280px;background:#fef3c7;border-left:4px solid var(--warning);padding:14px;border-radius:8px">
+              <h4 style="margin:0 0 8px 0;color:#92400e">📌 Konstanta (Angka yang berdiri sendiri)</h4>
+              <div style="background:#fff;padding:10px;border-radius:6px;margin:8px 0;font-weight:700;color:var(--accent)">
+                Rp <span id="nilaiKonst">—</span>
+              </div>
+              <p style="margin:0;font-size:13px;color:#78350f">Ini adalah <strong>biaya awal/aplikasi</strong> yang selalu dikenakan, apapun jaraknya. Ini seperti "asuransi" perjalanan Anda.</p>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="show('scratchpad')">⟵ Kembali</button>
+            <button class="btn" onclick="show('penyajian-fungsi')">Lanjut: Penyajian Fungsi ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide: Penyajian Fungsi dalam Berbagai Bentuk - INTERACTIVE -->
+      <section class="slide" id="penyajian-fungsi">
+        <div class="card-lite">
+          <h2>📊 Penyajian Fungsi Tarif dalam Berbagai Bentuk</h2>
+          <p style="color:var(--muted);margin-bottom:16px">Inputkan data jarak (domain), sistem akan otomatis menampilkan tarif di semua bentuk penyajian!</p>
+
+          <!-- INPUT SECTION -->
+          <div class="scenario-box" style="background:#fff3cd;border-left:4px solid var(--warning)">
+            <p style="margin:0 0 12px 0;color:var(--accent);font-weight:700">📥 Input Data Jarak</p>
+            <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+              <div>
+                <label style="display:block;margin-bottom:4px;color:var(--accent);font-weight:700;font-size:13px">Jarak (km)</label>
+                <input type="number" id="inputJarak" min="1" max="20" placeholder="Contoh: 5" style="padding:8px;border:2px solid #d1d5db;border-radius:6px;width:100px">
+              </div>
+              <button class="btn" id="btnTambahData" style="padding:8px 16px">+ Tambah Data</button>
+              <button class="btn ghost" id="btnResetData" style="padding:8px 16px">🔄 Reset</button>
+            </div>
+            <p style="margin:12px 0 0 0;font-size:12px;color:#666">Hint: Tambahkan data untuk melihat bagaimana fungsi ditampilkan dalam berbagai bentuk</p>
+          </div>
+
+          <!-- TAB SELECTOR -->
+          <div style="display:flex;gap:8px;margin:20px 0;flex-wrap:wrap;justify-content:center">
+            <button class="btn" id="tabDiagram" onclick="showTab('diagram')" style="padding:10px 16px;background:var(--accent);color:white">📍 Diagram Panah</button>
+            <button class="btn ghost" id="tabTabel" onclick="showTab('tabel')" style="padding:10px 16px">📋 Tabel</button>
+            <button class="btn ghost" id="tabPasangan" onclick="showTab('pasangan')" style="padding:10px 16px">📍 Pasangan Berurutan</button>
+            <button class="btn ghost" id="tabPersamaan" onclick="showTab('persamaan')" style="padding:10px 16px">📐 Persamaan</button>
+            <button class="btn ghost" id="tabGrafik" onclick="showTab('grafik')" style="padding:10px 16px">📈 Grafik</button>
+          </div>
+
+          <!-- DIAGRAM PANAH -->
+          <div id="contentDiagram" style="display:block;animation:fadeIn 0.3s ease-out">
+            <div class="scenario-box">
+              <h3 style="color:var(--accent);margin-top:0">1️⃣ Diagram Panah</h3>
+              <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:flex-start;gap:20px;text-align:center">
+                <div style="border:2px solid var(--accent);border-radius:8px;padding:16px;background:#fff3d9;min-height:150px">
+                  <p style="margin:0 0 12px 0;color:var(--accent);font-weight:700">Jarak (km)</p>
+                  <div id="diagramDomain" style="color:var(--accent);font-weight:700;line-height:2">
+                    <em style="color:#999">Tunggu input...</em>
+                  </div>
+                </div>
+                <div style="color:var(--accent);font-weight:700;font-size:20px;margin-top:40px">⟶</div>
+                <div style="border:2px solid var(--accent);border-radius:8px;padding:16px;background:#fff3d9;min-height:150px">
+                  <p style="margin:0 0 12px 0;color:var(--accent);font-weight:700">Tarif (Rp)</p>
+                  <div id="diagramKodomain" style="color:var(--accent);font-weight:700;line-height:2">
+                    <em style="color:#999">Tunggu input...</em>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TABEL -->
+          <div id="contentTabel" style="display:none;animation:fadeIn 0.3s ease-out">
+            <div class="scenario-box">
+              <h3 style="color:var(--accent);margin-top:0">2️⃣ Tabel</h3>
+              <div style="overflow-x:auto">
+                <table class="data-table" id="tabelPenyajian" style="margin:12px 0">
+                  <thead>
+                    <tr>
+                      <th>Jarak (x, km)</th>
+                      <th id="tabelHeader"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="font-weight:700">Tarif (f(x), Rp)</td>
+                      <td id="tabelData"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- PASANGAN BERURUTAN -->
+          <div id="contentPasangan" style="display:none;animation:fadeIn 0.3s ease-out">
+            <div class="scenario-box">
+              <h3 style="color:var(--accent);margin-top:0">3️⃣ Himpunan Pasangan Berurutan</h3>
+              <div style="background:#fff;padding:16px;border:2px solid var(--accent);border-radius:8px;text-align:center;min-height:100px;display:flex;align-items:center;justify-content:center">
+                <div style="font-size:16px;color:var(--accent);font-weight:700">
+                  <span style="font-size:14px">f = </span>
+                  <span id="pasanganBerurutan" style="color:#999">{Tunggu input...}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PERSAMAAN FUNGSI -->
+          <div id="contentPersamaan" style="display:none;animation:fadeIn 0.3s ease-out">
+            <div class="scenario-box">
+              <h3 style="color:var(--accent);margin-top:0">4️⃣ Persamaan Fungsi</h3>
+              <div style="background:#fff;padding:16px;border:2px solid var(--accent);border-radius:8px;text-align:center;margin:12px 0">
+                <div style="font-size:24px;color:var(--accent);font-weight:700;margin-bottom:8px">
+                  f(x) = 4.000x + 5.000
+                </div>
+                <p style="margin:0;color:var(--muted);font-size:13px">
+                  Dimana: <strong>x</strong> = jarak (km), <strong>f(x)</strong> = tarif (Rp)
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- GRAFIK -->
+          <div id="contentGrafik" style="display:none;animation:fadeIn 0.3s ease-out">
+            <div class="scenario-box">
+              <h3 style="color:var(--accent);margin-top:0">5️⃣ Grafik Fungsi</h3>
+              <div style="background:#fff;border:2px solid #e0e0e0;border-radius:8px;padding:20px;text-align:center;position:relative;width:100%;height:400px">
+                <canvas id="grafikCanvas" style="width:100%;height:100%;border:1px solid #ddd;border-radius:4px"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="show('analisisKomponen')">⟵ Kembali</button>
+            <button class="btn" onclick="show('penyajian-rumus')">Lanjut: Penyajian Hasil ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide: Fase 4 - Penyajian Hasil Karya -->
+      <section class="slide" id="penyajian-rumus">
+        <div class="card-lite">
+          <h2>🎨 Fase 4: Penyajian Hasil Karya (Gallery Walk)</h2>
+          <p style="color:var(--muted);margin-bottom:20px">
+            Presentasikan hasil investigasi kelompokmu! Pilih bentuk penyajian rumus yang paling menarik menurutmu.
+          </p>
+
+          <!-- BAGIAN A: PILIH BENTUK PENYAJIAN -->
+          <div class="card-lite">
+            <h3 style="color:var(--accent);margin-bottom:12px">📊 A. Pilih Bentuk Penyajian Rumus</h3>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:12px">
+              Kelompokmu sudah menemukan rumus f(x) = 4000x + 5000. Sekarang pilih cara terbaik untuk menyajikannya:
+            </p>
+            
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px">
+              <label class="penyajian-option">
+                <input type="radio" name="bentukPenyajianRumus" value="tabel" checked>
+                <span>📋 Tabel Jarak-Tarif</span>
+              </label>
+              <label class="penyajian-option">
+                <input type="radio" name="bentukPenyajianRumus" value="grafik">
+                <span>📈 Grafik Linear</span>
+              </label>
+              <label class="penyajian-option">
+                <input type="radio" name="bentukPenyajianRumus" value="rumus-penjelasan">
+                <span>🧮 Rumus + Penjelasan</span>
+              </label>
+              <label class="penyajian-option">
+                <input type="radio" name="bentukPenyajianRumus" value="cerita">
+                <span>📖 Cerita Pola (Narrative)</span>
+              </label>
+            </div>
+
+            <textarea id="deskripsiPenyajianRumus" 
+              placeholder="Jelaskan mengapa kelompokmu memilih bentuk penyajian ini... (contoh: Kami pilih grafik karena siswa lebih mudah melihat hubungan antara jarak dan tarif)"
+              style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;font-family:Arial;min-height:80px"></textarea>
+
+            <button class="btn" id="btnSimpanPenyajianRumus" style="margin-top:12px">💾 Simpan Penyajian Kami</button>
+            <div id="feedbackPenyajianRumus" style="margin-top:12px"></div>
+          </div>
+
+          <!-- BAGIAN B: GALLERY WALK - KOMENTAR DARI KELOMPOK LAIN -->
+          <div class="card-lite" style="margin-top:20px">
+            <h3 style="color:var(--accent);margin-bottom:12px">👥 B. Gallery Walk: Berikan Komentar</h3>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:12px">
+              Kunjungi hasil karya kelompok lain dan berikan saran/komentar yang membangun!
+            </p>
+
+            <div style="display:flex;gap:12px;margin-bottom:16px">
+              <input type="text" id="namaKelompokKomentarRumus" 
+                placeholder="Nama Kelompokmu (contoh: Kelompok 1)"
+                style="flex:1;padding:10px;border-radius:8px;border:2px solid #ddd">
+            </div>
+
+            <textarea id="komentarPeerReviewRumus" 
+              placeholder="Tulis komentar/saran untuk kelompok ini... (contoh: Penyajian kalian jelas! Tapi coba jelaskan arti 4000 dan 5000 di rumusnya lebih detail)"
+              style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;font-family:Arial;min-height:100px"></textarea>
+
+            <button class="btn" id="btnKirimKomentarRumus" style="margin-top:12px">💬 Kirim Komentar</button>
+
+            <!-- DAFTAR KOMENTAR -->
+            <div id="daftarKomentarRumus" style="margin-top:20px">
+              <h4 style="color:var(--accent);margin-bottom:12px">📝 Komentar dari Kelompok Lain:</h4>
+              <div id="komentarListRumus" style="max-height:300px;overflow-y:auto">
+                <p style="color:var(--muted);font-style:italic">Belum ada komentar. Jadilah yang pertama!</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- NAVIGASI -->
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="show('analisisKomponen')">⟵ Kembali</button>
+            <button class="btn" onclick="show('evaluasi')">Lanjut ke Evaluasi ⟶</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide: Evaluasi & Refleksi -->
+      <section class="slide" id="evaluasi">
+        <div class="card-lite">
+          <h2>📝 Evaluasi & Refleksi Pembelajaran</h2>
+          <p style="color:var(--muted);margin-bottom:20px">Uji pemahamanmu tentang fungsi dan bagikan pengalaman belajarmu!</p>
+
+          <!-- BAGIAN A: PILIHAN GANDA -->
+          <div class="scenario-box" style="background:#fff3cd;border-left:4px solid var(--warning)">
+            <h3 style="color:var(--accent);margin-top:0">📋 Bagian A: Evaluasi Materi (Pilihan Ganda)</h3>
+            
+            <!-- Soal 1 -->
+            <div style="margin:16px 0;padding:12px;background:#fff;border-radius:8px">
+              <p style="margin:0 0 8px 0;color:var(--accent);font-weight:700">1. Jika f(x) = 4.000x + 5.000, maka f(3) adalah...</p>
+              <div style="margin:8px 0">
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal1" value="A" style="margin-right:8px">
+                  A. 12.000
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal1" value="B" style="margin-right:8px">
+                  B. 15.000
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal1" value="C" style="margin-right:8px">
+                  C. 17.000
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal1" value="D" style="margin-right:8px">
+                  D. 20.000
+                </label>
+              </div>
+            </div>
+
+            <!-- Soal 2 -->
+            <div style="margin:16px 0;padding:12px;background:#fff;border-radius:8px">
+              <p style="margin:0 0 8px 0;color:var(--accent);font-weight:700">2. Dalam fungsi f(x) = 4.000x + 5.000, angka 5.000 disebut...</p>
+              <div style="margin:8px 0">
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal2" value="A" style="margin-right:8px">
+                  A. Koefisien
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal2" value="B" style="margin-right:8px">
+                  B. Konstanta
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal2" value="C" style="margin-right:8px">
+                  C. Variabel
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal2" value="D" style="margin-right:8px">
+                  D. Domain
+                </label>
+              </div>
+            </div>
+
+            <!-- Soal 4 -->
+            <div style="margin:16px 0;padding:12px;background:#fff;border-radius:8px">
+              <p style="margin:0 0 8px 0;color:var(--accent);font-weight:700">4. Himpunan pasangan berurutan berikut yang merupakan fungsi adalah...</p>
+              <div style="margin:8px 0">
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal4" value="A" style="margin-right:8px">
+                  A. {(1,2), (1,3), (2,4)}
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal4" value="B" style="margin-right:8px">
+                  B. {(1,2), (2,2), (3,4)}
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal4" value="C" style="margin-right:8px">
+                  C. {(1,2), (2,3), (1,4)}
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal4" value="D" style="margin-right:8px">
+                  D. {(1,2), (1,2), (3,4)}
+                </label>
+              </div>
+            </div>
+
+            <!-- Soal 5 -->
+            <div style="margin:16px 0;padding:12px;background:#fff;border-radius:8px">
+              <p style="margin:0 0 8px 0;color:var(--accent);font-weight:700">5. Fungsi dapat disajikan dalam bentuk berikut, KECUALI...</p>
+              <div style="margin:8px 0">
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal5" value="A" style="margin-right:8px">
+                  A. Diagram panah
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal5" value="B" style="margin-right:8px">
+                  B. Tabel
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal5" value="C" style="margin-right:8px">
+                  C. Diagram lingkaran
+                </label>
+                <label style="display:block;margin:6px 0;cursor:pointer">
+                  <input type="radio" name="soal5" value="D" style="margin-right:8px">
+                  D. Grafik
+                </label>
+              </div>
+            </div>
+
+            <button class="btn" id="btnCekEvaluasi" style="width:100%;padding:12px;margin-top:16px">✓ Cek Jawaban</button>
+            <div id="feedbackEvaluasi" class="feedback-box"></div>
+          </div>
+
+          <!-- BAGIAN B: REFLEKSI -->
+          <div class="scenario-box" style="background:#e0f2fe;border-left:4px solid var(--info);margin-top:20px">
+            <h3 style="color:var(--accent);margin-top:0">💭 Bagian B: Refleksi Pembelajaran</h3>
+            
+            <p style="margin:12px 0;color:var(--accent);font-weight:700">Bagaimana pengalaman belajarmu hari ini?</p>
+            
+            <!-- Emoji Rating -->
+            <div style="text-align:center;margin:20px 0">
+              <p style="margin:0 0 12px 0;color:var(--muted);font-size:14px">Pilih emoji yang menggambarkan perasaanmu:</p>
+              <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap">
+                <button class="emoji-btn" data-rating="5" style="font-size:48px;border:3px solid transparent;background:transparent;cursor:pointer;border-radius:50%;padding:8px;transition:all 0.3s">😊</button>
+                <button class="emoji-btn" data-rating="4" style="font-size:48px;border:3px solid transparent;background:transparent;cursor:pointer;border-radius:50%;padding:8px;transition:all 0.3s">🙂</button>
+                <button class="emoji-btn" data-rating="3" style="font-size:48px;border:3px solid transparent;background:transparent;cursor:pointer;border-radius:50%;padding:8px;transition:all 0.3s">😐</button>
+                <button class="emoji-btn" data-rating="2" style="font-size:48px;border:3px solid transparent;background:transparent;cursor:pointer;border-radius:50%;padding:8px;transition:all 0.3s">😕</button>
+                <button class="emoji-btn" data-rating="1" style="font-size:48px;border:3px solid transparent;background:transparent;cursor:pointer;border-radius:50%;padding:8px;transition:all 0.3s">😢</button>
+              </div>
+              <p id="emojiLabel" style="margin:12px 0;color:var(--accent);font-weight:700;min-height:24px"></p>
+            </div>
+
+            <!-- Text Box Refleksi -->
+            <div style="margin:16px 0">
+              <label style="display:block;margin-bottom:8px;color:var(--accent);font-weight:700">Ceritakan pengalamanmu:</label>
+              <textarea id="refleksiPembelajaran" placeholder="Apa yang paling menarik? Bagian mana yang sulit? Apa yang kamu pelajari hari ini?" style="width:100%;min-height:100px;padding:12px;border:2px solid #d1d5db;border-radius:8px;font-family:Arial,sans-serif;font-size:14px;box-sizing:border-box"></textarea>
+            </div>
+
+            <button class="btn" id="btnSimpanRefleksi" style="width:100%;padding:12px">💾 Simpan Refleksi</button>
+            <div id="feedbackRefleksi" class="feedback-box"></div>
+          </div>
+
+          <!-- BAGIAN G: REFLEKSI INDIVIDU MENDALAM -->
+          <div class="scenario-box" style="background:#fff9f0;border-left:4px solid #ffcb64;margin-top:20px;border:3px solid #ffcb64">
+            <h3 style="color:var(--accent);margin-top:0">🤔 Bagian G: Refleksi Individu Mendalam</h3>
+            <p style="color:var(--muted);margin-bottom:12px;font-size:14px">Jawab pertanyaan berikut dengan jujur untuk memahami pembelajaran kalian dengan lebih dalam:</p>
+            
+            <div style="margin-bottom:14px">
+              <div style="font-weight:600;color:var(--accent);margin-bottom:6px">1️⃣ Bagian mana dari konsep fungsi linear (f(x) = ax + b) yang paling membingungkan bagimu?</div>
+              <textarea id="refleksi7" placeholder="Jelaskan mana yang masih membuat kalian bingung (contoh: perbedaan koefisien vs konstanta, cara membaca grafik, dll)..." style="width:100%;height:100px;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);font-size:14px;box-sizing:border-box;background:#fff"></textarea>
+            </div>
+            
+            <div style="margin-bottom:14px">
+              <div style="font-weight:600;color:var(--accent);margin-bottom:6px">2️⃣ Kesalahan apa yang sempat kalian lakukan saat mencari pola tarif atau membuat rumus?</div>
+              <textarea id="refleksi8" placeholder="Ceritakan kesalahan yang pernah terjadi saat investigasi (contoh: awalnya salah menghitung selisih tarif, lupa hitung biaya awal, dll)..." style="width:100%;height:100px;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);font-size:14px;box-sizing:border-box;background:#fff"></textarea>
+            </div>
+            
+            <div style="margin-bottom:14px">
+              <div style="font-weight:600;color:var(--accent);margin-bottom:6px">3️⃣ Mengapa menurutmu pemahaman tentang fungsi linear ini belum sepenuhnya kalian kuasai? Apa yang masih perlu dipelajari?</div>
+              <textarea id="refleksi9" placeholder="Jelaskan aspek apa yang masih perlu diperdalam untuk memahami fungsi linear dengan lebih baik..." style="width:100%;height:100px;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.12);font-size:14px;box-sizing:border-box;background:#fff"></textarea>
+            </div>
+          </div>
+
+          <!-- KIRIM KE GURU -->
+          <div class="scenario-box" style="background:#e8f5e9;border-left:4px solid #4caf50;margin-top:20px;text-align:center;">
+            <h3 style="color:#2e7d32;margin-top:0;">📤 Kirim Hasil Pembelajaran</h3>
+            <p style="color:var(--muted);margin:8px 0;font-size:14px;">Kirim hasil pengerjaan Anda ke guru dalam format PDF melalui Google Form</p>
+            <button class="btn" onclick="generatePDFReport()" style="padding:14px 30px;font-size:16px;margin:10px auto;">
+              📤 Kirim Hasil ke Guru
+            </button>
+            <p style="font-size:12px;color:#666;margin-top:10px;">
+              PDF akan berisi evaluasi, refleksi, dan ringkasan pembelajaran Anda
+            </p>
+            <div id="feedbackDownload" class="feedback-box" style="margin-top:12px"></div>
+          </div>
+
+          <div style="display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap">
+            <button class="btn ghost" onclick="show('penyajian-fungsi')">⟵ Kembali</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  document.getElementById(id)?.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// Tab switching untuk slide penyajian fungsi - UPDATED untuk 5 tab
+function showTab(tabName) {
+  // Hide all content
+  document.getElementById('contentDiagram').style.display = 'none';
+  document.getElementById('contentTabel').style.display = 'none';
+  document.getElementById('contentPasangan').style.display = 'none';
+  document.getElementById('contentPersamaan').style.display = 'none';
+  document.getElementById('contentGrafik').style.display = 'none';
+
+  // Remove active state dari semua tab buttons
+  ['tabDiagram', 'tabTabel', 'tabPasangan', 'tabPersamaan', 'tabGrafik'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) {
+      btn.classList.remove('btn');
+      btn.classList.add('btn', 'ghost');
+      btn.style.background = '';
+      btn.style.color = '';
+    }
+  });
+
+  // Show selected content dan set active button
+  const tabMap = {
+    'diagram': 'contentDiagram',
+    'tabel': 'contentTabel',
+    'pasangan': 'contentPasangan',
+    'persamaan': 'contentPersamaan',
+    'grafik': 'contentGrafik'
+  };
+
+  const contentId = tabMap[tabName];
+  const buttonId = 'tab' + tabName.charAt(0).toUpperCase() + tabName.slice(1);
+
+  if (document.getElementById(contentId)) {
+    document.getElementById(contentId).style.display = 'block';
+    const btn = document.getElementById(buttonId);
+    if (btn) {
+      btn.classList.remove('btn', 'ghost');
+      btn.classList.add('btn');
+      btn.style.background = 'var(--accent)';
+      btn.style.color = 'white';
+    }
+    
+    // Jika grafik, render canvas
+    if (tabName === 'grafik') {
+      renderGrafikPenyajian();
+    }
+  }
+}
+
+// Data penyajian fungsi (global)
+let dataPenyajian = [];
+
+// Update semua representasi saat ada input baru
+function updateSemuaPenyajian() {
+  const koef = 4000;
+  const konst = 5000;
+
+  // Update Diagram Panah
+  const domain = dataPenyajian.map(d => String(d.jarak)).join('<br>');
+  const kodomain = dataPenyajian.map(d => String(d.tarif.toLocaleString('id-ID'))).join('<br>');
+  document.getElementById('diagramDomain').innerHTML = domain || '<em style="color:#999">Tunggu input...</em>';
+  document.getElementById('diagramKodomain').innerHTML = kodomain || '<em style="color:#999">Tunggu input...</em>';
+
+  // Update Tabel
+  if (dataPenyajian.length > 0) {
+    let headerHtml = dataPenyajian.map(d => `<th>${d.jarak}</th>`).join('');
+    let dataHtml = dataPenyajian.map(d => `<td>${d.tarif.toLocaleString('id-ID')}</td>`).join('');
+    document.getElementById('tabelHeader').innerHTML = headerHtml;
+    document.getElementById('tabelData').innerHTML = dataHtml;
+  }
+
+  // Update Pasangan Berurutan
+  if (dataPenyajian.length > 0) {
+    const pasangan = dataPenyajian.map(d => `(${d.jarak}, ${d.tarif.toLocaleString('id-ID')})`).join(', ');
+    document.getElementById('pasanganBerurutan').innerHTML = `{${pasangan}}`;
+  } else {
+    document.getElementById('pasanganBerurutan').innerHTML = '<em style="color:#999">Tunggu input...</em>';
+  }
+}
+
+// Render grafik
+function renderGrafikPenyajian() {
+  const canvas = document.getElementById('grafikCanvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  const width = canvas.offsetWidth;
+  const height = canvas.offsetHeight;
+
+  // Set canvas size
+  canvas.width = width;
+  canvas.height = height;
+
+  const padding = 40;
+  const graphWidth = width - 2 * padding;
+  const graphHeight = height - 2 * padding;
+
+  // Draw axes
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(padding, height - padding);
+  ctx.lineTo(width - padding, height - padding); // X axis
+  ctx.moveTo(padding, height - padding);
+  ctx.lineTo(padding, padding); // Y axis
+  ctx.stroke();
+
+  // Tentukan scale
+  const maxX = dataPenyajian.length > 0 ? Math.max(...dataPenyajian.map(d => d.jarak)) : 20;
+  const maxY = dataPenyajian.length > 0 ? Math.max(...dataPenyajian.map(d => d.tarif)) : 100000;
+
+  const scaleX = graphWidth / maxX;
+  const scaleY = graphHeight / maxY;
+
+  // Draw grid & labels
+  ctx.strokeStyle = '#eee';
+  ctx.lineWidth = 1;
+  ctx.fillStyle = '#666';
+  ctx.font = '12px Arial';
+  ctx.textAlign = 'center';
+
+  // X axis labels
+  for (let i = 0; i <= maxX; i += 5) {
+    const x = padding + i * scaleX;
+    ctx.beginPath();
+    ctx.moveTo(x, height - padding);
+    ctx.lineTo(x, height - padding + 5);
+    ctx.stroke();
+    ctx.fillText(i, x, height - padding + 20);
+  }
+
+  ctx.textAlign = 'right';
+  // Y axis labels
+  for (let i = 0; i <= maxY; i += 20000) {
+    const y = height - padding - (i * scaleY);
+    ctx.beginPath();
+    ctx.moveTo(padding - 5, y);
+    ctx.lineTo(padding, y);
+    ctx.stroke();
+    ctx.fillText((i/1000) + 'K', padding - 10, y + 4);
+  }
+
+  // Draw regression line (f(x) = 4000x + 5000)
+  ctx.strokeStyle = '#0284c7';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  const x0 = 0;
+  const y0 = 5000;
+  const x1 = maxX;
+  const y1 = 4000 * x1 + 5000;
+
+  const px0 = padding + x0 * scaleX;
+  const py0 = height - padding - y0 * scaleY;
+  const px1 = padding + x1 * scaleX;
+  const py1 = height - padding - y1 * scaleY;
+
+  ctx.moveTo(px0, py0);
+  ctx.lineTo(px1, py1);
+  ctx.stroke();
+
+  // Draw data points
+  ctx.fillStyle = '#c62828';
+  dataPenyajian.forEach(d => {
+    const px = padding + d.jarak * scaleX;
+    const py = height - padding - d.tarif * scaleY;
+    ctx.beginPath();
+    ctx.arc(px, py, 5, 0, 2 * Math.PI);
+    ctx.fill();
+  });
+
+  // Labels
+  ctx.fillStyle = '#333';
+  ctx.font = 'bold 14px Arial';
+  ctx.textAlign = 'center';
+  ctx.fillText('Jarak (km)', width / 2, height - 5);
+  
+  ctx.save();
+  ctx.translate(15, height / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillText('Tarif (Rp)', 0, 0);
+  ctx.restore();
+}
+
+// Global untuk menyimpan rumus yang ditemukan siswa
+let discoveredFormula = { coef: null, const: null };
+
+document.addEventListener('DOMContentLoaded', () => {
+  
+  // ======== SLIDE PENYAJIAN FUNGSI - INPUT & UPDATE ========
+  const inputJarak = document.getElementById('inputJarak');
+  const btnTambahData = document.getElementById('btnTambahData');
+  const btnResetData = document.getElementById('btnResetData');
+
+  btnTambahData?.addEventListener('click', () => {
+    const jarak = parseInt(inputJarak?.value || '0');
+    
+    if (jarak < 1 || jarak > 20) {
+      alert('Masukkan jarak antara 1-20 km!');
+      return;
+    }
+
+    // Cek apakah data sudah ada
+    if (dataPenyajian.find(d => d.jarak === jarak)) {
+      alert('Data jarak ' + jarak + ' km sudah ditambahkan!');
+      return;
+    }
+
+    const tarif = 4000 * jarak + 5000;
+    dataPenyajian.push({ jarak, tarif });
+    dataPenyajian.sort((a, b) => a.jarak - b.jarak);
+
+    inputJarak.value = '';
+    updateSemuaPenyajian();
+  });
+
+  btnResetData?.addEventListener('click', () => {
+    dataPenyajian = [];
+    inputJarak.value = '';
+    updateSemuaPenyajian();
+    document.getElementById('diagramDomain').innerHTML = '<em style="color:#999">Tunggu input...</em>';
+    document.getElementById('diagramKodomain').innerHTML = '<em style="color:#999">Tunggu input...</em>';
+    document.getElementById('tabelHeader').innerHTML = '';
+    document.getElementById('tabelData').innerHTML = '';
+    document.getElementById('pasanganBerurutan').innerHTML = '<em style="color:#999">Tunggu input...</em>';
+  });
+
+  // Allow Enter key untuk menambah data
+  inputJarak?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      btnTambahData?.click();
+    }
+  });
+
+  // ======== FASE 3: MEMBIMBING PENYELIDIKAN (INVESTIGASI GUIDED) ========
+  const btnValidasiInvestigasi = document.getElementById('btnValidasiInvestigasi');
+  const feedbackEksplorasi = document.getElementById('feedbackEksplorasi');
+  const botInvestigasi = document.getElementById('botInvestigasi');
+  const botMsgInvestigasi = document.getElementById('botMsgInvestigasi');
+
+  function showBotInvestigasi(message) {
+    if (botInvestigasi && botMsgInvestigasi) {
+      botMsgInvestigasi.textContent = message;
+      botInvestigasi.style.display = 'block';
+      setTimeout(() => {
+        botInvestigasi.style.display = 'none';
+      }, 10000);
+    }
+  }
+
+  btnValidasiInvestigasi?.addEventListener('click', () => {
+    // Ambil semua input investigasi
+    const observasi = document.getElementById('observasiData')?.value.trim();
+    const tarifPerKm = parseInt(document.getElementById('hipotesisTarifPerKm')?.value || '0');
+    const prediksi4km = parseInt(document.getElementById('prediksi4km')?.value || '0');
+    const biayaAwal = parseInt(document.getElementById('hipotesisBiayaAwal')?.value || '0');
+    const rumusKoef = parseInt(document.getElementById('rumusKoef')?.value || '0');
+    const rumusKonst = parseInt(document.getElementById('rumusKonst')?.value || '0');
+
+    // Validasi minimal observasi ditulis
+    if (!observasi || observasi.length < 20) {
+      feedbackEksplorasi.textContent = '💭 STEP 1 belum terisi. Coba lihat data: 2 km → Rp 13.000 dan 3 km → Rp 17.000';
+      feedbackEksplorasi.className = 'feedback-box warning';
+      showBotInvestigasi('Apa yang menarik dari kedua data ini? Coba tuliskan apapun yang kalian amati!');
+      return;
+    }
+
+    // Validasi STEP 2: Tarif per km
+    if (tarifPerKm !== 4000) {
+      feedbackEksplorasi.textContent = '🤔 Hmm, coba bandingkan tarif 2 km dengan 3 km. Apa yang berubah ketika jarak bertambah 1 km?';
+      feedbackEksplorasi.className = 'feedback-box warning';
+      showBotInvestigasi('Kalau 2 km = Rp 13.000 dan 3 km = Rp 17.000, berapa selisihnya? Selisih itu artinya tarif bertambah berapa per km?');
+      return;
+    }
+
+    // Validasi STEP 2: Prediksi 4 km
+    if (prediksi4km !== 21000) {
+      feedbackEksplorasi.textContent = '🤔 Jika pola yang kalian temukan konsisten, bagaimana cara menghitung tarif 4 km dari data 3 km?';
+      feedbackEksplorasi.className = 'feedback-box warning';
+      showBotInvestigasi('Kalian sudah tahu tarif 3 km dan berapa penambahan per km. Coba gunakan pola itu untuk prediksi!');
+      return;
+    }
+
+    // Validasi STEP 3: Biaya awal
+    if (biayaAwal !== 5000) {
+      feedbackEksplorasi.textContent = '🤔 Coba pikirkan: kalau tarif 2 km adalah Rp 13.000, dan km ke-2 menambah Rp 4.000, berapa tarif km pertama?';
+      feedbackEksplorasi.className = 'feedback-box warning';
+      showBotInvestigasi('Hint: Coba hitung mundur dari 2 km. Tarif 2 km dikurangi penambahan 1 km = ?');
+      return;
+    }
+
+    // Validasi STEP 4: Rumus
+    if (rumusKoef !== 4000 || rumusKonst !== 5000) {
+      feedbackEksplorasi.textContent = '🤔 Lihat lagi hasil investigasi di STEP 2 dan STEP 3. Bagaimana menggabungkannya jadi satu rumus?';
+      feedbackEksplorasi.className = 'feedback-box warning';
+      showBotInvestigasi('Kalian sudah punya: penambahan per km dan biaya km pertama. Coba susun pola: Tarif = ... × Jarak + ...');
+      return;
+    }
+
+    // SEMUA BENAR - Investigasi Sukses!
+    discoveredFormula.coef = 4000;
+    discoveredFormula.const = 5000;
+
+    feedbackEksplorasi.textContent = '🎉 LUAR BIASA! Investigasi kelompokmu berhasil! Kalian telah menemukan:\n• Tarif per km = Rp 4.000\n• Biaya awal = Rp 5.000\n• Rumus: Tarif = 4.000 × Jarak + 5.000\n\nSekarang lanjut validasi rumus dengan data lain!';
+    feedbackEksplorasi.className = 'feedback-box success';
+
+    showBotInvestigasi('Proses investigasi kalian sangat sistematis! Kalian mengamati data → menemukan pola → prediksi → menemukan biaya awal → susun rumus. Ini adalah cara ilmuwan bekerja! 🔬');
+
+    // Simpan hasil investigasi
+    localStorage.setItem('investigasiFase3', JSON.stringify({
+      observasi: observasi,
+      tarifPerKm: tarifPerKm,
+      prediksi4km: prediksi4km,
+      biayaAwal: biayaAwal,
+      rumus: `Tarif = ${rumusKoef} × Jarak + ${rumusKonst}`,
+      timestamp: new Date().toISOString()
+    }));
+
+    // Enable navigasi ke scratchpad
+    setTimeout(() => {
+      const btn = document.querySelector('button[onclick*="scratchpad"]');
+      if (btn) {
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        btn.style.cursor = 'pointer';
+      }
+    }, 500);
+  });
+
+  // ======== SLIDE 3: VALIDASI RUMUS DENGAN DATA TAMBAHAN ========
+  const koefInput = document.getElementById('koefInput');
+  const konstInput = document.getElementById('konstInput');
+  const btnHitungRumus = document.getElementById('btnHitungRumus');
+  const btnResetRumus = document.getElementById('btnResetRumus');
+  const btnLanjutKeScratchpad = document.getElementById('btnLanjutKeScratchpad');
+  const feedbackRumus = document.getElementById('feedbackRumus');
+
+  btnHitungRumus?.addEventListener('click', () => {
+    const koef = parseInt(koefInput?.value || '0');
+    const konst = parseInt(konstInput?.value || '0');
+
+    if (koef === 0 || konst === 0) {
+      feedbackRumus.textContent = '⚠️ Lengkapi koefisien dan konstanta terlebih dahulu!';
+      feedbackRumus.className = 'feedback-box warning';
+      return;
+    }
+
+    // Test dengan data sebenarnya
+    const testData = [
+      { x: 4, expected: 21000 },
+      { x: 5, expected: 25000 },
+      { x: 10, expected: 45000 }
+    ];
+
+    let allCorrect = true;
+    testData.forEach(data => {
+      const hasil = koef * data.x + konst;
+      const row = document.querySelector(`tr[data-x="${data.x}"]`);
+
+  // ======== FASE 4: PENYAJIAN HASIL KARYA (GALLERY WALK) ========
+  const btnSimpanPenyajianRumus = document.getElementById('btnSimpanPenyajianRumus');
+  const btnKirimKomentarRumus = document.getElementById('btnKirimKomentarRumus');
+  const feedbackPenyajianRumus = document.getElementById('feedbackPenyajianRumus');
+  const komentarListRumus = document.getElementById('komentarListRumus');
+
+  // Load komentar dari localStorage
+  let daftarKomentarRumus = JSON.parse(localStorage.getItem('komentarPeerReviewRumus') || '[]');
+
+  function tampilkanKomentarRumus() {
+    if (daftarKomentarRumus.length === 0) {
+      komentarListRumus.innerHTML = '<p style="color:var(--muted);font-style:italic">Belum ada komentar. Jadilah yang pertama!</p>';
+      return;
+    }
+    
+    komentarListRumus.innerHTML = daftarKomentarRumus.map((k, idx) => `
+      <div class="komentar-item">
+        <div class="komentar-header">
+          <span class="komentar-kelompok">👥 ${k.kelompok}</span>
+          <span class="komentar-waktu">${k.waktu}</span>
+        </div>
+        <div class="komentar-isi">${k.komentar}</div>
+      </div>
+    `).join('');
+  }
+
+  // Simpan pilihan penyajian
+  btnSimpanPenyajianRumus?.addEventListener('click', () => {
+    const bentukPenyajian = document.querySelector('input[name="bentukPenyajianRumus"]:checked')?.value;
+    const deskripsi = document.getElementById('deskripsiPenyajianRumus')?.value.trim();
+    
+    if (!deskripsi || deskripsi.length < 20) {
+      feedbackPenyajianRumus.innerHTML = '<div class="feedback-box warning">⚠️ Jelaskan dulu mengapa memilih bentuk penyajian ini (minimal 20 karakter)!</div>';
+      return;
+    }
+    
+    const penyajian = {
+      bentuk: bentukPenyajian,
+      deskripsi: deskripsi,
+      timestamp: new Date().toLocaleString('id-ID')
+    };
+    
+    localStorage.setItem('penyajianRumusKelompok', JSON.stringify(penyajian));
+    
+    feedbackPenyajianRumus.innerHTML = `
+      <div class="feedback-box success">
+        ✅ Penyajian tersimpan! Kelompokmu memilih: <strong>${bentukPenyajian}</strong>
+        <br><small>Sekarang kelompok lain bisa memberikan komentar di Gallery Walk!</small>
+      </div>
+    `;
+  });
+
+  // Kirim komentar
+  btnKirimKomentarRumus?.addEventListener('click', () => {
+    const namaKelompok = document.getElementById('namaKelompokKomentarRumus')?.value.trim();
+    const komentar = document.getElementById('komentarPeerReviewRumus')?.value.trim();
+    
+    if (!namaKelompok) {
+      alert('⚠️ Tulis nama kelompokmu dulu!');
+      return;
+    }
+    
+    if (!komentar || komentar.length < 15) {
+      alert('⚠️ Komentar terlalu singkat! Berikan saran yang membangun (minimal 15 karakter)');
+      return;
+    }
+    
+    const komentarBaru = {
+      kelompok: namaKelompok,
+      komentar: komentar,
+      waktu: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+    };
+    
+    daftarKomentarRumus.push(komentarBaru);
+    localStorage.setItem('komentarPeerReviewRumus', JSON.stringify(daftarKomentarRumus));
+    
+    // Reset input
+    document.getElementById('komentarPeerReviewRumus').value = '';
+    
+    // Tampilkan komentar
+    tampilkanKomentarRumus();
+    
+    // Notifikasi sukses
+    alert(`✅ Komentar dari "${namaKelompok}" berhasil dikirim!`);
+  });
+
+  // Load komentar saat halaman dibuka
+  if (komentarListRumus) {
+    tampilkanKomentarRumus();
+  }
+
+      const hasilSpan = row?.querySelector('.rumusHasil');
+      const statusSpan = row?.querySelector('.statusCokok');
+
+      hasilSpan.textContent = hasil.toLocaleString('id-ID');
+
+      if (hasil === data.expected) {
+        statusSpan.textContent = '✔';
+        statusSpan.style.color = 'var(--success)';
+      } else {
+        statusSpan.textContent = '✖';
+        statusSpan.style.color = 'var(--danger)';
+        allCorrect = false;
+      }
+    });
+
+    if (allCorrect) {
+      feedbackRumus.textContent = '✅ TEPAT! Rumusmu f(x) = ' + koef.toLocaleString('id-ID') + 'x + ' + konst.toLocaleString('id-ID') + ' sudah tervalidasi!';
+      feedbackRumus.className = 'feedback-box success';
+      
+      // Simpan formula
+      discoveredFormula.coef = koef;
+      discoveredFormula.const = konst;
+      
+      // Enable tombol lanjut
+      if (btnLanjutKeScratchpad) {
+        btnLanjutKeScratchpad.disabled = false;
+        btnLanjutKeScratchpad.style.opacity = '1';
+        btnLanjutKeScratchpad.style.cursor = 'pointer';
+      }
+    } else {
+      feedbackRumus.textContent = '❌ Belum cocok dengan semua data. Coba perbaiki koefisien atau konstanta.';
+      feedbackRumus.className = 'feedback-box error';
+    }
+  });
+
+  btnResetRumus?.addEventListener('click', () => {
+    koefInput.value = '';
+    konstInput.value = '';
+    document.querySelectorAll('.rumusHasil').forEach(el => el.textContent = '—');
+    document.querySelectorAll('.statusCokok').forEach(el => el.textContent = '?');
+    feedbackRumus.className = 'feedback-box';
+  });
+
+  // Link tombol lanjut ke Puzzle slide
+  if (btnLanjutKeScratchpad) {
+    btnLanjutKeScratchpad.addEventListener('click', () => show('analisis'));
+  }
+
+  // ======== SLIDE 4: PUZZLE REKONSTRUKSI RUMUS ========
+  const puzzleKoef = document.getElementById('puzzleKoef');
+  const puzzleKonst = document.getElementById('puzzleKonst');
+  const btnCekPuzzle = document.getElementById('btnCekPuzzle');
+  const btnResetPuzzle = document.getElementById('btnResetPuzzle');
+  const btnKeValidasi = document.getElementById('btnKeValidasi');
+  const feedbackPuzzle = document.getElementById('feedbackPuzzle');
+  const puzzleRows = document.querySelectorAll('tr[data-expected]');
+
+  btnCekPuzzle?.addEventListener('click', () => {
+    const k = parseInt(puzzleKoef?.value || '0');
+    const c = parseInt(puzzleKonst?.value || '0');
+
+    if (!k || !c) {
+      feedbackPuzzle.textContent = '⚠️ Lengkapi koefisien dan konstanta dulu!';
+      feedbackPuzzle.className = 'feedback-box warning';
+      return;
+    }
+
+    let allOk = true;
+    puzzleRows.forEach(row => {
+      const x = parseInt(row.dataset.x, 10);
+      const expected = parseInt(row.dataset.expected, 10);
+      const hasil = k * x + c;
+      const hasilSpan = row.querySelector('.puzzleHasil');
+      const statusSpan = row.querySelector('.puzzleStatus');
+
+      hasilSpan.textContent = hasil.toLocaleString('id-ID');
+      if (hasil === expected) {
+        statusSpan.textContent = '✔';
+        statusSpan.style.color = 'var(--success)';
+      } else {
+        statusSpan.textContent = '✖';
+        statusSpan.style.color = 'var(--danger)';
+        allOk = false;
+      }
+    });
+
+    if (allOk) {
+      discoveredFormula.coef = k;
+      discoveredFormula.const = c;
+      updateRumusDisplay();
+      feedbackPuzzle.textContent = '✅ LUAR BIASA! Rumusmu berhasil melalui semua pengujian. Lanjut ke tabel validasi lengkap!';
+      feedbackPuzzle.className = 'feedback-box success';
+      
+      if (btnKeValidasi) {
+        btnKeValidasi.disabled = false;
+        btnKeValidasi.style.opacity = '1';
+        btnKeValidasi.style.cursor = 'pointer';
+      }
+    } else {
+      feedbackPuzzle.textContent = '❌ Ada yang tidak cocok. Cek kembali koefisien dan konstanta Anda.';
+      feedbackPuzzle.className = 'feedback-box error';
+    }
+  });
+
+  btnResetPuzzle?.addEventListener('click', () => {
+    puzzleKoef.value = '';
+    puzzleKonst.value = '';
+    puzzleRows.forEach(row => {
+      row.querySelector('.puzzleHasil').textContent = '—';
+      row.querySelector('.puzzleStatus').textContent = '?';
+      row.querySelector('.puzzleStatus').style.color = '';
+    });
+    feedbackPuzzle.className = 'feedback-box';
+  });
+
+  if (btnKeValidasi) {
+    btnKeValidasi.addEventListener('click', () => show('validasi'));
+  }
+
+  // ======== UPDATE DISPLAY RUMUS ========
+  function updateRumusDisplay() {
+    if (discoveredFormula.coef && discoveredFormula.const) {
+      document.getElementById('rumusMuDisplay').innerHTML = 
+        `f(x) = <strong>${discoveredFormula.coef.toLocaleString('id-ID')}</strong> × x + <strong>${discoveredFormula.const.toLocaleString('id-ID')}</strong>`;
+      
+      document.getElementById('rumusDisplay').textContent = 
+        `f(x) = ${discoveredFormula.coef.toLocaleString('id-ID')}x + ${discoveredFormula.const.toLocaleString('id-ID')}`;
+
+      document.getElementById('rumusKomponen').innerHTML = 
+        `f(x) = <strong>${discoveredFormula.coef.toLocaleString('id-ID')}</strong>x + <strong>${discoveredFormula.const.toLocaleString('id-ID')}</strong>`;
+
+      document.getElementById('nilaiKoef').textContent = discoveredFormula.coef.toLocaleString('id-ID');
+      document.getElementById('nilaiKonst').textContent = discoveredFormula.const.toLocaleString('id-ID');
+
+      // Update tabel validasi
+      document.querySelectorAll('.rumusCell').forEach(cell => {
+        const x = cell.closest('tr').dataset.x;
+        const hasil = discoveredFormula.coef * x + discoveredFormula.const;
+        cell.textContent = `${discoveredFormula.coef.toLocaleString('id-ID')}(${x}) + ${discoveredFormula.const.toLocaleString('id-ID')} = ${hasil.toLocaleString('id-ID')}`;
+      });
+    }
+  }
+
+  // ======== SLIDE 5: TABEL VALIDASI ========
+  const inputs = document.querySelectorAll('.inputValidasi');
+  const btnValidasiSemua = document.getElementById('btnValidasiSemua');
+  const btnResetValidasi = document.getElementById('btnResetValidasi');
+  const feedbackValidasi = document.getElementById('feedbackValidasi');
+
+  function calculateF(x) {
+    if (!discoveredFormula.coef || !discoveredFormula.const) return null;
+    return discoveredFormula.coef * x + discoveredFormula.const;
+  }
+
+  inputs.forEach(input => {
+    input.addEventListener('blur', () => {
+      const x = parseFloat(input.dataset.x);
+      const userVal = parseInt(input.value || '0');
+      const correctVal = calculateF(x);
+      const row = input.closest('tr');
+      const statusIcon = row.querySelector('.statusIcon');
+
+      if (userVal === correctVal) {
+        statusIcon.textContent = '✔';
+        statusIcon.style.color = 'var(--success)';
+      } else if (userVal === 0) {
+        statusIcon.textContent = '?';
+        statusIcon.style.color = 'var(--muted)';
+      } else {
+        statusIcon.textContent = '✖';
+        statusIcon.style.color = 'var(--danger)';
+        input.style.borderColor = 'var(--danger)';
+      }
+    });
+  });
+
+  btnValidasiSemua?.addEventListener('click', () => {
+    let correct = 0;
+    let total = 0;
+
+    inputs.forEach(input => {
+      const x = parseFloat(input.dataset.x);
+      const userVal = parseInt(input.value || '0');
+      const correctVal = calculateF(x);
+
+      if (userVal > 0) total++;
+      if (userVal === correctVal) correct++;
+    });
+
+    if (total === 0) {
+      feedbackValidasi.textContent = '⚠️ Lengkapi semua input sebelum validasi!';
+      feedbackValidasi.className = 'feedback-box warning';
+      return;
+    }
+
+    if (correct === total) {
+      feedbackValidasi.textContent = `✅ SEMPURNA! ${correct}/${total} jawaban benar. Pemahaman Anda sudah solid!`;
+      feedbackValidasi.className = 'feedback-box success';
+    } else {
+      feedbackValidasi.textContent = `⚠️ ${correct}/${total} benar. Periksa kembali perhitungannya.`;
+      feedbackValidasi.className = 'feedback-box warning';
+    }
+  });
+
+  btnResetValidasi?.addEventListener('click', () => {
+    inputs.forEach(input => {
+      input.value = '';
+      input.style.borderColor = '#d1d5db';
+      input.closest('tr').querySelector('.statusIcon').textContent = '-';
+    });
+    feedbackValidasi.className = 'feedback-box';
+  });
+
+  // ======== SLIDE: HITUNG 9 KM ========
+  const distanceSlider = document.getElementById('distanceSlider');
+  const distanceInput = document.getElementById('distanceInput');
+  const btnHitung9km = document.getElementById('btnHitung9km');
+  const feedbackHitung9km = document.getElementById('feedbackHitung9km');
+  const breakdownList = document.getElementById('breakdownList');
+  const arrowTableBody = document.querySelector('#arrowTable tbody');
+
+  function getFormula() {
+    const k = discoveredFormula?.coef || 4000;
+    const c = discoveredFormula?.const || 5000;
+    return { k, c };
+  }
+
+  function formatRp(n) {
+    return n.toLocaleString('id-ID');
+  }
+
+  function renderArrowTable(d, k, c) {
+    if (!arrowTableBody) return;
+    arrowTableBody.innerHTML = '';
+    for (let x = 1; x <= d; x++) {
+      const val = k * x + c;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="text-align:center"><strong>${x}</strong></td>
+        <td style="text-align:center">→</td>
+        <td style="text-align:center"><strong>${formatRp(val)}</strong></td>
+      `;
+      arrowTableBody.appendChild(tr);
+    }
+  }
+
+  function renderBreakdown(d, k, c) {
+    if (!breakdownList) return;
+    breakdownList.innerHTML = '';
+    const total = k * d + c;
+    const steps = [
+      `Gunakan rumus: f(x) = kx + c`,
+      `k (koefisien per km) = ${formatRp(k)}`,
+      `c (konstanta) = ${formatRp(c)}`,
+      `Perhitungan: ${formatRp(k)} × ${d} + ${formatRp(c)} = ${formatRp(total)}`
+    ];
+    steps.forEach(s => {
+      const li = document.createElement('li');
+      li.textContent = s;
+      breakdownList.appendChild(li);
+    });
+  }
+
+  function computeAndShow() {
+    const d = parseInt(distanceInput?.value || distanceSlider?.value || '9', 10);
+    const { k, c } = getFormula();
+    const total = k * d + c;
+
+    renderBreakdown(d, k, c);
+    renderArrowTable(d, k, c);
+
+    if (!feedbackHitung9km) return;
+    feedbackHitung9km.className = 'feedback-box success';
+    if (d === 9) {
+      feedbackHitung9km.textContent = `✅ Untuk ${d} km: ${formatRp(k)}×${d} + ${formatRp(c)} = ${formatRp(total)} (jawaban yang diharapkan)`;
+    } else {
+      feedbackHitung9km.textContent = `ℹ️ Untuk ${d} km: ${formatRp(k)}×${d} + ${formatRp(c)} = ${formatRp(total)}`;
+    }
+  }
+
+  distanceSlider?.addEventListener('input', () => {
+    if (distanceInput) distanceInput.value = distanceSlider.value;
+    computeAndShow();
+  });
+
+  distanceInput?.addEventListener('change', () => {
+    const val = Math.max(1, Math.min(20, parseInt(distanceInput.value || '9', 10)));
+    distanceInput.value = String(val);
+    if (distanceSlider) distanceSlider.value = String(val);
+    computeAndShow();
+  });
+
+  btnHitung9km?.addEventListener('click', computeAndShow);
+
+  // Auto-render if slide elements exist
+  if (distanceInput && distanceSlider) {
+    computeAndShow();
+  }
+
+  // ======== SLIDE 6: ANALISIS KOMPONEN ========
+  // (Otomatis update saat updateRumusDisplay dipanggil)
+
+  // ======== IDENTITAS KELOMPOK ========
+  const addAnggotaBtn = document.getElementById('addAnggotaBtn');
+  const btnLanjutPenyelidikan = document.getElementById('btnLanjutPenyelidikan');
+  const feedbackKelompok = document.getElementById('feedbackKelompok');
+
+  addAnggotaBtn?.addEventListener('click', () => {
+    const container = document.getElementById('anggotaContainer');
+    const count = container?.querySelectorAll('.anggota-input').length || 0;
+    
+    if (count >= 5) {
+      alert('⚠️ Maksimal 5 anggota per kelompok.');
+      return;
+    }
+
+    const newRow = document.createElement('div');
+    newRow.className = 'anggota-row';
+    newRow.style.display = 'flex';
+    newRow.style.gap = '8px';
+    newRow.innerHTML = `
+      <input type="text" class="anggota-input" placeholder="Nama anggota ${count + 1}" style="flex:1;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px">
+      <select class="tanggung-jawab-select" style="padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
+        <option value="Ketua Kelompok">Ketua Kelompok</option>
+        <option value="Wakil Ketua">Wakil Ketua</option>
+        <option value="Sekretaris">Sekretaris</option>
+        <option value="Anggota Aktif">Anggota Aktif</option>
+        <option value="Anggota">Anggota</option>
+      </select>
+      <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:50px;padding:8px">✖</button>
+    `;
+    container?.appendChild(newRow);
+  });
+
+  btnLanjutPenyelidikan?.addEventListener('click', () => {
+    const namaKelompok = document.getElementById('namaKelompok')?.value.trim();
+    const anggotaRows = document.querySelectorAll('.anggota-row');
+    const anggota = Array.from(anggotaRows).map(row => {
+      const namaInput = row.querySelector('.anggota-input');
+      const tanggungJawabSelect = row.querySelector('.tanggung-jawab-select');
+      const nama = namaInput?.value.trim();
+      const tanggungJawab = tanggungJawabSelect?.value || 'Anggota';
+      return nama ? { nama, tanggungJawab } : null;
+    }).filter(x => x);
+
+    if (!namaKelompok) {
+      alert('⚠️ Mohon isi nama kelompok terlebih dahulu.');
+      return;
+    }
+
+    if (anggota.length === 0) {
+      alert('⚠️ Mohon isi minimal 1 nama anggota.');
+      return;
+    }
+
+    const kelompokData = { nama: namaKelompok, anggota: anggota };
+    localStorage.setItem('kelompokData', JSON.stringify(kelompokData));
+
+    // Simpan solusi awal jika ada
+    const solusiAwal = document.getElementById('solusiAwalPertemuan4')?.value.trim();
+    if (solusiAwal) {
+      localStorage.setItem('solusiAwalPertemuan4', solusiAwal);
+    }
+
+    if (feedbackKelompok) {
+      feedbackKelompok.textContent = `✅ Kelompok "${namaKelompok}" tersimpan dengan ${anggota.length} anggota!`;
+      feedbackKelompok.style.display = 'block';
+      feedbackKelompok.style.background = '#d1fae5';
+      feedbackKelompok.style.color = '#065f46';
+      feedbackKelompok.style.borderLeft = '4px solid var(--success)';
+    }
+
+    setTimeout(() => show('skenario'), 800);
+  });
+
+  // ======== SLIDE LATIHAN: HITUNG JARAK LAINNYA ========
+  const btnCekJawaban = document.getElementById('btnCekJawaban');
+  const btnResetTabel = document.getElementById('btnResetTabel');
+  const feedbackLatihan = document.getElementById('feedbackLatihan');
+
+  // Data jawaban yang benar untuk setiap jarak (f(x) = 4000x + 5000)
+  const jawabanBenar = {
+    2: 13000,   // 4000 × 2 + 5000 = 8000 + 5000 = 13000
+    5: 25000,   // 4000 × 5 + 5000 = 20000 + 5000 = 25000
+    7: 33000,   // 4000 × 7 + 5000 = 28000 + 5000 = 33000
+    10: 45000,  // 4000 × 10 + 5000 = 40000 + 5000 = 45000
+    12: 53000,  // 4000 × 12 + 5000 = 48000 + 5000 = 53000
+    15: 65000,  // 4000 × 15 + 5000 = 60000 + 5000 = 65000
+    20: 85000   // 4000 × 20 + 5000 = 80000 + 5000 = 85000
+  };
+
+  btnCekJawaban?.addEventListener('click', () => {
+    let benar = 0;
+    let salah = 0;
+    let kosong = 0;
+
+    Object.keys(jawabanBenar).forEach(jarak => {
+      const inputTarif = document.getElementById(`tarif${jarak}`);
+      const statusSpan = document.getElementById(`status${jarak}`);
+      const jawaban = parseInt(inputTarif?.value || '0');
+
+      if (!inputTarif?.value || jawaban === 0) {
+        statusSpan.textContent = '⚠️';
+        statusSpan.style.color = 'var(--warning)';
+        kosong++;
+      } else if (jawaban === jawabanBenar[jarak]) {
+        statusSpan.textContent = '✅';
+        statusSpan.style.color = 'var(--success)';
+        benar++;
+      } else {
+        statusSpan.textContent = `❌ (${formatRp(jawabanBenar[jarak])})`;
+        statusSpan.style.color = 'var(--danger)';
+        salah++;
+      }
+    });
+
+    // Tampilkan feedback
+    const total = Object.keys(jawabanBenar).length;
+    if (kosong > 0) {
+      feedbackLatihan.textContent = `⚠️ Masih ada ${kosong} jawaban yang belum diisi. Silakan lengkapi semua kolom!`;
+      feedbackLatihan.className = 'feedback-box warning';
+    } else if (benar === total) {
+      feedbackLatihan.textContent = `🎉 Sempurna! Semua jawaban benar (${benar}/${total})! Kalian memahami rumus tarif dengan baik!`;
+      feedbackLatihan.className = 'feedback-box success';
+    } else if (benar >= total * 0.7) {
+      feedbackLatihan.textContent = `👍 Bagus! ${benar} dari ${total} jawaban benar. Periksa kembali yang salah dan coba lagi!`;
+      feedbackLatihan.className = 'feedback-box success';
+    } else {
+      feedbackLatihan.textContent = `📝 ${benar} benar, ${salah} salah. Ingat rumusnya: f(x) = 4.000 × x + 5.000. Coba lagi!`;
+      feedbackLatihan.className = 'feedback-box warning';
+    }
+  });
+
+  btnResetTabel?.addEventListener('click', () => {
+    Object.keys(jawabanBenar).forEach(jarak => {
+      const inputCalc = document.getElementById(`calc${jarak}`);
+      const inputTarif = document.getElementById(`tarif${jarak}`);
+      const statusSpan = document.getElementById(`status${jarak}`);
+
+      if (inputCalc) inputCalc.value = '';
+      if (inputTarif) inputTarif.value = '';
+      if (statusSpan) {
+        statusSpan.textContent = '—';
+        statusSpan.style.color = '';
+      }
+    });
+
+    feedbackLatihan.textContent = '';
+    feedbackLatihan.className = 'feedback-box';
+  });
+
+  // ======== SLIDE 8: EVALUASI & REFLEKSI ========
+  const btnCekEvaluasi = document.getElementById('btnCekEvaluasi');
+  const feedbackEvaluasi = document.getElementById('feedbackEvaluasi');
+  const btnSimpanRefleksi = document.getElementById('btnSimpanRefleksi');
+  const feedbackRefleksi = document.getElementById('feedbackRefleksi');
+  const refleksiPembelajaran = document.getElementById('refleksiPembelajaran');
+  const emojiLabel = document.getElementById('emojiLabel');
+  const emojiBtns = document.querySelectorAll('.emoji-btn');
+
+  let selectedRating = 0;
+  const emojiLabels = {
+    5: 'Sangat Senang! 😊',
+    4: 'Senang 🙂',
+    3: 'Biasa Saja 😐',
+    2: 'Kurang Paham 😕',
+    1: 'Sulit Sekali 😢'
+  };
+
+  // Handle emoji selection
+  emojiBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      // Reset all emojis
+      emojiBtns.forEach(b => {
+        b.style.border = '3px solid transparent';
+        b.style.transform = 'scale(1)';
+      });
+
+      // Highlight selected emoji
+      this.style.border = '3px solid var(--accent)';
+      this.style.transform = 'scale(1.1)';
+      
+      selectedRating = parseInt(this.dataset.rating);
+      emojiLabel.textContent = emojiLabels[selectedRating];
+      emojiLabel.style.color = 'var(--accent)';
+    });
+  });
+
+  // Cek jawaban evaluasi
+  btnCekEvaluasi?.addEventListener('click', () => {
+    const kunciJawaban = {
+      soal1: 'C', // f(3) = 4000*3 + 5000 = 17000
+      soal2: 'B', // 5000 adalah konstanta
+      soal3: 'B', // {(1,2), (2,2), (3,4)} adalah fungsi
+      soal4: 'C'  // Diagram lingkaran bukan penyajian fungsi
+    };
+
+    let benar = 0;
+    let salah = 0;
+    let kosong = 0;
+
+    Object.keys(kunciJawaban).forEach(soal => {
+      const selected = document.querySelector(`input[name="${soal}"]:checked`);
+      if (!selected) {
+        kosong++;
+      } else if (selected.value === kunciJawaban[soal]) {
+        benar++;
+      } else {
+        salah++;
+      }
+    });
+
+    const total = Object.keys(kunciJawaban).length;
+    const nilai = Math.round((benar / total) * 100);
+
+    if (kosong > 0) {
+      feedbackEvaluasi.textContent = `⚠️ Masih ada ${kosong} soal yang belum dijawab. Silakan lengkapi semua jawaban!`;
+      feedbackEvaluasi.className = 'feedback-box warning';
+    } else if (nilai >= 80) {
+      feedbackEvaluasi.textContent = `🎉 Luar biasa! Nilai kamu: ${nilai} (${benar}/${total} benar). Kamu benar-benar memahami konsep fungsi!`;
+      feedbackEvaluasi.className = 'feedback-box success';
+    } else if (nilai >= 60) {
+      feedbackEvaluasi.textContent = `👍 Bagus! Nilai kamu: ${nilai} (${benar}/${total} benar). Terus tingkatkan pemahamanmu!`;
+      feedbackEvaluasi.className = 'feedback-box success';
+    } else {
+      feedbackEvaluasi.textContent = `📝 Nilai kamu: ${nilai} (${benar}/${total} benar). Yuk, pelajari lagi materinya agar lebih paham!`;
+      feedbackEvaluasi.className = 'feedback-box warning';
+    }
+
+    // Simpan hasil evaluasi
+    localStorage.setItem('evaluasiNilai', nilai);
+    localStorage.setItem('evaluasiBenar', benar);
+    localStorage.setItem('evaluasiTotal', total);
+  });
+
+  // Simpan refleksi
+  btnSimpanRefleksi?.addEventListener('click', () => {
+    const refleksi = refleksiPembelajaran.value.trim();
+    
+    if (!selectedRating) {
+      feedbackRefleksi.textContent = '⚠️ Silakan pilih emoji yang menggambarkan perasaanmu terlebih dahulu!';
+      feedbackRefleksi.className = 'feedback-box warning';
+      return;
+    }
+
+    if (!refleksi || refleksi.length < 20) {
+      feedbackRefleksi.textContent = '⚠️ Refleksi terlalu pendek. Tuliskan minimal 20 karakter!';
+      feedbackRefleksi.className = 'feedback-box warning';
+      return;
+    }
+
+    // Simpan ke localStorage
+    const refleksiData = {
+      rating: selectedRating,
+      emojiText: emojiLabels[selectedRating],
+      refleksi: refleksi,
+      timestamp: new Date().toISOString()
+    };
+
+    localStorage.setItem('refleksiPembelajaran', JSON.stringify(refleksiData));
+
+    // Simpan data penyajian fungsi ke localStorage
+    localStorage.setItem('dataPenyajian', JSON.stringify(dataPenyajian));
+
+    feedbackRefleksi.textContent = `✅ Refleksi berhasil disimpan! Terima kasih atas partisipasi dan kejujuranmu dalam berbagi pengalaman belajar.`;
+    feedbackRefleksi.className = 'feedback-box success';
+  });
+
+  // ======== DOWNLOAD LAPORAN PDF ========
+  const btnDownloadPDF = document.getElementById('btnDownloadPDF');
+  const btnCetakLaporan = document.getElementById('btnCetakLaporan');
+  const feedbackDownload = document.getElementById('feedbackDownload');
+
+  // Fungsi untuk mengambil screenshot canvas grafik
+  function getGrafikScreenshot() {
+    const canvas = document.getElementById('canvasPenyajian');
+    if (canvas) {
+      return canvas.toDataURL('image/png');
+    }
+    return null;
+  }
+
+  // Fungsi untuk generate laporan HTML
+  function generateLaporanHTML() {
+    const now = new Date();
+    const tanggal = now.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    const jam = now.toLocaleTimeString('id-ID');
+
+    // Ambil data dari form
+    const namaAnggota = [];
+    document.querySelectorAll('.anggota-input').forEach(input => {
+      if (input.value.trim()) {
+        namaAnggota.push(input.value.trim());
+      }
+    });
+
+    // Ambil data evaluasi
+    const jawabanEvaluasi = {};
+    const kunciJawaban = {
+      soal1: 'C',
+      soal2: 'B',
+      soal3: 'B',
+      soal4: 'C'
+    };
+    let benarCount = 0;
+    Object.keys(kunciJawaban).forEach(soal => {
+      const selected = document.querySelector(`input[name="${soal}"]:checked`);
+      if (selected) {
+        jawabanEvaluasi[soal] = selected.value;
+        if (selected.value === kunciJawaban[soal]) {
+          benarCount++;
+        }
+      } else {
+        jawabanEvaluasi[soal] = '-';
+      }
+    });
+    const nilaiEvaluasi = Math.round((benarCount / 4) * 100);
+
+    // Ambil data refleksi
+    const refleksiData = localStorage.getItem('refleksiPembelajaran');
+    const refleksi = refleksiData ? JSON.parse(refleksiData) : null;
+
+    // Ambil data penyajian fungsi
+    const dataPenyajianStr = localStorage.getItem('dataPenyajian');
+    const dataPenyajian = dataPenyajianStr ? JSON.parse(dataPenyajianStr) : [];
+
+    // Ambil data latihan hitung jarak
+    const jawabanLatihan = {};
+    const jawabanBenar = {
+      '2': 13000,
+      '5': 25000,
+      '7': 33000,
+      '10': 45000,
+      '12': 53000,
+      '15': 65000,
+      '20': 85000
+    };
+    let latihanBenar = 0;
+    Object.keys(jawabanBenar).forEach(jarak => {
+      const input = document.getElementById(`tarif${jarak}`);
+      if (input && input.value) {
+        jawabanLatihan[jarak] = input.value;
+        if (parseInt(input.value) === jawabanBenar[jarak]) {
+          latihanBenar++;
+        }
+      }
+    });
+
+    // Generate grafik screenshot
+    const grafikImg = getGrafikScreenshot();
+
+    // HTML Laporan
+    let html = '<' + '!DOCTYPE html>' + '\n';
+    html += '<html lang="id">\n<head>\n';
+    html += '<meta charset="UTF-8">\n';
+    html += '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n';
+    html += '<title>Laporan Pengerjaan - Media Pembelajaran Fungsi<' + '/title>\n';
+    html += '<style>\n';
+    html += '  * { margin: 0; padding: 0; box-sizing: border-box; }\n';
+    html += '  body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; padding: 20px; }\n';
+    html += '  .container { max-width: 900px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }\n';
+    html += '  .header { text-align: center; border-bottom: 3px solid #6366f1; padding-bottom: 20px; margin-bottom: 30px; }\n';
+    html += '  .header h1 { color: #6366f1; font-size: 28px; margin-bottom: 10px; }\n';
+    html += '  .header p { color: #666; font-size: 14px; }\n';
+    html += '  .info-section { background: #f0f4ff; padding: 15px; border-radius: 6px; margin-bottom: 25px; border-left: 4px solid #6366f1; }\n';
+    html += '  .info-section h3 { color: #6366f1; margin-bottom: 10px; font-size: 16px; }\n';
+    html += '  .info-row { display: flex; margin-bottom: 8px; }\n';
+    html += '  .info-label { font-weight: 700; width: 150px; color: #666; }\n';
+    html += '  .info-value { flex: 1; color: #333; }\n';
+    html += '  .section { margin-bottom: 30px; page-break-inside: avoid; }\n';
+    html += '  .section-title { background: #6366f1; color: white; padding: 12px; border-radius: 4px; font-size: 18px; font-weight: 700; margin-bottom: 15px; }\n';
+    html += '  .subsection-title { color: #6366f1; font-size: 16px; font-weight: 700; margin-top: 15px; margin-bottom: 10px; border-bottom: 2px solid #e5e7eb; padding-bottom: 8px; }\n';
+    html += '  table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }\n';
+    html += '  table thead { background: #f3f4f6; }\n';
+    html += '  table th { padding: 12px; text-align: left; font-weight: 700; color: #6366f1; border-bottom: 2px solid #6366f1; }\n';
+    html += '  table td { padding: 10px 12px; border-bottom: 1px solid #e5e7eb; }\n';
+    html += '  table tbody tr:nth-child(odd) { background: #fafbfc; }\n';
+    html += '  .score-box { background: #ecf0ff; padding: 15px; border-radius: 6px; margin-bottom: 15px; text-align: center; border-left: 4px solid #6366f1; }\n';
+    html += '  .score-value { font-size: 36px; font-weight: 700; color: #6366f1; }\n';
+    html += '  .score-label { color: #666; font-size: 14px; margin-top: 5px; }\n';
+    html += '  .status-correct { color: #22c55e; font-weight: 700; }\n';
+    html += '  .status-wrong { color: #ef4444; font-weight: 700; }\n';
+    html += '  .status-empty { color: #f59e0b; font-weight: 700; }\n';
+    html += '  .grafik-box { text-align: center; margin: 20px 0; }\n';
+    html += '  .grafik-box img { max-width: 100%; border: 2px solid #e5e7eb; border-radius: 6px; }\n';
+    html += '  .emoji-rating { font-size: 32px; text-align: center; margin: 10px 0; }\n';
+    html += '  .reflection-text { background: #f9fafb; padding: 15px; border-radius: 6px; border-left: 4px solid #6366f1; font-style: italic; color: #666; line-height: 1.8; }\n';
+    html += '  .footer { margin-top: 40px; padding-top: 20px; border-top: 2px solid #e5e7eb; text-align: center; color: #999; font-size: 12px; }\n';
+    html += '<' + '/style>\n' + '<' + '/head>\n<body>\n';
+    html += '<div class="container">\n';
+    html += '<div class="header"><h1>📊 Laporan Pengerjaan Pembelajaran<' + '/h1><p>Media Pembelajaran Fungsi - Masalah Ojek Online<' + '/p><' + '/div>\n';
+    
+    // Info peserta
+    html += '<div class="info-section"><h3>👥 Informasi Peserta<' + '/h3>\n';
+    html += '<div class="info-row"><div class="info-label">Tanggal:<' + '/div><div class="info-value">' + tanggal + '<' + '/div><' + '/div>\n';
+    html += '<div class="info-row"><div class="info-label">Waktu:<' + '/div><div class="info-value">' + jam + '<' + '/div><' + '/div>\n';
+    html += '<div class="info-row"><div class="info-label">Anggota Kelompok:<' + '/div><div class="info-value">' + (namaAnggota.length > 0 ? namaAnggota.join(', ') : 'Tidak ada') + '<' + '/div><' + '/div>\n';
+    html += '<' + '/div>\n';
+
+    // Latihan Hitung Jarak
+    html += '<div class="section"><div class="section-title">1️⃣ Latihan Menghitung Tarif<' + '/div>\n';
+    html += '<table><thead><tr><th>Jarak (km)<' + '/th><th>Jawaban Siswa<' + '/th><th>Jawaban Benar<' + '/th><th>Status<' + '/th><' + '/tr><' + '/thead><tbody>\n';
+    
+    Object.keys(jawabanBenar).forEach(jarak => {
+      const jawaban = jawabanLatihan[jarak] ? parseInt(jawabanLatihan[jarak]) : '-';
+      const benar = jawabanBenar[jarak];
+      let status = '';
+      if (jawaban === '-') {
+        status = '<span class="status-empty">Tidak Dijawab<' + '/span>';
+      } else if (jawaban === benar) {
+        status = '<span class="status-correct">✓ Benar<' + '/span>';
+      } else {
+        status = '<span class="status-wrong">✗ Salah<' + '/span>';
+      }
+      html += '<tr><td>' + jarak + '<' + '/td><td>' + (jawaban === '-' ? '-' : 'Rp' + jawaban.toLocaleString('id-ID')) + '<' + '/td><td>Rp' + benar.toLocaleString('id-ID') + '<' + '/td><td>' + status + '<' + '/td><' + '/tr>\n';
+    });
+
+    html += '<' + '/tbody><' + '/table>\n';
+    html += '<div class="score-box"><div class="score-label">Nilai Latihan Hitung Jarak<' + '/div><div class="score-value">' + latihanBenar + '/' + Object.keys(jawabanBenar).length + '<' + '/div><div class="score-label">' + Math.round((latihanBenar / Object.keys(jawabanBenar).length) * 100) + '%<' + '/div><' + '/div>\n';
+    html += '<' + '/div>\n';
+
+    // Penyajian Fungsi
+    html += '<div class="section"><div class="section-title">2️⃣ Penyajian Fungsi (5 Representasi)<' + '/div>\n';
+    html += '<div class="subsection-title">📊 Data yang Diinputkan Peserta:<' + '/div>\n';
+    
+    if (dataPenyajian.length > 0) {
+      html += '<table><thead><tr><th>No<' + '/th><th>Jarak (km)<' + '/th><th>Tarif (Rp)<' + '/th><' + '/tr><' + '/thead><tbody>\n';
+      dataPenyajian.forEach((data, i) => {
+        html += '<tr><td>' + (i+1) + '<' + '/td><td>' + data.jarak + '<' + '/td><td>Rp' + data.tarif.toLocaleString('id-ID') + '<' + '/td><' + '/tr>\n';
+      });
+      html += '<' + '/tbody><' + '/table>\n';
+    } else {
+      html += '<p style="color: #999; font-style: italic;">Tidak ada data yang diinputkan<' + '/p>\n';
+    }
+
+    html += '<div class="subsection-title">📈 Screenshot Grafik Penyajian Fungsi:<' + '/div>\n';
+    if (grafikImg) {
+      html += '<div class="grafik-box"><img src="' + grafikImg + '" alt="Grafik Penyajian Fungsi"><p style="color: #666; font-size: 12px; margin-top: 10px;">Grafik menampilkan hubungan antara jarak (km) dan tarif (Rp)<' + '/p><' + '/div>\n';
+    } else {
+      html += '<p style="color: #999; font-style: italic;">Grafik tidak tersedia<' + '/p>\n';
+    }
+    html += '<' + '/div>\n';
+
+    // Evaluasi
+    html += '<div class="section"><div class="section-title">3️⃣ Evaluasi Materi (4 Soal Pilihan Ganda)<' + '/div>\n';
+    html += '<table><thead><tr><th>Soal<' + '/th><th>Jawaban Siswa<' + '/th><th>Jawaban Benar<' + '/th><th>Status<' + '/th><' + '/tr><' + '/thead><tbody>\n';
+    
+    html += '<tr><td><strong>1.<' + '/strong> Nilai f(3) dari f(x) = 4.000x + 5.000<' + '/td><td>' + jawabanEvaluasi.soal1 + '<' + '/td><td>' + kunciJawaban.soal1 + '<' + '/td><td>' + (jawabanEvaluasi.soal1 === kunciJawaban.soal1 ? '<span class="status-correct">✓ Benar<' + '/span>' : jawabanEvaluasi.soal1 === '-' ? '<span class="status-empty">Tidak Dijawab<' + '/span>' : '<span class="status-wrong">✗ Salah<' + '/span>') + '<' + '/td><' + '/tr>\n';
+    html += '<tr><td><strong>2.<' + '/strong> Dalam f(x) = 4.000x + 5.000, angka 5.000 disebut...<' + '/td><td>' + jawabanEvaluasi.soal2 + '<' + '/td><td>' + kunciJawaban.soal2 + '<' + '/td><td>' + (jawabanEvaluasi.soal2 === kunciJawaban.soal2 ? '<span class="status-correct">✓ Benar<' + '/span>' : jawabanEvaluasi.soal2 === '-' ? '<span class="status-empty">Tidak Dijawab<' + '/span>' : '<span class="status-wrong">✗ Salah<' + '/span>') + '<' + '/td><' + '/tr>\n';
+    html += '<tr><td><strong>3.<' + '/strong> Himpunan pasangan berurutan yang merupakan fungsi<' + '/td><td>' + jawabanEvaluasi.soal3 + '<' + '/td><td>' + kunciJawaban.soal3 + '<' + '/td><td>' + (jawabanEvaluasi.soal3 === kunciJawaban.soal3 ? '<span class="status-correct">✓ Benar<' + '/span>' : jawabanEvaluasi.soal3 === '-' ? '<span class="status-empty">Tidak Dijawab<' + '/span>' : '<span class="status-wrong">✗ Salah<' + '/span>') + '<' + '/td><' + '/tr>\n';
+    html += '<tr><td><strong>4.<' + '/strong> Fungsi dapat disajikan dalam bentuk berikut, KECUALI...<' + '/td><td>' + jawabanEvaluasi.soal4 + '<' + '/td><td>' + kunciJawaban.soal4 + '<' + '/td><td>' + (jawabanEvaluasi.soal4 === kunciJawaban.soal4 ? '<span class="status-correct">✓ Benar<' + '/span>' : jawabanEvaluasi.soal4 === '-' ? '<span class="status-empty">Tidak Dijawab<' + '/span>' : '<span class="status-wrong">✗ Salah<' + '/span>') + '<' + '/td><' + '/tr>\n';
+    
+    html += '<' + '/tbody><' + '/table>\n';
+    html += '<div class="score-box"><div class="score-label">Nilai Evaluasi<' + '/div><div class="score-value">' + nilaiEvaluasi + '<' + '/div><div class="score-label">' + benarCount + '/4 Jawaban Benar<' + '/div><' + '/div>\n';
+    html += '<' + '/div>\n';
+
+    // Refleksi
+    html += '<div class="section"><div class="section-title">4️⃣ Refleksi Pembelajaran<' + '/div>\n';
+    if (refleksi) {
+      html += '<div class="subsection-title">Perasaan Pembelajaran (Emoji Rating):<' + '/div>\n';
+      html += '<div class="emoji-rating">' + refleksi.emojiText + '<' + '/div>\n';
+      html += '<div class="subsection-title">Catatan Refleksi:<' + '/div>\n';
+      html += '<div class="reflection-text">"' + refleksi.refleksi + '"<' + '/div>\n';
+      html += '<div style="margin-top: 15px; padding: 10px; background: #f0f4ff; border-radius: 4px; color: #666; font-size: 12px;"><strong>Waktu Pengisian:<' + '/strong> ' + new Date(refleksi.timestamp).toLocaleString('id-ID') + '<' + '/div>\n';
+    } else {
+      html += '<p style="color: #999; font-style: italic;">Refleksi belum diisi<' + '/p>\n';
+    }
+    html += '<' + '/div>\n';
+
+    // Ringkasan
+    html += '<div class="section"><div class="section-title">📋 Ringkasan Pencapaian<' + '/div>\n';
+    html += '<table><thead><tr><th>Komponen<' + '/th><th>Skor<' + '/th><th>Persentase<' + '/th><' + '/tr><' + '/thead><tbody>\n';
+    html += '<tr><td>Latihan Hitung Jarak<' + '/td><td>' + latihanBenar + '/' + Object.keys(jawabanBenar).length + '<' + '/td><td>' + Math.round((latihanBenar / Object.keys(jawabanBenar).length) * 100) + '%<' + '/td><' + '/tr>\n';
+    html += '<tr><td>Evaluasi Materi<' + '/td><td>' + benarCount + '/4<' + '/td><td>' + nilaiEvaluasi + '%<' + '/td><' + '/tr>\n';
+    html += '<tr style="background: #e8f5e9; font-weight: 700;"><td>Rata-rata<' + '/td><td colspan="2" style="text-align: center;">' + Math.round(((latihanBenar / Object.keys(jawabanBenar).length * 100) + nilaiEvaluasi) / 2) + '%<' + '/td><' + '/tr>\n';
+    html += '<' + '/tbody><' + '/table>\n';
+    html += '<' + '/div>\n';
+
+    // Footer
+    html += '<div class="footer"><p>Laporan ini dibuat otomatis oleh Sistem Media Pembelajaran Fungsi<' + '/p><p>Tanggal Cetak: ' + new Date().toLocaleString('id-ID') + '<' + '/p><' + '/div>\n';
+    html += '<' + '/div>\n<' + '/body>\n<' + '/html>';
+
+
+    return html;
+  }
+
+  // Download as PDF (menggunakan teknik print-to-PDF)
+  btnDownloadPDF?.addEventListener('click', async () => {
+    feedbackDownload.textContent = '⏳ Mempersiapkan laporan...';
+    feedbackDownload.className = 'feedback-box info';
+
+    setTimeout(() => {
+      try {
+        const laporanHTML = generateLaporanHTML();
+        
+        // Buka di tab baru dengan opsi print
+        const blob = new Blob([laporanHTML], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.style.display = 'none';
+        document.body.appendChild(iframe);
+        
+        // Tunggu iframe load sebelum print
+        iframe.onload = () => {
+          setTimeout(() => {
+            iframe.contentWindow.print();
+            feedbackDownload.textContent = '✅ Laporan siap diunduh! Pilih "Simpan sebagai PDF" di dialog print.';
+            feedbackDownload.className = 'feedback-box success';
+          }, 500);
+        };
+      } catch (error) {
+        feedbackDownload.textContent = '❌ Error: ' + error.message;
+        feedbackDownload.className = 'feedback-box warning';
+      }
+    }, 500);
+  });
+
+  // Cetak Laporan
+  btnCetakLaporan?.addEventListener('click', () => {
+    feedbackDownload.textContent = '⏳ Mempersiapkan laporan untuk dicetak...';
+    feedbackDownload.className = 'feedback-box info';
+
+    setTimeout(() => {
+      try {
+        const laporanHTML = generateLaporanHTML();
+        const printWindow = window.open('', 'PRINT', 'width=900,height=600');
+        printWindow.document.write(laporanHTML);
+        printWindow.document.close();
+        
+        setTimeout(() => {
+          printWindow.focus();
+          printWindow.print();
+          feedbackDownload.textContent = '✅ Dialog cetak telah dibuka.';
+          feedbackDownload.className = 'feedback-box success';
+        }, 250);
+      } catch (error) {
+        feedbackDownload.textContent = '❌ Error: ' + error.message;
+        feedbackDownload.className = 'feedback-box warning';
+      }
+    }, 500);
+  });
+
+});
+
+// Function to remove anggota row
+function removeAnggota(btn) {
+  const container = document.getElementById('anggotaContainer');
+  if (container && container.querySelectorAll('.anggota-input').length <= 1) {
+    alert('⚠️ Minimal ada 1 anggota kelompok.');
+    return;
+  }
+  btn.parentElement.remove();
+}
+
+// Screenshot-based PDF generation
+window.generatePDFReport = async function(){
+  const { jsPDF } = window.jspdf;
+  if(!jsPDF) throw new Error('jsPDF library belum dimuat');
+  
+  const namaKelompok = document.getElementById('namaKelompok')?.value || 'Kelompok';
+  console.log('🎬 Mulai screenshot semua slide...');
+  
+  try {
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgWidth = 210;
+    const pageHeight = 297;
+    let pageCount = 0;
+    
+    const slides = document.querySelectorAll('.slide');
+    console.log('📄 Total slides ditemukan:', slides.length);
+    
+    for (let i = 0; i < slides.length; i++) {
+      const slide = slides[i];
+      slide.style.display = 'block';
+      slide.classList.add('active');
+      
+      await new Promise(r => setTimeout(r, 150));
+      
+      try {
+        const canvas = await html2canvas(slide, {
+          scale: 4,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          windowHeight: slide.scrollHeight,
+          imageTimeout: 8000,
+          removeContainer: true,
+          proxy: null
+        });
+        
+        const ctx = canvas.getContext('2d');
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i+1];
+          const b = data[i+2];
+          const lum = (r * 0.299 + g * 0.587 + b * 0.114) / 255;
+          
+          if (lum < 0.7) {
+            data[i] = Math.max(0, r - 40);
+            data[i+1] = Math.max(0, g - 40);
+            data[i+2] = Math.max(0, b - 40);
+          } else {
+            data[i] = Math.min(255, r + 15);
+            data[i+1] = Math.min(255, g + 15);
+            data[i+2] = Math.min(255, b + 15);
+          }
+        }
+        
+        for (let i = 0; i < data.length; i += 4) {
+          const r = data[i];
+          const g = data[i+1];
+          const b = data[i+2];
+          const max = Math.max(r, g, b);
+          const min = Math.min(r, g, b);
+          const l = (max + min) / 2;
+          
+          if (max !== min) {
+            let s = l > 128 ? (max - min) / (510 - max - min) : (max - min) / (max + min);
+            s = Math.min(1, s * 1.4);
+            
+            const h = max === r ? (((g - b) / (max - min)) % 6) / 6 :
+                      max === g ? ((b - r) / (max - min) + 2) / 6 :
+                      ((r - g) / (max - min) + 4) / 6;
+            
+            const c = (1 - Math.abs(2 * l / 255 - 1)) * s * 255;
+            const x = c * (1 - Math.abs((h * 6) % 2 - 1));
+            const m = l / 2 - c / 2;
+            
+            let nr = 0, ng = 0, nb = 0;
+            if (h < 1/6) { nr = c; ng = x; }
+            else if (h < 2/6) { nr = x; ng = c; }
+            else if (h < 3/6) { ng = c; nb = x; }
+            else if (h < 4/6) { ng = x; nb = c; }
+            else if (h < 5/6) { nr = x; nb = c; }
+            else { nr = c; nb = x; }
+            
+            data[i] = Math.round((nr + m) * 1.1);
+            data[i+1] = Math.round((ng + m) * 1.1);
+            data[i+2] = Math.round((nb + m) * 1.1);
+          }
+        }
+        
+        ctx.putImageData(imageData, 0, 0);
+        
+        const slideHeight = (canvas.height * imgWidth) / canvas.width;
+        const scaleToFit = pageHeight / slideHeight;
+        
+        let finalWidth = imgWidth;
+        let finalHeight = slideHeight;
+        
+        if (slideHeight > pageHeight - 5) {
+          finalWidth = imgWidth * scaleToFit;
+          finalHeight = slideHeight * scaleToFit;
+        }
+        
+        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+        
+        if (pageCount > 0) {
+          pdf.addPage();
+        }
+        
+        const xPos = (imgWidth - finalWidth) / 2;
+        const yPos = (pageHeight - finalHeight) / 2;
+        
+        pdf.addImage(imgData, 'JPEG', xPos, yPos, finalWidth, finalHeight);
+        pageCount++;
+        
+        console.log(`✅ Slide ${i + 1}/${slides.length} → Halaman ${pageCount}`);
+      } catch(slideErr) {
+        console.warn(`⚠️ Slide ${i + 1} error:`, slideErr.message);
+      }
+      
+      slide.style.display = 'none';
+      slide.classList.remove('active');
+    }
+    
+    const filename = `Hasil_Pertemuan_${namaKelompok.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
+    pdf.save(filename);
+    console.log('✅ PDF berhasil dibuat:', filename, `(${pageCount} halaman)`);
+    return filename;
+  } catch(err) {
+    console.error('❌ Error saat screenshot:', err);
+    throw err;
+  }
+};
+</script>
+
+<!-- Google Form Helper Script -->
+<script src="google-form-helper.js"></script>
+
+</body>
+</html>
