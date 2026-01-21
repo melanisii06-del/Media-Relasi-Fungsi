@@ -1023,7 +1023,7 @@ h1, h2 {
       <div id="kardinalitasArea">
         <button class="btn ghost" id="kardinalitasToggle" style="margin-bottom:15px; width: 100%;">🤔 Apa itu Kardinalitas? (Klik untuk Bantuan)</button>
         
-        <div id="hiddenKardinalitasInfo" class="hidden-info">
+        <div id="hiddenKardinalitasInfo" class="hidden-info" style="display:none;">
           <h3>Pengertian Kardinalitas Himpunan</h3>
           <p><strong>Kardinalitas</strong> adalah jumlah anggota (buku) yang ada dalam suatu himpunan atau operasi himpunan. Dilambangkan dengan <strong>n(Himpunan)</strong>.</p>
           <p>Hitunglah Kardinalitas (<strong>n(X)</strong>) berdasarkan Rak yang sudah terisi:</p>
@@ -1376,11 +1376,16 @@ window.selectQuizAnswer = function(quizId, answer) {
 
 
 document.addEventListener('DOMContentLoaded', () => {
+
   // Initialize header visibility (start slide should show header)
   const headerEl = document.querySelector('.card > .header');
   if(headerEl) {
     headerEl.style.display = 'block';
   }
+
+  // Inisialisasi agar info kardinalitas selalu hidden secara inline (agar toggle selalu berfungsi)
+  const hiddenKardInfo = document.getElementById('hiddenKardinalitasInfo');
+  if (hiddenKardInfo) hiddenKardInfo.style.display = 'none';
 
 window.safeOn = function(selOrId, ev, fn){
   const el = typeof selOrId === 'string'
@@ -1760,14 +1765,29 @@ document.addEventListener('DOMContentLoaded', () => {
   let idx = 0;
   const updateSlide = () => {
     slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
-    document.getElementById('levelLabel').textContent = `Level ${idx+1} dari ${slides.length}`;
-    document.getElementById('prevBtn').disabled = idx===0;
-    document.getElementById('nextBtn').disabled = true;
+    const levelLabel = document.getElementById('levelLabel');
+    if (levelLabel) {
+      levelLabel.textContent = `Level ${idx+1} dari ${slides.length}`;
+    }
+    const prevBtn = document.getElementById('prevBtn');
+    if (prevBtn) {
+      prevBtn.disabled = idx===0;
+    }
+    const nextBtn = document.getElementById('nextBtn');
+    if (nextBtn) {
+      nextBtn.disabled = true;
+    }
   };
 
   // prev/next top buttons (prev goes back)
-  document.getElementById('prevBtn').addEventListener('click', ()=>{ if(idx>0){ idx--; updateSlide(); }});
-  document.getElementById('nextBtn').addEventListener('click', ()=>{ if(idx<slides.length-1){ idx++; updateSlide(); }});
+  const prevBtn = document.getElementById('prevBtn');
+  if (prevBtn) {
+    prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; updateSlide(); }});
+  }
+  const nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) {
+    nextBtn.addEventListener('click', ()=>{ if(idx<slides.length-1){ idx++; updateSlide(); }});
+  }
 
   // NAV buttons inside levels
   const goto2 = document.getElementById('goto2');
@@ -1938,20 +1958,22 @@ document.addEventListener('DOMContentLoaded', () => {
     p.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' ') p.click(); });
   });
 
-  assembly.addEventListener('dragover', e=> e.preventDefault());
-  assembly.addEventListener('drop', e=>{
-    e.preventDefault();
-    const text = e.dataTransfer.getData('text/plain');
-    if(!text) return;
-    // prevent duplicates
-    if(assembled.includes(text)) return;
-    assembled.push(text);
-    appendPieceNode(text);
-    // gray the piece
-    const src = Array.from(document.querySelectorAll('#level-2 .piece')).find(x=>x.textContent.trim()===text.trim());
-    if(src) src.style.opacity = '0.4';
-    validateAssembly();
-  });
+  if (assembly) {
+    assembly.addEventListener('dragover', e=> e.preventDefault());
+    assembly.addEventListener('drop', e=>{
+      e.preventDefault();
+      const text = e.dataTransfer.getData('text/plain');
+      if(!text) return;
+      // prevent duplicates
+      if(assembled.includes(text)) return;
+      assembled.push(text);
+      appendPieceNode(text);
+      // gray the piece
+      const src = Array.from(document.querySelectorAll('#level-2 .piece')).find(x=>x.textContent.trim()===text.trim());
+      if(src) src.style.opacity = '0.4';
+      validateAssembly();
+    });
+  }
 
   // allow goto3 if present
   if(goto3) goto3.addEventListener('click', ()=>{ if(!goto3.disabled){ idx = 2; updateSlide(); }});
@@ -2478,80 +2500,83 @@ document.addEventListener('DOMContentLoaded', () => {
  // ...existing code...
 
     // --- LOGIKA CEK HASIL ---
-  document.getElementById('checkBtn').addEventListener('click', () => {
-    let allPemilahanCorrect = true;
-    const correctAnswers = { A: [], B: [], AB: [], LUAR: [] };
-    let feedbackHTML = '<p style="margin: 0 0 12px 0; font-size: 14px; font-weight:bold;"><strong>Penjelasan Pemilahan:</strong></p>';
+  const checkBtn = document.getElementById('checkBtn');
+  if (checkBtn) {
+    checkBtn.addEventListener('click', () => {
+      let allPemilahanCorrect = true;
+      const correctAnswers = { A: [], B: [], AB: [], LUAR: [] };
+      let feedbackHTML = '<p style="margin: 0 0 12px 0; font-size: 14px; font-weight:bold;"><strong>Penjelasan Pemilahan:</strong></p>';
 
-    // 1. Cek Pemilahan Buku & tampilkan feedback di kolom tabel
-    BOOKS_DATA.forEach(book => {
-      const select = document.querySelector(`select[data-book="${book.id}"]`);
-      const feedbackCell = document.getElementById(`feedback_${book.id}`);
-      const studentRak = select.value;
-      const correctRak = getCorrectRak(book);
-      const isCorrect = studentRak === correctRak;
-      
-      correctAnswers[correctRak].push(book.id);
+      // 1. Cek Pemilahan Buku & tampilkan feedback di kolom tabel
+      BOOKS_DATA.forEach(book => {
+        const select = document.querySelector(`select[data-book="${book.id}"]`);
+        const feedbackCell = document.getElementById(`feedback_${book.id}`);
+        const studentRak = select.value;
+        const correctRak = getCorrectRak(book);
+        const isCorrect = studentRak === correctRak;
+        
+        correctAnswers[correctRak].push(book.id);
 
-      // Tampilkan feedback di kolom tabel
-      if (!isCorrect) {
-        allPemilahanCorrect = false;
-        feedbackCell.textContent = '❌ Salah';
-        feedbackCell.classList.add('wrong');
-        feedbackCell.classList.remove('correct');
-        
-        // Alasan di statusBox (bawah tabel)
-        feedbackHTML += `<p style="margin: 6px 0; padding: 8px; background:#ffebee; border-left:4px solid var(--danger); border-radius:4px;"><strong>Buku ${book.id}:</strong> Seharusnya di <strong>${RAK_OPTIONS[correctRak]}</strong> (hal: ${book.hal}, tahun: ${book.thn}), tetapi Anda memilih ${studentRak ? RAK_OPTIONS[studentRak] : '<em>kosong</em>'}</p>`;
-        
-        // Koreksi otomatis
-        moveBookBadge(book.id, correctRak); 
-        select.value = correctRak; 
+        // Tampilkan feedback di kolom tabel
+        if (!isCorrect) {
+          allPemilahanCorrect = false;
+          feedbackCell.textContent = '❌ Salah';
+          feedbackCell.classList.add('wrong');
+          feedbackCell.classList.remove('correct');
+          
+          // Alasan di statusBox (bawah tabel)
+          feedbackHTML += `<p style="margin: 6px 0; padding: 8px; background:#ffebee; border-left:4px solid var(--danger); border-radius:4px;"><strong>Buku ${book.id}:</strong> Seharusnya di <strong>${RAK_OPTIONS[correctRak]}</strong> (hal: ${book.hal}, tahun: ${book.thn}), tetapi Anda memilih ${studentRak ? RAK_OPTIONS[studentRak] : '<em>kosong</em>'}</p>`;
+          
+          // Koreksi otomatis
+          moveBookBadge(book.id, correctRak); 
+          select.value = correctRak; 
+        } else {
+          feedbackCell.textContent = '✅ Tepat';
+          feedbackCell.classList.add('correct');
+          feedbackCell.classList.remove('wrong');
+          
+          // Alasan di statusBox
+          feedbackHTML += `<p style="margin: 6px 0; padding: 8px; background:#e8f5e9; border-left:4px solid var(--success); border-radius:4px;"><strong>Buku ${book.id}:</strong> Benar di <strong>${RAK_OPTIONS[correctRak]}</strong> (hal: ${book.hal} &gt; 100, tahun: ${book.thn} ${book.thn > 2018 ? '&gt;' : '&le;'} 2018)</p>`;
+        }
+      });
+
+      // Perbarui Tampilan Anggota Kardinalitas
+      updateAnggotaKardinalitas(correctAnswers);
+
+      // 2. Cek Kardinalitas
+      let allKardinalitasCorrect = checkKardinalitas(correctAnswers);
+      let finalStatusText;
+
+      if (!allPemilahanCorrect) {
+         finalStatusText = '⚠️ <strong>PEMILAHAN DIKOREKSI.</strong> Lihat kolom Status di tabel & penjelasan di bawah. Silakan hitung ulang Kardinalitas.';
+      } else if (!allKardinalitasCorrect) {
+         finalStatusText = '🚨 <strong>PEMILAHAN TEPAT</strong>, namun perhitungan Kardinalitas Anda <strong>BELUM TEPAT</strong>. Silakan koreksi angkanya.';
       } else {
-        feedbackCell.textContent = '✅ Tepat';
-        feedbackCell.classList.add('correct');
-        feedbackCell.classList.remove('wrong');
-        
-        // Alasan di statusBox
-        feedbackHTML += `<p style="margin: 6px 0; padding: 8px; background:#e8f5e9; border-left:4px solid var(--success); border-radius:4px;"><strong>Buku ${book.id}:</strong> Benar di <strong>${RAK_OPTIONS[correctRak]}</strong> (hal: ${book.hal} &gt; 100, tahun: ${book.thn} ${book.thn > 2018 ? '&gt;' : '&le;'} 2018)</p>`;
+         finalStatusText = '🎉 <strong>SEMUA TEPAT!</strong> Pemilahan Buku dan Analisis Kardinalitas Anda Sempurna.';
       }
+      
+      // Set status Box
+      const statusBox = document.getElementById('statusBox');
+      statusBox.classList.add('feedback');
+      
+      if (allPemilahanCorrect && allKardinalitasCorrect) {
+          statusBox.classList.remove('wrong', 'no');
+          statusBox.classList.add('correct', 'ok');
+          statusBox.style.background = '#e8f5e9';
+          statusBox.style.borderLeftColor = 'var(--success)';
+          statusBox.style.color = 'var(--success)';
+      } else {
+          statusBox.classList.remove('correct', 'ok');
+          statusBox.classList.add('wrong', 'no');
+          statusBox.style.background = '#fff8e6';
+          statusBox.style.borderLeftColor = '#ff9800';
+          statusBox.style.color = '#e65100';
+      }
+      
+      statusBox.innerHTML = finalStatusText + '<br><br>' + feedbackHTML;
+      statusBox.style.display = 'block';
     });
-
-    // Perbarui Tampilan Anggota Kardinalitas
-    updateAnggotaKardinalitas(correctAnswers);
-
-    // 2. Cek Kardinalitas
-    let allKardinalitasCorrect = checkKardinalitas(correctAnswers);
-    let finalStatusText;
-
-    if (!allPemilahanCorrect) {
-       finalStatusText = '⚠️ <strong>PEMILAHAN DIKOREKSI.</strong> Lihat kolom Status di tabel & penjelasan di bawah. Silakan hitung ulang Kardinalitas.';
-    } else if (!allKardinalitasCorrect) {
-       finalStatusText = '🚨 <strong>PEMILAHAN TEPAT</strong>, namun perhitungan Kardinalitas Anda <strong>BELUM TEPAT</strong>. Silakan koreksi angkanya.';
-    } else {
-       finalStatusText = '🎉 <strong>SEMUA TEPAT!</strong> Pemilahan Buku dan Analisis Kardinalitas Anda Sempurna.';
-    }
-    
-    // Set status Box
-    const statusBox = document.getElementById('statusBox');
-    statusBox.classList.add('feedback');
-    
-    if (allPemilahanCorrect && allKardinalitasCorrect) {
-        statusBox.classList.remove('wrong', 'no');
-        statusBox.classList.add('correct', 'ok');
-        statusBox.style.background = '#e8f5e9';
-        statusBox.style.borderLeftColor = 'var(--success)';
-        statusBox.style.color = 'var(--success)';
-    } else {
-        statusBox.classList.remove('correct', 'ok');
-        statusBox.classList.add('wrong', 'no');
-        statusBox.style.background = '#fff8e6';
-        statusBox.style.borderLeftColor = '#ff9800';
-        statusBox.style.color = '#e65100';
-    }
-    
-    statusBox.innerHTML = finalStatusText + '<br><br>' + feedbackHTML;
-    statusBox.style.display = 'block';
-  });
+  }
  // ...existing code...
 
   // Fungsi untuk mengisi kolom Anggota Kardinalitas
@@ -2638,10 +2663,13 @@ function simpanProgress() {
 }
 
 // Panggil saat tombol cek diklik (Tahap 4)
-document.getElementById('checkBtn').addEventListener('click', () => {
-  // ... kode cek yang sudah ada ...
-  simpanProgress(); // tambah baris ini
-});
+const checkBtn2 = document.getElementById('checkBtn');
+if (checkBtn2) {
+  checkBtn2.addEventListener('click', () => {
+    // ... kode cek yang sudah ada ...
+    simpanProgress(); // tambah baris ini
+  });
+}
 
 // Panggil saat tombol selesaikan Tahap 5 diklik
 document.querySelector('[data-go="tahap5"]')?.addEventListener('click', () => {
@@ -3402,4 +3430,3 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="../Relasi/google-form-helper.js"></script>
 
 </body></html>
-
