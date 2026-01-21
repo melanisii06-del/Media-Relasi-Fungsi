@@ -1053,8 +1053,31 @@ h1, h2 {
             <input type="text" id="namaKelompok" placeholder="Contoh: Kelompok Relasi Jaya" style="width:100%;padding:12px;border-radius:8px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:15px;box-sizing:border-box">
 
             <div style="margin-top:20px">
-              <label style="color:var(--accent);font-weight:700;font-size:16px">👤 Anggota Kelompok</label>
-              <div id="anggotaContainer" style="margin-top:12px"></div>
+              <label style="color:var(--accent);font-weight:700;font-size:16px">👤 Anggota &amp; Tugas Kelompok</label>
+              <div style="font-size:14px;color:var(--muted);margin-bottom:8px">
+                <b>Pembagian Tugas Kelompok:</b>
+                <ul style="margin:6px 0 8px 18px;padding-left:0">
+                  <li><b>Ketua Kelompok:</b> Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</li>
+                  <li><b>Wakil Ketua:</b> Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</li>
+                  <li><b>Sekretaris:</b> Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses</li>
+                  <li><b>Anggota Aktif:</b> Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal</li>
+                  <li><b>Anggota:</b> Turut serta dalam diskusi dan mengerjakan tugas kelompok</li>
+                </ul>
+                Pilih peran dan tugas untuk setiap anggota sesuai pembagian di atas.
+              </div>
+              <div id="anggotaContainer" style="margin-top:12px">
+                <div class="anggota-row" style="display:flex;gap:8px;margin-bottom:8px">
+                  <input type="text" class="anggota-input" placeholder="Nama anggota 1" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
+                  <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:180px">
+                    <option value="Ketua Kelompok">Ketua Kelompok - Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</option>
+                    <option value="Wakil Ketua">Wakil Ketua - Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</option>
+                    <option value="Sekretaris">Sekretaris - Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses</option>
+                    <option value="Anggota Aktif">Anggota Aktif - Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal</option>
+                    <option value="Anggota">Anggota - Turut serta dalam diskusi dan mengerjakan tugas kelompok</option>
+                  </select>
+                  <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px">−</button>
+                </div>
+              </div>
               <button type="button" class="btn ghost" onclick="tambahAnggota()" style="margin-top:12px;width:100%">+ Tambah Anggota</button>
             </div>
           </div>
@@ -4353,4 +4376,3 @@ window.addEventListener('beforeunload', function() {
 
 </body>
 </html>
-
