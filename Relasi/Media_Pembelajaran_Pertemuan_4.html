@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -681,19 +681,29 @@ h1, h2 {
 
           <div class="scenario-box" style="max-width:700px;margin:20px auto">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-              <label style="color:var(--accent);font-weight:700;font-size:16px">👤 Anggota Kelompok</label>
+              <label style="color:var(--accent);font-weight:700;font-size:16px">👤 Anggota &amp; Tugas Kelompok</label>
               <button class="btn ghost" id="addAnggotaBtn" style="padding:8px 16px;font-size:14px">+ Tambah Anggota</button>
             </div>
-            
+            <div style="font-size:14px;color:var(--muted);margin-bottom:8px">
+              <b>Pembagian Tugas Kelompok:</b>
+              <ul style="margin:6px 0 8px 18px;padding-left:0">
+                <li><b>Ketua Kelompok:</b> Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</li>
+                <li><b>Wakil Ketua:</b> Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</li>
+                <li><b>Sekretaris:</b> Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses</li>
+                <li><b>Anggota Aktif:</b> Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal</li>
+                <li><b>Anggota:</b> Turut serta dalam diskusi dan mengerjakan tugas kelompok</li>
+              </ul>
+              Pilih peran dan tugas untuk setiap anggota sesuai pembagian di atas.
+            </div>
             <div id="anggotaContainer" style="display:flex;flex-direction:column;gap:10px">
               <div class="anggota-row" style="display:flex;gap:8px">
                 <input type="text" class="anggota-input" placeholder="Nama anggota 1" style="flex:1;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px">
-                <select class="tanggung-jawab-select" style="padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
-                  <option value="Ketua Kelompok">Ketua Kelompok</option>
-                  <option value="Wakil Ketua">Wakil Ketua</option>
-                  <option value="Sekretaris">Sekretaris</option>
-                  <option value="Anggota Aktif">Anggota Aktif</option>
-                  <option value="Anggota">Anggota</option>
+                <select class="tanggung-jawab-select" style="padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;min-width:180px">
+                  <option value="Ketua Kelompok">Ketua Kelompok - Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</option>
+                  <option value="Wakil Ketua">Wakil Ketua - Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</option>
+                  <option value="Sekretaris">Sekretaris - Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses</option>
+                  <option value="Anggota Aktif">Anggota Aktif - Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal</option>
+                  <option value="Anggota">Anggota - Turut serta dalam diskusi dan mengerjakan tugas kelompok</option>
                 </select>
                 <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:50px;padding:8px">✖</button>
               </div>
@@ -2764,4 +2774,3 @@ window.generatePDFReport = async function(){
 
 </body>
 </html>
-
