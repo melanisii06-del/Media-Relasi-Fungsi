@@ -1451,13 +1451,16 @@ h1, h2 {
               <p style="color:var(--muted);font-size:15px;margin:10px 0;line-height:1.6">
                 <strong>Risiko:</strong> Data yang salah bisa fatal untuk kesehatan penerima darah. PMI memerlukan data yang <strong>akurat dan terpercaya</strong> — setiap donor harus memiliki TEPAT SATU golongan darah yang pasti!
               </p>
+              
               <p style="color:var(--accent);font-weight:700;font-size:15px;margin:14px 0;line-height:1.6">
                 ❓ Pertanyaan Pemantik: "Bagaimana cara memastikan setiap siswa memiliki SATU golongan darah yang jelas dan SEMUA siswa tercakup?"
               </p>
             </div>
 
             <p style="color:var(--accent);font-weight:700;margin:16px 0;font-size:20px">Misi Kalian:</p>
-            <p style="color:var(--muted);margin-bottom:10px;font-size:15px;line-height:1.6">Organisir data donor darah 8 siswa agar valid dan terverifikasi, sehingga bisa diserahkan ke PMI dengan percaya diri!</p>
+            <p style="color:var(--muted);margin-bottom:10px;font-size:15px;line-height:1.6">Bantulah para panitia untuk memperbaiki data donor darah 8 siswa yang berantakan agar kembali rapih tanpa ada yang tertukar, Selain merapikan daftar, panitia juga diminta menghitung ada berapa banyak sih variasi daftar golongan darah yang mungkin terbentuk dari 8 siswa ini?
+
+Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa total kemungkinan kombinasi data yang bisa diterima PMI nanti? Coba hitung dan jelaskan</p>
             <p style="color:var(--muted);margin-bottom:8px;font-size:15px;line-height:1.6">Sebelum memulai, silakan duduk bersama kelompok Anda masing-masing — permasalahan ini dikerjakan secara berkelompok! 👥</p>
 
             <!-- Textarea untuk siswa menuliskan solusi -->
@@ -1493,19 +1496,29 @@ h1, h2 {
 
           <div class="card-lite">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-              <label style="color:var(--accent);font-weight:700">Anggota Kelompok</label>
+              <label style="color:var(--accent);font-weight:700">Anggota &amp; Tugas Kelompok</label>
               <button class="btn ghost" id="addAnggotaBtn" style="padding:6px 12px;font-size:14px">+ Tambah Anggota</button>
             </div>
-            
+            <div style="font-size:14px;color:var(--muted);margin-bottom:8px">
+              <b>Pembagian Tugas Kelompok:</b>
+              <ul style="margin:6px 0 8px 18px;padding-left:0">
+                <li><b>Ketua Kelompok:</b> Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</li>
+                <li><b>Wakil Ketua:</b> Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</li>
+                <li><b>Sekretaris:</b> Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses</li>
+                <li><b>Anggota Aktif:</b> Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal</li>
+                <li><b>Anggota:</b> Turut serta dalam diskusi dan mengerjakan tugas kelompok</li>
+              </ul>
+              Pilih peran dan tugas untuk setiap anggota sesuai pembagian di atas.
+            </div>
             <div id="anggotaContainer" class="anggota-container">
               <div class="anggota-row">
                 <input type="text" class="anggota-input" placeholder="Nama anggota 1">
-                <select class="tanggung-jawab-select" style="padding:12px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:'Bagel Fat One',cursive;font-size:16px;min-width:150px">
-                  <option value="Ketua Kelompok">Ketua Kelompok</option>
-                  <option value="Wakil Ketua">Wakil Ketua</option>
-                  <option value="Sekretaris">Sekretaris</option>
-                  <option value="Anggota Aktif">Anggota Aktif</option>
-                  <option value="Anggota">Anggota</option>
+                <select class="tanggung-jawab-select" style="padding:12px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:'Bagel Fat One',cursive;font-size:16px;min-width:180px">
+                  <option value="Ketua Kelompok">Ketua Kelompok - Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</option>
+                  <option value="Wakil Ketua">Wakil Ketua - Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</option>
+                  <option value="Sekretaris">Sekretaris - Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses</option>
+                  <option value="Anggota Aktif">Anggota Aktif - Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal</option>
+                  <option value="Anggota">Anggota - Turut serta dalam diskusi dan mengerjakan tugas kelompok</option>
                 </select>
                 <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px;padding:8px">−</button>
               </div>
@@ -3791,5 +3804,3 @@ if (komentarList) {
 
 </body>
 </html>
-
-
