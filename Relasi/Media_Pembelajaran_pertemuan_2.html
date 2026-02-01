@@ -659,7 +659,7 @@ h1, h2 {
         </div>
 
         <div class="content" style="text-align:center">
-          <img src="../relasii.png" alt="Ilustrasi kantin sekolah" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
+          <img src="../images/relasii.png" alt="Ilustrasi kantin sekolah" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
 
           <div style="background:#fff3d9;border-left:4px solid #ffb84d;border-radius:10px;padding:16px;margin:14px auto;max-width:760px;text-align:left">
             <div style="font-weight:700;color:var(--accent);margin-bottom:10px;font-size:18px">�️ Permasalahan: Ibu Kantin Kebingungan!</div>
@@ -715,64 +715,68 @@ h1, h2 {
     <section class="slide" id="identitas-kelompok">
       <div class="panel">
         <div class="header">
-          <h1>Mengorganisasikan siswa</h1>
-          <h1>Data Kelompok</h1>
+          <h1>👥 Data Kelompok</h1>
           <div class="lead">Isi nama kelompok dan anggota kelompok Anda sebelum memulai.</div>
         </div>
 
-        <div class="content" style="max-width:600px;margin:0 auto">
-          <div style="background:#fff8e6;padding:16px;border-radius:10px;margin-bottom:18px">
-            <p style="margin-top:0;font-weight:bold;color:var(--accent)">Petunjuk:</p>
-            <ul style="margin:8px 0;color:var(--muted)">
-              <li>Isi nama kelompok (contoh: Kelompok A, Regu 1, dll)</li>
-              <li>Masukkan nama setiap anggota (minimal 1, maksimal 5 anggota)</li>
-              <li>Tekan "Lanjut ke Tahap 1" setelah selesai</li>
-            </ul>
+        <div class="content" style="max-width:700px;margin:0 auto">
+          <div class="card-lite" style="background:#fff;padding:16px;border-radius:10px;margin-bottom:20px">
+            <label style="display:block;margin-bottom:8px;font-weight:bold;color:var(--accent);font-size:16px">📝 Nama Kelompok</label>
+            <input type="text" id="namaKelompok" class="input" style="width:100%;padding:10px;border-radius:8px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:15px;box-sizing:border-box" placeholder="Contoh: Kelompok Avengers">
           </div>
 
-          <div class="panel" style="background:#fff;padding:14px;border-radius:10px">
+          <!-- PREVIEW ANGGOTA YANG SUDAH DI-INPUT -->
+          <div class="card-lite" style="background:#f9f5ff;border-left:4px solid #c084fc;padding:16px;border-radius:10px;margin-bottom:20px">
+            <label style="color:var(--accent);font-weight:700;font-size:16px;display:block;margin-bottom:12px">✅ Anggota yang Sudah Terdaftar</label>
+            <div id="previewAnggota" style="display:flex;flex-direction:column;gap:12px;min-height:40px">
+              <div style="color:var(--muted);font-size:14px;text-align:center;padding:20px">
+                📝 Belum ada anggota yang di-input. Isi form di bawah untuk mulai.
+              </div>
+            </div>
+          </div>
 
-            <label style="display:block;margin-bottom:8px;font-weight:bold">Nama Kelompok:</label>
-            <input type="text" id="namaKelompok" class="input" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)" placeholder="Contoh: Kelompok Avengers">
-
-            <div style="height:16px"></div>
-
-            <div style="font-size:14px;color:var(--muted);margin-bottom:8px">
-              <b>Pembagian Tugas Kelompok:</b>
-              <ul style="margin:6px 0 8px 18px;padding-left:0">
-                <li><b>Ketua Kelompok:</b> Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</li>
-                <li><b>Wakil Ketua:</b> Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</li>
-                <li><b>Sekretaris:</b> Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses</li>
-                <li><b>Anggota Aktif:</b> Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal</li>
-                <li><b>Anggota:</b> Turut serta dalam diskusi dan mengerjakan tugas kelompok</li>
-              </ul>
-              Pilih peran dan tugas untuk setiap anggota sesuai pembagian di atas.
+          <!-- FORM INPUT ANGGOTA -->
+          <div class="card-lite" style="background:#fff;padding:16px;border-radius:10px">
+            <label style="color:var(--accent);font-weight:700;font-size:16px;display:block;margin-bottom:12px">👤 Input Anggota &amp; Tugas Kelompok</label>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:16px;padding:10px;background:#fff3cd;border-radius:6px;border-left:3px solid #ffcb64">
+              <b>💡 Petunjuk:</b> Isi nama dan pilih peran untuk setiap anggota, kemudian klik <b>"INPUT"</b>. Tugas lengkap akan terlihat setelah Anda mengklik tombol tersebut.
             </div>
 
-            <label style="display:block;margin-bottom:8px;font-weight:bold">Nama Anggota Kelompok:</label>
-            <div id="anggotaContainer">
-              <div style="display:flex;gap:8px;margin-bottom:8px">
-                <input type="text" class="anggota-input" placeholder="Nama anggota 1" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
-                <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:180px">
-                  <option value="Ketua Kelompok">Ketua Kelompok - Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</option>
-                  <option value="Wakil Ketua">Wakil Ketua - Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</option>
-                  <option value="Sekretaris">Sekretaris - Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses</option>
-                  <option value="Anggota Aktif">Anggota Aktif - Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal</option>
-                  <option value="Anggota">Anggota - Turut serta dalam diskusi dan mengerjakan tugas kelompok</option>
+            <div style="display:flex;gap:8px;margin-bottom:12px">
+              <div style="flex:1">
+                <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px">Nama Anggota</label>
+                <input type="text" id="inputNamaAnggota" placeholder="Ketik nama anggota..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;box-sizing:border-box">
+              </div>
+              <div style="flex:1">
+                <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px">Pilih Peran</label>
+                <select id="selectPenanggungJawab" style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;box-sizing:border-box">
+                  <option value="">-- Pilih peran --</option>
+                  <option value="Ketua Kelompok">Ketua Kelompok</option>
+                  <option value="Wakil Ketua">Wakil Ketua</option>
+                  <option value="Sekretaris">Sekretaris</option>
+                  <option value="Anggota Aktif">Anggota Aktif</option>
+                  <option value="Anggota">Anggota</option>
                 </select>
-                <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px">−</button>
+              </div>
+              <div>
+                <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px">&nbsp;</label>
+                <button class="btn" id="btnInputAnggota" style="padding:10px 20px;font-size:14px;width:100%">INPUT ➜</button>
               </div>
             </div>
 
-            <button class="btn ghost" id="addAnggotaBtn" style="width:100%;margin-bottom:12px">+ Tambah Anggota</button>
-
-            <div style="height:12px"></div>
-
-            <div style="display:flex;gap:8px;justify-content:center">
-              <button class="btn ghost" data-go="start">⟵ Kembali</button>
-                <button class="btn" id="lanjutTahap1Btn" data-go="permasalahan">Lanjut ke Tahap 1 ⟶</button>
+            <!-- Deskripsi peran (muncul ketika dipilih) -->
+            <div id="deskripsiPeran" style="display:none;padding:12px;background:#f0f9ff;border-radius:6px;border-left:4px solid #3b82f6;margin-bottom:12px;font-size:13px;color:#1e40af">
+              <b style="display:block;margin-bottom:6px">📋 Tugas untuk peran ini:</b>
+              <span id="deskripsiTeks"></span>
             </div>
           </div>
+
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:20px">
+            <button class="btn ghost" data-go="permasalahan-foto">⟵ Kembali</button>
+            <button class="btn" id="lanjutTahap1Btn">Lanjut ke Tahap 1 ⟶</button>
+          </div>
+
+          <div id="feedbackKelompok" style="margin-top:12px;color:var(--success);font-weight:700;text-align:center;display:none"></div>
         </div>
 
         <div class="footer" style="margin-top:14px">
@@ -1484,6 +1488,8 @@ function addAnggota() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Clear data anggota saat fresh load
+  localStorage.removeItem('daftarAnggotaTerdaftar');
 
   // =========================================================
   // 1. LOGIKA GLOBAL DAN NAVIGASI
@@ -2347,64 +2353,173 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateProgress();
 
-    // --- LOGIKA INPUT IDENTITAS KELOMPOK ---
-    document.getElementById('addAnggotaBtn')?.addEventListener('click', () => {
-      const container = document.getElementById('anggotaContainer');
-      if(!container) return;
-      const count = container.querySelectorAll('.anggota-input').length;
-      if (count >= 5) {
-        alert('Maksimal 5 anggota per kelompok.');
-        return;
-      }
-      const newRow = document.createElement('div');
-      newRow.style.display = 'flex';
-      newRow.style.gap = '8px';
-      newRow.style.marginBottom = '8px';
-      newRow.innerHTML = `
-        <input type="text" class="anggota-input" placeholder="Nama anggota ${count + 1}" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
-        <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
-          <option value="Ketua Kelompok">Ketua Kelompok</option>
-          <option value="Wakil Ketua">Wakil Ketua</option>
-          <option value="Sekretaris">Sekretaris</option>
-          <option value="Anggota Aktif">Anggota Aktif</option>
-          <option value="Anggota">Anggota</option>
-        </select>
-        <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px">−</button>
-      `;
-      container.appendChild(newRow);
-    });
-
-    window.removeAnggota = function(btn) {
-      const container = document.getElementById('anggotaContainer');
-      if(!container) return;
-      if (container.querySelectorAll('.anggota-input').length <= 1) {
-        alert('Minimal ada 1 anggota.');
-        return;
-      }
-      btn.parentElement.remove();
+    // --- LOGIKA INPUT IDENTITAS KELOMPOK (SISTEM INPUT/PREVIEW) ---
+    
+    // Deskripsi peran lengkap
+    const deskripsiPeranMap = {
+      'Ketua Kelompok': 'Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi, dan membuat keputusan akhir.',
+      'Wakil Ketua': 'Siap membantu ketua, menyiapkan materi, memotivasi anggota lain, dan menggantikan ketua jika diperlukan.',
+      'Sekretaris': 'Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses, dan mengelola berkas kelompok.',
+      'Anggota Aktif': 'Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal, dan memberikan kontribusi nyata.',
+      'Anggota': 'Turut serta dalam diskusi dan mengerjakan tugas kelompok sesuai arahan dari pemimpin.'
     };
 
+    // Load data anggota dari localStorage saat page load
+    function loadDataAnggota() {
+      const saved = localStorage.getItem('daftarAnggotaTerdaftar');
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch (e) {
+          return [];
+        }
+      }
+      return [];
+    }
+
+    // Save data anggota ke localStorage
+    function saveDataAnggota(anggotaList) {
+      localStorage.setItem('daftarAnggotaTerdaftar', JSON.stringify(anggotaList));
+    }
+
+    // Render preview anggota
+    function renderPreviewAnggota() {
+      const anggotaList = loadDataAnggota();
+      const previewContainer = document.getElementById('previewAnggota');
+      
+      if (!previewContainer) return;
+
+      if (anggotaList.length === 0) {
+        previewContainer.innerHTML = `
+          <div style="color:var(--muted);font-size:14px;text-align:center;padding:20px">
+            📝 Belum ada anggota yang di-input. Isi form di bawah untuk mulai.
+          </div>
+        `;
+        return;
+      }
+
+      previewContainer.innerHTML = anggotaList.map((anggota, idx) => `
+        <div style="padding:14px;background:white;border-radius:8px;border-left:4px solid #8b5cf6;display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+          <div style="flex:1">
+            <div style="font-weight:700;color:var(--accent);font-size:15px;margin-bottom:6px">👤 ${anggota.nama}</div>
+            <div style="font-size:13px;color:var(--muted);margin-bottom:4px"><b>📋 Peran:</b> ${anggota.peran}</div>
+            <div style="font-size:13px;color:#059669;line-height:1.5"><b>✅ Tugas:</b> ${deskripsiPeranMap[anggota.peran] || anggota.peran}</div>
+          </div>
+          <button class="btn ghost" onclick="hapusAnggotaTerdaftar(${idx})" style="min-width:50px;padding:8px;color:#ef4444">✖</button>
+        </div>
+      `).join('');
+    }
+
+    // Fungsi hapus anggota dari preview
+    window.hapusAnggotaTerdaftar = function(idx) {
+      const anggotaList = loadDataAnggota();
+      anggotaList.splice(idx, 1);
+      saveDataAnggota(anggotaList);
+      renderPreviewAnggota();
+    };
+
+    // Event listener untuk input nama
+    const inputNamaAnggota = document.getElementById('inputNamaAnggota');
+    inputNamaAnggota?.addEventListener('focus', () => {
+      // Clear preview description on focus to new input
+    });
+
+    // Event listener untuk select peran - tampilkan deskripsi
+    const selectPenanggungJawab = document.getElementById('selectPenanggungJawab');
+    selectPenanggungJawab?.addEventListener('change', () => {
+      const peran = selectPenanggungJawab.value;
+      const deskripsiDiv = document.getElementById('deskripsiPeran');
+      const deskripsiTeks = document.getElementById('deskripsiTeks');
+      
+      if (peran && deskripsiPeranMap[peran]) {
+        deskripsiDiv.style.display = 'block';
+        deskripsiTeks.innerText = deskripsiPeranMap[peran];
+      } else {
+        deskripsiDiv.style.display = 'none';
+      }
+    });
+
+    // Event listener untuk tombol INPUT
+    const btnInputAnggota = document.getElementById('btnInputAnggota');
+    btnInputAnggota?.addEventListener('click', () => {
+      const nama = inputNamaAnggota?.value.trim() || '';
+      const peran = selectPenanggungJawab?.value || '';
+
+      if (!nama) {
+        alert('⚠️ Mohon isi nama anggota terlebih dahulu.');
+        return;
+      }
+
+      if (!peran) {
+        alert('⚠️ Mohon pilih peran/tanggung jawab.');
+        return;
+      }
+
+      // Cek duplikasi nama
+      const anggotaList = loadDataAnggota();
+      if (anggotaList.some(a => a.nama.toLowerCase() === nama.toLowerCase())) {
+        alert('⚠️ Nama anggota sudah terdaftar. Gunakan nama lain.');
+        return;
+      }
+
+      // Cek maksimal 5 anggota
+      if (anggotaList.length >= 5) {
+        alert('⚠️ Maksimal 5 anggota per kelompok.');
+        return;
+      }
+
+      // Tambah anggota ke list
+      anggotaList.push({ nama, peran });
+      saveDataAnggota(anggotaList);
+
+      // Reset form
+      inputNamaAnggota.value = '';
+      selectPenanggungJawab.value = '';
+      document.getElementById('deskripsiPeran').style.display = 'none';
+      inputNamaAnggota.focus();
+
+      // Re-render preview
+      renderPreviewAnggota();
+    });
+
+    // Render preview saat page load
+    renderPreviewAnggota();
+
+    // Simpan kelompok
     document.getElementById('lanjutTahap1Btn')?.addEventListener('click', () => {
       const namaKelompok = document.getElementById('namaKelompok')?.value.trim();
-      const anggotaInputs = document.querySelectorAll('.anggota-input');
-      const anggota = Array.from(anggotaInputs).map(inp => inp.value.trim()).filter(x => x);
+      const anggota = loadDataAnggota();
 
       if (!namaKelompok) {
-        alert('Mohon isi nama kelompok.');
+        alert('⚠️ Mohon isi nama kelompok terlebih dahulu.');
         return;
       }
 
       if (anggota.length === 0) {
-        alert('Mohon isi minimal 1 nama anggota.');
+        alert('⚠️ Mohon isi minimal 1 nama anggota.');
         return;
       }
 
       const kelompokData = { nama: namaKelompok, anggota: anggota };
       localStorage.setItem('kelompokData', JSON.stringify(kelompokData));
 
-      alert(`Kelompok "${namaKelompok}" terdaftar dengan ${anggota.length} anggota. Selamat mengerjakan!`);
-      show('permasalahan'); // navigasi ke Permasalahan
+      // Simpan solusi awal jika ada
+      const solusiAwal = document.getElementById('solusiAwalPertemuan2')?.value.trim();
+      if (solusiAwal) {
+        localStorage.setItem('solusiAwalPertemuan2', solusiAwal);
+      }
+
+      const feedback = document.getElementById('feedbackKelompok');
+      if (feedback) {
+        feedback.textContent = `✓ Kelompok "${namaKelompok}" berhasil disimpan dengan ${anggota.length} anggota!`;
+        feedback.style.display = 'block';
+      }
+
+      alert(`Data kelompok berhasil disimpan!\n\nKelompok: ${namaKelompok}\nJumlah Anggota: ${anggota.length}\n\nSiap melanjutkan ke tahap berikutnya!`);
+      show('permasalahan');
     });
+
+    // --- LEGACY CODE (dihapus karena sudah diganti dengan sistem input/preview) ---
 
     // === Fase 3: Penyelidikan Nilai & Bentuk Fungsi (Tarif Delivery) ===
     const dataTarif = [
