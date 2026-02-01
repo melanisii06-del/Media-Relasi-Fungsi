@@ -441,6 +441,11 @@ h3{
       </div>
       
       <div class="menu-grid">
+        <div class="menu-card" onclick="showBahanAjar()">
+          <div class="menu-card-title">📘 Bahan Ajar</div>
+          <div class="menu-card-desc">Materi lengkap Relasi & Fungsi</div>
+        </div>
+
         <div class="menu-card" onclick="showPertemuan(1)">
           <div class="menu-card-title">📖 Pertemuan 1</div>
           <div class="menu-card-desc">Konsep Dasar Himpunan & Operasi Himpunan</div>
@@ -453,20 +458,24 @@ h3{
         
         <div class="menu-card" onclick="showPertemuan(3)">
           <div class="menu-card-title">📊 Pertemuan 3</div>
-          <div class="menu-card-desc">Fungsi dan penyajiannya</div>
+          <div class="menu-card-desc">Karakteristik Fungsi </div>
         </div>
         
         <div class="menu-card" onclick="showPertemuan(4)">
           <div class="menu-card-title">🧮 Pertemuan 4</div>
-          <div class="menu-card-desc">Nilai Fungsi & Bentuk Fungsi</div>
+          <div class="menu-card-desc">Penyajian dan Bentuk Fungsi</div>
         </div>
         
         <div class="menu-card" onclick="showPertemuan(5)">
           <div class="menu-card-title">🔄 Pertemuan 5</div>
+          <div class="menu-card-desc">Nilai dan Bentuk Fungsi </div>
+        </div>
+        
+        <div class="menu-card" onclick="showPertemuan(6)">
+          <div class="menu-card-title">🎯 Pertemuan 6</div>
           <div class="menu-card-desc">Korespondensi Satu-Satu & banyaknya korespondensi satu-satu</div>
         </div>
       </div>
-      
       <div class="nav">
         <button class="btn ghost" onclick="show('welcome')">← Kembali</button>
       </div>
@@ -475,6 +484,13 @@ h3{
     <!-- CONTAINER UNTUK SETIAP PERTEMUAN -->
     <div class="pertemuan-container" id="pertemuan1">
       <iframe src="himpunan/Media_pertemuan_1.html" 
+              style="width:100%; height:85vh; border:none; border-radius:12px;"
+              loading="lazy">
+      </iframe>
+    </div>
+
+    <div class="pertemuan-container" id="bahanAjar">
+      <iframe src="Bahan_Ajar_Relasi_Fungsi.html" 
               style="width:100%; height:85vh; border:none; border-radius:12px;"
               loading="lazy">
       </iframe>
@@ -508,6 +524,12 @@ h3{
       </iframe>
     </div>
 
+     <div class="pertemuan-container" id="pertemuan6">
+      <iframe src="Relasi/Media_Pembelajaran_Pertemuan_6.html" 
+              style="width:100%; height:85vh; border:none; border-radius:12px;"
+              loading="lazy">
+      </iframe>
+    </div>
   </div>
 </div>
 
@@ -542,6 +564,25 @@ function showPertemuan(num) {
   
   // Show selected pertemuan
   const container = document.getElementById('pertemuan' + num);
+  if (container) {
+    container.classList.add('active');
+  }
+  
+  // Show back to menu button
+  document.getElementById('backToMenuBtn').classList.add('show');
+  
+  window.scrollTo(0, 0);
+}
+
+function showBahanAjar() {
+  // Hide all slides
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  
+  // Hide all pertemuan containers
+  document.querySelectorAll('.pertemuan-container').forEach(p => p.classList.remove('active'));
+  
+  // Show bahan ajar
+  const container = document.getElementById('bahanAjar');
   if (container) {
     container.classList.add('active');
   }
