@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bahan Ajar - Relasi dan Fungsi</title>
+<style>
+@media print {
+  .no-print { display: none !important; }
+  .page-break { page-break-before: always; }
+  body { background: white !important; }
+}
+
+:root {
+  --primary: #3e2723;
+  --accent: #ffcb64;
+  --secondary: #6b4b3a;
+  --light: #fff3d9;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+.container {
+  max-width: 210mm;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+.page {
+  padding: 40px;
+  min-height: 297mm;
+  background: white;
+}
+
+/* Cover Page */
+.cover {
+  text-align: center;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, #ffcb64 0%, #ffc850 100%);
+  color: var(--primary);
+  min-height: 297mm;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.cover h1 {
+  font-size: 48px;
+  margin: 30px 0;
+  font-weight: 700;
+}
+
+.cover .subtitle {
+  font-size: 28px;
+  margin: 20px 0;
+  font-weight: 600;
+}
+
+.cover .info {
+  font-size: 18px;
+  margin: 15px 0;
+}
+
+.cover .logo-placeholder {
+  width: 150px;
+  height: 150px;
+  background: white;
+  border-radius: 50%;
+  margin: 0 auto 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+}
+
+/* Headers */
+h1 {
+  color: var(--primary);
+  font-size: 32px;
+  margin-bottom: 20px;
+  border-bottom: 3px solid var(--accent);
+  padding-bottom: 10px;
+}
+
+h2 {
+  color: var(--primary);
+  font-size: 24px;
+  margin: 30px 0 15px;
+}
+
+h3 {
+  color: var(--secondary);
+  font-size: 20px;
+  margin: 25px 0 12px;
+}
+
+h4 {
+  color: var(--secondary);
+  font-size: 18px;
+  margin: 20px 0 10px;
+}
+
+/* Table of Contents */
+.toc {
+  padding: 20px 0;
+}
+
+.toc-item {
+  padding: 12px 0;
+  border-bottom: 1px dotted #ddd;
+  display: flex;
+  justify-content: space-between;
+}
+
+.toc-item:hover {
+  background: #f9f9f9;
+  padding-left: 10px;
+}
+
+.toc-number {
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 60px;
+}
+
+.toc-title {
+  flex: 1;
+}
+
+.toc-page {
+  color: #999;
+  min-width: 40px;
+  text-align: right;
+}
+
+/* Content Boxes */
+.info-box {
+  background: var(--light);
+  border-left: 4px solid var(--accent);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.tip-box {
+  background: #e3f2fd;
+  border-left: 4px solid #2196f3;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 6px;
+}
+
+.warning-box {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 6px;
+}
+
+.example-box {
+  background: #f1f8e9;
+  border: 2px solid #8bc34a;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+/* Screenshot Container */
+.screenshot {
+  margin: 25px 0;
+  text-align: center;
+}
+
+.screenshot img {
+  max-width: 100%;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.screenshot-caption {
+  margin-top: 10px;
+  font-style: italic;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Lists */
+ul, ol {
+  margin: 15px 0 15px 30px;
+}
+
+li {
+  margin: 8px 0;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+table th {
+  background: var(--primary);
+  color: white;
+  padding: 12px;
+  text-align: left;
+}
+
+table td {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+/* Steps */
+.step {
+  display: flex;
+  margin: 20px 0;
+  align-items: flex-start;
+}
+
+.step-number {
+  background: var(--accent);
+  color: var(--primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+
+.step-content {
+  flex: 1;
+}
+
+/* Practice Questions */
+.question {
+  background: white;
+  border: 2px solid #e0e0e0;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 8px;
+}
+
+.question-number {
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+/* Concept Map */
+.concept-map {
+  background: #fafafa;
+  padding: 30px;
+  border-radius: 12px;
+  margin: 25px 0;
+  text-align: center;
+}
+
+/* Footer */
+.page-footer {
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
+/* Glossary */
+.glossary-term {
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 15px;
+}
+
+.glossary-def {
+  margin-left: 20px;
+  color: #555;
+}
+
+/* Print Button */
+.no-print {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.print-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.print-btn:hover {
+  background: var(--secondary);
+  transform: translateY(-2px);
+}
+
+.section-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+</style>
+</head>
+<body>
+
+<!-- Print Button -->
+<div class="no-print">
+  <button class="print-btn" onclick="window.print()">🖨️ Cetak / Export PDF</button>
+</div>
+
+<div class="container">
+  
+  <!-- HALAMAN SAMPUL -->
+  <div class="page cover">
+    <div class="logo-placeholder">🎓</div>
+    <h1>BAHAN AJAR</h1>
+    <div class="subtitle">RELASI DAN FUNGSI</div>
+    <div class="info">Matematika Kelas VIII SMP/MTs</div>
+    <div class="info" style="margin-top: 60px;">Dilengkapi dengan Media Pembelajaran Digital Interaktif</div>
+    <div style="margin-top: 80px; font-size: 16px;">
+      <p><strong>Disusun oleh:</strong></p>
+      <p style="margin-top: 10px;">Melani Sintawati</p>
+      <p>22510094</p>
+      <p style="margin-top: 30px;">IKIP SILIWANGI</p>
+      <p>2026</p>
+    </div>
+  </div>
+
+  <!-- KATA PENGANTAR -->
+  <div class="page page-break">
+    <h1><span class="section-icon">✍️</span>KATA PENGANTAR</h1>
+    
+    <p style="margin: 20px 0;">Puji syukur kehadirat Tuhan Yang Maha Esa atas segala rahmat dan karunia-Nya sehingga bahan ajar ini dapat diselesaikan dengan baik.</p>
+    
+    <p style="margin: 20px 0;">Bahan ajar ini disusun sebagai panduan pembelajaran materi <strong>Relasi dan Fungsi</strong> untuk siswa kelas VIII SMP/MTs. Materi disajikan secara sistematis dengan pendekatan Problem-Based Learning (PBL) yang dikemas dalam media pembelajaran digital interaktif.</p>
+    
+    <p style="margin: 20px 0;">Bahan ajar ini dilengkapi dengan:</p>
+    <ul>
+      <li>Materi lengkap untuk 6 pertemuan pembelajaran</li>
+      <li>Media pembelajaran digital berbasis web yang interaktif</li>
+      <li>Petunjuk penggunaan media yang detail</li>
+      <li>Soal-soal latihan dan evaluasi</li>
+      <li>Peta konsep untuk memudahkan pemahaman</li>
+    </ul>
+    
+    <p style="margin: 20px 0;">Penyusun menyadari bahwa bahan ajar ini masih jauh dari sempurna. Oleh karena itu, kritik dan saran yang membangun sangat diharapkan untuk perbaikan di masa mendatang.</p>
+    
+    <p style="margin: 20px 0;">Semoga bahan ajar ini dapat bermanfaat bagi siswa dan guru dalam proses pembelajaran matematika, khususnya materi Relasi dan Fungsi.</p>
+    
+    <p style="margin: 40px 0 0 0; text-align: right;">[Kota], Februari 2026</p>
+    <p style="margin: 60px 0 0 0; text-align: right;">Penyusun</p>
+  </div>
+
+  <!-- DAFTAR ISI -->
+  <div class="page page-break">
+    <h1><span class="section-icon">📑</span>DAFTAR ISI</h1>
+    
+    <div class="toc">
+      <div class="toc-item">
+        <span class="toc-number">I.</span>
+        <span class="toc-title">Kata Pengantar</span>
+        <span class="toc-page">i</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">II.</span>
+        <span class="toc-title">Daftar Isi</span>
+        <span class="toc-page">ii</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">III.</span>
+        <span class="toc-title">Petunjuk Penggunaan Media Pembelajaran</span>
+        <span class="toc-page">1</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">IV.</span>
+        <span class="toc-title">Peta Konsep Materi</span>
+        <span class="toc-page">5</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">V.</span>
+        <span class="toc-title">Capaian Pembelajaran dan Tujuan Pembelajaran (Kurikulum Merdeka)</span>
+        <span class="toc-page">7</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">VI.</span>
+        <span class="toc-title">Materi Pembelajaran</span>
+        <span class="toc-page">10</span>
+      </div>
+      <div class="toc-item" style="margin-left: 30px;">
+        <span class="toc-number">6.1</span>
+        <span class="toc-title">Pertemuan 1: Konsep Dasar Himpunan</span>
+        <span class="toc-page">11</span>
+      </div>
+      <div class="toc-item" style="margin-left: 30px;">
+        <span class="toc-number">6.2</span>
+        <span class="toc-title">Pertemuan 2: Pengenalan Relasi</span>
+        <span class="toc-page">16</span>
+      </div>
+      <div class="toc-item" style="margin-left: 30px;">
+        <span class="toc-number">6.3</span>
+        <span class="toc-title">Pertemuan 3: Karakteristik Fungsi</span>
+        <span class="toc-page">21</span>
+      </div>
+      <div class="toc-item" style="margin-left: 30px;">
+        <span class="toc-number">6.4</span>
+        <span class="toc-title">Pertemuan 4: Penyajian dan Bentuk Fungsi</span>
+        <span class="toc-page">26</span>
+      </div>
+      <div class="toc-item" style="margin-left: 30px;">
+        <span class="toc-number">6.5</span>
+        <span class="toc-title">Pertemuan 5: Nilai dan Bentuk Fungsi</span>
+        <span class="toc-page">31</span>
+      </div>
+      <div class="toc-item" style="margin-left: 30px;">
+        <span class="toc-number">6.6</span>
+        <span class="toc-title">Pertemuan 6: Korespondensi Satu-Satu</span>
+        <span class="toc-page">36</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">VII.</span>
+        <span class="toc-title">Tampilan dan Fitur Media Pembelajaran</span>
+        <span class="toc-page">41</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">VIII.</span>
+        <span class="toc-title">Soal Latihan dan Evaluasi</span>
+        <span class="toc-page">50</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">IX.</span>
+        <span class="toc-title">Kunci Jawaban</span>
+        <span class="toc-page">60</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">X.</span>
+        <span class="toc-title">Glosarium</span>
+        <span class="toc-page">65</span>
+      </div>
+      <div class="toc-item">
+        <span class="toc-number">XI.</span>
+        <span class="toc-title">Daftar Pustaka</span>
+        <span class="toc-page">68</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- PETUNJUK PENGGUNAAN MEDIA -->
+  <div class="page page-break">
+    <h1><span class="section-icon">📱</span>PETUNJUK PENGGUNAAN MEDIA PEMBELAJARAN</h1>
+    
+    <div class="info-box">
+      <h3>💡 Tentang Media Pembelajaran Digital</h3>
+      <p>Media pembelajaran ini adalah aplikasi web interaktif berbasis HTML5 yang dapat diakses melalui browser. Media ini dirancang dengan pendekatan Problem-Based Learning (PBL) untuk memfasilitasi pembelajaran aktif dan kolaboratif.</p>
+    </div>
+
+    <h2>A. Cara Mengakses Media</h2>
+    
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h4>Buka File Media</h4>
+        <p>Klik dua kali file <code>Media_Pembelajaran_Lengkap.html</code> atau buka file individual untuk setiap pertemuan di folder <code>Relasi/</code> atau <code>Himpunan/</code></p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h4>Browser yang Disarankan</h4>
+        <p>Gunakan browser modern seperti Google Chrome, Mozilla Firefox, atau Microsoft Edge versi terbaru untuk performa optimal.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h4>Izinkan Penyimpanan Data</h4>
+        <p>Media ini menggunakan localStorage browser untuk menyimpan progres Anda. Pastikan browser tidak dalam mode private/incognito.</p>
+      </div>
+    </div>
+
+    <h2>B. Navigasi dalam Media</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Tombol</th>
+          <th>Fungsi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>← Kembali</td>
+          <td>Kembali ke slide sebelumnya</td>
+        </tr>
+        <tr>
+          <td>Lanjut →</td>
+          <td>Melanjutkan ke slide berikutnya</td>
+        </tr>
+        <tr>
+          <td>Ke Menu Utama</td>
+          <td>Kembali ke menu pemilihan pertemuan</td>
+        </tr>
+        <tr>
+          <td>🖨️ Cetak PDF</td>
+          <td>Export hasil kerja ke format PDF</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>C. Fitur-Fitur Utama</h2>
+
+    <h3>1. Identitas Kelompok</h3>
+    <p>Isi data anggota kelompok Anda di awal pembelajaran. Data akan tersimpan otomatis.</p>
+
+    <h3>2. Area Kerja Interaktif</h3>
+    <ul>
+      <li>Canvas untuk menggambar diagram</li>
+      <li>Input field untuk memasukkan data</li>
+      <li>Validasi otomatis untuk pengecekan jawaban</li>
+    </ul>
+
+    <h3>3. Gallery Walk</h3>
+    <p>Fitur untuk melihat hasil kerja kelompok lain dan memberikan komentar/rating (1-5 bintang).</p>
+
+    <h3>4. Scaffolding/Bantuan</h3>
+    <p>Klik tombol "💡 Butuh Bantuan?" untuk mendapatkan petunjuk bertahap jika mengalami kesulitan.</p>
+
+    <div class="warning-box">
+      <strong>⚠️ Penting!</strong>
+      <ul>
+        <li>Jangan tutup browser sebelum menyimpan progres</li>
+        <li>Gunakan tombol navigasi yang disediakan, jangan tombol back browser</li>
+        <li>Pastikan koneksi internet stabil jika menggunakan fitur Google Form</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PETA KONSEP -->
+  <div class="page page-break">
+    <h1><span class="section-icon">🗺️</span>PETA KONSEP MATERI</h1>
+    
+    <div class="concept-map">
+      <h2 style="color: var(--primary); margin-bottom: 30px;">RELASI DAN FUNGSI</h2>
+      
+      <div style="text-align: left; max-width: 800px; margin: 0 auto;">
+        <h3>📚 Pertemuan 1: Himpunan</h3>
+        <ul>
+          <li>Pengertian himpunan</li>
+          <li>Notasi dan cara menyajikan himpunan</li>
+          <li>Jenis-jenis himpunan</li>
+          <li>Operasi himpunan (irisan, gabungan, selisih, komplemen)</li>
+        </ul>
+
+        <h3 style="margin-top: 25px;">🔗 Pertemuan 2: Relasi</h3>
+        <ul>
+          <li>Pengertian relasi</li>
+          <li>Cara menyatakan relasi (diagram panah, pasangan berurutan, diagram Cartesius, tabel)</li>
+          <li>Domain, kodomain, dan range</li>
+        </ul>
+
+        <h3 style="margin-top: 25px;">📊 Pertemuan 3: Fungsi</h3>
+        <ul>
+          <li>Pengertian fungsi</li>
+          <li>Syarat suatu relasi menjadi fungsi</li>
+          <li>Membedakan fungsi dan bukan fungsi</li>
+        </ul>
+
+        <h3 style="margin-top: 25px;">🧮 Pertemuan 4: Penyajian Fungsi</h3>
+        <ul>
+          <li>Diagram panah</li>
+          <li>Pasangan berurutan</li>
+          <li>Tabel</li>
+          <li>Grafik/diagram Cartesius</li>
+          <li>Rumus fungsi</li>
+        </ul>
+
+        <h3 style="margin-top: 25px;">🔄 Pertemuan 5: Nilai Fungsi</h3>
+        <ul>
+          <li>Menghitung nilai fungsi f(x)</li>
+          <li>Bentuk-bentuk fungsi (linear, kuadrat, dll)</li>
+          <li>Aplikasi fungsi dalam kehidupan nyata</li>
+        </ul>
+
+        <h3 style="margin-top: 25px;">🎯 Pertemuan 6: Korespondensi Satu-Satu</h3>
+        <ul>
+          <li>Pengertian korespondensi satu-satu</li>
+          <li>Syarat korespondensi satu-satu</li>
+          <li>Menghitung banyaknya korespondensi satu-satu</li>
+          <li>Aplikasi dalam masalah nyata</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tip-box" style="margin-top: 30px;">
+      <strong>💡 Alur Pembelajaran:</strong>
+      <p>Materi dirancang secara berurutan dari konsep dasar (himpunan) menuju konsep yang lebih kompleks (korespondensi satu-satu). Setiap pertemuan membangun pemahaman dari pertemuan sebelumnya.</p>
+    </div>
+  </div>
+
+  <!-- CAPAIAN PEMBELAJARAN DAN TUJUAN PEMBELAJARAN (KURIKULUM MERDEKA) -->
+  <div class="page page-break">
+    <h1><span class="section-icon">🎯</span>CAPAIAN PEMBELAJARAN DAN TUJUAN PEMBELAJARAN</h1>
+    
+    <div class="info-box">
+      <h3 style="margin-top: 0;">📌 Kurikulum: Kurikulum Merdeka (KM)</h3>
+      <p>Bahan ajar ini disusun berdasarkan Capaian Pembelajaran (CP) dan Tujuan Pembelajaran (TP) yang ditetapkan dalam Kurikulum Merdeka untuk Fase D (Kelas VIII SMP/MTs).</p>
+    </div>
+
+    <h2>A. Capaian Pembelajaran (CP) - Relasi dan Fungsi</h2>
+    
+    <div class="info-box">
+      <p>Peserta didik dapat menganalisis karakteristik relasi, fungsi, dan korespondensi satu-satu antara dua himpunan, serta menyelesaikan masalah yang berkaitan dengan hal tersebut dengan menggunakan berbagai representasi (diagram panah, himpunan pasangan berurutan, tabel, grafik/diagram Kartesius, dan notasi/rumus fungsi).</p>
+    </div>
+
+    <h2>B. Tujuan Pembelajaran (TP) Per Pertemuan</h2>
+
+    <h3>Pertemuan 1: Konsep Dasar Himpunan</h3>
+    <div class="question" style="border: 1px solid #e0e0e0; padding: 16px; margin: 16px 0; background: #fafafa;">
+      <p>Siswa (A) dapat menganalisis (HOTS - C4) permasalahan kontekstual tentang konsep Himpunan, kemudian menyajikan (B - Keterampilan) secara kreatif (Karakter) dalam bentuk diagram Venn dan tabel, menggunakan Web Media Pembelajaran (ICT) dengan tepat (D), serta menunjukkan sikap disiplin dan tanggung jawab dalam mengerjakan tugas.</p>
+      <p style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"><strong>📱 Akses Media:</strong> <a href="himpunan/Media_pertemuan_1.html" target="_blank" style="color: #ff6b6b; text-decoration: none; font-weight: bold;">Buka Media Pembelajaran Pertemuan 1 →</a></p>
+    </div>
+
+    <h3>Pertemuan 2: Pengenalan Relasi</h3>
+    <div class="question" style="border: 1px solid #e0e0e0; padding: 16px; margin: 16px 0; background: #fafafa;">
+      <p>Siswa (A) dapat menganalisis (HOTS - C4) permasalahan kontekstual tentang relasi, kemudian menyajikan (B - Keterampilan) secara kreatif (Karakter) dalam bentuk diagram panah, himpunan pasangan berurutan, dan grafik, menggunakan Web Media Pembelajaran (ICT) dengan tepat (D), serta menunjukkan sikap disiplin dan tanggung jawab dalam mengerjakan Tugas.</p>
+      <p style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"><strong>📱 Akses Media:</strong> <a href="Relasi/Media_Pembelajaran_pertemuan_2.html" target="_blank" style="color: #ff6b6b; text-decoration: none; font-weight: bold;">Buka Media Pembelajaran Pertemuan 2 →</a></p>
+    </div>
+
+    <h3>Pertemuan 3: Karakteristik Fungsi</h3>
+    <div class="question" style="border: 1px solid #e0e0e0; padding: 16px; margin: 16px 0; background: #fafafa;">
+      <p>Siswa (A) dapat menganalisis (HOTS - C4) permasalahan kontekstual untuk membedakan antara relasi dan fungsi serta menentukan banyak fungsi yang mungkin dari dua himpunan, kemudian menyajikan (B - Keterampilan) secara kreatif (Karakter) hasil konstruksi fungsi tersebut dalam bentuk diagram Kartesius, menggunakan Web Media Pembelajaran (ICT) dengan tepat (D), serta menunjukkan sikap disiplin dan tanggung jawab (Karakter) dalam mengerjakan tugas</p>
+      <p style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"><strong>📱 Akses Media:</strong> <a href="Relasi/Media_Pembelajaran_pertemuan_3.html" target="_blank" style="color: #ff6b6b; text-decoration: none; font-weight: bold;">Buka Media Pembelajaran Pertemuan 3 →</a></p>
+    </div>
+
+    <h3>Pertemuan 4: Penyajian dan Bentuk Fungsi</h3>
+    <div class="question" style="border: 1px solid #e0e0e0; padding: 16px; margin: 16px 0; background: #fafafa;">
+      <p>Siswa (A) dapat menganalisis (HOTS - C4) permasalahan kontekstual untuk diubah ke dalam bentuk fungsi, kemudian menyajikan (B - Keterampilan) secara kreatif (Karakter) hasil konstruksi fungsi tersebut dalam 5 bentuk penyajian (himpunan pasangan berurutan, diagram panah, tabel, notasi/rumus fungsi, dan grafik Kartesius), menggunakan Web Media Pembelajaran (ICT) dengan tepat (D), serta menunjukkan sikap disiplin dan tanggung jawab (Karakter) dalam mengerjakan tugas.</p>
+      <p style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"><strong>📱 Akses Media:</strong> <a href="Relasi/Media_Pembelajaran_Pertemuan_4.html" target="_blank" style="color: #ff6b6b; text-decoration: none; font-weight: bold;">Buka Media Pembelajaran Pertemuan 4 →</a></p>
+    </div>
+
+    <h3>Pertemuan 5: Nilai dan Bentuk Fungsi</h3>
+    <div class="question" style="border: 1px solid #e0e0e0; padding: 16px; margin: 16px 0; background: #fafafa;">
+      <p>Siswa (A) dapat menganalisis (HOTS - C4) berbagai bentuk fungsi (rumus fungsi) dan menentukan nilai fungsi, kemudian menyajikan (B - Keterampilan) secara kreatif (Karakter) fungsi tersebut ke dalam berbagai bentuk penyajian (diagram panah, himpunan pasangan berurutan, tabel, dan grafik) menggunakan Web Media Pembelajaran (ICT) dengan tepat (D), serta menunjukkan sikap disiplin dan tanggung jawab (Karakter) dalam mengerjakan tugas.</p>
+      <p style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"><strong>📱 Akses Media:</strong> <a href="Relasi/Media_Pembelajaran_Pertemuan_5.html" target="_blank" style="color: #ff6b6b; text-decoration: none; font-weight: bold;">Buka Media Pembelajaran Pertemuan 5 →</a></p>
+    </div>
+
+    <h3>Pertemuan 6: Korespondensi Satu-Satu</h3>
+    <div class="question" style="border: 1px solid #e0e0e0; padding: 16px; margin: 16px 0; background: #fafafa;">
+      <p>Siswa (A) dapat menganalisis (HOTS - C4) karakteristik permasalahan kontekstual yang berkaitan dengan korespondensi satu-satu serta menentukan banyaknya korespondensi satu-satu yang mungkin terjadi antara dua himpunan, kemudian menyajikan (B - Keterampilan) hasil konstruksinya secara kreatif (Karakter) dalam bentuk diagram panah dan himpunan pasangan berurutan menggunakan Web Media Pembelajaran (ICT) dengan tepat (D), serta menunjukkan sikap disiplin dan tanggung jawab (Karakter) dalam mengerjakan tugas.</p>
+      <p style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #ddd;"><strong>📱 Akses Media:</strong> <a href="Relasi/Media_Pembelajaran_Pertemuan_6.html" target="_blank" style="color: #ff6b6b; text-decoration: none; font-weight: bold;">Buka Media Pembelajaran Pertemuan 6 →</a></p>
+    </div>
+
+    <h2>C. Komponen Pembelajaran dalam TP</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Komponen</th>
+          <th>Penjelasan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>A (Attitude - Sikap)</strong></td>
+          <td>Siswa menunjukkan sikap disiplin dan tanggung jawab</td>
+        </tr>
+        <tr>
+          <td><strong>B (Behavior - Keterampilan)</strong></td>
+          <td>Siswa dapat menyajikan, mengonstruksi, dan mempresentasikan hasil kerja</td>
+        </tr>
+        <tr>
+          <td><strong>C4 (Cognition - Higher Order Thinking)</strong></td>
+          <td>Siswa dapat menganalisis (C4) permasalahan kontekstual</td>
+        </tr>
+        <tr>
+          <td><strong>Karakter (Character)</strong></td>
+          <td>Siswa berkreativitas dalam penyajian hasil kerja</td>
+        </tr>
+        <tr>
+          <td><strong>D (Digital/ICT)</strong></td>
+          <td>Siswa menggunakan Web Media Pembelajaran dengan tepat</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MATERI PEMBELAJARAN -->
+  <div class="page page-break">
+    <h1><span class="section-icon">📖</span>MATERI PEMBELAJARAN</h1>
+    
+    <h2>PERTEMUAN 1: KONSEP DASAR HIMPUNAN</h2>
+    
+    <h3>A. Pengertian Himpunan</h3>
+    <p>Himpunan adalah kumpulan objek yang terdefinisi dengan jelas. Objek-objek dalam himpunan disebut anggota atau elemen himpunan.</p>
+    
+    <div class="example-box">
+      <h4>💡 Contoh:</h4>
+      <ul>
+        <li>A = {1, 2, 3, 4, 5} adalah himpunan bilangan asli kurang dari 6</li>
+        <li>B = {merah, biru, kuning} adalah himpunan warna primer</li>
+        <li>C = {x | x adalah hari dalam seminggu} adalah himpunan hari</li>
+      </ul>
+    </div>
+
+    <h3>B. Cara Menyatakan Himpunan</h3>
+    
+    <h4>1. Notasi Tabulasi (Pencacahan)</h4>
+    <p>Semua anggota himpunan dituliskan di dalam kurung kurawal, dipisahkan dengan koma.</p>
+    <p><strong>Contoh:</strong> P = {2, 3, 5, 7, 11}</p>
+
+    <h4>2. Notasi Pembentuk Himpunan</h4>
+    <p>Menuliskan syarat keanggotaan suatu himpunan.</p>
+    <p><strong>Contoh:</strong> P = {x | x adalah bilangan prima kurang dari 12}</p>
+
+    <h4>3. Diagram Venn</h4>
+    <p>Himpunan digambarkan sebagai daerah tertutup (biasanya lingkaran atau persegi panjang).</p>
+
+    <h3>C. Jenis-Jenis Himpunan</h3>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Jenis</th>
+          <th>Definisi</th>
+          <th>Contoh</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Himpunan Kosong</td>
+          <td>Himpunan yang tidak memiliki anggota</td>
+          <td>∅ atau { }</td>
+        </tr>
+        <tr>
+          <td>Himpunan Semesta</td>
+          <td>Himpunan yang memuat semua objek yang dibicarakan</td>
+          <td>S = {1,2,3,...,10}</td>
+        </tr>
+        <tr>
+          <td>Himpunan Bagian</td>
+          <td>Himpunan A adalah bagian dari B jika setiap anggota A adalah anggota B</td>
+          <td>A⊂B</td>
+        </tr>
+        <tr>
+          <td>Himpunan Sama</td>
+          <td>Dua himpunan sama jika memiliki anggota yang sama persis</td>
+          <td>A = B</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>D. Operasi Himpunan</h3>
+
+    <h4>1. Irisan (∩)</h4>
+    <p>A ∩ B adalah himpunan yang anggotanya merupakan anggota A dan anggota B.</p>
+    <div class="example-box">
+      <p>A = {1, 2, 3, 4}</p>
+      <p>B = {3, 4, 5, 6}</p>
+      <p><strong>A ∩ B = {3, 4}</strong></p>
+    </div>
+
+    <h4>2. Gabungan (∪)</h4>
+    <p>A ∪ B adalah himpunan yang anggotanya merupakan anggota A atau anggota B atau keduanya.</p>
+    <div class="example-box">
+      <p>A = {1, 2, 3, 4}</p>
+      <p>B = {3, 4, 5, 6}</p>
+      <p><strong>A ∪ B = {1, 2, 3, 4, 5, 6}</strong></p>
+    </div>
+
+    <h4>3. Selisih (−)</h4>
+    <p>A − B adalah himpunan yang anggotanya merupakan anggota A tetapi bukan anggota B.</p>
+
+    <h4>4. Komplemen (A')</h4>
+    <p>A' adalah himpunan yang anggotanya merupakan anggota semesta tetapi bukan anggota A.</p>
+
+    <div class="tip-box">
+      <strong>💡 Tips Belajar:</strong>
+      <p>Gunakan diagram Venn untuk memvisualisasikan operasi himpunan agar lebih mudah dipahami!</p>
+    </div>
+  </div>
+
+  <!-- PERTEMUAN 2 -->
+  <div class="page page-break">
+    <h2>PERTEMUAN 2: PENGENALAN RELASI</h2>
+    
+    <h3>A. Pengertian Relasi</h3>
+    <p>Relasi dari himpunan A ke himpunan B adalah hubungan yang memasangkan anggota-anggota himpunan A dengan anggota-anggota himpunan B.</p>
+
+    <div class="info-box">
+      <p><strong>Himpunan A</strong> disebut <strong>Domain (daerah asal)</strong></p>
+      <p><strong>Himpunan B</strong> disebut <strong>Kodomain (daerah kawan)</strong></p>
+      <p><strong>Himpunan anggota B yang dipasangkan</strong> disebut <strong>Range (daerah hasil)</strong></p>
+    </div>
+
+    <h3>B. Cara Menyatakan Relasi</h3>
+
+    <h4>1. Diagram Panah</h4>
+    <p>Relasi digambarkan dengan panah dari anggota himpunan A ke anggota himpunan B.</p>
+    
+    <div class="example-box">
+      <p><strong>Contoh:</strong> Relasi "faktor dari" dari A = {2, 3, 4} ke B = {6, 8, 12}</p>
+      <p style="font-family: monospace; margin: 15px 0;">
+        2 → 6<br>
+        2 → 8<br>
+        2 → 12<br>
+        3 → 6<br>
+        3 → 12<br>
+        4 → 8<br>
+        4 → 12
+      </p>
+    </div>
+
+    <h4>2. Himpunan Pasangan Berurutan</h4>
+    <p>Relasi dinyatakan sebagai himpunan pasangan terurut (a, b) dengan a ∈ A dan b ∈ B.</p>
+    <p><strong>Contoh:</strong> {(2,6), (2,8), (2,12), (3,6), (3,12), (4,8), (4,12)}</p>
+
+    <h4>3. Diagram Cartesius</h4>
+    <p>Relasi ditampilkan sebagai titik-titik koordinat pada bidang Cartesius.</p>
+
+    <h4>4. Tabel</h4>
+    <p>Relasi disajikan dalam bentuk tabel dengan baris mewakili himpunan A dan kolom mewakili himpunan B.</p>
+
+    <h3>C. Menentukan Domain, Kodomain, dan Range</h3>
+    
+    <div class="example-box">
+      <h4>Contoh Soal:</h4>
+      <p>Diketahui relasi dari A = {1, 2, 3, 4} ke B = {2, 4, 6, 8, 10} dengan aturan "dua kali dari".</p>
+      <p><strong>Penyelesaian:</strong></p>
+      <ul>
+        <li>Domain = {1, 2, 3, 4}</li>
+        <li>Kodomain = {2, 4, 6, 8, 10}</li>
+        <li>Relasi = {(1,2), (2,4), (3,6), (4,8)}</li>
+        <li>Range = {2, 4, 6, 8}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PERTEMUAN 3 -->
+  <div class="page page-break">
+    <h2>PERTEMUAN 3: KARAKTERISTIK FUNGSI</h2>
+    
+    <h3>A. Pengertian Fungsi</h3>
+    <p>Fungsi (pemetaan) dari himpunan A ke himpunan B adalah relasi khusus yang memasangkan setiap anggota himpunan A dengan <strong>tepat satu</strong> anggota himpunan B.</p>
+
+    <div class="info-box">
+      <h4>⚡ Syarat Suatu Relasi Menjadi Fungsi:</h4>
+      <ol>
+        <li>Setiap anggota domain (A) harus dipasangkan</li>
+        <li>Setiap anggota domain dipasangkan dengan <strong>TEPAT SATU</strong> anggota kodomain (B)</li>
+      </ol>
+    </div>
+
+    <h3>B. Membedakan Fungsi dan Bukan Fungsi</h3>
+
+    <div class="example-box">
+      <h4>✅ Contoh FUNGSI:</h4>
+      <p>A = {1, 2, 3} → B = {a, b, c}</p>
+      <p>Relasi: {(1,a), (2,b), (3,c)}</p>
+      <p><strong>Ini fungsi karena:</strong> Setiap anggota A dipasangkan dengan tepat satu anggota B.</p>
+    </div>
+
+    <div class="warning-box">
+      <h4>❌ Contoh BUKAN FUNGSI:</h4>
+      <p><strong>Kasus 1:</strong> Ada anggota A yang dipasangkan dengan lebih dari satu anggota B</p>
+      <p>Relasi: {(1,a), (1,b), (2,c), (3,a)}</p>
+      <p>→ Bukan fungsi karena 1 dipasangkan dengan a dan b</p>
+      
+      <p style="margin-top: 15px;"><strong>Kasus 2:</strong> Ada anggota A yang tidak dipasangkan</p>
+      <p>Relasi: {(1,a), (2,b)}</p>
+      <p>→ Bukan fungsi karena 3 tidak dipasangkan</p>
+    </div>
+
+    <h3>C. Notasi Fungsi</h3>
+    <p>Fungsi dari A ke B ditulis: <strong>f: A → B</strong></p>
+    <p>Dibaca: "f adalah fungsi dari A ke B" atau "f memetakan A ke B"</p>
+    <p>Jika x ∈ A dipetakan ke y ∈ B, ditulis: <strong>f(x) = y</strong></p>
+
+    <div class="tip-box">
+      <strong>💡 Cara Mudah Mengingat:</strong>
+      <p>Bayangkan fungsi seperti mesin vending: Anda tekan satu tombol (input), pasti keluar satu barang tertentu (output). Tidak mungkin satu tombol keluar dua barang berbeda!</p>
+    </div>
+  </div>
+
+  <!-- PERTEMUAN 4 -->
+  <div class="page page-break">
+    <h2>PERTEMUAN 4: PENYAJIAN DAN BENTUK FUNGSI</h2>
+    
+    <h3>A. Cara Menyajikan Fungsi</h3>
+
+    <h4>1. Diagram Panah</h4>
+    <p>Setiap elemen domain dihubungkan dengan tepat satu elemen kodomain menggunakan panah.</p>
+
+    <h4>2. Himpunan Pasangan Berurutan</h4>
+    <p>Fungsi f: A → B dapat dinyatakan sebagai: {(x, y) | y = f(x), x ∈ A}</p>
+
+    <h4>3. Tabel</h4>
+    <table style="max-width: 400px;">
+      <thead>
+        <tr>
+          <th>x</th>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>f(x)</td>
+          <td>2</td>
+          <td>4</td>
+          <td>6</td>
+          <td>8</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4>4. Grafik (Diagram Cartesius)</h4>
+    <p>Fungsi digambarkan sebagai kurva atau garis pada bidang koordinat.</p>
+
+    <h4>5. Rumus Fungsi</h4>
+    <p>Fungsi dinyatakan dalam bentuk persamaan matematika.</p>
+    <p><strong>Contoh:</strong> f(x) = 2x, f(x) = x² + 1, f(x) = 3x - 5</p>
+
+    <h3>B. Bentuk-Bentuk Fungsi</h3>
+
+    <h4>1. Fungsi Linear</h4>
+    <p>Bentuk umum: <strong>f(x) = ax + b</strong></p>
+    <p>dengan a dan b adalah konstanta, a ≠ 0</p>
+    <p>Grafiknya berupa garis lurus.</p>
+
+    <div class="example-box">
+      <p><strong>Contoh:</strong> f(x) = 2x + 3</p>
+      <p>Jika x = 1, maka f(1) = 2(1) + 3 = 5</p>
+      <p>Jika x = 2, maka f(2) = 2(2) + 3 = 7</p>
+    </div>
+
+    <h4>2. Fungsi Konstan</h4>
+    <p>Bentuk umum: <strong>f(x) = c</strong></p>
+    <p>dengan c adalah konstanta</p>
+    <p>Grafiknya berupa garis horizontal.</p>
+
+    <h4>3. Fungsi Kuadrat</h4>
+    <p>Bentuk umum: <strong>f(x) = ax² + bx + c</strong></p>
+    <p>dengan a ≠ 0</p>
+    <p>Grafiknya berupa parabola.</p>
+
+    <div class="tip-box">
+      <strong>💡 Tips Mengubah Bentuk Penyajian:</strong>
+      <ul>
+        <li>Dari diagram panah → Pasangan berurutan: Tulis setiap pasangan panah</li>
+        <li>Dari tabel → Rumus: Cari pola hubungan antara x dan f(x)</li>
+        <li>Dari rumus → Grafik: Buat tabel nilai, lalu plot titik-titiknya</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PERTEMUAN 5 -->
+  <div class="page page-break">
+    <h2>PERTEMUAN 5: NILAI DAN BENTUK FUNGSI</h2>
+    
+    <h3>A. Menghitung Nilai Fungsi</h3>
+    
+    <p>Nilai fungsi f(x) untuk x = a ditulis f(a), artinya nilai y yang bersesuaian dengan x = a pada fungsi f.</p>
+
+    <div class="example-box">
+      <h4>Contoh 1: Fungsi Linear</h4>
+      <p>Diketahui f(x) = 3x - 5. Tentukan nilai f(2) dan f(-1)!</p>
+      <p><strong>Penyelesaian:</strong></p>
+      <p>f(2) = 3(2) - 5 = 6 - 5 = 1</p>
+      <p>f(-1) = 3(-1) - 5 = -3 - 5 = -8</p>
+    </div>
+
+    <div class="example-box">
+      <h4>Contoh 2: Fungsi Kuadrat</h4>
+      <p>Diketahui f(x) = x² - 4x + 3. Tentukan nilai f(0) dan f(3)!</p>
+      <p><strong>Penyelesaian:</strong></p>
+      <p>f(0) = 0² - 4(0) + 3 = 0 - 0 + 3 = 3</p>
+      <p>f(3) = 3² - 4(3) + 3 = 9 - 12 + 3 = 0</p>
+    </div>
+
+    <h3>B. Menentukan Rumus Fungsi</h3>
+
+    <h4>Dari Nilai Fungsi yang Diketahui</h4>
+    <div class="example-box">
+      <p><strong>Soal:</strong> Fungsi f(x) = ax + b. Jika f(1) = 5 dan f(2) = 8, tentukan rumus fungsi f(x)!</p>
+      <p><strong>Penyelesaian:</strong></p>
+      <p>f(1) = 5 → a(1) + b = 5 → a + b = 5 ... (1)</p>
+      <p>f(2) = 8 → a(2) + b = 8 → 2a + b = 8 ... (2)</p>
+      <p>Dari (2) - (1): a = 3</p>
+      <p>Substitusi ke (1): 3 + b = 5 → b = 2</p>
+      <p><strong>Jadi, f(x) = 3x + 2</strong></p>
+    </div>
+
+    <h3>C. Aplikasi Fungsi dalam Kehidupan</h3>
+
+    <div class="example-box">
+      <h4>Contoh: Tarif Parkir</h4>
+      <p>Sebuah tempat parkir menerapkan tarif Rp2.000 untuk jam pertama dan Rp1.000 untuk setiap jam berikutnya.</p>
+      <p><strong>Rumus fungsi:</strong></p>
+      <p>f(x) = 2000 + 1000(x - 1) untuk x ≥ 1</p>
+      <p>f(x) = 1000x + 1000</p>
+      <p>dengan x = lama parkir (jam)</p>
+    </div>
+
+    <div class="example-box">
+      <h4>Contoh: Konversi Suhu</h4>
+      <p>Rumus mengubah Celsius (C) ke Fahrenheit (F):</p>
+      <p>F(C) = (9/5)C + 32</p>
+      <p>Jika suhu 25°C, maka:</p>
+      <p>F(25) = (9/5)(25) + 32 = 45 + 32 = 77°F</p>
+    </div>
+  </div>
+
+  <!-- PERTEMUAN 6 -->
+  <div class="page page-break">
+    <h2>PERTEMUAN 6: KORESPONDENSI SATU-SATU</h2>
+    
+    <h3>A. Pengertian Korespondensi Satu-Satu</h3>
+    
+    <p>Korespondensi satu-satu adalah fungsi khusus dari himpunan A ke himpunan B dimana:</p>
+    <ol>
+      <li>Setiap anggota A dipasangkan dengan tepat satu anggota B (sifat fungsi)</li>
+      <li>Setiap anggota B dipasangkan dengan tepat satu anggota A (sifat onto/surjektif)</li>
+      <li>Tidak ada dua anggota A yang dipasangkan ke anggota B yang sama (sifat satu-satu/injektif)</li>
+    </ol>
+
+    <div class="info-box">
+      <h4>⚡ Syarat Korespondensi Satu-Satu:</h4>
+      <p>Korespondensi satu-satu hanya mungkin terjadi jika <strong>n(A) = n(B)</strong></p>
+      <p>Artinya, banyak anggota himpunan A harus sama dengan banyak anggota himpunan B.</p>
+    </div>
+
+    <h3>B. Menentukan Banyak Korespondensi Satu-Satu</h3>
+
+    <p>Jika n(A) = n(B) = n, maka banyaknya korespondensi satu-satu dari A ke B adalah:</p>
+    
+    <div style="background: #fffacd; padding: 20px; border-radius: 10px; text-align: center; margin: 20px 0; border: 3px solid #ffd700;">
+      <h3 style="margin: 0;">n! = n × (n-1) × (n-2) × ... × 2 × 1</h3>
+    </div>
+
+    <div class="example-box">
+      <h4>Contoh 1:</h4>
+      <p>A = {1, 2, 3} dan B = {a, b, c}</p>
+      <p>n(A) = n(B) = 3</p>
+      <p>Banyak korespondensi satu-satu = 3! = 3 × 2 × 1 = 6</p>
+      <p><strong>Kemungkinan pasangan:</strong></p>
+      <ol>
+        <li>{(1,a), (2,b), (3,c)}</li>
+        <li>{(1,a), (2,c), (3,b)}</li>
+        <li>{(1,b), (2,a), (3,c)}</li>
+        <li>{(1,b), (2,c), (3,a)}</li>
+        <li>{(1,c), (2,a), (3,b)}</li>
+        <li>{(1,c), (2,b), (3,a)}</li>
+      </ol>
+    </div>
+
+    <div class="example-box">
+      <h4>Contoh 2: Soal Kontekstual</h4>
+      <p><strong>Soal:</strong> Dalam turnamen badminton ganda campuran, ada 4 pemain putra dan 4 pemain putri. Setiap pemain putra harus berpasangan dengan tepat satu pemain putri. Berapa banyak cara membentuk pasangan?</p>
+      <p><strong>Penyelesaian:</strong></p>
+      <p>Ini adalah masalah korespondensi satu-satu karena:</p>
+      <ul>
+        <li>Setiap pemain putra berpasangan dengan tepat satu pemain putri</li>
+        <li>Setiap pemain putri berpasangan dengan tepat satu pemain putra</li>
+        <li>n(Putra) = n(Putri) = 4</li>
+      </ul>
+      <p>Banyak cara = 4! = 4 × 3 × 2 × 1 = <strong>24 cara</strong></p>
+    </div>
+
+    <h3>C. Perbedaan dengan Konsep Lain</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Konsep</th>
+          <th>Karakteristik</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Relasi</td>
+          <td>Hubungan bebas antara A dan B</td>
+        </tr>
+        <tr>
+          <td>Fungsi</td>
+          <td>Setiap anggota A dipasangkan dengan tepat satu anggota B</td>
+        </tr>
+        <tr>
+          <td>Korespondensi Satu-Satu</td>
+          <td>Fungsi + setiap anggota B juga dipasangkan dengan tepat satu anggota A (n(A)=n(B))</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SCREENSHOT MEDIA -->
+  <div class="page page-break">
+    <h1><span class="section-icon">📸</span>SCREENSHOT DAN FITUR MEDIA PEMBELAJARAN</h1>
+    
+    <h2>A. Tampilan Menu Utama</h2>
+    
+    <div class="screenshot">
+      <img src="images/awal.png" alt="Menu Pemilihan Pertemuan" style="max-width: 100%; height: auto;">
+      <div class="screenshot-caption">Gambar 1: Menu Pemilihan Pertemuan</div>
+    </div>
+
+    <div class="info-box">
+      <h4>Fitur Menu Utama:</h4>
+      <ul>
+        <li>Pilihan 6 pertemuan pembelajaran</li>
+        <li>Setiap card menampilkan judul dan deskripsi singkat</li>
+        <li>Navigasi responsif dan user-friendly</li>
+      </ul>
+    </div>
+
+    <h2>B. Halaman Identitas Kelompok</h2>
+    
+    <div class="screenshot">
+      <img src="images/tengah.png" alt="Form Identitas Kelompok" style="max-width: 100%; height: auto;">
+      <div class="screenshot-caption">Gambar 2: Form Identitas Kelompok</div>
+    </div>
+
+    <div class="info-box">
+      <h4>Fitur Identitas Kelompok:</h4>
+      <ul>
+        <li>Input nama kelompok</li>
+        <li>Tambah anggota dengan nama dan peran</li>
+        <li>Preview daftar anggota yang terdaftar</li>
+        <li>Deskripsi peran otomatis muncul saat memilih</li>
+        <li>Data tersimpan di localStorage browser</li>
+      </ul>
+    </div>
+
+    <h2>C. Area Kerja Problem-Based Learning</h2>
+    
+    <div class="screenshot">
+      <img src="images/tengah (2).png" alt="Area Kerja PBL - Canvas" style="max-width: 100%; height: auto;">
+      <div class="screenshot-caption">Gambar 3a: Area Kerja Interaktif - Canvas Diagram</div>
+    </div>
+    
+    <div class="screenshot">
+      <img src="images/tengah (3).png" alt="Area Kerja PBL - Input" style="max-width: 100%; height: auto;">
+      <div class="screenshot-caption">Gambar 3b: Area Kerja Interaktif - Input Jawaban</div>
+    </div>
+    
+    <div class="screenshot">
+      <img src="images/tengah (4).png" alt="Area Kerja PBL - Scaffolding" style="max-width: 100%; height: auto;">
+      <div class="screenshot-caption">Gambar 3c: Area Kerja Interaktif - Scaffolding/Bantuan</div>
+    </div>
+
+    <div class="info-box">
+      <h4>Fitur Area Kerja:</h4>
+      <ul>
+        <li>Canvas untuk menggambar diagram panah</li>
+        <li>Input field untuk pasangan berurutan dan tabel</li>
+        <li>Tombol validasi jawaban dengan feedback real-time</li>
+        <li>Scaffolding bertingkat untuk bantuan</li>
+        <li>Tips dan petunjuk kontekstual</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SCREENSHOT LANJUTAN -->
+  <div class="page page-break">
+    <h2>D. Fitur Gallery Walk</h2>
+    
+    <div class="screenshot">
+      <img src="images/galerywalk.png" alt="Gallery Walk" style="max-width: 100%; height: auto;">
+      <div class="screenshot-caption">Gambar 4: Gallery Walk - Tampilan Grid</div>
+    </div>
+
+    <div class="info-box">
+      <h4>Fitur Gallery Walk:</h4>
+      <ul>
+        <li>Grid layout responsif untuk menampilkan hasil kerja</li>
+        <li>Filter berdasarkan bentuk representasi (panah, tabel, grafik)</li>
+        <li>Modal untuk memberikan komentar dan rating (1-5 bintang)</li>
+        <li>Menampilkan nama kelompok dan bentuk pekerjaan</li>
+        <li>Counter jumlah komentar per karya</li>
+        <li>Timestamp untuk setiap komentar</li>
+      </ul>
+    </div>
+
+    <h2>E. Export PDF</h2>
+    
+    <div class="screenshot">
+      <img src="images/pdf.png" alt="Export PDF" style="max-width: 100%; height: auto;">
+      <div class="screenshot-caption">Gambar 5: Contoh Hasil Export PDF</div>
+    </div>
+
+    <div class="info-box">
+      <h4>Fitur Export PDF:</h4>
+      <ul>
+        <li>Menggunakan library jsPDF dan html2canvas</li>
+        <li>Mencakup identitas kelompok, jawaban, dan screenshot kerja</li>
+        <li>Komentar dari gallery walk otomatis ter-include</li>
+        <li>Format rapi dan siap print</li>
+        <li>Nama file otomatis sesuai kelompok dan pertemuan</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SOAL LATIHAN -->
+  <div class="page page-break">
+    <h1><span class="section-icon">📝</span>SOAL LATIHAN DAN EVALUASI</h1>
+    
+    <h2>A. Soal Pilihan Ganda</h2>
+
+    <div class="question">
+      <div class="question-number">1.</div>
+      <p>Diketahui A = {1, 2, 3, 4, 5} dan B = {2, 4, 6, 8}. Himpunan A ∩ B adalah...</p>
+      <p style="margin-left: 20px;">
+        a. {1, 2, 3, 4, 5, 6, 8}<br>
+        b. {2, 4}<br>
+        c. {1, 3, 5}<br>
+        d. {6, 8}
+      </p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">2.</div>
+      <p>Relasi dari A = {1, 2, 3} ke B = {4, 5, 6} yang merupakan fungsi adalah...</p>
+      <p style="margin-left: 20px;">
+        a. {(1,4), (1,5), (2,6)}<br>
+        b. {(1,4), (2,5), (3,6)}<br>
+        c. {(1,4), (2,4), (2,5)}<br>
+        d. {(1,4), (3,6)}
+      </p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">3.</div>
+      <p>Diketahui f(x) = 2x + 3. Nilai f(5) adalah...</p>
+      <p style="margin-left: 20px;">
+        a. 8<br>
+        b. 10<br>
+        c. 13<br>
+        d. 15
+      </p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">4.</div>
+      <p>Banyak korespondensi satu-satu yang mungkin dari himpunan A = {a, b, c} ke B = {1, 2, 3} adalah...</p>
+      <p style="margin-left: 20px;">
+        a. 3<br>
+        b. 6<br>
+        c. 9<br>
+        d. 12
+      </p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">5.</div>
+      <p>Relasi "kurang dari" dari A = {2, 4, 6} ke B = {3, 5, 7} menghasilkan pasangan berurutan...</p>
+      <p style="margin-left: 20px;">
+        a. {(2,3), (2,5), (2,7), (4,5), (4,7), (6,7)}<br>
+        b. {(2,3), (4,5), (6,7)}<br>
+        c. {(3,2), (5,4), (7,6)}<br>
+        d. {(2,2), (4,4), (6,6)}
+      </p>
+    </div>
+
+    <h2>B. Soal Uraian</h2>
+
+    <div class="question">
+      <div class="question-number">1.</div>
+      <p>Diketahui himpunan A = {1, 2, 3, 4, 5, 6, 7, 8, 9} dan B = {bilangan prima kurang dari 10}.</p>
+      <p>a. Tuliskan himpunan B dalam notasi tabulasi!</p>
+      <p>b. Tentukan A ∩ B!</p>
+      <p>c. Tentukan A - B!</p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">2.</div>
+      <p>Perhatikan diagram panah berikut:</p>
+      <p style="margin-left: 20px; font-family: monospace;">
+        A → B<br>
+        1 → a<br>
+        2 → b<br>
+        3 → a<br>
+        4 → c
+      </p>
+      <p>a. Apakah relasi di atas merupakan fungsi? Jelaskan!</p>
+      <p>b. Tentukan domain, kodomain, dan range!</p>
+      <p>c. Tuliskan dalam bentuk himpunan pasangan berurutan!</p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">3.</div>
+      <p>Diketahui fungsi f(x) = 3x - 7.</p>
+      <p>a. Tentukan nilai f(2), f(0), dan f(-1)!</p>
+      <p>b. Jika f(a) = 8, tentukan nilai a!</p>
+      <p>c. Gambarkan grafik fungsi tersebut pada bidang Cartesius!</p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">4.</div>
+      <p>Sebuah toko foto menerapkan tarif cetak foto sebagai berikut:</p>
+      <ul style="margin-left: 40px;">
+        <li>Rp2.000 untuk 10 lembar pertama</li>
+        <li>Rp1.500 untuk setiap lembar berikutnya</li>
+      </ul>
+      <p>a. Buatlah rumus fungsi untuk menghitung biaya cetak x lembar foto (x > 10)!</p>
+      <p>b. Berapa biaya untuk mencetak 25 lembar foto?</p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">5.</div>
+      <p>Dalam sebuah lomba debat, ada 5 orang debater dan 5 posisi peran (opening speaker, rebuttal, dll). Setiap orang akan mengisi tepat satu posisi dan setiap posisi diisi oleh tepat satu orang.</p>
+      <p>a. Apakah situasi ini termasuk korespondensi satu-satu? Jelaskan!</p>
+      <p>b. Berapa banyak susunan posisi yang mungkin terbentuk?</p>
+      <p>c. Jika 2 orang sudah ditentukan posisinya, berapa banyak susunan untuk 3 orang sisanya?</p>
+    </div>
+  </div>
+
+  <!-- KUNCI JAWABAN -->
+  <div class="page page-break">
+    <h1><span class="section-icon">🔑</span>KUNCI JAWABAN</h1>
+    
+    <h2>A. Kunci Jawaban Pilihan Ganda</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Jawaban</th>
+          <th>Pembahasan Singkat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>b</td>
+          <td>Irisan A dan B adalah anggota yang ada di kedua himpunan: {2, 4}</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>b</td>
+          <td>Setiap anggota A dipasangkan dengan tepat satu anggota B</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>c</td>
+          <td>f(5) = 2(5) + 3 = 10 + 3 = 13</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>b</td>
+          <td>3! = 3 × 2 × 1 = 6</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>a</td>
+          <td>Setiap elemen A yang kurang dari elemen B dipasangkan</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>B. Kunci Jawaban Uraian</h2>
+
+    <div class="question">
+      <div class="question-number">1.</div>
+      <p><strong>Jawaban:</strong></p>
+      <p>a. B = {2, 3, 5, 7}</p>
+      <p>b. A ∩ B = {2, 3, 5, 7}</p>
+      <p>c. A - B = {1, 4, 6, 8, 9}</p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">2.</div>
+      <p><strong>Jawaban:</strong></p>
+      <p>a. Ya, merupakan fungsi karena setiap anggota A (1, 2, 3, 4) dipasangkan dengan tepat satu anggota B. Meskipun ada anggota B (yaitu 'a') yang dipasangkan dengan lebih dari satu anggota A, ini tetap fungsi.</p>
+      <p>b. Domain = {1, 2, 3, 4}, Kodomain = {a, b, c}, Range = {a, b, c}</p>
+      <p>c. {(1,a), (2,b), (3,a), (4,c)}</p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">3.</div>
+      <p><strong>Jawaban:</strong></p>
+      <p>a. f(2) = 3(2) - 7 = -1</p>
+      <p style="margin-left: 20px;">f(0) = 3(0) - 7 = -7</p>
+      <p style="margin-left: 20px;">f(-1) = 3(-1) - 7 = -10</p>
+      <p>b. f(a) = 8</p>
+      <p style="margin-left: 20px;">3a - 7 = 8</p>
+      <p style="margin-left: 20px;">3a = 15</p>
+      <p style="margin-left: 20px;">a = 5</p>
+      <p>c. [Gambar grafik garis lurus dengan gradien 3, memotong sumbu y di -7]</p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">4.</div>
+      <p><strong>Jawaban:</strong></p>
+      <p>a. Untuk x > 10:</p>
+      <p style="margin-left: 20px;">f(x) = 10(2000) + (x - 10)(1500)</p>
+      <p style="margin-left: 20px;">f(x) = 20000 + 1500x - 15000</p>
+      <p style="margin-left: 20px;">f(x) = 1500x + 5000</p>
+      <p>b. f(25) = 1500(25) + 5000 = 37500 + 5000 = Rp42.500</p>
+    </div>
+
+    <div class="question">
+      <div class="question-number">5.</div>
+      <p><strong>Jawaban:</strong></p>
+      <p>a. Ya, ini termasuk korespondensi satu-satu karena:</p>
+      <p style="margin-left: 20px;">- Setiap orang mengisi tepat satu posisi</p>
+      <p style="margin-left: 20px;">- Setiap posisi diisi tepat satu orang</p>
+      <p style="margin-left: 20px;">- n(Debater) = n(Posisi) = 5</p>
+      <p>b. Banyak susunan = 5! = 5 × 4 × 3 × 2 × 1 = 120 susunan</p>
+      <p>c. Jika 2 orang sudah ditentukan, sisanya 3 orang: 3! = 3 × 2 × 1 = 6 susunan</p>
+    </div>
+  </div>
+
+  <!-- GLOSARIUM -->
+  <div class="page page-break">
+    <h1><span class="section-icon">📚</span>GLOSARIUM</h1>
+    
+    <div class="glossary-term">Anggota / Elemen</div>
+    <div class="glossary-def">Objek yang tergabung dalam suatu himpunan</div>
+
+    <div class="glossary-term">Domain (Daerah Asal)</div>
+    <div class="glossary-def">Himpunan yang menjadi daerah asal dalam suatu relasi atau fungsi</div>
+
+    <div class="glossary-term">Diagram Cartesius</div>
+    <div class="glossary-def">Sistem koordinat untuk menyajikan relasi atau fungsi dalam bentuk grafik dengan sumbu x dan y</div>
+
+    <div class="glossary-term">Diagram Panah</div>
+    <div class="glossary-def">Cara menyajikan relasi atau fungsi dengan menghubungkan anggota domain dan kodomain menggunakan panah</div>
+
+    <div class="glossary-term">Fungsi</div>
+    <div class="glossary-def">Relasi khusus dimana setiap anggota domain dipasangkan dengan tepat satu anggota kodomain</div>
+
+    <div class="glossary-term">Himpunan</div>
+    <div class="glossary-def">Kumpulan objek yang terdefinisi dengan jelas</div>
+
+    <div class="glossary-term">Himpunan Kosong</div>
+    <div class="glossary-def">Himpunan yang tidak memiliki anggota, dilambangkan dengan ∅ atau { }</div>
+
+    <div class="glossary-term">Irisan</div>
+    <div class="glossary-def">Operasi himpunan yang menghasilkan anggota yang ada di kedua himpunan, dilambangkan ∩</div>
+
+    <div class="glossary-term">Gabungan</div>
+    <div class="glossary-def">Operasi himpunan yang menghasilkan anggota dari salah satu atau kedua himpunan, dilambangkan ∪</div>
+
+    <div class="glossary-term">Kodomain (Daerah Kawan)</div>
+    <div class="glossary-def">Himpunan yang menjadi daerah tujuan dalam suatu relasi atau fungsi</div>
+
+    <div class="glossary-term">Komplemen</div>
+    <div class="glossary-def">Himpunan anggota semesta yang bukan anggota himpunan tertentu</div>
+
+    <div class="glossary-term">Korespondensi Satu-Satu</div>
+    <div class="glossary-def">Fungsi khusus dimana setiap anggota domain berpasangan dengan tepat satu anggota kodomain dan sebaliknya (bijektif)</div>
+
+    <div class="glossary-term">Notasi Pembentuk Himpunan</div>
+    <div class="glossary-def">Cara menyatakan himpunan dengan menuliskan syarat keanggotaan</div>
+
+    <div class="glossary-term">Notasi Tabulasi</div>
+    <div class="glossary-def">Cara menyatakan himpunan dengan mencacah semua anggotanya</div>
+
+    <div class="glossary-term">Pasangan Berurutan</div>
+    <div class="glossary-def">Cara menyatakan relasi atau fungsi dalam bentuk (x, y) dimana x dari domain dan y dari kodomain</div>
+
+    <div class="glossary-term">Range (Daerah Hasil)</div>
+    <div class="glossary-def">Himpunan anggota kodomain yang benar-benar dipasangkan dengan anggota domain</div>
+
+    <div class="glossary-term">Relasi</div>
+    <div class="glossary-def">Hubungan yang memasangkan anggota-anggota dua himpunan</div>
+
+    <div class="glossary-term">Scaffolding</div>
+    <div class="glossary-def">Bantuan bertahap yang diberikan kepada siswa untuk membantu proses pembelajaran</div>
+
+    <div class="glossary-term">Selisih</div>
+    <div class="glossary-def">Operasi himpunan yang menghasilkan anggota himpunan pertama yang bukan anggota himpunan kedua</div>
+  </div>
+
+  <!-- DAFTAR PUSTAKA -->
+  <div class="page page-break">
+    <h1><span class="section-icon">📖</span>DAFTAR PUSTAKA</h1>
+    
+    <div style="line-height: 2;">
+      <p>Abdur Rahman As'ari, dkk. (2017). <em>Matematika SMP/MTs Kelas VIII Semester 1</em>. Jakarta: Kementerian Pendidikan dan Kebudayaan.</p>
+
+      <p>Agus, N. A. (2016). <em>Mudah Belajar Matematika untuk SMP/MTs Kelas VIII</em>. Jakarta: Departemen Pendidikan Nasional.</p>
+
+      <p><strong>Buku Paket (Klik untuk membuka):</strong> <a href="buku%20mtk%20kelas%208%20kurmer%20pemerintah.pdf" target="_blank" rel="noopener">Buku Matematika Kelas 8 Kurikulum Merdeka (Pemerintah)</a></p>
+
+      <p>Kemendikbud. (2018). <em>Buku Guru Matematika SMP/MTs Kelas VIII</em>. Jakarta: Pusat Kurikulum dan Perbukuan.</p>
+
+      <p>Nuharini, D. & Wahyuni, T. (2018). <em>Matematika Konsep dan Aplikasinya untuk SMP/MTs Kelas VIII</em>. Jakarta: Pusat Perbukuan Depdiknas.</p>
+
+      <p>Permendikbud Nomor 37 Tahun 2018 tentang Kompetensi Inti dan Kompetensi Dasar Pelajaran pada Kurikulum 2013.</p>
+
+      <p>Kemendikbud. (2022). <em>Kurikulum Merdeka - Capaian Pembelajaran Fase D</em>. Jakarta: Pusat Kurikulum dan Perbukuan.</p>
+
+      <p>Wintarti, A., dkk. (2019). <em>Contextual Teaching and Learning Matematika: Sekolah Menengah Pertama/Madrasah Tsanawiyah Kelas VIII Edisi 4</em>. Jakarta: Pusat Perbukuan Depdiknas.</p>
+    </div>
+
+    <div class="page-footer" style="margin-top: 100px;">
+      <p>— Akhir Bahan Ajar —</p>
+      <p style="margin-top: 20px;">Media Pembelajaran Digital dapat diakses melalui file HTML yang disertakan</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Tambahkan interaktivitas jika diperlukan
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('Bahan Ajar Relasi dan Fungsi - Siap digunakan');
+  
+  // Smooth scroll untuk daftar isi (jika diperlukan)
+  const tocItems = document.querySelectorAll('.toc-item');
+  tocItems.forEach(item => {
+    item.addEventListener('click', function() {
+      // Implementasi scroll ke section terkait jika diperlukan
+    });
+  });
+});
+</script>
+
+</body>
+</html>
