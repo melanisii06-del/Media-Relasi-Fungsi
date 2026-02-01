@@ -455,7 +455,7 @@ h1, h2 {
         </div>
 
         <div class="content" style="text-align:center">
-          <img src="../permasalahan.png" alt="Foto permasalahan" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
+          <img src="../images/permasalahan.png" alt="Foto permasalahan" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
           <p style="color:var(--muted);margin-bottom:8px">Dapatkah kalian membantu pustakawan untuk memilah buku sesuai dengan kriteria, dan menempatkan buku sesuai dengan raknya masing-masing?</p>
           <p style="color:var(--muted);margin-bottom:8px">Pustakawan membutuhkan bantuan kalian untuk menentukan cara menempatkan buku agar tidak terjadi kesalahan.</p>
           <p style="color:var(--muted);margin-bottom:8px">Kalian diminta untuk menganalisis data buku dan rak yang tersedia serta menentukan aturan penempatannya.</p>
@@ -491,26 +491,10 @@ h1, h2 {
         </div>
 
         <div class="content" style="max-width:600px;margin:0 auto">
-          <div style="background:#fff8e6;padding:16px;border-radius:10px;margin-bottom:18px">
-            <p style="margin-top:0;font-weight:bold;color:var(--accent)">Pembagian Tugas Kelompok:</p>
-            <p style="margin:8px 0;color:var(--muted);font-size:14px;line-height:1.6">Setiap kelompok bertugas membantu pustakawan dengan menyusun cara memilah dan menempatkan buku ke dalam rak berdasarkan data yang diberikan.</p>
-            <ul style="margin:8px 0;color:var(--muted);font-size:13px;line-height:1.6">
-              <li><strong>Ketua Kelompok:</strong> Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi</li>
-              <li><strong>Wakil Ketua:</strong> Siap membantu ketua, menyiapkan materi, memotivasi anggota lain</li>
-              <li><strong>Sekretaris:</strong> Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses pemilahan buku</li>
-              <li><strong>Anggota Aktif:</strong> Aktif memberikan ide, melakukan drag-drop buku ke diagram, mengerjakan soal</li>
-              <li><strong>Anggota:</strong> Turut serta dalam diskusi dan mengerjakan tugas kelompok</li>
-            </ul>
-          </div>
-
-          <div style="background:#fff8e6;padding:16px;border-radius:10px;margin-bottom:18px">
-            <p style="margin-top:0;font-weight:bold;color:var(--accent)">Petunjuk:</p>
-            <ul style="margin:8px 0;color:var(--muted)">
-              <li>Isi nama kelompok (contoh: Kelompok A, Regu 1, dll)</li>
-              <li>Masukkan nama setiap anggota (minimal 1, maksimal 5 anggota)</li>
-              <li>Pilih tanggung jawab untuk setiap anggota sesuai peran mereka</li>
-              <li>Tekan "Lanjut ke Tahap 1" setelah selesai</li>
-            </ul>
+          <!-- PREVIEW AREA (Daftar Anggota Terdaftar) -->
+          <div id="previewAnggota" style="background:#f5f5f5;border-radius:10px;padding:16px;margin-bottom:20px;display:none">
+            <h3 style="margin-top:0;color:var(--accent)">📋 Anggota yang Terdaftar</h3>
+            <div id="listAnggotaTerdaftar" style="display:grid;gap:8px"></div>
           </div>
 
           <div class="panel" style="background:#fff;padding:14px;border-radius:10px">
@@ -519,28 +503,65 @@ h1, h2 {
 
             <div style="height:16px"></div>
 
-            <label style="display:block;margin-bottom:8px;font-weight:bold">Nama Anggota Kelompok:</label>
-            <div id="anggotaContainer">
-              <div style="display:flex;gap:8px;margin-bottom:8px">
-                <input type="text" class="anggota-input" placeholder="Nama anggota 1" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
-                <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
+            <!-- PEMBAGIAN TUGAS KELOMPOK (Penjelasan) -->
+            <div style="background:#fff3e0;border-left:4px solid #ff9800;padding:12px;border-radius:8px;margin-bottom:16px">
+              <h3 style="color:#2a2420;margin-top:0;font-size:14px">📌 Pembagian Tugas Kelompok</h3>
+              <div style="font-size:13px;color:#2a2420">
+                <div style="margin-bottom:8px;padding:8px;background:#fff;border-radius:6px;border-left:3px solid #ff9800">
+                  <strong style="color:#ff9800">👨 Ketua Kelompok:</strong><br>
+                  Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi
+                </div>
+                <div style="margin-bottom:8px;padding:8px;background:#fff;border-radius:6px;border-left:3px solid #ff9800">
+                  <strong style="color:#ff9800">👔 Wakil Ketua:</strong><br>
+                  Siap membantu ketua, menyiapkan materi, memotivasi anggota lain
+                </div>
+                <div style="margin-bottom:8px;padding:8px;background:#fff;border-radius:6px;border-left:3px solid #ff9800">
+                  <strong style="color:#ff9800">📋 Sekretaris:</strong><br>
+                  Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses
+                </div>
+                <div style="margin-bottom:8px;padding:8px;background:#fff;border-radius:6px;border-left:3px solid #ff9800">
+                  <strong style="color:#ff9800">💡 Anggota Aktif:</strong><br>
+                  Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal
+                </div>
+                <div style="padding:8px;background:#fff;border-radius:6px;border-left:3px solid #ff9800">
+                  <strong style="color:#ff9800">👥 Anggota:</strong><br>
+                  Turut serta dalam diskusi dan mengerjakan tugas kelompok
+                </div>
+              </div>
+            </div>
+
+            <label style="display:block;margin-bottom:8px;font-weight:bold">Tambah Anggota Kelompok:</label>
+            
+            <!-- FORM INPUT -->
+            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:8px;margin-bottom:12px">
+              <div>
+                <input type="text" id="inputNamaAnggota" placeholder="Nama anggota" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
+              </div>
+              <div>
+                <select id="selectPenanggungJawab" style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px">
+                  <option value="">-- Pilih Peran --</option>
                   <option value="Ketua Kelompok">Ketua Kelompok</option>
                   <option value="Wakil Ketua">Wakil Ketua</option>
                   <option value="Sekretaris">Sekretaris</option>
                   <option value="Anggota Aktif">Anggota Aktif</option>
                   <option value="Anggota">Anggota</option>
                 </select>
-                <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px">−</button>
+              </div>
+              <div>
+                <button id="btnInputAnggota" class="btn" style="padding:10px 16px;white-space:nowrap">INPUT ➜</button>
               </div>
             </div>
 
-            <button class="btn ghost" id="addAnggotaBtn" style="width:100%;margin-bottom:12px">+ Tambah Anggota</button>
-
-            <div style="height:12px"></div>
+            <!-- DESKRIPSI PERAN (Conditional) -->
+            <div id="deskripsiPeran" style="margin-bottom:12px;padding:12px;background:#fff3e0;border-radius:8px;border-left:4px solid #ff9800;display:none">
+              <p style="margin:0;color:#2a2420;font-size:13px">
+                <strong>Deskripsi Peran:</strong> <span id="deskripsiTeks"></span>
+              </p>
+            </div>
 
             <div style="display:flex;gap:8px;justify-content:center">
               <button class="btn ghost" data-go="permasalahan-gambar">⟵ Kembali</button>
-              <button class="btn" id="lanjutTahap1Btn">Lanjut ke Tahap 1 ⟶</button>
+              <button class="btn" id="lanjutTahap1Btn" data-go="permasalahan">Lanjut ke Tahap 1 ⟶</button>
             </div>
           </div>
         </div>
@@ -556,7 +577,7 @@ h1, h2 {
   <div class="panel" role="application" aria-label="Tahap 1 Interaktif">
     <div class="header">
       <h1>🔍 Membimbing Penyelidikan</h1>
-      <div class="lead">Misi: Tentukan kriteria yang termasuk HIMPUNAN dan yang BUKAN</div>
+      <div class="lead">Misi: Menganalisis kriteria yang termasuk HIMPUNAN dan yang BUKAN</div>
     </div>
 
     <div class="content">
@@ -564,7 +585,7 @@ h1, h2 {
       <div class="panel mission" id="missionCard" style="background:#fff8e6;border:2px solid #ffd199;margin-bottom:16px">
         <div class="row-between">
           <div>
-            <div style="font-size:16px;font-weight:bold;color:var(--accent)">📌 Misi: Tentukan Kriteria HIMPUNAN</div>
+            <div style="font-size:16px;font-weight:bold;color:var(--accent)">📌 Misi: Menganalisis Kriteria HIMPUNAN</div>
             <div class="tiny" style="color:#666">Tarik setiap kartu kriteria ke kotak yang sesuai berdasarkan pemahamanmu.</div>
           </div>
           <div>
@@ -1387,6 +1408,102 @@ document.addEventListener('DOMContentLoaded', () => {
   const hiddenKardInfo = document.getElementById('hiddenKardinalitasInfo');
   if (hiddenKardInfo) hiddenKardInfo.style.display = 'none';
 
+  // FRESH LOAD: Clear identitas kelompok data
+  localStorage.removeItem('daftarAnggotaTerdaftar');
+
+  // ========== IDENTITAS KELOMPOK SYSTEM (Input/Preview) ==========
+  const deskripsiPeranMap = {
+    'Ketua Kelompok': 'Memimpin diskusi, mengatur waktu, memastikan semua anggota ikut berkontribusi',
+    'Wakil Ketua': 'Siap membantu ketua, menyiapkan materi, memotivasi anggota lain',
+    'Sekretaris': 'Mencatat hasil diskusi, menulis kesimpulan, mendokumentasikan proses',
+    'Anggota Aktif': 'Aktif memberikan ide, melakukan tugas teknis, mengerjakan soal',
+    'Anggota': 'Turut serta dalam diskusi dan mengerjakan tugas kelompok'
+  };
+
+  window.loadDataAnggota = function() {
+    const savedData = localStorage.getItem('daftarAnggotaTerdaftar');
+    return savedData ? JSON.parse(savedData) : [];
+  };
+
+  window.saveDataAnggota = function(anggotaList) {
+    localStorage.setItem('daftarAnggotaTerdaftar', JSON.stringify(anggotaList));
+    renderPreviewAnggota();
+  };
+
+  window.renderPreviewAnggota = function() {
+    const anggotaList = loadDataAnggota();
+    const preview = document.getElementById('previewAnggota');
+    const listContainer = document.getElementById('listAnggotaTerdaftar');
+
+    if (anggotaList.length === 0) {
+      preview.style.display = 'none';
+      return;
+    }
+
+    preview.style.display = 'block';
+    listContainer.innerHTML = anggotaList.map(function(item, idx) {
+      return '<div style="background:#fff;padding:10px;border-radius:6px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid var(--accent)"><div><strong>' + item.nama + '</strong> <span style="color:#666;font-size:13px">(' + item.peran + ')</span></div><button style="background:#ff4444;color:#fff;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-weight:700" onclick="hapusAnggotaTerdaftar(' + idx + ')">Hapus</button></div>';
+    }).join('');
+  };
+
+  window.hapusAnggotaTerdaftar = function(idx) {
+    const anggotaList = loadDataAnggota();
+    anggotaList.splice(idx, 1);
+    saveDataAnggota(anggotaList);
+  };
+
+  // Event listener untuk peran selection
+  const selectPenanggungJawab = document.getElementById('selectPenanggungJawab');
+  if (selectPenanggungJawab) {
+    selectPenanggungJawab.addEventListener('change', function() {
+      const deskripsiPeran = document.getElementById('deskripsiPeran');
+      const deskripsiTeks = document.getElementById('deskripsiTeks');
+      const peran = this.value;
+      
+      if (peran && deskripsiPeranMap[peran]) {
+        deskripsiTeks.textContent = deskripsiPeranMap[peran];
+        deskripsiPeran.style.display = 'block';
+      } else {
+        deskripsiPeran.style.display = 'none';
+      }
+    });
+  }
+  
+  // Event listener untuk tombol INPUT ANGGOTA
+  const btnInputAnggota = document.getElementById('btnInputAnggota');
+  if (btnInputAnggota) {
+    btnInputAnggota.addEventListener('click', function() {
+      const inputNama = document.getElementById('inputNamaAnggota');
+      const selectPeran = document.getElementById('selectPenanggungJawab');
+      
+      if (!inputNama || !selectPeran) return;
+      
+      const nama = inputNama.value.trim();
+      const peran = selectPeran.value;
+      
+      if (!nama) {
+        alert('⚠️ Masukkan nama anggota!');
+        return;
+      }
+      
+      if (!peran) {
+        alert('⚠️ Pilih peran anggota!');
+        return;
+      }
+      
+      // Add to list
+      const anggotaList = loadDataAnggota();
+      anggotaList.push({nama: nama, peran: peran});
+      saveDataAnggota(anggotaList);
+      
+      // Clear inputs
+      inputNama.value = '';
+      selectPeran.value = '';
+      document.getElementById('deskripsiPeran').style.display = 'none';
+      inputNama.focus();
+    });
+  }
+
 window.safeOn = function(selOrId, ev, fn){
   const el = typeof selOrId === 'string'
     ? (document.getElementById(selOrId) || document.querySelector(selOrId))
@@ -1404,52 +1521,9 @@ window.safeOn = function(selOrId, ev, fn){
      */
     // ...existing code...
   // --- LOGIKA INPUT IDENTITAS KELOMPOK ---
-  document.getElementById('addAnggotaBtn').addEventListener('click', () => {
-    const container = document.getElementById('anggotaContainer');
-    const count = container.querySelectorAll('.anggota-input').length;
-    
-    if (count >= 5) {
-      alert('Maksimal 5 anggota per kelompok.');
-      return;
-    }
-    
-    const newRow = document.createElement('div');
-    newRow.style.display = 'flex';
-    newRow.style.gap = '8px';
-    newRow.style.marginBottom = '8px';
-    newRow.innerHTML = `
-      <input type="text" class="anggota-input" placeholder="Nama anggota ${count + 1}" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
-      <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
-        <option value="Ketua Kelompok">Ketua Kelompok</option>
-        <option value="Wakil Ketua">Wakil Ketua</option>
-        <option value="Sekretaris">Sekretaris</option>
-        <option value="Anggota Aktif">Anggota Aktif</option>
-        <option value="Anggota">Anggota</option>
-      </select>
-      <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px">−</button>
-    `;
-    container.appendChild(newRow);
-  });
-
-  window.removeAnggota = function(btn) {
-    const container = document.getElementById('anggotaContainer');
-    if (container.querySelectorAll('.anggota-input').length <= 1) {
-      alert('Minimal ada 1 anggota.');
-      return;
-    }
-    btn.parentElement.remove();
-  };
-
   document.getElementById('lanjutTahap1Btn').addEventListener('click', () => {
     const namaKelompok = document.getElementById('namaKelompok').value.trim();
-    const anggotaRows = document.querySelectorAll('#anggotaContainer > div');
-    const anggota = Array.from(anggotaRows).map(row => {
-      const namaInput = row.querySelector('.anggota-input');
-      const tanggungJawabSelect = row.querySelector('.tanggung-jawab-select');
-      const nama = namaInput?.value.trim();
-      const tanggungJawab = tanggungJawabSelect?.value || 'Anggota';
-      return nama ? { nama, tanggungJawab } : null;
-    }).filter(x => x);
+    const anggota = loadDataAnggota();
 
     if (!namaKelompok) {
       alert('Mohon isi nama kelompok.');
@@ -2680,111 +2754,169 @@ document.querySelector('[data-go="tahap5"]')?.addEventListener('click', () => {
 const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 if (downloadPdfBtn) {
   downloadPdfBtn.addEventListener('click', () => {
-    const { jsPDF } = window.jspdf;
-    
-    if (!jsPDF) {
-      alert('⚠️ Library PDF tidak siap. Tunggu sebentar dan coba lagi.');
-      console.error('jsPDF library not available');
+    if(typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined'){
+      alert('Fitur PDF belum tersedia. Coba muat ulang halaman.');
       return;
     }
 
-    // Ambil data dari localStorage
-    const namaKelompok = document.getElementById('namaKelompok')?.value || 'Kelompok';
-    const progressData = JSON.parse(localStorage.getItem('progressData') || '{}');
+    const kelompokData = localStorage.getItem('kelompokData');
+    const solusiAwal = localStorage.getItem('solusiAwalPertemuan1');
+    const progressTahap2 = localStorage.getItem('progressTahap2');
+    const kesimpulanHimpunan = localStorage.getItem('kesimpulanHimpunan');
+    const penyajianHimpunan1 = localStorage.getItem('penyajianHimpunan1');
+    const saranHimpunan1 = localStorage.getItem('saranHimpunan1');
+
+    const { jsPDF } = jspdf;
+    const doc = new jsPDF();
     
-    // Buat dokumen PDF
-    const doc = new jsPDF('p', 'mm', 'a4');
     let yPos = 20;
-    const lineHeight = 7;
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 15;
-    
-    // Fungsi untuk menambah halaman baru jika perlu
-    const checkNewPage = (height) => {
-      if (yPos + height > pageHeight - 15) {
+    const pageHeight = doc.internal.pageSize.height;
+    const margin = 20;
+    const maxWidth = 170;
+
+    function checkPageBreak(needed = 20){
+      if(yPos + needed > pageHeight - margin){
         doc.addPage();
         yPos = margin;
+        return true;
       }
-    };
-    
-    // Title
-    doc.setFontSize(16);
-    doc.setTextColor(62, 39, 35); // warna accent
-    doc.text('LAPORAN HASIL PEMBELAJARAN', margin, yPos);
-    yPos += 12;
-    
-    doc.setFontSize(12);
-    doc.text('Pembelajaran Himpunan & Relasi', margin, yPos);
-    yPos += 15;
-    
-    // Data Kelompok
-    doc.setFontSize(11);
-    doc.setTextColor(62, 39, 35);
-    doc.text('DATA KELOMPOK', margin, yPos);
-    yPos += 8;
-    
-    doc.setFontSize(10);
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Nama Kelompok: ${namaKelompok}`, margin + 5, yPos);
-    yPos += 6;
-    
-    const anggota = progressData.anggota ? progressData.anggota.join(', ') : '-';
-    doc.text(`Anggota: ${anggota}`, margin + 5, yPos);
-    yPos += 6;
-    
-    const tanggal = progressData.tahap4?.timestamp || new Date().toLocaleString('id-ID');
-    doc.text(`Tanggal: ${tanggal}`, margin + 5, yPos);
-    yPos += 12;
-    
-    // Progress Pembelajaran
-    doc.setFontSize(11);
-    doc.setTextColor(62, 39, 35);
-    doc.text('PROGRESS PEMBELAJARAN', margin, yPos);
-    yPos += 8;
-    
-    doc.setFontSize(9);
-    doc.setTextColor(0, 0, 0);
-    const stages = [
-      { name: 'Tahap 1: Orientasi Masalah', key: 'tahap1' },
-      { name: 'Tahap 2: Representasi Himpunan', key: 'tahap2' },
-      { name: 'Tahap 3: Relasi Himpunan', key: 'tahap3' },
-      { name: 'Tahap 4: Analisis Kardinalitas', key: 'tahap4' },
-      { name: 'Tahap 5: Refleksi & Evaluasi', key: 'tahap5' }
-    ];
-    
-    stages.forEach(stage => {
-      const status = progressData[stage.key]?.status === 'selesai' ? '✓' : '⏳';
-      doc.text(`${status} ${stage.name}`, margin + 5, yPos);
-      yPos += 6;
-    });
-    
-    yPos += 6;
-    
-    // Hasil Tahap 4
-    checkNewPage(20);
-    doc.setFontSize(11);
-    doc.setTextColor(62, 39, 35);
-    doc.text('HASIL ANALISIS KARDINALITAS (TAHAP 4)', margin, yPos);
-    yPos += 8;
-    
-    doc.setFontSize(9);
-    doc.setTextColor(0, 0, 0);
-    const hasilTahap4 = progressData.tahap4?.hasilPemilahan || 'Data tidak tersedia';
-    const lines = doc.splitTextToSize(hasilTahap4, 170);
-    doc.text(lines, margin + 5, yPos);
-    yPos += lines.length * 5 + 5;
-    
+      return false;
+    }
+
+    function addTitle(text, size = 16){
+      checkPageBreak(size + 5);
+      doc.setFontSize(size);
+      doc.setFont(undefined, 'bold');
+      doc.text(text, margin, yPos);
+      yPos += size + 5;
+    }
+
+    function addText(text, size = 11){
+      if(!text || text.trim() === '') return;
+      checkPageBreak(size + 3);
+      doc.setFontSize(size);
+      doc.setFont(undefined, 'normal');
+      const lines = doc.splitTextToSize(text, maxWidth);
+      doc.text(lines, margin, yPos);
+      yPos += (lines.length * (size/2)) + 5;
+    }
+
+    // Cover
+    doc.setFontSize(24);
+    doc.setFont(undefined, 'bold');
+    doc.text('HASIL PEMBELAJARAN', doc.internal.pageSize.width/2, 100, {align: 'center'});
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'normal');
+    doc.text('Pertemuan 1: Himpunan', doc.internal.pageSize.width/2, 120, {align: 'center'});
+    doc.addPage();
+    yPos = margin;
+
+    // Section 1: Identitas Kelompok
+    addTitle('1. IDENTITAS KELOMPOK', 14);
+    if(kelompokData){
+      try{
+        const kelompok = JSON.parse(kelompokData);
+        addText(`Nama Kelompok: ${kelompok.namaKelompok || '-'}`);
+        addText(`Nama Anggota:`);
+        (kelompok.anggota || []).forEach((item, i) => {
+          let namaText = '';
+          if(typeof item === 'string'){
+            namaText = item;
+          }else if(item.nama){
+            namaText = item.nama;
+          }
+          addText(`  ${i+1}. ${namaText}`);
+        });
+      }catch(e){
+        addText('Data identitas tidak valid');
+      }
+    }else{
+      addText('Belum mengisi identitas kelompok');
+    }
+    yPos += 10;
+
+    // Section 2: Solusi Awal
+    addTitle('2. SOLUSI AWAL', 14);
+    if(solusiAwal){
+      addText(`Solusi Kelompok: ${solusiAwal}`);
+    }else{
+      addText('Belum mengisi solusi awal');
+    }
+    yPos += 10;
+
+    // Section 3: Representasi Himpunan (Tahap 2)
+    addTitle('3. REPRESENTASI HIMPUNAN', 14);
+    if(progressTahap2){
+      try{
+        const tahap2 = JSON.parse(progressTahap2);
+        addText(`Himpunan A: ${tahap2.himpunanA || '-'}`);
+        addText(`Himpunan B: ${tahap2.himpunanB || '-'}`);
+        addText(`Relasi: ${tahap2.relasi || '-'}`);
+      }catch(e){
+        addText('Data representasi tidak valid');
+      }
+    }else{
+      addText('Belum mengisi representasi himpunan');
+    }
+    yPos += 10;
+
+    // Section 4: Penyajian Himpunan
+    addTitle('4. PENYAJIAN HIMPUNAN', 14);
+    if(penyajianHimpunan1){
+      try{
+        const penyajian = JSON.parse(penyajianHimpunan1);
+        addText(`Bentuk Penyajian: ${penyajian.bentuk || '-'}`);
+        if(penyajian.hasil){
+          addText(`Hasil: ${penyajian.hasil}`);
+        }
+      }catch(e){
+        addText('Data penyajian tidak valid');
+      }
+    }else{
+      addText('Belum mengisi penyajian himpunan');
+    }
+    yPos += 10;
+
+    // Section 5: Kesimpulan
+    addTitle('5. KESIMPULAN', 14);
+    if(kesimpulanHimpunan){
+      addText(`Kesimpulan: ${kesimpulanHimpunan}`);
+    }else{
+      addText('Belum mengisi kesimpulan');
+    }
+    yPos += 10;
+
+    // Section 6: Saran & Masukan
+    addTitle('6. SARAN & MASUKAN', 14);
+    if(saranHimpunan1){
+      try{
+        const saran = JSON.parse(saranHimpunan1);
+        if(Array.isArray(saran) && saran.length > 0){
+          saran.forEach((s, i) => {
+            addText(`Saran ${i+1}: ${s.saran || s}`);
+          });
+        }else{
+          addText('Belum ada saran');
+        }
+      }catch(e){
+        addText('Data saran tidak valid');
+      }
+    }else{
+      addText('Belum ada saran');
+    }
+    yPos += 10;
+
     // Footer
-    checkNewPage(15);
-    doc.setFontSize(8);
-    doc.setTextColor(150, 150, 150);
-    doc.text(`Laporan dibuat: ${new Date().toLocaleString('id-ID')}`, margin, pageHeight - 10);
-    
-    // Simpan PDF
-    const filename = `Hasil_Pembelajaran_${namaKelompok.replace(/\s/g, '_')}_${Date.now()}.pdf`;
-    doc.save(filename);
-    
-    console.log('✅ PDF berhasil diunduh:', filename);
+    checkPageBreak(15);
+    doc.setFontSize(9);
+    doc.setFont(undefined, 'italic');
+    doc.text(`Diunduh pada: ${new Date().toLocaleString('id-ID')}`, margin, yPos);
+
+    // Save PDF
+    const namaKelompok = kelompokData ? JSON.parse(kelompokData).namaKelompok : 'Kelompok';
+    doc.save(`Hasil_Pertemuan1_${namaKelompok.replace(/\s+/g, '_')}_${Date.now()}.pdf`);
+
+    console.log('✅ PDF berhasil diunduh');
     alert('✅ PDF hasil pembelajaran berhasil diunduh!');
   });
 }
