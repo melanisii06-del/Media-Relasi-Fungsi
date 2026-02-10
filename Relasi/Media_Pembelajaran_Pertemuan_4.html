@@ -591,6 +591,11 @@ label:has(input[type="radio"]:checked) {
         <h2>Selamat Datang</h2>
         <p class="lead">Media Pembelajaran: Relasi & Fungsi<br>Pertemuan 4</p>
         <button class="btn" data-go="menu">Mulai</button>
+        <!-- Tombol Download untuk Testing -->
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(0,0,0,0.1)">
+          <p style="font-size:12px;color:#666;margin-bottom:8px">🧪 Testing Download:</p>
+          <button class="btn" id="testDownloadBtn" style="background:#2196F3;font-size:14px">📥 Download Hasil PDF</button>
+        </div>
       </div>
     </section>
 
@@ -3684,7 +3689,7 @@ async function downloadAllResults(){
       if(comments.length > 0){
         comments.forEach((c, i) => {
           addText(`Komentar ${i+1}: ${c.comment}`);
-          addText(`Rating: ${'⭐'.repeat(c.rating)}`);
+          addText(`Rating: ${'★'.repeat(c.rating)}`);
           yPos += 3;
         });
       }else{
@@ -3703,9 +3708,9 @@ async function downloadAllResults(){
   if(reflectionData){
     try{
       const reflection = JSON.parse(reflectionData);
-      addText(`Penilaian Fase 3: ${'⭐'.repeat(reflection.fase3Rating || 0)}`);
+      addText(`Penilaian Fase 3: ${'★'.repeat(reflection.fase3Rating || 0)}`);
       addText(`Tanggapan Fase 3: ${reflection.fase3Response || '-'}`);
-      addText(`Penilaian Fase 4: ${'⭐'.repeat(reflection.fase4Rating || 0)}`);
+      addText(`Penilaian Fase 4: ${'★'.repeat(reflection.fase4Rating || 0)}`);
       addText(`Tanggapan Fase 4: ${reflection.fase4Response || '-'}`);
       addText(`Yang Paling Disukai: ${reflection.enjoyment || '-'}`);
       addText(`Pesan untuk Guru: ${reflection.message || '-'}`);
@@ -3883,6 +3888,7 @@ function renderGallery(){
 }
 
 downloadAllBtn?.addEventListener('click', downloadAllResults);
+document.getElementById('testDownloadBtn')?.addEventListener('click', downloadAllResults);
 
 // Open comment modal
 function openCommentModal(kelompok, bentuk){
@@ -4224,4 +4230,3 @@ function showCompletionSummary(){
 </script>
 </body>
 </html>
-
