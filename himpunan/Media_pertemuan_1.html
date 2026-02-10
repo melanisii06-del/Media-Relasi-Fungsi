@@ -386,9 +386,45 @@ textarea{
 h1, h2 {
   animation: floating 3s ease-in-out infinite;
 }
+
+/* Tombol Download Darurat untuk Testing */
+.btn-test-download {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  color: white;
+  border: none;
+  padding: 16px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.btn-test-download:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(255, 107, 53, 0.6);
+}
+
+.btn-test-download:active {
+  transform: translateY(0px);
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4); }
+  50% { box-shadow: 0 8px 32px rgba(255, 107, 53, 0.7); }
+}
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="../Relasi/tools/libs/html2canvas.min.js"></script>
+<script src="../Relasi/tools/libs/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -1242,17 +1278,6 @@ h1, h2 {
 <p><b>6. Bagaimana perasaan kamu tentang pembelajaran hari ini?</b></p>
 <textarea placeholder="Senang, cukup mudah, bingung, atau bagaimana?"></textarea>
 </div>
-
-<!-- ===================== -->
-<!-- NAVIGASI & DOWNLOAD -->
-<!-- ===================== -->
-<div class="nav">
-  <button class="button" style="display:none">⟵ Kembali</button>
-  <button id="downloadPdfBtn" class="button" style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);width:100%;padding:12px;font-size:16px;cursor:pointer">📥 Download Hasil Pembelajaran (PDF)</button>
-</div> 
-<div style="display:flex;gap:8px;justify-content:center;margin-top:12px;font-size:12px;color:#666;">
-  💡 Hasil pembelajaran akan diunduh sebagai file PDF ke perangkat Anda
-</div>
   </div>
 </div>
 </section>
@@ -1565,6 +1590,7 @@ window.safeOn = function(selOrId, ev, fn){
 window.show = show;
     // Status penyelesaian: Hanya melacak 'materi' untuk demo ini
     const completion = { materi: 0, k1: 0, k2: 0, k3: 0, k4: 0, k5: 0 };
+    window.completion = completion; // Make it globally accessible
     const progressCountEl = document.getElementById('progressCount');
     
     /**
@@ -2719,6 +2745,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Fungsi untuk menyimpan progress siswa
 function simpanProgress() {
   const kelompokData = JSON.parse(localStorage.getItem('kelompokData')) || {};
+  const completion = window.completion || { k2: 0, k3: 0 };
   const progressData = {
     kelompok: kelompokData.nama || 'Tanpa Nama',
     anggota: kelompokData.anggota || [],
@@ -2750,176 +2777,7 @@ document.querySelector('[data-go="tahap5"]')?.addEventListener('click', () => {
   simpanProgress();
 });
 // ...existing code...
-// ========== DOWNLOAD PDF HANDLER ==========
-const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-if (downloadPdfBtn) {
-  downloadPdfBtn.addEventListener('click', () => {
-    if(typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined'){
-      alert('Fitur PDF belum tersedia. Coba muat ulang halaman.');
-      return;
-    }
 
-    const kelompokData = localStorage.getItem('kelompokData');
-    const solusiAwal = localStorage.getItem('solusiAwalPertemuan1');
-    const progressTahap2 = localStorage.getItem('progressTahap2');
-    const kesimpulanHimpunan = localStorage.getItem('kesimpulanHimpunan');
-    const penyajianHimpunan1 = localStorage.getItem('penyajianHimpunan1');
-    const saranHimpunan1 = localStorage.getItem('saranHimpunan1');
-
-    const { jsPDF } = jspdf;
-    const doc = new jsPDF();
-    
-    let yPos = 20;
-    const pageHeight = doc.internal.pageSize.height;
-    const margin = 20;
-    const maxWidth = 170;
-
-    function checkPageBreak(needed = 20){
-      if(yPos + needed > pageHeight - margin){
-        doc.addPage();
-        yPos = margin;
-        return true;
-      }
-      return false;
-    }
-
-    function addTitle(text, size = 16){
-      checkPageBreak(size + 5);
-      doc.setFontSize(size);
-      doc.setFont(undefined, 'bold');
-      doc.text(text, margin, yPos);
-      yPos += size + 5;
-    }
-
-    function addText(text, size = 11){
-      if(!text || text.trim() === '') return;
-      checkPageBreak(size + 3);
-      doc.setFontSize(size);
-      doc.setFont(undefined, 'normal');
-      const lines = doc.splitTextToSize(text, maxWidth);
-      doc.text(lines, margin, yPos);
-      yPos += (lines.length * (size/2)) + 5;
-    }
-
-    // Cover
-    doc.setFontSize(24);
-    doc.setFont(undefined, 'bold');
-    doc.text('HASIL PEMBELAJARAN', doc.internal.pageSize.width/2, 100, {align: 'center'});
-    doc.setFontSize(14);
-    doc.setFont(undefined, 'normal');
-    doc.text('Pertemuan 1: Himpunan', doc.internal.pageSize.width/2, 120, {align: 'center'});
-    doc.addPage();
-    yPos = margin;
-
-    // Section 1: Identitas Kelompok
-    addTitle('1. IDENTITAS KELOMPOK', 14);
-    if(kelompokData){
-      try{
-        const kelompok = JSON.parse(kelompokData);
-        addText(`Nama Kelompok: ${kelompok.namaKelompok || '-'}`);
-        addText(`Nama Anggota:`);
-        (kelompok.anggota || []).forEach((item, i) => {
-          let namaText = '';
-          if(typeof item === 'string'){
-            namaText = item;
-          }else if(item.nama){
-            namaText = item.nama;
-          }
-          addText(`  ${i+1}. ${namaText}`);
-        });
-      }catch(e){
-        addText('Data identitas tidak valid');
-      }
-    }else{
-      addText('Belum mengisi identitas kelompok');
-    }
-    yPos += 10;
-
-    // Section 2: Solusi Awal
-    addTitle('2. SOLUSI AWAL', 14);
-    if(solusiAwal){
-      addText(`Solusi Kelompok: ${solusiAwal}`);
-    }else{
-      addText('Belum mengisi solusi awal');
-    }
-    yPos += 10;
-
-    // Section 3: Representasi Himpunan (Tahap 2)
-    addTitle('3. REPRESENTASI HIMPUNAN', 14);
-    if(progressTahap2){
-      try{
-        const tahap2 = JSON.parse(progressTahap2);
-        addText(`Himpunan A: ${tahap2.himpunanA || '-'}`);
-        addText(`Himpunan B: ${tahap2.himpunanB || '-'}`);
-        addText(`Relasi: ${tahap2.relasi || '-'}`);
-      }catch(e){
-        addText('Data representasi tidak valid');
-      }
-    }else{
-      addText('Belum mengisi representasi himpunan');
-    }
-    yPos += 10;
-
-    // Section 4: Penyajian Himpunan
-    addTitle('4. PENYAJIAN HIMPUNAN', 14);
-    if(penyajianHimpunan1){
-      try{
-        const penyajian = JSON.parse(penyajianHimpunan1);
-        addText(`Bentuk Penyajian: ${penyajian.bentuk || '-'}`);
-        if(penyajian.hasil){
-          addText(`Hasil: ${penyajian.hasil}`);
-        }
-      }catch(e){
-        addText('Data penyajian tidak valid');
-      }
-    }else{
-      addText('Belum mengisi penyajian himpunan');
-    }
-    yPos += 10;
-
-    // Section 5: Kesimpulan
-    addTitle('5. KESIMPULAN', 14);
-    if(kesimpulanHimpunan){
-      addText(`Kesimpulan: ${kesimpulanHimpunan}`);
-    }else{
-      addText('Belum mengisi kesimpulan');
-    }
-    yPos += 10;
-
-    // Section 6: Saran & Masukan
-    addTitle('6. SARAN & MASUKAN', 14);
-    if(saranHimpunan1){
-      try{
-        const saran = JSON.parse(saranHimpunan1);
-        if(Array.isArray(saran) && saran.length > 0){
-          saran.forEach((s, i) => {
-            addText(`Saran ${i+1}: ${s.saran || s}`);
-          });
-        }else{
-          addText('Belum ada saran');
-        }
-      }catch(e){
-        addText('Data saran tidak valid');
-      }
-    }else{
-      addText('Belum ada saran');
-    }
-    yPos += 10;
-
-    // Footer
-    checkPageBreak(15);
-    doc.setFontSize(9);
-    doc.setFont(undefined, 'italic');
-    doc.text(`Diunduh pada: ${new Date().toLocaleString('id-ID')}`, margin, yPos);
-
-    // Save PDF
-    const namaKelompok = kelompokData ? JSON.parse(kelompokData).namaKelompok : 'Kelompok';
-    doc.save(`Hasil_Pertemuan1_${namaKelompok.replace(/\s+/g, '_')}_${Date.now()}.pdf`);
-
-    console.log('✅ PDF berhasil diunduh');
-    alert('✅ PDF hasil pembelajaran berhasil diunduh!');
-  });
-}
 document.addEventListener('DOMContentLoaded', () => {
   const kirimBtn = document.getElementById('kirimJawabanBtn');
   if (kirimBtn) {
@@ -3558,8 +3416,197 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
+<!-- Tombol Download Darurat untuk Testing -->
+<button class="btn-test-download" id="btnTestDownload">
+  <span style="font-size: 20px;">🚨</span>
+  <span>TEST DOWNLOAD PDF</span>
+</button>
+
 <!-- Google Form Helper Script -->
 <script src="../Relasi/google-form-helper.js"></script>
 
-</body></html>
+<script>
+// Handler untuk tombol download 
+document.getElementById('btnTestDownload').addEventListener('click', function() {
+  console.log('🚨 DOWNLOAD BUTTON CLICKED');
+  
+  // Cek apakah library sudah dimuat
+  if(typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined'){
+    alert('Fitur PDF belum tersedia. Coba muat ulang halaman.');
+    console.error('jsPDF not loaded');
+    return;
+  }
+  
+  createStudentResultPDF();
+});
 
+function createStudentResultPDF() {
+  try {
+    const kelompokData = localStorage.getItem('kelompokData');
+    const solusiAwal = localStorage.getItem('solusiAwalPertemuan1');
+    const progressTahap2 = localStorage.getItem('progressTahap2');
+    const kesimpulanHimpunan = localStorage.getItem('kesimpulanHimpunan');
+    const penyajianHimpunan1 = localStorage.getItem('penyajianHimpunan1');
+    const saranHimpunan1 = localStorage.getItem('saranHimpunan1');
+
+    const { jsPDF } = jspdf;
+    const doc = new jsPDF();
+    
+    let yPos = 20;
+    const pageHeight = doc.internal.pageSize.height;
+    const margin = 20;
+    const maxWidth = 170;
+
+    function checkPageBreak(needed = 20) {
+      if(yPos + needed > pageHeight - margin) {
+        doc.addPage();
+        yPos = margin;
+        return true;
+      }
+      return false;
+    }
+
+    function addTitle(text, size = 16) {
+      checkPageBreak(size + 5);
+      doc.setFontSize(size);
+      doc.setFont(undefined, 'bold');
+      doc.text(text, margin, yPos);
+      yPos += size + 5;
+    }
+
+    function addText(text, size = 11) {
+      if(!text || text.trim() === '') return;
+      checkPageBreak(size + 3);
+      doc.setFontSize(size);
+      doc.setFont(undefined, 'normal');
+      const lines = doc.splitTextToSize(text, maxWidth);
+      doc.text(lines, margin, yPos);
+      yPos += (lines.length * (size/2)) + 5;
+    }
+
+    // Cover
+    doc.setFontSize(24);
+    doc.setFont(undefined, 'bold');
+    doc.text('HASIL PEMBELAJARAN', doc.internal.pageSize.width/2, 100, {align: 'center'});
+    doc.setFontSize(14);
+    doc.setFont(undefined, 'normal');
+    doc.text('Pertemuan 1: Himpunan', doc.internal.pageSize.width/2, 120, {align: 'center'});
+    doc.addPage();
+    yPos = margin;
+
+    // Section 1: Identitas Kelompok
+    addTitle('1. IDENTITAS KELOMPOK', 14);
+    if(kelompokData) {
+      try {
+        const kelompok = JSON.parse(kelompokData);
+        addText('Nama Kelompok: ' + (kelompok.nama || '-'));
+        addText('Nama Anggota:');
+        (kelompok.anggota || []).forEach((item, i) => {
+          let namaText = '';
+          if(typeof item === 'string') {
+            namaText = item;
+          } else if(item.nama) {
+            namaText = item.nama;
+          }
+          addText('  ' + (i+1) + '. ' + namaText);
+        });
+      } catch(e) {
+        addText('Data identitas tidak valid');
+      }
+    } else {
+      addText('Belum mengisi identitas kelompok');
+    }
+    yPos += 10;
+
+    // Section 2: Solusi Awal
+    addTitle('2. SOLUSI AWAL', 14);
+    if(solusiAwal) {
+      addText('Solusi Kelompok: ' + solusiAwal);
+    } else {
+      addText('Belum mengisi solusi awal');
+    }
+    yPos += 10;
+
+    // Section 3: Representasi Himpunan (Tahap 2)
+    addTitle('3. REPRESENTASI HIMPUNAN', 14);
+    if(progressTahap2) {
+      try {
+        const tahap2 = JSON.parse(progressTahap2);
+        addText('Himpunan A: ' + (tahap2.himpunanA || '-'));
+        addText('Himpunan B: ' + (tahap2.himpunanB || '-'));
+        addText('Relasi: ' + (tahap2.relasi || '-'));
+      } catch(e) {
+        addText('Data representasi tidak valid');
+      }
+    } else {
+      addText('Belum mengisi representasi himpunan');
+    }
+    yPos += 10;
+
+    // Section 4: Penyajian Himpunan
+    addTitle('4. PENYAJIAN HIMPUNAN', 14);
+    if(penyajianHimpunan1) {
+      try {
+        const penyajian = JSON.parse(penyajianHimpunan1);
+        addText('Bentuk Penyajian: ' + (penyajian.bentuk || '-'));
+        if(penyajian.hasil) {
+          addText('Hasil: ' + penyajian.hasil);
+        }
+      } catch(e) {
+        addText('Data penyajian tidak valid');
+      }
+    } else {
+      addText('Belum mengisi penyajian himpunan');
+    }
+    yPos += 10;
+
+    // Section 5: Kesimpulan
+    addTitle('5. KESIMPULAN', 14);
+    if(kesimpulanHimpunan) {
+      addText('Kesimpulan: ' + kesimpulanHimpunan);
+    } else {
+      addText('Belum mengisi kesimpulan');
+    }
+    yPos += 10;
+
+    // Section 6: Saran & Masukan
+    addTitle('6. SARAN & MASUKAN', 14);
+    if(saranHimpunan1) {
+      try {
+        const saran = JSON.parse(saranHimpunan1);
+        if(Array.isArray(saran) && saran.length > 0) {
+          saran.forEach((s, i) => {
+            addText('Saran ' + (i+1) + ': ' + (s.saran || s));
+          });
+        } else {
+          addText('Belum ada saran');
+        }
+      } catch(e) {
+        addText('Data saran tidak valid');
+      }
+    } else {
+      addText('Belum ada saran');
+    }
+    yPos += 10;
+
+    // Footer
+    checkPageBreak(15);
+    doc.setFontSize(9);
+    doc.setFont(undefined, 'italic');
+    doc.text('Diunduh pada: ' + new Date().toLocaleString('id-ID'), margin, yPos);
+
+    // Save PDF
+    const namaKelompok = kelompokData ? JSON.parse(kelompokData).nama : 'Kelompok';
+    const fileName = 'Hasil_Pertemuan1_' + namaKelompok.replace(/\s+/g, '_') + '_' + Date.now() + '.pdf';
+    doc.save(fileName);
+
+    console.log('PDF berhasil diunduh: ' + fileName);
+    alert('PDF hasil pembelajaran berhasil diunduh!');
+  } catch(err) {
+    console.error('Error creating PDF:', err);
+    alert('Terjadi kesalahan saat membuat PDF. Periksa console.');
+  }
+}
+</script>
+
+</body></html>
