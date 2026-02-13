@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Media Pembelajaran — Relasi & Fungsi</title>
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -13,7 +13,7 @@
 html,body{
   height:100%;
   margin:0;
-  font-family:'Bagel Fat One',cursive;
+  font-family:'Poppins',sans-serif;
   background:var(--bg);
   color:var(--accent);
 }
@@ -131,7 +131,7 @@ input[type="text"], textarea {
   border-radius: 10px;
   border: 2px solid rgba(0,0,0,0.1);
   background: #fff;
-  font-family: 'Bagel Fat One', cursive;
+  font-family: 'Poppins', sans-serif;
   font-size: 16px;
   box-sizing: border-box;
   margin-bottom: 12px;
@@ -336,6 +336,89 @@ input[type="text"]:focus, textarea:focus {
 }
 .comment-section{
   margin-top: 8px;
+}
+
+/* === GALLERY DISPLAY (Penyajian Karya) === */
+.gallery-display-box {
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  border: 3px solid #ffcb64;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  display: none;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.gallery-display-box.show {
+  display: block;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px dashed rgba(0,0,0,0.1);
+}
+
+.gallery-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.gallery-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.gallery-content {
+  min-height: 200px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px dashed rgba(0,0,0,0.08);
+}
+
+.gallery-image-wrapper {
+  text-align: center;
+  padding: 16px;
+}
+
+.gallery-image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  border: 2px solid #e0e0e0;
+}
+
+.gallery-text-wrapper {
+  padding: 20px;
+}
+
+.gallery-text-item {
+  background: #fffef7;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+.gallery-text-label {
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.gallery-text-content {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-wrap;
 }
 .comment-header{
   display: flex;
@@ -1029,7 +1112,7 @@ table {
   border: 2px solid rgba(0,0,0,0.1);
   border-radius: 8px;
   cursor: pointer;
-  font-family: 'Bagel Fat One', cursive;
+  font-family: 'Poppins', sans-serif;
   font-size: 14px;
   transition: all 0.3s ease;
 }
@@ -1571,7 +1654,7 @@ h1, h2 {
           </div>
 
           <div class="content" style="text-align:center">
-            <img src="../images/fungsiii.png" alt="Foto permasalahan donor darah" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
+            <img src="../fungsiii.png" alt="Foto permasalahan donor darah" style="max-width:100%;height:auto;border-radius:10px;display:block;margin:0 auto 12px;">
             
             <!-- Konteks Permasalahan -->
             <div style="background:#fff3d9;border-left:4px solid #ffb84d;border-radius:8px;padding:14px;margin:14px auto;max-width:700px;text-align:left">
@@ -1625,7 +1708,7 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
 
           <div class="card-lite">
             <label for="namaKelompok" style="display:block;margin-bottom:8px;color:var(--accent);font-weight:700;font-size:16px">📝 Nama Kelompok</label>
-            <input type="text" id="namaKelompok" placeholder="Contoh: Kelompok Hemat Cerdas" style="width:100%;padding:12px;border-radius:8px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:15px;box-sizing:border-box">
+            <input type="text" id="namaKelompok" placeholder="Contoh: Kelompok Hemat Cerdas" style="width:100%;padding:12px;border-radius:8px;border:2px solid #d1d5db;font-family:'Poppins',sans-serif;font-size:15px;box-sizing:border-box">
           </div>
 
           <!-- PREVIEW ANGGOTA YANG SUDAH DI-INPUT -->
@@ -1648,11 +1731,11 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
             <div style="display:flex;gap:8px;margin-bottom:12px">
               <div style="flex:1">
                 <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px">Nama Anggota</label>
-                <input type="text" id="inputNamaAnggota" placeholder="Ketik nama anggota..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;box-sizing:border-box">
+                <input type="text" id="inputNamaAnggota" placeholder="Ketik nama anggota..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Poppins',sans-serif;font-size:14px;box-sizing:border-box">
               </div>
               <div style="flex:1">
                 <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px">Pilih Peran</label>
-                <select id="selectPenanggungJawab" style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;box-sizing:border-box">
+                <select id="selectPenanggungJawab" style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Poppins',sans-serif;font-size:14px;box-sizing:border-box">
                   <option value="">-- Pilih peran --</option>
                   <option value="Ketua Kelompok">Ketua Kelompok</option>
                   <option value="Wakil Ketua">Wakil Ketua</option>
@@ -1702,8 +1785,8 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
 
           <!-- PENGANTAR AKTIVITAS SIMULASI -->
           <div style="margin-bottom:16px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
-            <strong style="display:block;margin-bottom:6px">📌 Mengapa Kegiatan Ini Penting?</strong>
-            <div class="small">Untuk memastikan data donor darah valid, setiap siswa HARUS memiliki TEPAT SATU golongan darah (tidak boleh 2 atau lebih). Aktivitas ini mengajarkan kalian berpikir seperti seorang "data validator" — menerapkan aturan logis untuk memvalidasi data. Dengan cara ini, kalian akan menemukan sendiri syarat-syarat FUNGSI dari pengalaman dunia nyata!</div>
+            <strong style="display:block;margin-bottom:6px">📌 Aturan Utama:</strong>
+            <div class="small">Setiap siswa hanya boleh punya 1 golongan darah. Kamu bebas membuat pasangan, tapi perhatikan apakah hasilnya mengikuti aturan ini. Logika inilah awal mula konsep FUNGSI! 🧬</div>
           </div>
 
           <!-- Data Siswa & Golongan Darah -->
@@ -1747,108 +1830,57 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
               <p style="color:var(--muted);font-size:14px;text-align:center">Belum ada pasangan. Mulai dengan klik nama dan golongan darah.</p>
             </div>
             <button class="btn ghost" id="resetPasangan" style="margin-top:10px">Reset Semua</button>
-          </div>
+            <button class="btn" id="btnSelesaiPasangan" style="margin-top:10px;margin-left:8px" disabled>✓ Selesai Membuat Pasangan (min. 3) ⟶</button>
+            <p id="countPasangan" style="font-size:12px;color:var(--muted);margin-top:8px;text-align:right">Pasangan dibuat: 0/3</p>
 
           <!-- 🔍 SECTION ANALISIS - Siswa Menemukan Sendiri -->
           <div class="card-lite" id="analysisSectionStart" style="background:#fff9f0;border:3px solid #ffb84d;margin-top:20px;display:none">
-            <!-- PENGANTAR AKTIVITAS ANALISIS LOGIKA -->
-            <div style="margin-bottom:14px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
-              <strong style="display:block;margin-bottom:6px">📌 Mengapa Analisis Logika Penting?</strong>
-              <div class="small">Kalian akan menjawab pertanyaan berdasarkan pengalaman hidup sehari-hari, BUKAN rumus matematika. Tujuannya adalah menggali logika kalian sendiri tentang bagaimana setiap orang memiliki SATU golongan darah dan SEMUA orang pasti memiliki golongan darah. Logika inilah yang menjadi fondasi syarat-syarat FUNGSI dalam matematika!</div>
-            </div>
+            <h3 style="color:var(--accent);margin-bottom:12px">🔍 Analisis: Apa yang Kamu Amati?</h3>
 
-            <h3 style="color:var(--accent);margin-bottom:12px">🔍 Aktivitas Analisis: Dari Dunia Nyata ke Konsep Fungsi</h3>
-            <p style="color:var(--muted);font-size:14px;margin-bottom:16px">
-              <strong>Instruksi:</strong> Mari kita analisis pasangan yang telah kamu buat dengan cara berpikir sehari-hari terlebih dahulu!
-            </p>
-
-            <!-- Prompt sebelum clue -->
-            <p style="color:#8a6d3b;background:#fff3cd;border:1px solid #ffeeba;padding:10px;border-radius:8px;margin:0 0 12px 0">
-              <strong>Perhatikan:</strong> Perhatikan pasangan yang telah kamu buat di atas — apakah ada keanehan?
-            </p>
             <div style="display:flex;gap:10px;align-items:center;margin-bottom:12px">
-              <button class="btn ghost" id="toggleClueBtn" style="padding:8px 12px">📎 Lihat Pertanyaan (Clue)</button>
-              <span style="font-size:12px;color:var(--muted)">Klik tombol untuk membuka pertanyaan pemantik.</span>
+              <button class="btn ghost" id="toggleClueBtn" style="padding:8px 12px">📎 Lihat Pertanyaan Pemantik</button>
             </div>
 
             <!-- BAGIAN A: Pertanyaan Dunia Nyata -->
-            <div id="clueContainer" style="display:none;background:#fff;border:3px solid #ffb84d;border-radius:10px;padding:14px;margin-bottom:16px">
-              <h4 style="color:var(--accent);margin-bottom:12px">📍 BAGIAN A: Pemikiran Sehari-Hari (Logika Dunia Nyata)</h4>
-
-              <!-- Pertanyaan 1 - Konteks Nyata -->
-              <div style="background:#fffdf6;border:2px dashed #ffd199;border-radius:10px;padding:12px;margin-bottom:12px">
-                <div style="font-weight:700;color:#d4a574;margin-bottom:10px">❓ Pertanyaan 1: Golongan Darah dalam Tubuh Manusia</div>
-                <p style="color:var(--muted);font-size:13px;margin-bottom:10px;line-height:1.5">
-                  <strong>Konteks Nyata:</strong> Dalam kenyataan kehidupan, apakah seseorang bisa memiliki <strong>2 golongan darah atau lebih</strong> dalam satu tubuh mereka? 
+            <div id="clueContainer" style="display:none;background:#fffdf6;border:2px dashed #ffd199;border-radius:10px;padding:14px;margin-bottom:16px">
+              <!-- Pertanyaan 1 -->
+              <div style="background:#fff;border-left:4px solid #ffb84d;padding:12px;margin-bottom:16px;border-radius:4px">
+                <p style="color:var(--accent);font-weight:700;margin:0 0 8px 0">❓ Pertanyaan 1: Apa Syarat Data Agar Valid?</p>
+                <p style="color:var(--muted);font-size:13px;margin:0 0 10px 0;line-height:1.4">
+                  <strong>Skenario:</strong> Kamu adalah pengelola database donor darah. Apakah kamu akan izinkan satu orang memiliki 2 golongan darah atau lebih dalam sistem yang sama?
                 </p>
                 <div style="margin:10px 0;display:flex;gap:10px;flex-wrap:wrap">
-                  <label style="font-size:14px"><input type="radio" name="q1Life" value="bisa"> Bisa, seseorang bisa punya 2+ golongan darah</label>
-                  <label style="font-size:14px"><input type="radio" name="q1Life" value="tidak"> Tidak, setiap orang hanya punya 1 golongan darah</label>
+                  <label style="font-size:14px"><input type="radio" name="q1Life" value="tidak"> <strong>Tidak</strong> — satu orang maksimal 1 golongan darah</label>
+                  <label style="font-size:14px"><input type="radio" name="q1Life" value="bisa"> Boleh — fleksibel, boleh 2 atau lebih</label>
                 </div>
-                <label style="display:block;font-size:13px;color:var(--muted);margin-top:10px;margin-bottom:6px"><strong>Penjelasanmu:</strong> Mengapa kamu memilih jawaban tersebut?</label>
-                <textarea id="q1LifeDetail" placeholder="Contoh: Tidak, karena setiap orang lahir dengan satu jenis golongan darah tertentu (A, B, AB, atau O) dan itu tidak bisa berubah..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #ffd199;font-family:sans-serif;font-size:13px;min-height:70px"></textarea>
+                <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-top:12px;margin-bottom:6px">📝 Kesimpulanmu:</label>
+                <textarea id="q1LifeDetail" placeholder="Berdasarkan jawabanmu, apa aturan yang kamu tetapkan untuk data valid? Bagaimana ini berhubungan dengan pasangan Nama-Goldar yang kamu buat tadi?" style="width:100%;padding:10px;border-radius:6px;border:2px solid #ffd199;font-family:sans-serif;font-size:13px;min-height:70px;box-sizing:border-box"></textarea>
               </div>
 
-              <!-- Pertanyaan 2 - Konteks Nyata -->
-              <div style="background:#fffdf6;border:2px dashed #ffd199;border-radius:10px;padding:12px;margin-bottom:16px">
-                <div style="font-weight:700;color:#d4a574;margin-bottom:10px">❓ Pertanyaan 2: Golongan Darah yang Tidak Ada</div>
-                <p style="color:var(--muted);font-size:13px;margin-bottom:10px;line-height:1.5">
-                  <strong>Konteks Nyata:</strong> Apakah ada kemungkinan seorang manusia <strong>tidak memiliki golongan darah sama sekali</strong> dalam tubuhnya?
+              <!-- Pertanyaan 2 -->
+              <div style="background:#fff;border-left:4px solid #ffb84d;padding:12px;margin-bottom:16px;border-radius:4px">
+                <p style="color:var(--accent);font-weight:700;margin:0 0 8px 0">❓ Pertanyaan 2: Bolehkah Ada Data Tidak Terisi?</p>
+                <p style="color:var(--muted);font-size:13px;margin:0 0 10px 0;line-height:1.4">
+                  <strong>Skenario:</strong> Dalam database tersebut, bolehkah ada nama orang yang tidak memiliki data golongan darah sama sekali?
                 </p>
                 <div style="margin:10px 0;display:flex;gap:10px;flex-wrap:wrap">
-                  <label style="font-size:14px"><input type="radio" name="q2Life" value="ada"> Ada, bisa ada orang yang tidak punya golongan darah</label>
-                  <label style="font-size:14px"><input type="radio" name="q2Life" value="tidak"> Tidak, semua orang pasti punya golongan darah</label>
+                  <label style="font-size:14px"><input type="radio" name="q2Life" value="tidak"> <strong>Tidak</strong> — semua nama HARUS punya data goldar</label>
+                  <label style="font-size:14px"><input type="radio" name="q2Life" value="ada"> Boleh — ada yang boleh tidak terisi</label>
                 </div>
-                <label style="display:block;font-size:13px;color:var(--muted);margin-top:10px;margin-bottom:6px"><strong>Penjelasanmu:</strong> Mengapa demikian?</label>
-                <textarea id="q2LifeDetail" placeholder="Contoh: Tidak, karena setiap manusia yang hidup pasti memiliki golongan darah. Golongan darah adalah bagian dari sistem biologi manusia..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #ffd199;font-family:sans-serif;font-size:13px;min-height:70px"></textarea>
+                <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-top:12px;margin-bottom:6px">📝 Kesimpulanmu:</label>
+                <textarea id="q2LifeDetail" placeholder="Berdasarkan jawabanmu, apa aturan KEDUA yang kamu tetapkan? Sekarang kamu punya DUA aturan — apakah kira-kira nama dari dua aturan ini dalam matematika?" style="width:100%;padding:10px;border-radius:6px;border:2px solid #ffd199;font-family:sans-serif;font-size:13px;min-height:70px;box-sizing:border-box"></textarea>
               </div>
             </div>
 
-            <!-- BAGIAN B: Penguatan - Koneksi ke Konsep Fungsi -->
-            <div id="bagianBContainer" style="display:none;background:#fff9f0;border:3px solid #ffb84d;border-radius:10px;padding:14px;margin-bottom:16px">
-              <h4 style="color:var(--accent);margin-bottom:12px">🔗 BAGIAN B: Penguatan Konsep Fungsi</h4>
-              <p style="color:var(--muted);font-size:13px;margin-bottom:12px;line-height:1.6">
-                Sangat bagus! Logika yang kamu gunakan tadi <strong>sama persis dengan syarat-syarat fungsi dalam matematika!</strong><br><br>
-                <strong>Penjelasan:</strong>
-              </p>
-              
-              <div style="background:#fff;border-left:4px solid #ffb84d;padding:12px;margin-bottom:10px;border-radius:4px">
-                <p style="color:var(--accent);font-weight:700;margin:0 0 6px 0">➤ Dari jawaban Pertanyaan 1:</p>
-                <p style="color:var(--muted);font-size:13px;margin:6px 0">
-                  Kamu sudah tahu bahwa setiap orang hanya punya <strong>1 golongan darah</strong> (tidak boleh 2 atau lebih). <br>
-                  <strong>SAMA HALNYA DENGAN FUNGSI:</strong> Setiap anggota domain (nama/orang) hanya boleh dipasangkan dengan <strong>TEPAT SATU</strong> anggota kodomain (golongan darah). Tidak boleh lebih dari satu!
-                </p>
-              </div>
-
-              <div style="background:#fff;border-left:4px solid #ffb84d;padding:12px;margin-bottom:10px;border-radius:4px">
-                <p style="color:var(--accent);font-weight:700;margin:0 0 6px 0">➤ Dari jawaban Pertanyaan 2:</p>
-                <p style="color:var(--muted);font-size:13px;margin:6px 0">
-                  Kamu sudah tahu bahwa <strong>semua orang pasti punya golongan darah</strong> (tidak ada yang kosong). <br>
-                  <strong>SAMA HALNYA DENGAN FUNGSI:</strong> Setiap anggota domain (nama/orang) <strong>HARUS memiliki pasangan</strong> di kodomain (golongan darah). Tidak boleh ada yang tidak memiliki pasangan!
-                </p>
-              </div>
-
-              <div style="background:#e8f5e9;border-left:4px solid var(--success);padding:12px;border-radius:4px;margin-top:12px">
-                <p style="color:var(--success);font-weight:700;margin:0 0 6px 0">✨ Kesimpulan:</p>
-                <p style="color:var(--muted);font-size:13px;margin:6px 0">
-                  Dengan demikian, syarat-syarat fungsi adalah:
-                </p>
-                <ol style="color:var(--muted);font-size:13px;margin:8px 0;padding-left:20px">
-                  <li>✓ Setiap anggota domain HARUS memiliki pasangan (tidak boleh kosong)</li>
-                  <li>✓ Setiap anggota domain hanya memiliki TEPAT SATU pasangan (tidak boleh lebih dari satu)</li>
-                </ol>
-              </div>
+            <!-- Tombol Lanjut -->
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
+              <button class="btn ghost" data-go="identitas-kelompok">⟵ Kembali</button>
+              <button class="btn" id="btnSelesai">Mulai Analisis Data ⟶</button>
+              <button class="btn" data-go="simulator-populasi">Lanjut ke Skenario Populasi ⟶</button>
             </div>
-          </div>
 
-          <!-- Tombol Lanjut -->
-          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
-            <button class="btn ghost" data-go="identitas-kelompok">⟵ Kembali</button>
-            <button class="btn" id="btnSelesai">Mulai Analisis Data ⟶</button>
-            <button class="btn" data-go="simulator-populasi">Lanjut ke Skenario Populasi ⟶</button>
+            <div id="feedbackValidasi" style="margin-top:12px;font-weight:700;text-align:center"></div>
           </div>
-
-          <div id="feedbackValidasi" style="margin-top:12px;font-weight:700;text-align:center"></div>
         </div>
       </section>
 
@@ -1857,15 +1889,11 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
         <div class="panel">
           <h2>Simulator Skenario Populasi</h2>
           
-          <!-- PENGANTAR AKTIVITAS SIMULATOR -->
-          <div style="margin-bottom:16px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
-            <strong style="display:block;margin-bottom:6px">📌 Mengapa Kegiatan Ini Penting?</strong>
-            <div class="small">Aktivitas ini mengajarkan kalian cara berpikir KOMBINATORIK — berapa banyak fungsi yang bisa dibuat dari domain dan kodomain tertentu? Dengan memahami pola 2^n (atau n(B)^n(A)), kalian dapat memprediksi berapa banyak data valid yang mungkin ada tanpa harus menghitung satu per satu. Ini adalah kemampuan penting dalam data science!</div>
-          </div>
+          <p style="color:var(--muted);font-size:13px;margin-bottom:16px"><strong>🎯 Tantangan:</strong> Berapa banyak fungsi yang bisa dibuat? Coba hitung dengan logika kombinasi!</p>
 
           <div class="card-lite">
-            <h3 style="color:var(--accent);margin-bottom:8px">Skenario 1 — Hanya Dua Golongan Darah</h3>
-            <p style="color:var(--muted);font-size:14px;margin-bottom:12px">Kodomain: {A, B}. Domain: {Andi, Budi, Citra}. Coba pasangkan manual.</p>
+            <h3 style="color:var(--accent);margin-bottom:8px">Skenario 1: Golongan Darah {A, B} & Siswa {Andi, Budi, Citra}</h3>
+            <p style="color:var(--muted);font-size:13px;margin-bottom:12px">📝 Pasangkan manual, hitung berapa kemungkinan:</p>
 
             <div style="display:flex;gap:20px;flex-wrap:wrap">
               <div style="flex:1;min-width:220px">
@@ -1985,7 +2013,7 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
 
                 <!-- Kontrol Input Manual -->
                 <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-                  <select id="selectNama" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive">
+                  <select id="selectNama" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Poppins',sans-serif">
                     <option value="">Pilih Nama...</option>
                     <option value="Andi">Andi</option>
                     <option value="Budi">Budi</option>
@@ -1996,7 +2024,7 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
                     <option value="Gita">Gita</option>
                     <option value="Hendra">Hendra</option>
                   </select>
-                  <select id="selectGoldar" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive">
+                  <select id="selectGoldar" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Poppins',sans-serif">
                     <option value="">Pilih Goldar...</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
@@ -2166,41 +2194,35 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
         <div class="panel">
           <h2>🎨 Fase 4: Penyajian Hasil Karya (Gallery Walk)</h2>
           <p style="color:var(--muted);margin-bottom:20px">
-            Presentasikan hasil investigasi kelompokmu! Pilih bentuk penyajian fungsi yang paling menarik menurutmu.
+            Presentasikan hasil investigasi kelompokmu! Pada pertemuan ini, penyajiannya menggunakan Diagram Kartesius.
           </p>
 
-          <!-- BAGIAN A: PILIH BENTUK PENYAJIAN -->
+          <!-- BAGIAN A: PENYAJIAN HASIL (DIAGRAM KARTESIUS) -->
           <div class="card-lite">
-            <h3 style="color:var(--accent);margin-bottom:12px">📊 A. Pilih Bentuk Penyajian Fungsi</h3>
+            <h3 style="color:var(--accent);margin-bottom:12px">📊 A. Penyajian Diagram Kartesius</h3>
             <p style="color:var(--muted);font-size:14px;margin-bottom:12px">
-              Kelompokmu sudah menemukan fungsi di Bagian A & B. Sekarang pilih cara terbaik untuk menyajikannya:
+              Gunakan hasil diagram kartesius yang sudah kalian susun pada tahap sebelumnya.
             </p>
-            
-            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px">
-              <label class="penyajian-option">
-                <input type="radio" name="bentukPenyajian" value="tabel" checked>
-                <span>📋 Tabel</span>
-              </label>
-              <label class="penyajian-option">
-                <input type="radio" name="bentukPenyajian" value="grafik">
-                <span>📈 Grafik Kartesian</span>
-              </label>
-              <label class="penyajian-option">
-                <input type="radio" name="bentukPenyajian" value="diagram-panah">
-                <span>🎯 Diagram Panah</span>
-              </label>
-              <label class="penyajian-option">
-                <input type="radio" name="bentukPenyajian" value="pasangan-berurutan">
-                <span>📝 Himpunan Pasangan Berurutan</span>
-              </label>
-            </div>
 
             <textarea id="deskripsiPenyajian" 
-              placeholder="Jelaskan mengapa kelompokmu memilih bentuk penyajian ini... (contoh: Kami pilih grafik karena lebih mudah melihat pola naik/turun)"
+              placeholder="Tuliskan ringkasan singkat hasil kelompokmu... (contoh: Diagram kartesius menunjukkan setiap nama hanya memiliki satu goldar)"
               style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;font-family:Arial;min-height:80px"></textarea>
 
-            <button class="btn" id="btnSimpanPenyajian" style="margin-top:12px">💾 Simpan Penyajian Kami</button>
+            <button class="btn" id="btnSimpanPenyajian" style="margin-top:12px">💾 Simpan Penyajian Diagram Kartesius</button>
             <div id="feedbackPenyajian" style="margin-top:12px"></div>
+
+            <!-- AREA DISPLAY PENYAJIAN -->
+            <div id="galleryDisplayBox" class="gallery-display-box">
+              <div class="gallery-header">
+                <div class="gallery-title">🖼️ Hasil Penyajian Kami</div>
+                <div class="gallery-subtitle" id="gallerySubtitle">Bentuk: Diagram Kartesius</div>
+              </div>
+              <div class="gallery-content" id="galleryContent">
+                <p style="text-align:center;color:var(--muted);padding:40px 20px">
+                  📦 Klik "Simpan" untuk menampilkan hasil diagram kartesius kalian...
+                </p>
+              </div>
+            </div>
           </div>
 
           <!-- NAVIGASI -->
@@ -2355,7 +2377,7 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
             <p style="font-size:13px;color:var(--muted);margin-bottom:10px">
               Pilih salah satu pertanyaan dan tuliskan jawaban Anda:
             </p>
-            <select id="reflectionPrompt" style="width:100%;padding:10px;border-radius:8px;border:2px solid #ffd199;font-family:'Bagel Fat One',cursive;margin-bottom:10px">
+            <select id="reflectionPrompt" style="width:100%;padding:10px;border-radius:8px;border:2px solid #ffd199;font-family:'Poppins',sans-serif;margin-bottom:10px">
               <option value="">-- Pilih Pertanyaan --</option>
               <option value="sulit">Apa yang paling sulit dalam pembelajaran ini?</option>
               <option value="strategi">Bagaimana strategimu mengatasi kesulitan tersebut?</option>
@@ -2540,7 +2562,7 @@ document.addEventListener('DOMContentLoaded', () => {
     newRow.className = 'anggota-row';
     newRow.innerHTML = `
       <input type="text" class="anggota-input" placeholder="Nama anggota ${count + 1}">
-      <select class="tanggung-jawab-select" style="padding:12px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:'Bagel Fat One',cursive;font-size:16px;min-width:150px">
+      <select class="tanggung-jawab-select" style="padding:12px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:'Poppins',sans-serif;font-size:16px;min-width:150px">
         <option value="Ketua Kelompok">Ketua Kelompok</option>
         <option value="Wakil Ketua">Wakil Ketua</option>
         <option value="Sekretaris">Sekretaris</option>
@@ -2743,20 +2765,42 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (Object.keys(pasanganData).length === 0) {
       pasanganList.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center">Belum ada pasangan. Mulai dengan klik nama dan golongan darah.</p>';
-      return;
+    } else {
+      let html = '';
+      for (let nama in pasanganData) {
+        const gol = pasanganData[nama];
+        const hasError = gol.length > 1;
+        const badgeClass = hasError ? 'pasangan-badge error' : 'pasangan-badge';
+        
+        gol.forEach(g => {
+          html += `<span class="${badgeClass}">${nama} → ${g}</span>`;
+        });
+      }
+      pasanganList.innerHTML = html;
     }
 
-    let html = '';
-    for (let nama in pasanganData) {
-      const gol = pasanganData[nama];
-      const hasError = gol.length > 1;
-      const badgeClass = hasError ? 'pasangan-badge error' : 'pasangan-badge';
-      
-      gol.forEach(g => {
-        html += `<span class="${badgeClass}">${nama} → ${g}</span>`;
-      });
+    // UPDATE COUNTER & ENABLE TOMBOL
+    const totalPasangan = Object.keys(pasanganData).length;
+    const countDisplay = document.getElementById('countPasangan');
+    const btnSelesai = document.getElementById('btnSelesaiPasangan');
+    
+    if (countDisplay) {
+      countDisplay.textContent = `Pasangan dibuat: ${totalPasangan}/3`;
+      countDisplay.style.color = totalPasangan >= 3 ? 'var(--success)' : 'var(--muted)';
     }
-    pasanganList.innerHTML = html;
+
+    if (btnSelesai) {
+      if (totalPasangan >= 3) {
+        btnSelesai.disabled = false;
+        btnSelesai.style.opacity = '1';
+        btnSelesai.style.cursor = 'pointer';
+        btnSelesai.style.background = 'var(--success)';
+      } else {
+        btnSelesai.disabled = true;
+        btnSelesai.style.opacity = '0.5';
+        btnSelesai.style.cursor = 'not-allowed';
+      }
+    }
   }
 
   // Event listener untuk nama siswa (khusus slide simulasi fungsi)
@@ -2821,6 +2865,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     showBot('Bagus! Sekarang amati pasangan yang telah kamu buat dan jawab pertanyaan-pertanyaan analisis di bawah. Kamu akan menemukan karakteristik fungsi sendiri! 🔍');
+  });
+
+  // ✅ TOMBOL SELESAI MEMBUAT PASANGAN (Hybrid Approach)
+  document.getElementById('btnSelesaiPasangan')?.addEventListener('click', () => {
+    const analysisSectionStart = document.getElementById('analysisSectionStart');
+    const clueContainer = document.getElementById('clueContainer');
+    const toggleClueBtn = document.getElementById('toggleClueBtn');
+    
+    const totalPasangan = Object.keys(pasanganData).length;
+    
+    // Validasi minimal 3 pasangan
+    if (totalPasangan < 3) {
+      showBot(`Kamu baru membuat ${totalPasangan} pasangan. Buat minimal 3 pasangan untuk melanjutkan! 😊`);
+      return;
+    }
+
+    // Tampilkan section analisis
+    if (analysisSectionStart) {
+      analysisSectionStart.style.display = 'block';
+    }
+
+    // Otomatis buka pertanyaan pemantik
+    if (clueContainer) {
+      clueContainer.style.display = 'block';
+    }
+
+    if (toggleClueBtn) {
+      toggleClueBtn.textContent = '🔽 Sembunyikan Pertanyaan';
+    }
+
+    // Scroll ke section analisis
+    setTimeout(() => {
+      analysisSectionStart?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+
+    showBot('Wah, kamu sudah membuat ' + totalPasangan + ' pasangan! 🎉 Mari kita analisis pasangan yang telah kamu buat. Jawab pertanyaan-pertanyaan di bawah dan temukan karakteristik FUNGSI! 🔍');
   });
 
   // Enable tombol validasi jika kesimpulan sudah diisi
@@ -3148,6 +3228,67 @@ document.addEventListener('DOMContentLoaded', () => {
     grid.offsetHeight;
   }
 
+  // Fungsi untuk capture diagram Kartesius sebagai gambar
+  function captureAndSaveDiagram() {
+    return new Promise((resolve, reject) => {
+      console.log('🎬 captureAndSaveDiagram() dipanggil');
+      
+      // Tunggu html2canvas ready
+      if (typeof html2canvas === 'undefined') {
+        console.error('❌ html2canvas tidak tersedia');
+        reject('html2canvas library not loaded');
+        return;
+      }
+      console.log('✅ html2canvas tersedia');
+
+      const cartesianGrid = document.getElementById('cartesianGrid');
+      if (!cartesianGrid) {
+        console.error('❌ Diagram grid tidak ditemukan dengan ID: cartesianGrid');
+        console.log('📋 DOM elements saat ini:', document.body.innerHTML.substring(0, 200));
+        reject('cartesianGrid element not found');
+        return;
+      }
+      console.log('✅ cartesianGrid element ditemukan');
+
+      // Scroll ke element untuk memastikan visible
+      cartesianGrid.scrollIntoView({ block: 'nearest' });
+      console.log('📜 Scrolled to diagram');
+
+      // Tunggu sebentar untuk memastikan render complete
+      setTimeout(() => {
+        console.log('📸 Memulai html2canvas capture...');
+        html2canvas(cartesianGrid, {
+          backgroundColor: '#ffffff',
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          allowTaint: true,
+          imageTimeout: 0,
+          removeContainer: true,
+          width: cartesianGrid.offsetWidth,
+          height: cartesianGrid.offsetHeight
+        }).then(canvas => {
+          try {
+            console.log('🖼️ Canvas created, converting to dataURL...');
+            const imgData = canvas.toDataURL('image/png');
+            console.log('✅ Image data URL created, length:', imgData.length);
+            
+            localStorage.setItem('grafikKartesiusKelompok', imgData);
+            console.log('💾 Diagram tersimpan ke localStorage');
+            console.log('📊 Ukuran gambar:', imgData.length, 'bytes');
+            resolve(imgData);
+          } catch (e) {
+            console.error('❌ Error saat menyimpan ke localStorage:', e);
+            reject(e);
+          }
+        }).catch(error => {
+          console.error('❌ Error saat html2canvas.capture:', error);
+          reject(error);
+        });
+      }, 100);
+    });
+  }
+
   function checkWithTruth() {
     const resultEl = document.getElementById('kunciResult');
     const missing = namaList.filter(nama => !cartesianData[nama]);
@@ -3340,6 +3481,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Final Check
   document.getElementById('btnFinalCheck')?.addEventListener('click', () => {
+    console.log('🔵 btnFinalCheck clicked');
     const inputKesimpulan = document.getElementById('inputKesimpulan');
     const finalCheckResult = document.getElementById('finalCheckResult');
     const organizedDataSection = document.getElementById('organizedDataSection');
@@ -3347,8 +3489,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const messyDataDisplay = document.getElementById('messyDataDisplay');
     
     const kesimpulan = inputKesimpulan?.value.trim();
+    console.log('✍️ Kesimpulan:', kesimpulan?.substring(0, 50));
     
     if (!kesimpulan || kesimpulan.length < 30) {
+      console.warn('⚠️ Kesimpulan terlalu pendek');
       if (finalCheckResult) {
         finalCheckResult.textContent = '⚠️ Kesimpulan terlalu pendek! Jelaskan dengan lebih detail (minimal 30 karakter).';
         finalCheckResult.style.color = 'var(--danger)';
@@ -3363,13 +3507,26 @@ document.addEventListener('DOMContentLoaded', () => {
       timestamp: new Date().toISOString()
     };
     localStorage.setItem('diagramKartesiusData', JSON.stringify(finalData));
+    console.log('💾 Data diagram disimpan ke localStorage');
     
-    // Sukses!
+    // ✨ Sukses!
     if (finalCheckResult) {
       finalCheckResult.innerHTML = '✅ <strong>Data tervalidasi!</strong> Kesimpulan Anda sangat baik!';
       finalCheckResult.style.color = 'var(--success)';
     }
     
+    // 📸 Capture diagram Kartesius sebagai gambar untuk PDF (non-blocking)
+    console.log('📸 Memanggil captureAndSaveDiagram()...');
+    captureAndSaveDiagram().then(imgData => {
+      if (imgData) {
+        console.log('✅ Capture berhasil! Diagram siap untuk PDF');
+      }
+    }).catch(err => {
+      console.error('❌ Capture gagal:', err);
+      console.warn('⚠️ PDF tetap bisa di-generate, fallback capture akan dilakukan saat download');
+    });
+    
+
     // Transformasi visual: Ubah data acak jadi tabel rapi
     if (organizedTableBody) {
       let tableHTML = '';
@@ -3472,6 +3629,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Persist self-assessment
     localStorage.setItem('selfAssessment', JSON.stringify({ before, after }));
+    localStorage.setItem('evaluasiPertemuan3', JSON.stringify({ pemahaman: before, fungsi: after, progress }));
   }
 
   sliderBefore?.addEventListener('input', updateProgress);
@@ -3523,6 +3681,21 @@ document.addEventListener('DOMContentLoaded', () => {
       feedback.textContent = '✅ Refleksi Anda telah disimpan!';
       feedback.style.color = 'var(--success)';
     }
+  });
+
+  function saveDeepReflection() {
+    const data = {
+      refleksi7: document.getElementById('refleksi7')?.value.trim() || '',
+      refleksi8: document.getElementById('refleksi8')?.value.trim() || '',
+      refleksi9: document.getElementById('refleksi9')?.value.trim() || '',
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('refleksiMendalam', JSON.stringify(data));
+  }
+
+  ['refleksi7', 'refleksi8', 'refleksi9'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('blur', saveDeepReflection);
   });
 
   // Challenge scenario
@@ -3908,6 +4081,22 @@ window.generatePDFReport = async function(){
   const { jsPDF } = window.jspdf;
   if(!jsPDF) throw new Error('jsPDF library belum dimuat');
 
+  // 🎬 Fallback: Coba capture diagram jika belum tersimpan
+  console.log('📋 Cek apakah diagram sudah di-capture...');
+  let grafikExisting = localStorage.getItem('grafikKartesiusKelompok');
+  
+  if (!grafikExisting) {
+    console.log('❌ Diagram belum tersimpan, mencoba capture sekarang...');
+    try {
+      await captureAndSaveDiagram();
+      console.log('✅ Fallback capture berhasil');
+    } catch (err) {
+      console.warn('⚠️ Fallback capture gagal:', err);
+    }
+  } else {
+    console.log('✅ Diagram sudah tersimpan, lanjut ke PDF generation');
+  }
+
   // Ambil data dari localStorage
   const kelompokData = localStorage.getItem('kelompokData');
   const investigasiData = localStorage.getItem('diagramKartesiusData');
@@ -3966,23 +4155,38 @@ window.generatePDFReport = async function(){
 
   function addText(text, size = 11) {
     if (!text || text.trim() === '') return;
+    const safeText = String(text).replace(/[^\x09\x0A\x0D\x20-\x7E]/g, '');
     checkPageBreak(size + 3);
     doc.setFontSize(size);
     doc.setFont(undefined, 'normal');
-    const lines = doc.splitTextToSize(text, maxWidth);
+    const lines = doc.splitTextToSize(safeText, maxWidth);
     doc.text(lines, margin, yPos);
     yPos += (lines.length * (size / 2)) + 5;
   }
 
   function addImage(dataUrl, maxHeight = 80) {
-    if (!dataUrl || !dataUrl.startsWith('data:image')) return false;
+    if (!dataUrl) {
+      console.warn('⚠️ dataUrl kosong');
+      addText('[Gambar tidak tersedia]');
+      return false;
+    }
+    
+    if (!dataUrl.startsWith('data:image')) {
+      console.warn('⚠️ dataUrl bukan format image:', dataUrl.substring(0, 50));
+      addText('[Gambar format tidak valid]');
+      return false;
+    }
+    
     checkPageBreak(maxHeight + 10);
     try {
+      console.log('🖼️ Menambahkan gambar ke PDF, ukuran:', maxHeight);
       doc.addImage(dataUrl, 'PNG', margin, yPos, maxWidth, maxHeight);
       yPos += maxHeight + 10;
+      console.log('✅ Gambar berhasil ditambahkan ke PDF');
       return true;
     } catch (e) {
-      addText('[Gambar tidak dapat dimuat]');
+      console.error('❌ Error menambahkan gambar ke PDF:', e.message);
+      addText(`[Gambar tidak dapat dimuat: ${e.message}]`);
       return false;
     }
   }
@@ -4031,11 +4235,21 @@ window.generatePDFReport = async function(){
   // Section 3: Penyajian Hasil Karya
   addTitle('3. PENYAJIAN HASIL KARYA (DIAGRAM KARTESIUS)', 14);
   addText('Berikut adalah diagram kartesius yang telah dibuat oleh kelompok:');
+  
   const grafikImage = localStorage.getItem('grafikKartesiusKelompok');
+  console.log('🔍 Cek localStorage grafikKartesiusKelompok:');
+  console.log('   - Exists:', !!grafikImage);
   if (grafikImage) {
+    console.log('   - Size:', grafikImage.length, 'bytes');
+    console.log('   - Starts with:', grafikImage.substring(0, 50));
+  }
+  
+  if (grafikImage && grafikImage.startsWith('data:image')) {
+    console.log('✅ Menambahkan diagram gambar ke PDF');
     addImage(grafikImage, 100);
   } else {
-    addText('[Diagram kartesius belum dibuat]');
+    console.warn('⚠️ Diagram gambar tidak ditemukan atau invalid');
+    addText('[Diagram kartesius belum di-capture atau gagal tersimpan]');
   }
   yPos += 5;
 
@@ -4070,13 +4284,27 @@ window.generatePDFReport = async function(){
   // Section 5: Evaluasi
   addTitle('5. EVALUASI MATERI', 14);
   const evaluasi = localStorage.getItem('evaluasiPertemuan3');
+  let evaluasiData = null;
   if (evaluasi) {
     try {
-      const ev = JSON.parse(evaluasi);
-      addText(`Pemahaman Relasi: ${ev.pemahaman || '-'}`);
-      addText(`Pemahaman Fungsi: ${ev.fungsi || '-'}`);
+      evaluasiData = JSON.parse(evaluasi);
     } catch (e) {
-      addText('Data evaluasi tidak lengkap');
+      evaluasiData = null;
+    }
+  }
+  if (!evaluasiData) {
+    const beforeVal = parseInt(document.getElementById('sliderBefore')?.value || '0', 10);
+    const afterVal = parseInt(document.getElementById('sliderAfter')?.value || '0', 10);
+    if (beforeVal || afterVal) {
+      evaluasiData = { pemahaman: beforeVal, fungsi: afterVal, progress: afterVal - beforeVal };
+      localStorage.setItem('evaluasiPertemuan3', JSON.stringify(evaluasiData));
+    }
+  }
+  if (evaluasiData) {
+    addText(`Pemahaman Relasi: ${evaluasiData.pemahaman ?? '-'}`);
+    addText(`Pemahaman Fungsi: ${evaluasiData.fungsi ?? '-'}`);
+    if (typeof evaluasiData.progress === 'number') {
+      addText(`Perubahan: ${evaluasiData.progress >= 0 ? '+' : ''}${evaluasiData.progress}`);
     }
   } else {
     addText('Data evaluasi belum diisi');
@@ -4088,15 +4316,38 @@ window.generatePDFReport = async function(){
   if (refleksi) {
     try {
       const ref = typeof refleksi === 'string' ? JSON.parse(refleksi) : refleksi;
-      const emojiMap = { 'sangat-senang': '😄', 'senang': '🙂', 'biasa': '😐', 'kesulitan': '😔' };
-      const emoji = emojiMap[ref.feeling || ''] || '😐';
-      addText(`Perasaan: ${emoji}`);
+      const feelingMap = { 'sangat-senang': 'Sangat senang', 'senang': 'Senang', 'biasa': 'Biasa', 'kesulitan': 'Kesulitan' };
+      const feelingLabel = feelingMap[ref.feeling || ''] || 'Biasa';
+      addText(`Perasaan: ${feelingLabel}`);
       addText(`Catatan: ${ref.note || '-'}`);
     } catch (e) {
       addText('Data refleksi tidak lengkap');
     }
   } else {
     addText('Refleksi belum diisi');
+  }
+
+  const refleksiMendalamRaw = localStorage.getItem('refleksiMendalam');
+  let refleksiMendalam = null;
+  if (refleksiMendalamRaw) {
+    try {
+      refleksiMendalam = JSON.parse(refleksiMendalamRaw);
+    } catch (e) {
+      refleksiMendalam = null;
+    }
+  }
+  if (!refleksiMendalam) {
+    refleksiMendalam = {
+      refleksi7: document.getElementById('refleksi7')?.value.trim() || '',
+      refleksi8: document.getElementById('refleksi8')?.value.trim() || '',
+      refleksi9: document.getElementById('refleksi9')?.value.trim() || ''
+    };
+  }
+  if (refleksiMendalam && (refleksiMendalam.refleksi7 || refleksiMendalam.refleksi8 || refleksiMendalam.refleksi9)) {
+    addText('Refleksi Mendalam:');
+    addText(`1) Bagian paling membingungkan: ${refleksiMendalam.refleksi7 || '-'}`);
+    addText(`2) Kesalahan/hambatan: ${refleksiMendalam.refleksi8 || '-'}`);
+    addText(`3) Hal yang perlu diperdalam: ${refleksiMendalam.refleksi9 || '-'}`);
   }
 
   // Footer
@@ -4130,37 +4381,188 @@ const starRating = document.getElementById('starRating');
 let currentCommentTarget = null;
 let selectedRating = 0;
 
+function generateGalleryDisplay(bentuk) {
+  const galleryContent = document.getElementById('galleryContent');
+  const gallerySubtitle = document.getElementById('gallerySubtitle');
+  const galleryBox = document.getElementById('galleryDisplayBox');
+
+  if (!galleryContent || !gallerySubtitle || !galleryBox) return;
+
+  const bentukLabels = {
+    'tabel': '📋 Tabel',
+    'grafik': '📈 Diagram Kartesius',
+    'diagram-panah': '🎯 Diagram Panah',
+    'pasangan-berurutan': '📝 Himpunan Pasangan Berurutan'
+  };
+
+  gallerySubtitle.textContent = `Bentuk: ${bentukLabels[bentuk] || bentuk}`;
+
+  let contentHTML = '';
+
+  if (bentuk === 'grafik') {
+    const grafikImage = localStorage.getItem('grafikKartesiusKelompok');
+    const diagramDataRaw = localStorage.getItem('diagramKartesiusData');
+    let diagramData = null;
+    if (diagramDataRaw) {
+      try {
+        diagramData = JSON.parse(diagramDataRaw);
+      } catch (e) {
+        diagramData = null;
+      }
+    }
+
+    const previewImage = grafikImage || (diagramData?.cartesianData ? buildKartesiusSvg(diagramData.cartesianData) : '');
+
+    if (previewImage) {
+      contentHTML = `
+        <div class="gallery-image-wrapper">
+          <div style="font-weight:700;color:var(--accent);margin-bottom:10px">Diagram Kartesius Kelompok</div>
+          <img src="${previewImage}" alt="Diagram Kartesius" />
+        </div>
+      `;
+    } else {
+      contentHTML = '<p style="text-align:center;color:var(--muted);padding:40px 20px">📌 Diagram Kartesius belum dibuat. Kerjakan diagram terlebih dahulu.</p>';
+    }
+  } else {
+    const deskripsi = document.getElementById('deskripsiPenyajian')?.value.trim();
+    if (deskripsi) {
+      contentHTML = `
+        <div class="gallery-text-wrapper">
+          <div class="gallery-text-item">
+            <div class="gallery-text-label">🧾 Alasan Penyajian:</div>
+            <div class="gallery-text-content">${deskripsi}</div>
+          </div>
+        </div>
+      `;
+    } else {
+      contentHTML = '<p style="text-align:center;color:var(--muted);padding:40px 20px">📌 Deskripsi penyajian belum diisi.</p>';
+    }
+  }
+
+  galleryContent.innerHTML = contentHTML;
+  galleryBox.classList.add('show');
+
+  setTimeout(() => {
+    galleryBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }, 200);
+}
+
 // Simpan pilihan penyajian
 btnSimpanPenyajian?.addEventListener('click', () => {
-  const bentukPenyajian = document.querySelector('input[name="bentukPenyajian"]:checked')?.value;
+  const bentukPenyajian = 'grafik';
   const deskripsi = document.getElementById('deskripsiPenyajian')?.value.trim();
-  
-  if (!deskripsi || deskripsi.length < 20) {
-    feedbackPenyajian.innerHTML = '<div class="feedback-box warning">⚠️ Jelaskan dulu mengapa memilih bentuk penyajian ini (minimal 20 karakter)!</div>';
-    return;
-  }
-  
+
   const penyajian = {
     bentuk: bentukPenyajian,
-    deskripsi: deskripsi,
+    deskripsi: deskripsi || '',
     timestamp: new Date().toLocaleString('id-ID')
   };
   
   localStorage.setItem('penyajianKelompok', JSON.stringify(penyajian));
+
+  generateGalleryDisplay(bentukPenyajian);
   
   feedbackPenyajian.innerHTML = `
     <div class="feedback-box success">
-      ✅ Penyajian tersimpan! Kelompokmu memilih: <strong>${bentukPenyajian}</strong>
-      <br><small>Silakan lihat karya di Galeri Walk.</small>
+      ✅ Penyajian diagram kartesius tersimpan.
+      <br><small>Lihat hasil karya kalian di bawah. Kelompok lain bisa memberikan saran!</small>
     </div>
   `;
 });
+
+// Auto-restore penyajian saat masuk ke slide penyajian-karya
+document.addEventListener('click', (ev) => {
+  const btn = ev.target.closest('[data-go]');
+  if (btn && btn.getAttribute('data-go') === 'penyajian-karya') {
+    setTimeout(() => {
+      const savedPenyajian = localStorage.getItem('penyajianKelompok');
+      if (savedPenyajian) {
+        try {
+          const data = JSON.parse(savedPenyajian);
+          const deskripsiField = document.getElementById('deskripsiPenyajian');
+          if (deskripsiField && data.deskripsi) {
+            deskripsiField.value = data.deskripsi;
+          }
+          generateGalleryDisplay('grafik');
+        } catch (e) {
+          console.error('Error restoring penyajian:', e);
+        }
+      }
+    }, 100);
+  }
+});
+
+function buildKartesiusSvg(data) {
+  const width = 360;
+  const height = 240;
+  const padding = 36;
+  const safeData = data || {};
+  const keys = Object.keys(safeData);
+
+  if (!keys.length) {
+    const emptySvg = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+        <rect width="100%" height="100%" fill="#ffffff" />
+        <text x="50%" y="50%" font-family="Arial, sans-serif" font-size="14" fill="#999" text-anchor="middle">Belum ada data diagram</text>
+      </svg>
+    `;
+    return `data:image/svg+xml;utf8,${encodeURIComponent(emptySvg.trim())}`;
+  }
+
+  const xStep = (width - 2 * padding) / (namaList.length - 1);
+  const yStep = (height - 2 * padding) / (goldarList.length - 1);
+
+  const points = namaList.map((nama, i) => {
+    const goldar = safeData[nama];
+    if (!goldar) return '';
+    const yIndex = goldarList.indexOf(goldar);
+    if (yIndex === -1) return '';
+    const x = padding + i * xStep;
+    const y = height - padding - yIndex * yStep;
+    return `
+      <circle cx="${x}" cy="${y}" r="5" fill="#1976d2" />
+      <text x="${x + 8}" y="${y - 6}" font-family="Arial, sans-serif" font-size="10" fill="#333">${nama}, ${goldar}</text>
+    `;
+  }).join('');
+
+  const xLabels = namaList.map((nama, i) => {
+    const x = padding + i * xStep;
+    return `<text x="${x}" y="${height - padding + 16}" font-family="Arial, sans-serif" font-size="9" fill="#666" text-anchor="middle">${nama}</text>`;
+  }).join('');
+
+  const yLabels = goldarList.map((goldar, i) => {
+    const y = height - padding - i * yStep;
+    return `<text x="${padding - 10}" y="${y + 4}" font-family="Arial, sans-serif" font-size="10" fill="#666" text-anchor="end">${goldar}</text>`;
+  }).join('');
+
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      <rect width="100%" height="100%" fill="#ffffff" />
+      <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="#777" stroke-width="1" />
+      <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - padding}" stroke="#777" stroke-width="1" />
+      ${xLabels}
+      ${yLabels}
+      ${points}
+    </svg>
+  `;
+
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg.trim())}`;
+}
 
 // Load user's saved works
 function loadUserWorks(){
   const userWorks = {};
   const penyajianData = localStorage.getItem('penyajianKelompok');
   const grafikImage = localStorage.getItem('grafikKartesiusKelompok');
+  const diagramDataRaw = localStorage.getItem('diagramKartesiusData');
+  let diagramData = null;
+  if (diagramDataRaw) {
+    try {
+      diagramData = JSON.parse(diagramDataRaw);
+    } catch (e) {
+      diagramData = null;
+    }
+  }
 
   if(penyajianData){
     try{
@@ -4182,11 +4584,23 @@ function loadUserWorks(){
 
       if(bentukKey === 'grafik' && grafikImage){
         userWorks[bentukKey] = {type: 'image', data: grafikImage, label: label};
+      } else if(bentukKey === 'grafik' && diagramData?.cartesianData){
+        const svgPreview = buildKartesiusSvg(diagramData.cartesianData);
+        userWorks[bentukKey] = {type: 'image', data: svgPreview, label: label};
       } else {
         userWorks[bentukKey] = {type: 'text', data: penyajian.deskripsi || '-', label: label};
       }
     }catch(e){
       return userWorks;
+    }
+  }
+
+  if (!userWorks.grafik) {
+    if (grafikImage) {
+      userWorks.grafik = {type: 'image', data: grafikImage, label: 'Diagram Kartesius'};
+    } else if (diagramData?.cartesianData) {
+      const svgPreview = buildKartesiusSvg(diagramData.cartesianData);
+      userWorks.grafik = {type: 'image', data: svgPreview, label: 'Diagram Kartesius'};
     }
   }
 
