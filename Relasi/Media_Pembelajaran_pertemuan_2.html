@@ -1,11 +1,11 @@
-444<!DOCTYPE html>
+<!DOCTYPE html>
 <!-- saved from url=(0060)file:///C:/Users/Melani%20Sintawati/Downloads/hahahahah.html -->
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Media Pembelajaran — Relasi & Fungsi (Final)</title>
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
@@ -14,7 +14,7 @@
 html,body{
   height:100%;
   margin:0;
-  font-family:'Bagel Fat One',cursive;
+  font-family:'Poppins',sans-serif;
   background:var(--bg);
   color:var(--accent);
 }
@@ -97,8 +97,6 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
 .nav{display:flex;justify-content:center;gap:12px;margin-top:18px}
 .btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
 .nav .btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
-.footer{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap;padding:0 20px 20px;}
-.progress{font-size:14px;color:var(--muted)}
 @media (max-width:920px){ .card{padding:12px} h1{font-size:32px} .oval{width:200px;height:220px} .dot-line{width:78%} .canvas-box canvas{width:100%} .input-large-half{width:100%} }
 
 /* Modal Papan Pesanan */
@@ -489,6 +487,237 @@ img {
   animation: fadeIn 0.8s ease-out;
 }
 
+/* === CHOICE CARDS (Pemilihan Kegiatan) === */
+.choice-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin: 30px auto;
+  max-width: 1100px;
+}
+
+.choice-card {
+  background: linear-gradient(135deg, #fff 0%, #fffef7 100%);
+  border: 3px solid rgba(0,0,0,0.08);
+  border-radius: 16px;
+  padding: 28px;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.choice-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #ffcb64, #ff9800);
+  transform: scaleX(0);
+  transition: transform 0.35s ease;
+}
+
+.choice-card:hover::before {
+  transform: scaleX(1);
+}
+
+.choice-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
+  border-color: var(--accent);
+}
+
+.choice-card.selected {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, #fff9e6 0%, #ffebcc 100%);
+  box-shadow: 0 8px 20px rgba(255, 152, 0, 0.25);
+}
+
+.choice-card.selected::before {
+  transform: scaleX(1);
+}
+
+.choice-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  display: block;
+  transition: all 0.3s ease;
+}
+
+.choice-card:hover .choice-icon {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.choice-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+
+.choice-desc {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.choice-badge {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1565c0;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.choice-badge.visual { background: #fce4ec; color: #c2185b; }
+.choice-badge.analytic { background: #e8f5e9; color: #2e7d32; }
+.choice-badge.verbal { background: #fff3e0; color: #e65100; }
+
+.preview-box {
+  background: #fff;
+  border: 2px dashed rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+  text-align: center;
+}
+
+.preview-label {
+  font-size: 14px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.preview-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.quick-preview-card {
+  background: linear-gradient(135deg, #f5f5f5 0%, #ececec 100%);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 16px 0;
+  border-left: 4px solid var(--accent);
+}
+
+.quick-preview-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.quick-preview-content {
+  color: #555;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* === GALLERY DISPLAY (Penyajian Karya) === */
+.gallery-display-box {
+  background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+  border: 3px solid #ffcb64;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  display: none;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.gallery-display-box.show {
+  display: block;
+}
+
+.gallery-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px dashed rgba(0,0,0,0.1);
+}
+
+.gallery-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.gallery-subtitle {
+  font-size: 14px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.gallery-content {
+  min-height: 200px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px dashed rgba(0,0,0,0.08);
+}
+
+.gallery-image-wrapper {
+  text-align: center;
+  padding: 16px;
+}
+
+.gallery-image-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  border: 2px solid #e0e0e0;
+}
+
+.gallery-text-wrapper {
+  padding: 20px;
+}
+
+.gallery-text-item {
+  background: #fffef7;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--accent);
+}
+
+.gallery-text-label {
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.gallery-text-content {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.gallery-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 12px;
+}
+
 /* Modal overlay untuk Google Form */
 #gformModal {
   display: none;
@@ -608,30 +837,6 @@ h1, h2 {
 </head>
 <body>
 
-<!-- Modal Google Form -->
-<div id="gformModal">
-  <div id="gformModalContent">
-    <span id="gformModalClose" onclick="closeGFormModal()">&times;</span>
-    <div class="gform-title">✅ PDF Berhasil Didownload!</div>
-    <div class="gform-message">
-      <p style="margin:10px 0;">File PDF hasil pembelajaran sudah tersimpan di komputer Anda.</p>
-      <p style="margin:10px 0;font-weight:700;color:#d32f2f;">Sekarang silakan upload ke Google Form:</p>
-    </div>
-    <a href="" id="gformLink" class="gform-link-btn" target="_blank">📝 BUKA GOOGLE FORM</a>
-    <div style="margin-top:25px;padding:20px;background:#fff9e6;border-radius:10px;text-align:left;">
-      <p style="font-size:14px;margin:8px 0;color:#333;"><strong>Instruksi:</strong></p>
-      <ol style="font-size:13px;line-height:1.8;color:#555;margin:8px 0;padding-left:20px;">
-        <li>Klik tombol hijau di atas untuk membuka Google Form</li>
-        <li>Isi nama kelompok Anda</li>
-        <li>Upload file PDF yang baru didownload</li>
-        <li>Klik Submit</li>
-      </ol>
-      <p style="font-size:12px;margin:10px 0;color:#777;font-style:italic;">💡 File akan otomatis masuk ke Google Drive guru!</p>
-    </div>
-    <div class="gform-close-btn" onclick="closeGFormModal()">Tutup</div>
-  </div>
-</div>
-
 <div class="wrapper"><div class="card">
   <div class="header"><h1>Media Pembelajaran Relasi &amp; Fungsi</h1><div class="lead">Interaktif — kerjakan dari Start → Permasalahan</div></div>
 
@@ -705,10 +910,6 @@ h1, h2 {
             <button class="btn" data-go="identitas-kelompok">Lanjut ⟶</button>
           </div>
         </div>
-
-        <div class="footer" style="margin-top:14px">
-          <!-- <div class="progress">Permasalahan — Foto</div> -->
-        </div>
       </div>
     </section>
 
@@ -722,7 +923,7 @@ h1, h2 {
         <div class="content" style="max-width:700px;margin:0 auto">
           <div class="card-lite" style="background:#fff;padding:16px;border-radius:10px;margin-bottom:20px">
             <label style="display:block;margin-bottom:8px;font-weight:bold;color:var(--accent);font-size:16px">📝 Nama Kelompok</label>
-            <input type="text" id="namaKelompok" class="input" style="width:100%;padding:10px;border-radius:8px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:15px;box-sizing:border-box" placeholder="Contoh: Kelompok Avengers">
+            <input type="text" id="namaKelompok" class="input" style="width:100%;padding:10px;border-radius:8px;border:2px solid #d1d5db;font-family:'Poppins',sans-serif;font-size:15px;box-sizing:border-box" placeholder="Contoh: Kelompok Avengers">
           </div>
 
           <!-- PREVIEW ANGGOTA YANG SUDAH DI-INPUT -->
@@ -745,11 +946,11 @@ h1, h2 {
             <div style="display:flex;gap:8px;margin-bottom:12px">
               <div style="flex:1">
                 <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px">Nama Anggota</label>
-                <input type="text" id="inputNamaAnggota" placeholder="Ketik nama anggota..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;box-sizing:border-box">
+                <input type="text" id="inputNamaAnggota" placeholder="Ketik nama anggota..." style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Poppins',sans-serif;font-size:14px;box-sizing:border-box">
               </div>
               <div style="flex:1">
                 <label style="display:block;font-size:12px;color:var(--accent);font-weight:700;margin-bottom:4px">Pilih Peran</label>
-                <select id="selectPenanggungJawab" style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Bagel Fat One',cursive;font-size:14px;box-sizing:border-box">
+                <select id="selectPenanggungJawab" style="width:100%;padding:10px;border-radius:6px;border:2px solid #d1d5db;font-family:'Poppins',sans-serif;font-size:14px;box-sizing:border-box">
                   <option value="">-- Pilih peran --</option>
                   <option value="Ketua Kelompok">Ketua Kelompok</option>
                   <option value="Wakil Ketua">Wakil Ketua</option>
@@ -912,7 +1113,7 @@ h1, h2 {
 
     <textarea id="k2_penemuan_input"
               placeholder="Tuliskan pengertian relasi menurut pemahamanmu..."
-              style="width:100%;height:140px;padding:10px;border-radius:12px;border:2px solid rgba(0,0,0,0.08);font-family:'Bagel Fat One';font-size:16px;">
+              style="width:100%;height:140px;padding:10px;border-radius:12px;border:2px solid rgba(0,0,0,0.08);font-family:'Poppins';font-size:16px;">
     </textarea>
 
     <div style="display:flex;justify-content:flex-end;margin-top:12px;gap:10px">
@@ -962,7 +1163,73 @@ h1, h2 {
           </div>
         </div>
       </div>
-      <div class="nav"><button class="btn" data-go="k1">Back</button><button class="btn" data-go="k3">Next</button></div>
+      <div class="nav"><button class="btn" data-go="k1">Back</button><button class="btn" data-go="pilih-kegiatan">Next</button></div>
+    </section>
+
+    <!-- SLIDE PEMILIHAN KEGIATAN -->
+    <section class="slide" id="pilih-kegiatan">
+      <h2 style="text-align:center;color:var(--accent);margin-bottom:16px">🎯 Pilih Cara Menyajikan Relasi</h2>
+      
+      <div style="max-width:900px;margin:0 auto 24px;padding:16px;background:#fff3cd;border-radius:12px;border-left:4px solid #ffcb64">
+        <strong style="display:block;margin-bottom:8px;color:var(--accent)">📌 Petunjuk Pemilihan:</strong>
+        <p style="color:var(--muted);font-size:14px;line-height:1.6;margin:0">
+          Kalian akan menggambar <strong>SATU relasi secara lengkap</strong> sesuai pilihan kalian. Setelah itu, kalian akan melihat preview singkat dari 2 bentuk lainnya. Pilih sesuai gaya belajar kalian!
+        </p>
+      </div>
+
+      <div class="choice-container">
+        <!-- CHOICE 1: Diagram Panah -->
+        <div class="choice-card" data-choice="k3" id="choice-k3">
+          <span class="choice-icon">🎯</span>
+          <div class="choice-title">Diagram Panah</div>
+          <div class="choice-desc">
+            Menggambar panah dari domain ke kodomain menggunakan canvas interaktif. Cocok untuk learner yang suka visualisasi hubungan langsung.
+          </div>
+          <span class="choice-badge visual">Visual Learner</span>
+          <div style="margin-top:12px;font-size:13px;color:#666">
+            ⏱️ Waktu: ~12-15 menit
+          </div>
+        </div>
+
+        <!-- CHOICE 2: Diagram Kartesius -->
+        <div class="choice-card" data-choice="k4" id="choice-k4">
+          <span class="choice-icon">📊</span>
+          <div class="choice-title">Diagram Kartesius</div>
+          <div class="choice-desc">
+            Menempatkan titik pada koordinat (x,y) untuk merepresentasikan relasi. Cocok untuk yang suka sistem koordinat dan analisis matematis.
+          </div>
+          <span class="choice-badge analytic">Analytic Learner</span>
+          <div style="margin-top:12px;font-size:13px;color:#666">
+            ⏱️ Waktu: ~12-15 menit
+          </div>
+        </div>
+
+        <!-- CHOICE 3: Pasangan Terurut -->
+        <div class="choice-card" data-choice="k5" id="choice-k5">
+          <span class="choice-icon">📝</span>
+          <div class="choice-title">Pasangan Terurut</div>
+          <div class="choice-desc">
+            Menulis relasi dalam bentuk notasi aljabar {(a,b), (c,d)}. Cocok untuk yang suka representasi ringkas dan simbolik.
+          </div>
+          <span class="choice-badge verbal">Verbal Learner</span>
+          <div style="margin-top:12px;font-size:13px;color:#666">
+            ⏱️ Waktu: ~8-10 menit
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:28px">
+        <button class="btn" id="btnMulaiKegiatan" disabled style="padding:14px 32px;font-size:18px;opacity:0.5;cursor:not-allowed">
+          Mulai Kegiatan Terpilih
+        </button>
+        <p id="pilihanInfo" style="margin-top:12px;color:var(--muted);font-size:14px">
+          ⬆️ Klik salah satu kartu di atas untuk memilih
+        </p>
+      </div>
+
+      <div class="nav" style="margin-top:24px">
+        <button class="btn ghost" data-go="k2">⟵ Kembali</button>
+      </div>
     </section>
 
     <section class="slide" id="k3">
@@ -1090,7 +1357,7 @@ h1, h2 {
         <button class="tool" id="saveImgBtn2">Simpan Gambar</button>
       </div>
 
-      <div class="nav"><button class="btn" data-go="k2">Back</button><button class="btn" data-go="k4">Next</button></div>
+      <div class="nav"><button class="btn" data-go="pilih-kegiatan">Back</button><button class="btn" data-go="preview-activities">Next</button></div>
     </section>
 
     <section class="slide" id="k4">
@@ -1148,7 +1415,7 @@ h1, h2 {
         <canvas id="plane2" width="900" height="320"></canvas>
       </div>
 
-      <div class="nav"><button class="btn" data-go="k3">Back</button><button class="btn" data-go="k5">Next</button></div>
+      <div class="nav"><button class="btn" data-go="pilih-kegiatan">Back</button><button class="btn" data-go="preview-activities">Next</button></div>
     </section>
 
     <section class="slide" id="k5">
@@ -1172,9 +1439,42 @@ h1, h2 {
       </div>
 
       <div style="display:flex;gap:12px;justify-content:center;margin-top:14px">
-        <button class="btn" data-go="k4">Back</button>
+        <button class="btn" data-go="pilih-kegiatan">Back</button>
         <button class="btn" id="finishBtn">Tandai Selesai</button>
-        <button class="btn" data-go="penyajian-relasi">Next: Penyajian Relasi ⟶</button>
+        <button class="btn" data-go="preview-activities">Next ⟶</button>
+      </div>
+    </section>
+
+    <!-- SLIDE PREVIEW AKTIVITAS LAINNYA -->
+    <section class="slide" id="preview-activities">
+      <h2 style="text-align:center;color:var(--accent);margin-bottom:20px">👀 Preview: Bentuk Penyajian Lainnya</h2>
+      
+      <div style="max-width:900px;margin:0 auto 24px;padding:16px;background:#e8f5e9;border-radius:12px;border-left:4px solid #4caf50">
+        <strong style="display:block;margin-bottom:8px;color:#2e7d32">✅ Kegiatan Utama Selesai!</strong>
+        <p style="color:#1b5e20;font-size:14px;line-height:1.6;margin:0">
+          Kalian telah menyelesaikan <strong id="completedActivityName">kegiatan terpilih</strong>. Sekarang mari lihat 2 bentuk representasi lainnya secara singkat untuk memperluas pemahaman.
+        </p>
+      </div>
+
+      <div id="previewContainer" style="max-width:900px;margin:0 auto">
+        <!-- Preview akan dimuat via JavaScript -->
+      </div>
+
+      <div style="text-align:center;margin-top:32px;padding:20px;background:#fff3d9;border-radius:12px;max-width:700px;margin-left:auto;margin-right:auto">
+        <h3 style="color:var(--accent);margin-bottom:12px">💡 Refleksi Singkat</h3>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:16px">
+          Setelah melihat 3 bentuk representasi relasi, mana yang paling mudah dipahami menurutmu?
+        </p>
+        <textarea id="refleksiPemilihan" 
+          placeholder="Tuliskan pendapatmu tentang ketiga bentuk representasi relasi..."
+          style="width:100%;padding:12px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);font-family:'Poppins';min-height:100px;resize:vertical"></textarea>
+        <button class="btn" id="simpanRefleksiPemilihan" style="margin-top:12px">💾 Simpan Refleksi</button>
+        <div id="feedbackRefleksi" style="margin-top:10px;color:#2e7d32;font-weight:600"></div>
+      </div>
+
+      <div class="nav" style="margin-top:28px">
+        <button class="btn ghost" id="backToSelectedActivity">⟵ Kembali ke Kegiatan</button>
+        <button class="btn" data-go="penyajian-relasi">Lanjut ke Gallery Walk ⟶</button>
       </div>
     </section>
 
@@ -1182,7 +1482,7 @@ h1, h2 {
     <section class="slide" id="penyajian-relasi">
       <h2 style="color:var(--accent);margin-bottom:20px">🎨 Fase 4: Penyajian Hasil Karya (Gallery Walk)</h2>
       <p style="color:var(--muted);margin-bottom:20px">
-        Kalian sudah menggambar 2 relasi (Makanan & Minuman). Pilih bentuk penyajian yang paling bagus untuk ditampilkan!
+        Kalian sudah menyelesaikan kegiatan terpilih dan melihat preview bentuk lainnya. Sekarang pilih bentuk penyajian mana yang paling efektif untuk menyampaikan pemahaman relasi kalian kepada kelompok lain!
       </p>
 
       <!-- BAGIAN A: PILIH BENTUK PENYAJIAN RELASI -->
@@ -1192,38 +1492,47 @@ h1, h2 {
           Kalian bisa menampilkan relasi makanan dalam bentuk:
         </p>
         
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:16px">
           <label class="penyajian-option">
             <input type="radio" name="bentukPenyajianRelasi" value="diagram-panah" checked>
             <span>🎯 Diagram Panah</span>
           </label>
           <label class="penyajian-option">
-            <input type="radio" name="bentukPenyajianRelasi" value="tabel">
-            <span>📋 Tabel Relasi</span>
+            <input type="radio" name="bentukPenyajianRelasi" value="diagram-kartesius">
+            <span>📊 Diagram Kartesius</span>
           </label>
           <label class="penyajian-option">
-            <input type="radio" name="bentukPenyajianRelasi" value="pasangan-berurutan">
-            <span>📝 Pasangan Berurutan</span>
-          </label>
-          <label class="penyajian-option">
-            <input type="radio" name="bentukPenyajianRelasi" value="visual-kreatif">
-            <span>🎨 Visualisasi Kreatif</span>
+            <input type="radio" name="bentukPenyajianRelasi" value="pasangan-terurut">
+            <span>📝 Pasangan Terurut</span>
           </label>
         </div>
 
         <textarea id="deskripsiPenyajianRelasi" 
-          placeholder="Jelaskan mengapa bentuk ini terbaik untuk menunjukkan relasi makanan kesukaan... (contoh: Diagram panah paling jelas karena bisa lihat aturan relasi dengan mudah)"
-          style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;font-family:Arial;min-height:80px"></textarea>
+          placeholder="Jelaskan mengapa bentuk ini terbaik untuk menyajikan relasi... (contoh: Diagram panah paling jelas karena visualnya menunjukkan hubungan langsung antar anggota himpunan)"
+          style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;font-family:'Poppins';min-height:80px"></textarea>
 
         <button class="btn" id="btnSimpanPenyajianRelasi" style="margin-top:12px">💾 Simpan Penyajian Kami</button>
         <div id="feedbackPenyajianRelasi" style="margin-top:12px"></div>
+        
+        <!-- AREA DISPLAY PENYAJIAN -->
+        <div id="galleryDisplayBox" class="gallery-display-box">
+          <div class="gallery-header">
+            <div class="gallery-title">🖼️ Hasil Penyajian Kami</div>
+            <div class="gallery-subtitle" id="gallerySubtitle">Bentuk: Diagram Panah</div>
+          </div>
+          <div class="gallery-content" id="galleryContent">
+            <p style="text-align:center;color:var(--muted);padding:40px 20px">
+              📦 Pilih bentuk penyajian dan klik "Simpan" untuk menampilkan karya kalian...
+            </p>
+          </div>
+        </div>
       </div>
 
       <!-- BAGIAN B: GALLERY WALK - KOMENTAR DARI KELOMPOK LAIN -->
       <div class="card-lite" style="margin-top:20px">
         <div style="font-weight:700;color:var(--accent);margin-bottom:12px">👥 B. Gallery Walk: Berikan Saran</div>
         <p style="color:var(--muted);font-size:14px;margin-bottom:12px">
-          Kunjungi hasil karya kelompok lain dan berikan saran konstruktif!
+          Kunjungi hasil karya kelompok lain yang ditampilkan di atas dan berikan saran konstruktif berdasarkan penyajian yang kalian lihat!
         </p>
 
         <div style="display:flex;gap:12px;margin-bottom:16px">
@@ -1249,7 +1558,7 @@ h1, h2 {
 
       <!-- NAVIGASI -->
       <div style="display:flex;gap:12px;justify-content:center;margin-top:24px;flex-wrap:wrap">
-        <button class="btn ghost" data-go="k4">⟵ Kembali</button>
+        <button class="btn ghost" data-go="preview-activities">⟵ Kembali</button>
         <button class="btn" data-go="evaluasi">Lanjut ke Evaluasi ⟶</button>
       </div>
     </section>
@@ -1358,7 +1667,7 @@ h1, h2 {
       <div style="margin-top:30px;padding:20px;background:#fff3d9;border-radius:12px;border:2px dashed #ffd199;text-align:center;">
         <div style="font-size:18px;font-weight:700;color:var(--accent);margin-bottom:10px;">📤 Kirim Hasil Pembelajaran</div>
         <div style="color:var(--muted);margin-bottom:16px;font-size:14px;">Setelah menyelesaikan semua tahapan, kirim hasil ke guru dalam bentuk PDF</div>
-        <button class="btn" onclick="showMetodePengiriman()" style="font-size:18px;padding:14px 30px;">
+        <button class="btn" id="btnKirimHasilGuru" style="font-size:18px;padding:14px 30px;">
           📤 Kirim Hasil ke Guru
         </button>
         <p style="font-size:13px;color:#666;margin-top:10px;">
@@ -1377,9 +1686,6 @@ h1, h2 {
   
 </main>
 
-  <footer class="footer">
-    <div class="progress">Progress: Kegiatan Selesai <span id="progressCount">0/6</span> </div>
-  </footer>
 </div></div>
 </div></div>
 
@@ -1422,20 +1728,6 @@ h1, h2 {
   
 </div>
 
-<!-- Modal Google Form -->
-<div id="gformModal">
-  <div id="gformModalContent">
-    <span id="gformModalClose" onclick="closeGFormModal()">&times;</span>
-    <div class="gform-title">✅ PDF Berhasil Dibuat</div>
-    <div class="gform-message">
-      <p>File PDF jawabanmu sudah disiapkan.</p>
-      <p style="font-weight:700;color:#d32f2f">Silakan upload ke Google Form melalui tombol di bawah.</p>
-    </div>
-    <a href="" id="gformLink" class="gform-link-btn" target="_blank">📝 BUKA GOOGLE FORM</a>
-    <div class="gform-close-btn" onclick="closeGFormModal()">Tutup</div>
-  </div>
-</div>
-
 <script>
 // --- Navigasi global (bisa dipakai di mana saja) ---
 function show(id) {
@@ -1475,7 +1767,7 @@ function addAnggota() {
   div.style.cssText = 'display:flex;gap:8px;margin-bottom:8px';
   div.innerHTML = `
     <input type="text" class="anggota-input" placeholder="Nama anggota ${count}" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
-    <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:150px">
+    <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Poppins',sans-serif;font-size:14px;min-width:150px">
       <option value="Ketua Kelompok">Ketua Kelompok</option>
       <option value="Wakil Ketua">Wakil Ketua</option>
       <option value="Sekretaris">Sekretaris</option>
@@ -1572,6 +1864,180 @@ document.addEventListener('DOMContentLoaded', () => {
       children.forEach(ch => itemsContainer.appendChild(ch));
     }
 
+    // =========================================================
+    // LOGIKA PEMILIHAN KEGIATAN (Choice-Based Learning)
+    // =========================================================
+    let selectedActivity = localStorage.getItem('selectedActivity') || null;
+    
+    // Setup event listener untuk choice cards
+    const choiceCards = document.querySelectorAll('.choice-card');
+    const btnMulaiKegiatan = document.getElementById('btnMulaiKegiatan');
+    const pilihanInfo = document.getElementById('pilihanInfo');
+    
+    choiceCards.forEach(card => {
+      card.addEventListener('click', function() {
+        // Hapus selected dari semua cards
+        choiceCards.forEach(c => c.classList.remove('selected'));
+        
+        // Tambah selected ke card yang diklik
+        this.classList.add('selected');
+        
+        // Simpan pilihan
+        selectedActivity = this.getAttribute('data-choice');
+        localStorage.setItem('selectedActivity', selectedActivity);
+        
+        // Enable tombol mulai
+        if (btnMulaiKegiatan) {
+          btnMulaiKegiatan.disabled = false;
+          btnMulaiKegiatan.style.opacity = '1';
+          btnMulaiKegiatan.style.cursor = 'pointer';
+        }
+        
+        // Update info text
+        const activityNames = {
+          'k3': 'Diagram Panah',
+          'k4': 'Diagram Kartesius',
+          'k5': 'Pasangan Terurut'
+        };
+        if (pilihanInfo) {
+          pilihanInfo.innerHTML = `✅ Kamu memilih: <strong>${activityNames[selectedActivity]}</strong>`;
+          pilihanInfo.style.color = '#2e7d32';
+          pilihanInfo.style.fontWeight = '600';
+        }
+      });
+    });
+    
+    // Restore pilihan dari localStorage
+    if (selectedActivity) {
+      const selectedCard = document.querySelector(`.choice-card[data-choice="${selectedActivity}"]`);
+      if (selectedCard) {
+        selectedCard.classList.add('selected');
+        if (btnMulaiKegiatan) {
+          btnMulaiKegiatan.disabled = false;
+          btnMulaiKegiatan.style.opacity = '1';
+          btnMulaiKegiatan.style.cursor = 'pointer';
+        }
+      }
+    }
+    
+    // Handle tombol mulai kegiatan
+    if (btnMulaiKegiatan) {
+      btnMulaiKegiatan.addEventListener('click', function() {
+        if (selectedActivity) {
+          show(selectedActivity);
+        } else {
+          alert('Pilih salah satu kegiatan terlebih dahulu!');
+        }
+      });
+    }
+    
+    // Handle back to selected activity dari preview
+    const backToSelectedActivity = document.getElementById('backToSelectedActivity');
+    if (backToSelectedActivity) {
+      backToSelectedActivity.addEventListener('click', function() {
+        const activity = localStorage.getItem('selectedActivity');
+        if (activity) {
+          show(activity);
+        } else {
+          show('pilih-kegiatan');
+        }
+      });
+    }
+    
+    // Generate preview untuk kegiatan yang tidak dipilih
+    function generatePreviews() {
+      const selected = localStorage.getItem('selectedActivity');
+      if (!selected) return;
+      
+      const previewContainer = document.getElementById('previewContainer');
+      const completedActivityName = document.getElementById('completedActivityName');
+      
+      if (!previewContainer) return;
+      
+      const activityData = {
+        'k3': {
+          title: 'Diagram Panah',
+          icon: '🎯',
+          desc: 'Diagram panah menunjukkan relasi dengan menggambar anak panah dari domain (himpunan awal) ke kodomain (himpunan tujuan). Setiap panah merepresentasikan satu pasangan hubungan.',
+          example: 'Jika Ani suka Donat, maka ada panah dari "Ani" ke "Donat". Visual ini sangat jelas untuk melihat hubungan one-to-one, one-to-many, atau many-to-one.'
+        },
+        'k4': {
+          title: 'Diagram Kartesius',
+          icon: '📊',
+          desc: 'Diagram Kartesius merepresentasikan relasi sebagai titik-titik pada bidang koordinat. Sumbu X adalah domain, sumbu Y adalah kodomain.',
+          example: 'Jika Budi suka Sosis, maka ada titik di koordinat (Budi, Sosis). Format ini berguna untuk analisis matematis dan mudah dihubungkan dengan konsep fungsi.'
+        },
+        'k5': {
+          title: 'Pasangan Terurut',
+          icon: '📝',
+          desc: 'Pasangan terurut adalah notasi aljabar yang paling ringkas untuk menyatakan relasi. Ditulis dalam bentuk {(a,b), (c,d), ...}',
+          example: 'Relasi makanan kesukaan dapat ditulis: {(Ani, Donat), (Budi, Sosis), (Citra, Donat), (Dedi, Sosis)}. Format ini sangat efisien dan formal.'
+        }
+      };
+      
+      const allActivities = ['k3', 'k4', 'k5'];
+      const otherActivities = allActivities.filter(a => a !== selected);
+      
+      // Update nama kegiatan yang selesai
+      if (completedActivityName) {
+        completedActivityName.textContent = activityData[selected].title;
+      }
+      
+      // Generate preview cards
+      let previewHTML = '';
+      otherActivities.forEach(actId => {
+        const data = activityData[actId];
+        previewHTML += `
+          <div class="quick-preview-card">
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+              <span style="font-size:40px">${data.icon}</span>
+              <div class="quick-preview-title">${data.title}</div>
+            </div>
+            <div class="quick-preview-content">
+              <p><strong>Deskripsi:</strong> ${data.desc}</p>
+              <p style="margin-top:10px;padding:12px;background:#fff3d9;border-radius:8px;border-left:3px solid #ffcb64">
+                <strong>💡 Contoh:</strong> ${data.example}
+              </p>
+            </div>
+          </div>
+        `;
+      });
+      
+      previewContainer.innerHTML = previewHTML;
+    }
+    
+    // Generate preview saat masuk ke slide preview-activities
+    document.addEventListener('click', (ev) => {
+      const btn = ev.target.closest('[data-go]');
+      if (btn && btn.getAttribute('data-go') === 'preview-activities') {
+        setTimeout(() => generatePreviews(), 100);
+      }
+    });
+    
+    // Handle simpan refleksi pemilihan
+    const simpanRefleksiBtn = document.getElementById('simpanRefleksiPemilihan');
+    if (simpanRefleksiBtn) {
+      simpanRefleksiBtn.addEventListener('click', function() {
+        const refleksi = document.getElementById('refleksiPemilihan')?.value.trim();
+        const feedback = document.getElementById('feedbackRefleksi');
+        
+        if (!refleksi) {
+          if (feedback) {
+            feedback.textContent = '❌ Mohon isi refleksi terlebih dahulu';
+            feedback.style.color = '#c62828';
+          }
+          return;
+        }
+        
+        localStorage.setItem('refleksiPemilihanKegiatan', refleksi);
+        
+        if (feedback) {
+          feedback.textContent = '✅ Refleksi tersimpan!';
+          feedback.style.color = '#2e7d32';
+        }
+      });
+    }
+
     // Salin data himpunan dari K2 ke K3 (diagram panah)
     // Saat pindah ke K3, copy nama Teman, Makanan, Minuman ke diagram
     let papanShown = false; // legacy flag (modal not used now)
@@ -1617,6 +2083,53 @@ document.addEventListener('DOMContentLoaded', () => {
             if (destMinuman) destMinuman.textContent = val;
           }
         }
+      }
+      
+      // Auto-populate K4 (Diagram Kartesius) dari K2
+      if (btn && btn.getAttribute('data-go') === 'k4') {
+        // Ambil data dari K2
+        const temanData = [];
+        const makananData = [];
+        const minumanData = [];
+        
+        for (let i = 1; i <= 4; i++) {
+          const teman = document.getElementById('t' + i);
+          const makanan = document.getElementById('m' + i);
+          const minuman = document.getElementById('d' + i);
+          
+          if (teman && teman.textContent.trim()) {
+            temanData.push(teman.textContent.trim());
+          }
+          if (makanan && makanan.textContent.trim()) {
+            makananData.push(makanan.textContent.trim());
+          }
+          if (minuman && minuman.textContent.trim()) {
+            minumanData.push(minuman.textContent.trim());
+          }
+        }
+        
+        // Auto-fill input fields K4 dengan delay kecil agar DOM sudah ready
+        setTimeout(() => {
+          // Domain inputs (nama siswa)
+          const domain1Input = document.getElementById('domain1_input');
+          const domain2Input = document.getElementById('domain2_input');
+          if (domain1Input && temanData.length > 0) {
+            domain1Input.value = temanData.join(', ');
+          }
+          if (domain2Input && temanData.length > 0) {
+            domain2Input.value = temanData.join(', ');
+          }
+          
+          // Kodomain inputs (makanan & minuman)
+          const kodomain1Input = document.getElementById('kodomain1_input');
+          const kodomain2Input = document.getElementById('kodomain2_input');
+          if (kodomain1Input && makananData.length > 0) {
+            kodomain1Input.value = makananData.join(', ');
+          }
+          if (kodomain2Input && minumanData.length > 0) {
+            kodomain2Input.value = minumanData.join(', ');
+          }
+        }, 100);
       }
     });
     
@@ -1696,6 +2209,131 @@ document.addEventListener('DOMContentLoaded', () => {
       `).join('');
     }
 
+    // Function untuk generate gallery display
+    function generateGalleryDisplay(bentuk) {
+      const galleryContent = document.getElementById('galleryContent');
+      const gallerySubtitle = document.getElementById('gallerySubtitle');
+      const galleryBox = document.getElementById('galleryDisplayBox');
+      
+      if (!galleryContent || !gallerySubtitle || !galleryBox) return;
+      
+      const bentukLabels = {
+        'diagram-panah': '🎯 Diagram Panah',
+        'diagram-kartesius': '📊 Diagram Kartesius',
+        'pasangan-terurut': '📝 Pasangan Terurut'
+      };
+      
+      gallerySubtitle.textContent = `Bentuk: ${bentukLabels[bentuk] || bentuk}`;
+      
+      let contentHTML = '';
+      
+      if (bentuk === 'diagram-panah') {
+        // Ambil gambar canvas dari K3 (Diagram Panah)
+        const canvasImg1 = localStorage.getItem('canvasImage_drawCanvas1');
+        const canvasImg2 = localStorage.getItem('canvasImage_drawCanvas2');
+        
+        if (canvasImg1 || canvasImg2) {
+          contentHTML = '<div class="gallery-image-wrapper">';
+          if (canvasImg1) {
+            contentHTML += `
+              <div style="margin-bottom:20px">
+                <div style="font-weight:700;color:var(--accent);margin-bottom:10px">Relasi 1: Makanan Kesukaan</div>
+                <img src="${canvasImg1}" alt="Diagram Panah Makanan" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.15)">
+              </div>
+            `;
+          }
+          if (canvasImg2) {
+            contentHTML += `
+              <div>
+                <div style="font-weight:700;color:var(--accent);margin-bottom:10px">Relasi 2: Minuman Kesukaan</div>
+                <img src="${canvasImg2}" alt="Diagram Panah Minuman" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.15)">
+              </div>
+            `;
+          }
+          contentHTML += '</div>';
+        } else {
+          contentHTML = '<p style="text-align:center;color:var(--muted);padding:40px 20px">📌 Diagram panah belum dibuat. Kerjakan Kegiatan 3 terlebih dahulu.</p>';
+        }
+      } 
+      else if (bentuk === 'diagram-kartesius') {
+        // Ambil gambar canvas dari K4 (Diagram Kartesius)
+        const plane1Img = localStorage.getItem('canvasImage_plane1');
+        const plane2Img = localStorage.getItem('canvasImage_plane2');
+        
+        if (plane1Img || plane2Img) {
+          contentHTML = '<div class="gallery-image-wrapper">';
+          if (plane1Img) {
+            contentHTML += `
+              <div style="margin-bottom:20px">
+                <div style="font-weight:700;color:var(--accent);margin-bottom:10px">Relasi 1: Makanan Kesukaan</div>
+                <img src="${plane1Img}" alt="Diagram Kartesius Makanan" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.15)">
+              </div>
+            `;
+          }
+          if (plane2Img) {
+            contentHTML += `
+              <div>
+                <div style="font-weight:700;color:var(--accent);margin-bottom:10px">Relasi 2: Minuman Kesukaan</div>
+                <img src="${plane2Img}" alt="Diagram Kartesius Minuman" style="max-width:100%;height:auto;border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,0.15)">
+              </div>
+            `;
+          }
+          contentHTML += '</div>';
+        } else {
+          contentHTML = '<p style="text-align:center;color:var(--muted);padding:40px 20px">📌 Diagram Kartesius belum dibuat. Kerjakan Kegiatan 4 terlebih dahulu.</p>';
+        }
+      } 
+      else if (bentuk === 'pasangan-terurut') {
+        // Ambil teks dari K5 (Pasangan Terurut)
+        const pairsFood = document.getElementById('pairs_food')?.value.trim();
+        const pairsDrink = document.getElementById('pairs_drink')?.value.trim();
+        const conclusion = document.getElementById('conclusion')?.value.trim();
+        
+        if (pairsFood || pairsDrink || conclusion) {
+          contentHTML = '<div class="gallery-text-wrapper">';
+          
+          if (pairsFood) {
+            contentHTML += `
+              <div class="gallery-text-item">
+                <div class="gallery-text-label">📋 Pasangan Terurut Makanan:</div>
+                <div class="gallery-text-content">${pairsFood}</div>
+              </div>
+            `;
+          }
+          
+          if (pairsDrink) {
+            contentHTML += `
+              <div class="gallery-text-item">
+                <div class="gallery-text-label">🥤 Pasangan Terurut Minuman:</div>
+                <div class="gallery-text-content">${pairsDrink}</div>
+              </div>
+            `;
+          }
+          
+          if (conclusion) {
+            contentHTML += `
+              <div class="gallery-text-item">
+                <div class="gallery-text-label">💡 Kesimpulan:</div>
+                <div class="gallery-text-content">${conclusion}</div>
+              </div>
+            `;
+          }
+          
+          contentHTML += '</div>';
+        } else {
+          contentHTML = '<p style="text-align:center;color:var(--muted);padding:40px 20px">📌 Pasangan terurut belum diisi. Kerjakan Kegiatan 5 terlebih dahulu.</p>';
+        }
+      }
+      
+      galleryContent.innerHTML = contentHTML;
+      galleryBox.classList.add('show');
+      
+      // Smooth scroll ke gallery display
+      setTimeout(() => {
+        galleryBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 200);
+    }
+    
     // Simpan pilihan penyajian
     btnSimpanPenyajianRelasi?.addEventListener('click', () => {
       const bentukPenyajian = document.querySelector('input[name="bentukPenyajianRelasi"]:checked')?.value;
@@ -1714,12 +2352,44 @@ document.addEventListener('DOMContentLoaded', () => {
       
       localStorage.setItem('penyajianRelasiKelompok', JSON.stringify(penyajian));
       
+      // Generate dan tampilkan gallery display
+      generateGalleryDisplay(bentukPenyajian);
+      
       feedbackPenyajianRelasi.innerHTML = `
         <div style="padding:12px;border-radius:8px;background:#d1fae5;border-left:4px solid #10b981;color:#065f46;font-weight:600">
           ✅ Penyajian tersimpan! Kelompokmu memilih: <strong>${bentukPenyajian}</strong>
-          <br><small>Sekarang kelompok lain bisa memberikan saran di Gallery Walk!</small>
+          <br><small>Lihat hasil karya kalian di bawah. Kelompok lain bisa memberikan saran!</small>
         </div>
       `;
+    });
+    
+    // Auto-restore penyajian saat masuk ke slide Gallery Walk
+    document.addEventListener('click', (ev) => {
+      const btn = ev.target.closest('[data-go]');
+      if (btn && btn.getAttribute('data-go') === 'penyajian-relasi') {
+        setTimeout(() => {
+          const savedPenyajian = localStorage.getItem('penyajianRelasiKelompok');
+          if (savedPenyajian) {
+            try {
+              const data = JSON.parse(savedPenyajian);
+              // Restore pilihan radio button
+              const radioBtn = document.querySelector(`input[name="bentukPenyajianRelasi"][value="${data.bentuk}"]`);
+              if (radioBtn) {
+                radioBtn.checked = true;
+              }
+              // Restore deskripsi
+              const deskripsiField = document.getElementById('deskripsiPenyajianRelasi');
+              if (deskripsiField && data.deskripsi) {
+                deskripsiField.value = data.deskripsi;
+              }
+              // Auto-generate display
+              generateGalleryDisplay(data.bentuk);
+            } catch(e) {
+              console.error('Error restoring penyajian:', e);
+            }
+          }
+        }, 100);
+      }
     });
 
     // Kirim komentar
@@ -1870,10 +2540,15 @@ document.addEventListener('DOMContentLoaded', () => {
           redrawDraw1(); 
         });
         saveImgBtn1.addEventListener('click', () => { 
+            const imgData = drawCanvas1.toDataURL();
+            // Simpan ke localStorage untuk gallery display
+            localStorage.setItem('canvasImage_drawCanvas1', imgData);
+            // Download file
             const link = document.createElement('a'); 
             link.download = 'diagram_panah_makanan.png'; 
-            link.href = drawCanvas1.toDataURL(); 
-            link.click(); 
+            link.href = imgData; 
+            link.click();
+            alert('✅ Gambar tersimpan! Bisa ditampilkan di Gallery Walk.');
         });
 
         drawCanvas1.addEventListener('pointerdown', (e) => {
@@ -2034,10 +2709,15 @@ document.addEventListener('DOMContentLoaded', () => {
             redrawDraw2(); 
         });
         saveImgBtn2.addEventListener('click', () => { 
+            const imgData = drawCanvas2.toDataURL();
+            // Simpan ke localStorage untuk gallery display
+            localStorage.setItem('canvasImage_drawCanvas2', imgData);
+            // Download file
             const link = document.createElement('a'); 
             link.download = 'diagram_panah_minuman.png'; 
-            link.href = drawCanvas2.toDataURL(); 
-            link.click(); 
+            link.href = imgData; 
+            link.click();
+            alert('✅ Gambar tersimpan! Bisa ditampilkan di Gallery Walk.');
         });
 
         drawCanvas2.addEventListener('pointerdown', (e) => {
@@ -2100,7 +2780,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.beginPath(); ctx.moveTo(endX, originY); ctx.lineTo(endX - 10, originY - 6); ctx.lineTo(endX - 10, originY + 6); ctx.closePath(); ctx.fill(); 
       ctx.beginPath(); ctx.moveTo(originX, endY); ctx.lineTo(originX - 6, endY + 10); ctx.lineTo(originX + 6, endY + 10); ctx.closePath(); ctx.fill(); 
         
-      ctx.font = '13px Bagel Fat One'; ctx.fillStyle = '#3e2723';
+      ctx.font = '13px Poppins'; ctx.fillStyle = '#3e2723';
       const state = planeState[idx];
       if(state.domainItems && state.domainItems.length > 0){
         const spacing = axisLen / (state.domainItems.length + 1);
@@ -2130,7 +2810,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ctx.beginPath(); ctx.fillStyle = '#ffeb3b'; 
             ctx.ellipse(pt.x, pt.y, 8, 8, 0, 0, Math.PI * 2); ctx.fill(); 
             ctx.strokeStyle = '#3e2723'; ctx.stroke(); 
-            ctx.font = '14px Bagel Fat One'; ctx.fillStyle = '#3e2723'; 
+            ctx.font = '14px Poppins'; ctx.fillStyle = '#3e2723'; 
             ctx.fillText(pt.name, pt.x + 12, pt.y + 4); 
         }); 
     }
@@ -2303,52 +2983,152 @@ document.addEventListener('DOMContentLoaded', () => {
         completion.k4 = (planeState[0].points.length > 0 || planeState[0].paths.length > 0 || planeState[1].points.length > 0 || planeState[1].paths.length > 0) ? 1 : 0;
         updateProgress();
     });
-    document.getElementById('saveCanvas')?.addEventListener('click', () => { planes.forEach((pl, i) => { if(pl){ const link = document.createElement('a'); link.download = 'plane_' + (i + 1) + '.png'; link.href = pl.toDataURL(); link.click(); } }); });
+    document.getElementById('saveCanvas')?.addEventListener('click', () => { 
+        planes.forEach((pl, i) => { 
+            if(pl){ 
+                const imgData = pl.toDataURL();
+                // Simpan ke localStorage untuk gallery display
+                const canvasId = i === 0 ? 'plane1' : 'plane2';
+                localStorage.setItem('canvasImage_' + canvasId, imgData);
+                // Download file
+                const link = document.createElement('a'); 
+                link.download = 'plane_' + (i + 1) + '.png'; 
+                link.href = imgData; 
+                link.click(); 
+            } 
+        }); 
+        alert('✅ Gambar tersimpan! Bisa ditampilkan di Gallery Walk.');
+    });
     
     // Set default K4 mode
     document.getElementById('pointTool')?.click(); 
 
 
     // =========================================================
-    // 4. LOGIKA PDF GENERATION
+    // 4. LOGIKA PDF GENERATION & KIRIM KE GURU
     // =========================================================
 
     const { jsPDF } = window.jspdf;
-    document.getElementById('downloadPdf')?.addEventListener('click', async () => {
+    
+    // Fungsi untuk generate PDF
+    async function generatePDFLaporan() {
         const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [1100, 1400] });
-        const ids = ['identitas-kelompok', 'k1', 'k2', 'k3', 'k4', 'k5', 'evaluasi']; 
+        
+        // Slides yang akan di-capture (sesuaikan dengan flow baru)
+        const slidesToCapture = [
+            'identitas-kelompok',
+            'permasalahan',
+            'k1',
+            'k2',
+            'pilih-kegiatan',
+            // Tambahkan slide kegiatan yang dipilih user
+            localStorage.getItem('selectedActivity') || 'k3',
+            'preview-activities',
+            'penyajian-relasi',
+            'evaluasi'
+        ];
         
         const activeSlideId = document.querySelector('.slide.active')?.id || 'start';
 
-        for (let i = 0; i < ids.length; i++) {
-            const id = ids[i];
+        for (let i = 0; i < slidesToCapture.length; i++) {
+            const id = slidesToCapture[i];
             const el = document.getElementById(id);
             if (!el) continue;
 
+            // Set slide active
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
             el.classList.add('active');
             
-            await new Promise(r => setTimeout(r, 100)); 
+            await new Promise(r => setTimeout(r, 150)); 
 
+            // Redraw canvas if needed
             if (id === 'k3') {
-                if (drawCanvas1) redrawDraw1();
-                if (drawCanvas2) redrawDraw2();
+                if (typeof redrawDraw1 === 'function') redrawDraw1();
+                if (typeof redrawDraw2 === 'function') redrawDraw2();
             }
-            if (id === 'k4' && planes.length > 0) { redrawPlane(0); redrawPlane(1); }
+            if (id === 'k4' && typeof redrawPlane === 'function') {
+                redrawPlane(0);
+                redrawPlane(1);
+            }
 
-            const canvas = await html2canvas(el, { scale: 1.2, useCORS: true, allowTaint: true, logging: false });
-            const img = canvas.toDataURL('image/png');
-            const pageW = pdf.internal.pageSize.getWidth();
-            const imgW = pageW;
-            const imgH = canvas.height * (imgW / canvas.width);
-            
-            if (i > 0) pdf.addPage();
-            pdf.addImage(img, 'PNG', 0, 0, imgW, imgH);
+            // Capture slide
+            try {
+                const canvas = await html2canvas(el, { 
+                  scale: 1.2, 
+                  useCORS: true, 
+                  allowTaint: true, 
+                  logging: false,
+                    backgroundColor: null
+                });
+                const img = canvas.toDataURL('image/png');
+                const pageW = pdf.internal.pageSize.getWidth();
+                const imgW = pageW;
+                const imgH = canvas.height * (imgW / canvas.width);
+                
+                if (i > 0) pdf.addPage();
+                pdf.addImage(img, 'PNG', 0, 0, imgW, imgH);
+            } catch(e) {
+                console.error('Error capturing slide:', id, e);
+            }
         }
         
-        pdf.save('Hasil_LKPD_Relasi_Fungsi.pdf');
-        
+        // Kembali ke slide aktif
         show(activeSlideId);
+        
+        return pdf;
+    }
+    
+    // Fungsi show modal Google Form
+    window.showMetodePengiriman = async function() {
+        try {
+            // Generate PDF
+            const pdf = await generatePDFLaporan();
+            
+            // Save PDF
+            const kelompokData = JSON.parse(localStorage.getItem('kelompokData') || '{}');
+            const namaKelompok = kelompokData.nama || 'Kelompok';
+            const fileName = `LKPD_Relasi_${namaKelompok.replace(/\s+/g, '_')}.pdf`;
+            
+            pdf.save(fileName);
+            
+            // Show modal
+            const modal = document.getElementById('gformModal');
+            if (modal) {
+                modal.style.display = 'block';
+                
+                // Set Google Form link (ganti dengan link Form guru)
+                const gformLink = document.getElementById('gformLink');
+                if (gformLink) {
+                    // TODO: Ganti dengan link Google Form yang sebenarnya
+                    gformLink.href = 'https://forms.gle/ZSJ28D5hA49ff6Jq5';
+                }
+            }
+        } catch(error) {
+            console.error('Error generating PDF:', error);
+            alert('❌ Gagal membuat PDF. Pastikan semua kegiatan sudah dikerjakan.');
+        }
+    }
+    
+    // Fungsi close modal
+    window.closeGFormModal = function() {
+        const modal = document.getElementById('gformModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+    
+    // Event listener untuk tombol Kirim Hasil
+    document.getElementById('btnKirimHasilGuru')?.addEventListener('click', showMetodePengiriman);
+    
+    // Legacy support - jika masih ada button dengan id downloadPdf
+    document.getElementById('downloadPdf')?.addEventListener('click', async () => {
+        try {
+            const pdf = await generatePDFLaporan();
+            pdf.save('Hasil_LKPD_Relasi_Fungsi.pdf');
+        } catch(error) {
+            console.error('Error:', error);
+            alert('❌ Gagal membuat PDF');
+        }
     });
 
     updateProgress();
