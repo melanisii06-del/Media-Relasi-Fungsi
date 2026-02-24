@@ -3636,30 +3636,26 @@ window.generatePDFReport = async function(){
 })();
 
 </script>
-
-<!-- Tombol Download Darurat untuk Testing -->
-<button class="btn-test-download" id="btnTestDownload">
-  <span style="font-size: 20px;">🚨</span>
-  <span>TEST DOWNLOAD PDF</span>
-</button>
-
 <!-- Google Form Helper Script -->
 <script src="../Relasi/google-form-helper.js"></script>
 
 <script>
 // Handler untuk tombol download 
-document.getElementById('btnTestDownload').addEventListener('click', function() {
-  console.log('🚨 DOWNLOAD BUTTON CLICKED');
-  
-  // Cek apakah library sudah dimuat
-  if(typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined'){
-    alert('Fitur PDF belum tersedia. Coba muat ulang halaman.');
-    console.error('jsPDF not loaded');
-    return;
-  }
-  
-  createStudentResultPDF();
-});
+const btnTestDownload = document.getElementById('btnTestDownload');
+if (btnTestDownload) {
+  btnTestDownload.addEventListener('click', function() {
+    console.log('🚨 DOWNLOAD BUTTON CLICKED');
+    
+    // Cek apakah library sudah dimuat
+    if(typeof jspdf === 'undefined' || typeof jspdf.jsPDF === 'undefined'){
+      alert('Fitur PDF belum tersedia. Coba muat ulang halaman.');
+      console.error('jsPDF not loaded');
+      return;
+    }
+    
+    createStudentResultPDF();
+  });
+}
 
 function createStudentResultPDF() {
   try {
