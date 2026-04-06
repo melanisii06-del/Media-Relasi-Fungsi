@@ -205,6 +205,161 @@ h3{
   padding:0 20px;
 }
 
+.menu-card.soal-card::before{
+  background:linear-gradient(90deg, #0284c7, #0ea5e9, #38bdf8);
+}
+
+.soal-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:20px;
+  padding:32px 20px;
+  max-width:1000px;
+  margin:0 auto;
+}
+
+.soal-panel{
+  max-width:960px;
+  margin:0 auto;
+  padding:10px 18px 30px;
+}
+
+.soal-placeholder{
+  background:linear-gradient(180deg,#ffffff 0%, #f4fbff 100%);
+  border:2px dashed rgba(2,132,199,0.22);
+  border-radius:16px;
+  padding:28px;
+  min-height:280px;
+  box-shadow:0 10px 24px rgba(0,0,0,0.06);
+}
+
+.soal-placeholder-title{
+  font-size:28px;
+  color:var(--accent);
+  margin:0 0 10px;
+}
+
+.soal-placeholder-desc{
+  font-size:16px;
+  color:var(--muted);
+  line-height:1.7;
+  margin:0 0 18px;
+}
+
+.soal-placeholder-box{
+  background:#fff;
+  border-radius:14px;
+  padding:18px 20px;
+  border:1px solid rgba(0,0,0,0.06);
+  color:#8a6d3b;
+  font-size:15px;
+}
+
+.soal-actions{
+  display:flex;
+  justify-content:flex-start;
+  gap:12px;
+  margin-top:20px;
+  flex-wrap:wrap;
+}
+
+.soal-question-list{
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.soal-question-item{
+  background:#fff;
+  border:1px solid rgba(0,0,0,0.08);
+  border-radius:14px;
+  padding:18px 18px 16px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.05);
+}
+
+.soal-question-number{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:34px;
+  border-radius:999px;
+  background:linear-gradient(135deg, #0284c7, #38bdf8);
+  color:#fff;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+.soal-question-text{
+  font-size:16px;
+  line-height:1.75;
+  color:#3e2723;
+  margin:0;
+  white-space:pre-line;
+}
+
+.soal-question-highlight{
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:12px;
+  background:#f4fbff;
+  border-left:4px solid #0284c7;
+  color:#5b4636;
+  font-size:15px;
+  line-height:1.65;
+}
+
+.soal-card-item{
+  height:140px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#fff 0%,#eef8ff 100%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
+  cursor:pointer;
+  border:3px solid rgba(2,132,199,0.08);
+  transition:all 0.3s ease;
+  position:relative;
+  overflow:hidden;
+}
+
+.soal-card-item::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:6px;
+  background:linear-gradient(90deg, #0284c7, #0ea5e9, #38bdf8);
+  transform:scaleX(0);
+  transition:transform 0.3s ease;
+}
+
+.soal-card-item:hover::before{
+  transform:scaleX(1);
+}
+
+.soal-card-item:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 30px rgba(0,0,0,0.15);
+  border-color:#0284c7;
+}
+
+.soal-card-title{
+  font-size:22px;
+  color:var(--accent);
+  margin-bottom:8px;
+}
+
+.soal-card-desc{
+  font-size:14px;
+  color:var(--muted);
+  text-align:center;
+  padding:0 18px;
+}
+
 /* Navigation */
 .nav{
   display:flex;
@@ -277,135 +432,9 @@ h3{
   display:block;
 }
 
-/* Modal overlay untuk Google Form */
-#gformModal {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0,0,0,0.7);
-  animation: fadeInModal 0.3s ease;
-}
-
-#gformModalContent {
-  position: relative;
-  background: linear-gradient(135deg, #fff 0%, #f9f9f9 100%);
-  margin: 5% auto;
-  padding: 40px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 600px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  animation: slideDownModal 0.4s ease;
-  text-align: center;
-}
-
-#gformModalClose {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 32px;
-  font-weight: bold;
-  color: #999;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-#gformModalClose:hover {
-  color: #333;
-}
-
-.gform-title {
-  color: #2a2420;
-  font-size: 24px;
-  margin-bottom: 20px;
-  font-weight: 700;
-}
-
-.gform-message {
-  color: #555;
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 30px;
-}
-
-.gform-link-btn {
-  display: inline-block;
-  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
-  color: white;
-  padding: 18px 40px;
-  font-size: 20px;
-  font-weight: 700;
-  border-radius: 12px;
-  text-decoration: none;
-  box-shadow: 0 4px 15px rgba(76,175,80,0.4);
-  transition: all 0.3s ease;
-  margin: 10px;
-}
-
-.gform-link-btn:hover {
-  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
-  box-shadow: 0 6px 20px rgba(76,175,80,0.5);
-  transform: translateY(-2px);
-}
-
-.gform-close-btn {
-  display: inline-block;
-  background: #ccc;
-  color: #333;
-  padding: 12px 30px;
-  font-size: 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 20px;
-  transition: all 0.2s;
-}
-
-.gform-close-btn:hover {
-  background: #bbb;
-}
-
-@keyframes fadeInModal {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideDownModal {
-  from {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 </style>
 </head>
 <body>
-
-<!-- Modal Google Form -->
-<div id="gformModal">
-  <div id="gformModalContent">
-    <span id="gformModalClose">&times;</span>
-    <div class="gform-title">📝 Kirim Hasil Belajar Anda</div>
-    <div class="gform-message">
-      Anda akan diarahkan ke Google Form untuk mengisi hasil pembelajaran Anda.<br>
-      Pastikan semua materi sudah Anda selesaikan dengan baik!
-    </div>
-    <a href="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform" 
-       target="_blank" 
-       class="gform-link-btn">
-      🚀 Buka Google Form
-    </a>
-    <div class="gform-close-btn" onclick="document.getElementById('gformModal').style.display='none'">
-      Tutup
-    </div>
-  </div>
-</div>
 
 <!-- Back to Menu Button -->
 <button class="back-to-menu" id="backToMenuBtn" onclick="showMenu()">
@@ -446,6 +475,11 @@ h3{
           <div class="menu-card-desc">Materi lengkap Relasi & Fungsi</div>
         </div>
 
+        <div class="menu-card soal-card" onclick="showSoal()">
+          <div class="menu-card-title">📝 Soal</div>
+          <div class="menu-card-desc">Latihan dan evaluasi hasil belajar</div>
+        </div>
+
         <div class="menu-card" onclick="showPertemuan(1)">
           <div class="menu-card-title">📖 Pertemuan 1</div>
           <div class="menu-card-desc">Konsep Dasar Himpunan & Operasi Himpunan</div>
@@ -478,6 +512,154 @@ h3{
       </div>
       <div class="nav">
         <button class="btn ghost" onclick="show('welcome')">← Kembali</button>
+      </div>
+    </div>
+
+    <!-- SLIDE MENU SOAL -->
+    <div class="slide" id="menuSoal">
+      <div class="header">
+        <h2>📝 Pilih Soal</h2>
+        <p class="lead">Silakan pilih soal sesuai pertemuan yang ingin dikerjakan</p>
+      </div>
+
+      <div class="soal-grid">
+        <div class="soal-card-item" onclick="showSoalPertemuan(1)">
+          <div class="soal-card-title">Soal 1</div>
+          <div class="soal-card-desc">Soal Pertemuan 1: Konsep Dasar Himpunan</div>
+        </div>
+
+        <div class="soal-card-item" onclick="showSoalPertemuan(2)">
+          <div class="soal-card-title">Soal 2</div>
+          <div class="soal-card-desc">Soal Pertemuan 2: Relasi & Representasi</div>
+        </div>
+
+        <div class="soal-card-item" onclick="showSoalPertemuan(3)">
+          <div class="soal-card-title">Soal 3</div>
+          <div class="soal-card-desc">Soal Pertemuan 3: Karakteristik Fungsi</div>
+        </div>
+
+        <div class="soal-card-item" onclick="showSoalPertemuan(4)">
+          <div class="soal-card-title">Soal 4</div>
+          <div class="soal-card-desc">Soal Pertemuan 4: Penyajian dan Bentuk Fungsi</div>
+        </div>
+
+        <div class="soal-card-item" onclick="showSoalPertemuan(5)">
+          <div class="soal-card-title">Soal 5</div>
+          <div class="soal-card-desc">Soal Pertemuan 5: Nilai dan Bentuk Fungsi</div>
+        </div>
+
+        <div class="soal-card-item" onclick="showSoalPertemuan(6)">
+          <div class="soal-card-title">Soal 6</div>
+          <div class="soal-card-desc">Soal Pertemuan 6: Korespondensi Satu-Satu</div>
+        </div>
+      </div>
+
+      <div class="nav">
+        <button class="btn ghost" onclick="showMenu()">← Kembali ke Menu</button>
+      </div>
+    </div>
+
+    <!-- SLIDE SOAL PERTEMUAN 1 -->
+    <div class="slide" id="soalPertemuan1">
+      <div class="header">
+        <h2>📝 Soal Pertemuan 1</h2>
+        <p class="lead">Konsep Dasar Himpunan & Operasi Himpunan</p>
+      </div>
+      <div class="soal-panel">
+        <iframe src="Soal_Pertemuan_1.html" style="width:100%; height:82vh; border:none; border-radius:16px; background:#fff;" loading="lazy"></iframe>
+      </div>
+       <div class="soal-actions">
+            <button class="btn ghost" onclick="showSoalMenu()">← Kembali ke Soal</button>
+          </div>
+    </div>
+
+    <!-- SLIDE SOAL PERTEMUAN 2 -->
+    <div class="slide" id="soalPertemuan2">
+      <div class="header">
+        <h2>📝 Soal Pertemuan 2</h2>
+        <p class="lead">Pengenalan Relasi & Representasi</p>
+      </div>
+      <div class="soal-panel">
+        <div class="soal-placeholder">
+          <h3 class="soal-placeholder-title">Soal Pertemuan 2</h3>
+          <p class="soal-placeholder-desc">Bagian ini akan diisi dengan soal Pertemuan 2. Silakan tambahkan butir soal, pilihan jawaban, atau isian sesuai kebutuhan pembelajaran.</p>
+          <div class="soal-placeholder-box">Tempat soal Pertemuan 2</div>
+          <div class="soal-actions">
+            <button class="btn ghost" onclick="showSoalMenu()">← Kembali ke Soal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE SOAL PERTEMUAN 3 -->
+    <div class="slide" id="soalPertemuan3">
+      <div class="header">
+        <h2>📝 Soal Pertemuan 3</h2>
+        <p class="lead">Karakteristik Fungsi</p>
+      </div>
+      <div class="soal-panel">
+        <div class="soal-placeholder">
+          <h3 class="soal-placeholder-title">Soal Pertemuan 3</h3>
+          <p class="soal-placeholder-desc">Bagian ini akan diisi dengan soal Pertemuan 3. Silakan tambahkan butir soal, pilihan jawaban, atau isian sesuai kebutuhan pembelajaran.</p>
+          <div class="soal-placeholder-box">Tempat soal Pertemuan 3</div>
+          <div class="soal-actions">
+            <button class="btn ghost" onclick="showSoalMenu()">← Kembali ke Soal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE SOAL PERTEMUAN 4 -->
+    <div class="slide" id="soalPertemuan4">
+      <div class="header">
+        <h2>📝 Soal Pertemuan 4</h2>
+        <p class="lead">Penyajian dan Bentuk Fungsi</p>
+      </div>
+      <div class="soal-panel">
+        <div class="soal-placeholder">
+          <h3 class="soal-placeholder-title">Soal Pertemuan 4</h3>
+          <p class="soal-placeholder-desc">Bagian ini akan diisi dengan soal Pertemuan 4. Silakan tambahkan butir soal, pilihan jawaban, atau isian sesuai kebutuhan pembelajaran.</p>
+          <div class="soal-placeholder-box">Tempat soal Pertemuan 4</div>
+          <div class="soal-actions">
+            <button class="btn ghost" onclick="showSoalMenu()">← Kembali ke Soal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE SOAL PERTEMUAN 5 -->
+    <div class="slide" id="soalPertemuan5">
+      <div class="header">
+        <h2>📝 Soal Pertemuan 5</h2>
+        <p class="lead">Nilai dan Bentuk Fungsi</p>
+      </div>
+      <div class="soal-panel">
+        <div class="soal-placeholder">
+          <h3 class="soal-placeholder-title">Soal Pertemuan 5</h3>
+          <p class="soal-placeholder-desc">Bagian ini akan diisi dengan soal Pertemuan 5. Silakan tambahkan butir soal, pilihan jawaban, atau isian sesuai kebutuhan pembelajaran.</p>
+          <div class="soal-placeholder-box">Tempat soal Pertemuan 5</div>
+          <div class="soal-actions">
+            <button class="btn ghost" onclick="showSoalMenu()">← Kembali ke Soal</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE SOAL PERTEMUAN 6 -->
+    <div class="slide" id="soalPertemuan6">
+      <div class="header">
+        <h2>📝 Soal Pertemuan 6</h2>
+        <p class="lead">Korespondensi Satu-Satu & banyaknya korespondensi satu-satu</p>
+      </div>
+      <div class="soal-panel">
+        <div class="soal-placeholder">
+          <h3 class="soal-placeholder-title">Soal Pertemuan 6</h3>
+          <p class="soal-placeholder-desc">Bagian ini akan diisi dengan soal Pertemuan 6. Silakan tambahkan butir soal, pilihan jawaban, atau isian sesuai kebutuhan pembelajaran.</p>
+          <div class="soal-placeholder-box">Tempat soal Pertemuan 6</div>
+          <div class="soal-actions">
+            <button class="btn ghost" onclick="showSoalMenu()">← Kembali ke Soal</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -544,7 +726,7 @@ function show(id) {
   
   // Hide back button on welcome and menu
   const backBtn = document.getElementById('backToMenuBtn');
-  if (id === 'welcome' || id === 'menuPertemuan') {
+  if (id === 'welcome' || id === 'menuPertemuan' || id === 'menuSoal') {
     backBtn.classList.remove('show');
   }
   
@@ -553,6 +735,10 @@ function show(id) {
 
 function showMenu() {
   show('menuPertemuan');
+}
+
+function showSoalMenu() {
+  show('menuSoal');
 }
 
 function showPertemuan(num) {
@@ -593,28 +779,15 @@ function showBahanAjar() {
   window.scrollTo(0, 0);
 }
 
-// Google Form Modal
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('gformModal');
-  const closeBtn = document.getElementById('gformModalClose');
-  
-  if (closeBtn) {
-    closeBtn.onclick = function() {
-      modal.style.display = 'none';
-    };
-  }
-  
-  window.onclick = function(event) {
-    if (event.target == modal) {
-      modal.style.display = 'none';
-    }
-  };
-});
-</script>
+function showSoal() {
+  showSoalMenu();
+}
 
-<!-- Google Form Helper Script -->
-<script src="Relasi/google-form-helper.js"></script>
+function showSoalPertemuan(num) {
+  show('soalPertemuan' + num);
+}
+
+</script>
 
 </body>
 </html>
-
