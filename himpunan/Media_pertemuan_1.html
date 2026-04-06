@@ -87,6 +87,13 @@ h3{font-size:18px;font-weight:600;color:var(--accent)}
 .drop-b{right:115px;top:75px;width:160px;height:160px;background:transparent}
 .drop-ab{left:260px;top:75px;width:160px;height:160px;background:transparent}
 .drop-out{position:absolute;left:20px;right:20px;bottom:10px;height:70px;margin:auto;border:2px dashed rgba(0,0,0,0.12);border-radius:10px;background:#fffef8;color:var(--muted);font-size:13px;align-items:center;justify-content:center;display:flex}
+.venn-guide-legend{display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:8px;background:#fff8e6;padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.08);margin:12px auto 8px auto;max-width:680px;font-size:12px;color:var(--accent)}
+.venn-guide-legend div{background:#fff;padding:8px;border-radius:8px;border-left:4px solid #ffb74d}
+.venn-zone-label{position:absolute;font-size:11px;font-weight:700;color:#5d4037;background:rgba(255,255,255,0.9);padding:3px 8px;border-radius:999px;border:1px solid rgba(0,0,0,0.15);z-index:1;pointer-events:none}
+.label-a{left:110px;top:52px}
+.label-b{right:110px;top:52px}
+.label-ab{left:282px;top:52px}
+.label-out{left:250px;bottom:84px}
 .zone.highlight{box-shadow:0 0 18px rgba(46,125,50,0.2);border-radius:10px}
 .zone.wrong{animation:shake .4s}
 .book{width:150px;padding:10px;background:#fff;border-radius:10px;border:2px solid rgba(0,0,0,0.06);box-shadow:0 6px 16px rgba(0,0,0,0.06);cursor:grab;text-align:center;transition:all 0.3s ease}
@@ -376,6 +383,90 @@ h1, h2 {
   0%, 100% { box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4); }
   50% { box-shadow: 0 8px 32px rgba(255, 107, 53, 0.7); }
 }
+
+/* Tutor Virtual */
+.tutor-launcher{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:10001;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  padding:10px 16px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+.tutor-launcher:hover{opacity:.92}
+
+.tutor-panel{
+  position:fixed;
+  right:16px;
+  bottom:72px;
+  width:350px;
+  max-width:calc(100vw - 24px);
+  background:linear-gradient(180deg,var(--panel),#fff7e6);
+  border:2px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  box-shadow:0 14px 30px rgba(0,0,0,.22);
+  padding:12px;
+  z-index:10001;
+  display:none;
+}
+.tutor-panel.show{display:block}
+.tutor-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tutor-avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#fff;
+  border:2px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  animation:tutorFloat 2.2s ease-in-out infinite;
+}
+.tutor-title{font-size:14px;font-weight:700;color:var(--accent)}
+.tutor-progress{font-size:12px;color:var(--muted)}
+.tutor-bubble{
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  border-left:4px solid var(--accent);
+  color:var(--accent);
+  font-size:13px;
+  line-height:1.5;
+  min-height:74px;
+}
+.tutor-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tutor-actions .btn{font-size:13px;padding:8px 10px;border-radius:9px}
+.tutor-status{margin-top:8px;font-size:12px;color:var(--muted)}
+
+.tutor-target-highlight{
+  outline:4px solid #fbc02d !important;
+  outline-offset:2px;
+  animation:tutorPulse 1.15s ease-in-out infinite;
+  border-radius:8px;
+  position:relative;
+  z-index:2;
+}
+
+@keyframes tutorFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes tutorPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(251,192,45,.18)}
+  50%{box-shadow:0 0 0 8px rgba(251,192,45,.04)}
+}
+
+@media (max-width:700px){
+  .tutor-panel{right:8px;left:8px;bottom:70px;width:auto}
+  .tutor-launcher{right:8px;bottom:10px}
+}
 </style>
 <!-- Library dari CDN - akan berfungsi di lokal dan GitHub Pages -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -422,7 +513,6 @@ h1, h2 {
           <h2>Selamat Datang</h2>
           <p class="lead">Media Pembelajaran: Relasi &amp; Fungsi</p>
           <button class="btn" data-go="menu">Mulai</button>
-          <button class="btn ghost" data-go="tahap4" style="margin-top:10px;">Navigasi Darurat: Tahap 4</button>
         </div>
       </section>
 
@@ -1000,11 +1090,21 @@ h1, h2 {
             </div>
 
             <p style="text-align:center;color:var(--muted)">A = halaman >100 | B = tahun >2018</p>
+            <div id="vennGuideLegend" class="venn-guide-legend" aria-live="polite">
+              <div><strong>Area A saja</strong> → Halaman &gt; 100 dan Tahun ≤ 2018</div>
+              <div><strong>Area B saja</strong> → Tahun &gt; 2018 dan Halaman ≤ 100</div>
+              <div><strong>Area Irisan A ∩ B</strong> → Memenuhi dua syarat sekaligus</div>
+              <div><strong>Area Luar</strong> → Tidak memenuhi A maupun B</div>
+            </div>
 
             <div class="venn-wrapper" aria-label="Diagram Venn">
               <div class="venn-rect" id="vennRect">
-                <div class="circle-a" aria-hidden="true"></div>
-                <div class="circle-b" aria-hidden="true"></div>
+                <div class="circle-a" aria-hidden="true">A: Halaman &gt; 100</div>
+                <div class="circle-b" aria-hidden="true">B: Tahun &gt; 2018</div>
+                <div class="venn-zone-label label-a">A saja</div>
+                <div class="venn-zone-label label-b">B saja</div>
+                <div class="venn-zone-label label-ab">A ∩ B</div>
+                <div class="venn-zone-label label-out">Luar A ∪ B</div>
                 <div class="zone drop-a" data-zone="A" id="zoneA"></div>
                 <div class="zone drop-b" data-zone="B" id="zoneB"></div>
                 <div class="zone drop-ab" data-zone="AB" id="zoneAB"></div>
@@ -3859,14 +3959,172 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Fungsi Generate Laporan Lengkap PDF
+function snapshotAktivitasLaporan() {
+  const safeValue = (selector) => {
+    const el = document.querySelector(selector);
+    return el ? String(el.value || '').trim() : '';
+  };
+
+  const safeText = (selector) => {
+    const el = document.querySelector(selector);
+    return el ? String(el.textContent || '').trim() : '';
+  };
+
+  const extractChipIds = (zoneId) => {
+    const zone = document.getElementById(zoneId);
+    if (!zone) return [];
+    const chips = Array.from(zone.querySelectorAll('.kartu'));
+    const ids = [];
+    chips.forEach((chip) => {
+      const classList = Array.from(chip.classList || []);
+      const marker = classList.find(cls => /^chip-[A-Z]$/i.test(cls));
+      if (marker) ids.push(marker.replace('chip-', '').toUpperCase());
+    });
+    return ids;
+  };
+
+  const getVennIds = (selector) => Array.from(document.querySelectorAll(selector)).map(el => el.dataset.id).filter(Boolean);
+
+  const quizAnswers = window.quizAnswers || {};
+  const quizData = window.quizData || {};
+  const quizSummary = Object.keys(quizData).map((id) => ({
+    id,
+    jawabanSiswa: quizAnswers[id] || '(belum dijawab)',
+    jawabanBenar: quizData[id].correct,
+    benar: quizAnswers[id] ? quizAnswers[id] === quizData[id].correct : false
+  }));
+  const quizCorrectCount = quizSummary.filter(item => item.benar).length;
+
+  const tahap2Level3 = ['quiz1', 'quiz2', 'quiz3'].map((name, index) => {
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    return {
+      soal: index + 1,
+      value: checked ? checked.value : '(belum dijawab)',
+      benar: checked ? checked.value === 'correct' : false
+    };
+  });
+
+  let komentarList = [];
+  try {
+    komentarList = JSON.parse(localStorage.getItem('komentarT4') || '[]');
+  } catch(_) {
+    komentarList = [];
+  }
+
+  const evidence = {
+    generatedAt: new Date().toLocaleString('id-ID'),
+    tahap1: {
+      kartuHimpunan: extractChipIds('zoneYes'),
+      kartuBukanHimpunan: extractChipIds('zoneNo'),
+      jumlahKartuDitempatkan: extractChipIds('zoneYes').length + extractChipIds('zoneNo').length,
+      quiz: {
+        detail: quizSummary,
+        skorBenar: quizCorrectCount,
+        totalSoal: Object.keys(quizData).length
+      },
+      kesimpulan: localStorage.getItem('kesimpulanHimpunan') || safeValue('#kesimpulanHimpunan') || '(belum diisi)'
+    },
+    tahap2: {
+      level1Selesai: safeText('#level1-icon').includes('✓'),
+      level2Selesai: safeText('#level2-icon').includes('✓'),
+      level3Selesai: safeText('#level3-icon').includes('✓'),
+      enumResult: safeText('#enum-result') || '{ ... }',
+      bukuDipilih: Array.from(document.querySelectorAll('#level-2-section .book-item.selected')).map(el => el.dataset.name),
+      quizLevel3: tahap2Level3,
+      feedbackLevel3: safeText('#feedback-level3')
+    },
+    tahap3: {
+      zoneA: getVennIds('#tahap3 #zoneA .book'),
+      zoneB: getVennIds('#tahap3 #zoneB .book'),
+      zoneAB: getVennIds('#tahap3 #zoneAB .book'),
+      zoneOUT: getVennIds('#tahap3 #zoneOUT .book'),
+      statusText: safeText('#tahap3 #statusBox'),
+      selesai: !!document.getElementById('goto-tahap4') && document.getElementById('goto-tahap4').disabled === false,
+      jawabanIrisan: document.querySelector('input[name="q-irisan"]:checked')?.value || '(belum dijawab)',
+      jawabanGabungan: document.querySelector('input[name="q-gabungan"]:checked')?.value || '(belum dijawab)',
+      operasiPanelTampil: (document.getElementById('notationPanel')?.style.display || '') !== 'none'
+    },
+    tahap4: {
+      pemilahanBuku: Array.from(document.querySelectorAll('#tahap4 select[data-book]')).map((select) => ({
+        buku: select.dataset.book,
+        pilihanRak: select.value || '(belum dipilih)',
+        status: safeText('#feedback_' + select.dataset.book) || '-',
+        isCorrect: /tepat/i.test(safeText('#feedback_' + select.dataset.book))
+      })),
+      kardinalitas: {
+        nAB: safeValue('#input_nAB') || '(belum diisi)',
+        nAU: safeValue('#input_nAU') || '(belum diisi)',
+        nLuar: safeValue('#input_nLuar') || '(belum diisi)'
+      },
+      statusCek: safeText('#tahap4 #statusBox') || '(belum dicek)',
+      komentar: komentarList
+    },
+    refleksi: {
+      refleksi6: safeValue('#refleksi6') || '(belum diisi)',
+      refleksi7: safeValue('#refleksi7') || '(belum diisi)',
+      refleksi8: safeValue('#refleksi8') || '(belum diisi)',
+      refleksi9: safeValue('#refleksi9') || '(belum diisi)'
+    }
+  };
+
+  localStorage.setItem('learningEvidenceP1', JSON.stringify(evidence));
+  return evidence;
+}
+
 function generateLaporanLengkap() {
   const { jsPDF } = jspdf;
   const doc = new jsPDF();
+  const evidence = snapshotAktivitasLaporan();
   
   let yPos = 20;
   const pageHeight = doc.internal.pageSize.height;
   const margin = 20;
   const maxWidth = 170;
+
+  function normalizePdfText(text) {
+    return String(text ?? '')
+      .replace(/\u00a0/g, ' ')
+      .replace(/\s+/g, ' ')
+      .replace(/∩/g, ' irisan ')
+      .replace(/∪/g, ' gabungan ')
+      .replace(/≤/g, '<=')
+      .replace(/≥/g, '>=')
+      .replace(/≠/g, '!=')
+      .replace(/×/g, 'x')
+      .replace(/—/g, '-')
+      .replace(/“|”/g, '"')
+      .replace(/‘|’/g, "'")
+      .replace(/\(\s+/g, '(')
+      .replace(/\s+\)/g, ')')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function rakLabel(rakKey) {
+    const map = {
+      A: 'Rak A (Hanya A)',
+      B: 'Rak B (Hanya B)',
+      AB: 'Rak AB (Irisan A dan B)',
+      LUAR: 'Rak LUAR (Komplemen)'
+    };
+    return map[rakKey] || 'Belum dipilih';
+  }
+
+  function statusLabel(isCorrect) {
+    return isCorrect ? 'Tepat' : 'Belum tepat';
+  }
+
+  function cleanBookIdText(value) {
+    return String(value || '').replace(/[^A-Z0-9,\-\s]/gi, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  function answerLabel(value) {
+    const v = String(value || '').toLowerCase();
+    if (v === 'correct') return 'Benar';
+    if (v === 'wrong1' || v === 'wrong2' || v === 'no') return 'Belum tepat';
+    if (v === '(belum dijawab)') return '(belum dijawab)';
+    return normalizePdfText(value);
+  }
 
   function checkPageBreak(needed = 20) {
     if(yPos + needed > pageHeight - margin) {
@@ -3889,19 +4147,20 @@ function generateLaporanLengkap() {
     checkPageBreak(size + 3);
     doc.setFontSize(size);
     doc.setFont(undefined, 'bold');
-    doc.text(text, margin, yPos);
+    doc.text(normalizePdfText(text), margin, yPos);
     yPos += size + 2;
   }
 
   function addText(text, size = 10, indent = 0) {
-    if(!text || text.trim() === '') {
+    const normalized = normalizePdfText(text);
+    if(!normalized || normalized.trim() === '') {
       addText('(Belum diisi)', size, indent);
       return;
     }
     checkPageBreak(size + 3);
     doc.setFontSize(size);
     doc.setFont(undefined, 'normal');
-    const lines = doc.splitTextToSize(text, maxWidth - indent);
+    const lines = doc.splitTextToSize(normalized, maxWidth - indent);
     doc.text(lines, margin + indent, yPos);
     yPos += (lines.length * (size/2)) + 3;
   }
@@ -3961,112 +4220,95 @@ function generateLaporanLengkap() {
   addText(solusiAwal || 'Belum diisi', 10, 5);
   yPos += 8;
 
-  // === 3. IDENTIFIKASI HIMPUNAN ===
-  addTitle('3. IDENTIFIKASI KRITERIA HIMPUNAN', 16);
-  const dataRak = localStorage.getItem('dataRak');
-  if(dataRak) {
-    try {
-      const rak = JSON.parse(dataRak);
-      addSubtitle('Kriteria Rak A:');
-      addText(rak.kriteriaA || '-', 10, 5);
-      addSubtitle('Kriteria Rak B:');
-      addText(rak.kriteriaB || '-', 10, 5);
-      
-      if(rak.rakA && rak.rakA.length > 0) {
-        addSubtitle('Buku di Rak A:');
-        addText(rak.rakA.join(', '), 10, 5);
-      }
-      if(rak.rakB && rak.rakB.length > 0) {
-        addSubtitle('Buku di Rak B:');
-        addText(rak.rakB.join(', '), 10, 5);
-      }
-      if(rak.irisan && rak.irisan.length > 0) {
-        addSubtitle('Buku di Irisan (A ∩ B):');
-        addText(rak.irisan.join(', '), 10, 5);
-      }
-    } catch(e) {
-      addText('Data tidak valid', 10, 5);
-    }
+  // === 3. BUKTI AKTIVITAS TAHAP 1 ===
+  addTitle('3. BUKTI AKTIVITAS TAHAP 1 (MENGIDENTIFIKASI HIMPUNAN)', 16);
+  addSubtitle('Hasil Drag & Drop Kartu Kriteria:');
+  addText('Masuk Himpunan: ' + (evidence.tahap1.kartuHimpunan.length ? evidence.tahap1.kartuHimpunan.join(', ') : '(belum lengkap)'), 10, 5);
+  addText('Masuk Bukan Himpunan: ' + (evidence.tahap1.kartuBukanHimpunan.length ? evidence.tahap1.kartuBukanHimpunan.join(', ') : '(belum lengkap)'), 10, 5);
+  addText('Jumlah kartu ditempatkan: ' + evidence.tahap1.jumlahKartuDitempatkan + '/3', 10, 5);
+
+  addSubtitle('Uji Pemahaman (5 Pernyataan):');
+  if (evidence.tahap1.quiz.detail.length > 0) {
+    evidence.tahap1.quiz.detail.forEach((item) => {
+      addText(
+        `${item.id}: Jawaban siswa = ${item.jawabanSiswa}, Kunci = ${item.jawabanBenar}, Status = ${item.benar ? 'Benar' : 'Belum Tepat'}`,
+        10,
+        5
+      );
+    });
+    addText(`Skor: ${evidence.tahap1.quiz.skorBenar}/${evidence.tahap1.quiz.totalSoal}`, 10, 5);
   } else {
-    addText('Belum mengisi data rak', 10, 5);
+    addText('Belum ada data kuis Tahap 1', 10, 5);
   }
+
+  addSubtitle('Kesimpulan Siswa:');
+  addText(evidence.tahap1.kesimpulan, 10, 5);
   yPos += 8;
 
-  // === 4. OPERASI HIMPUNAN ===
-  addTitle('4. OPERASI HIMPUNAN', 16);
-  const operasiData = localStorage.getItem('operasiHimpunanData');
-  if(operasiData) {
-    try {
-      const operasi = JSON.parse(operasiData);
-      if(operasi.irisan) {
-        addSubtitle('Irisan (A ∩ B):');
-        addText(operasi.irisan, 10, 5);
-      }
-      if(operasi.gabungan) {
-        addSubtitle('Gabungan (A ∪ B):');
-        addText(operasi.gabungan, 10, 5);
-      }
-      if(operasi.komplemen) {
-        addSubtitle('Komplemen:');
-        addText(operasi.komplemen, 10, 5);
-      }
-    } catch(e) {
-      addText('Data tidak valid', 10, 5);
-    }
-  } else {
-    addText('Belum mengisi operasi himpunan', 10, 5);
-  }
+  // === 4. BUKTI AKTIVITAS TAHAP 2 ===
+  addTitle('4. BUKTI AKTIVITAS TAHAP 2 (REPRESENTASI HIMPUNAN)', 16);
+  addSubtitle('Status Level:');
+  addText('Level 1 (Matching): ' + (evidence.tahap2.level1Selesai ? 'Selesai' : 'Belum selesai'), 10, 5);
+  addText('Level 2 (Pilih Buku): ' + (evidence.tahap2.level2Selesai ? 'Selesai' : 'Belum selesai'), 10, 5);
+  addText('Level 3 (Quiz): ' + (evidence.tahap2.level3Selesai ? 'Selesai' : 'Belum selesai'), 10, 5);
+  addSubtitle('Hasil Enumerasi:');
+  addText(evidence.tahap2.enumResult, 10, 5);
+  addSubtitle('Buku yang sempat dipilih siswa:');
+  addText(evidence.tahap2.bukuDipilih.length ? evidence.tahap2.bukuDipilih.join(', ') : '(tidak terdeteksi pilihan aktif)', 10, 5);
+  addSubtitle('Jawaban Quiz Level 3:');
+  evidence.tahap2.quizLevel3.forEach((item) => {
+    addText(`Soal ${item.soal}: ${item.value} (${item.benar ? 'Benar' : 'Belum Tepat'})`, 10, 5);
+  });
+  addText('Feedback terakhir: ' + (evidence.tahap2.feedbackLevel3 || '(belum ada feedback)'), 10, 5);
   yPos += 8;
 
-  // === 5. KARDINALITAS ===
-  addTitle('5. ANALISIS KARDINALITAS', 16);
-  const kardData = localStorage.getItem('kardinalitasData');
-  if(kardData) {
-    try {
-      const kard = JSON.parse(kardData);
-      addSubtitle('Hasil Perhitungan:');
-      addText('|A ∩ B| = ' + (kard.irisan || '0'), 10, 5);
-      addText('|A ∪ B| = ' + (kard.gabungan || '0'), 10, 5);
-      addText('|Komplemen| = ' + (kard.komplemen || '0'), 10, 5);
-    } catch(e) {
-      addText('Data tidak valid', 10, 5);
-    }
-  } else {
-    addText('Belum mengisi kardinalitas', 10, 5);
-  }
+  // === 5. BUKTI AKTIVITAS TAHAP 3 ===
+  addTitle('5. BUKTI AKTIVITAS TAHAP 3 (DIAGRAM VENN & OPERASI)', 16);
+  addSubtitle('Ringkasan Penempatan Buku:');
+  addText('Zona A saja -> ' + (evidence.tahap3.zoneA.length ? evidence.tahap3.zoneA.join(', ') : '-'), 10, 5);
+  addText('Zona B saja -> ' + (evidence.tahap3.zoneB.length ? evidence.tahap3.zoneB.join(', ') : '-'), 10, 5);
+  addText('Zona irisan A dan B -> ' + (evidence.tahap3.zoneAB.length ? evidence.tahap3.zoneAB.join(', ') : '-'), 10, 5);
+  addText('Zona luar -> ' + (evidence.tahap3.zoneOUT.length ? evidence.tahap3.zoneOUT.join(', ') : '-'), 10, 5);
+  addSubtitle('Ringkasan Jawaban Operasi Himpunan:');
+  addText('Irisan -> ' + answerLabel(evidence.tahap3.jawabanIrisan), 10, 5);
+  addText('Gabungan -> ' + answerLabel(evidence.tahap3.jawabanGabungan), 10, 5);
+  addText('Status Tahap 3 -> ' + (evidence.tahap3.selesai ? 'Selesai' : 'Belum selesai'), 10, 5);
   yPos += 8;
 
-  // === 6. GALLERY WALK - KOMENTAR ===
-  addTitle('6. GALLERY WALK - KOMENTAR ANTAR KELOMPOK', 16);
-  const komentarData = localStorage.getItem('komentarKelompokT4');
-  if(komentarData) {
-    try {
-      const komentar = JSON.parse(komentarData);
-      if(Array.isArray(komentar) && komentar.length > 0) {
-        komentar.forEach((k, i) => {
-          addSubtitle('Komentar ' + (i+1) + ':');
-          addText('Dari: ' + (k.kelompok || '-'), 10, 5);
-          addText(k.komentar || '-', 10, 5);
-          yPos += 3;
-        });
-      } else {
-        addText('Belum ada komentar', 10, 5);
-      }
-    } catch(e) {
-      addText('Data tidak valid', 10, 5);
-    }
+  // === 6. BUKTI AKTIVITAS TAHAP 4 ===
+  addTitle('6. BUKTI AKTIVITAS TAHAP 4 (PEMILAHAN & KARDINALITAS)', 16);
+  addSubtitle('Pilihan Rak per Buku:');
+  if (evidence.tahap4.pemilahanBuku.length > 0) {
+    evidence.tahap4.pemilahanBuku.forEach((item) => {
+      const bukuLabel = cleanBookIdText(item.buku);
+      addText(`Buku ${bukuLabel}: ${rakLabel(item.pilihanRak)} (${statusLabel(item.isCorrect)})`, 10, 5);
+    });
   } else {
-    addText('Belum ada komentar', 10, 5);
+    addText('Belum ada data pemilahan buku', 10, 5);
+  }
+  addSubtitle('Input Kardinalitas Siswa:');
+  addText('n(A irisan B) = ' + evidence.tahap4.kardinalitas.nAB, 10, 5);
+  addText('n(A gabungan B) = ' + evidence.tahap4.kardinalitas.nAU, 10, 5);
+  addText('n((A gabungan B)^c) = ' + evidence.tahap4.kardinalitas.nLuar, 10, 5);
+  addText('Status pengecekan: ' + evidence.tahap4.statusCek, 10, 5);
+
+  addSubtitle('Komentar Gallery Walk:');
+  if (Array.isArray(evidence.tahap4.komentar) && evidence.tahap4.komentar.length > 0) {
+    evidence.tahap4.komentar.forEach((k, i) => {
+      addText(`Komentar ${i + 1} - ${k.nama || '-'}: ${k.komentar || '-'}`, 10, 5);
+    });
+  } else {
+    addText('Belum ada komentar gallery walk', 10, 5);
   }
   yPos += 8;
 
   // === 7. REFLEKSI & EVALUASI ===
   addTitle('7. REFLEKSI & EVALUASI PEMBELAJARAN', 16);
   
-  const refleksi6 = document.getElementById('refleksi6')?.value;
-  const refleksi7 = document.getElementById('refleksi7')?.value;
-  const refleksi8 = document.getElementById('refleksi8')?.value;
-  const refleksi9 = document.getElementById('refleksi9')?.value;
+  const refleksi6 = evidence.refleksi.refleksi6;
+  const refleksi7 = evidence.refleksi.refleksi7;
+  const refleksi8 = evidence.refleksi.refleksi8;
+  const refleksi9 = evidence.refleksi.refleksi9;
   
   addSubtitle('Bagaimana perasaan tentang pembelajaran ini?');
   addText(refleksi6 || 'Belum diisi', 10, 5);
@@ -4100,6 +4342,481 @@ function generateLaporanLengkap() {
   
   console.log('✅ PDF Laporan berhasil diunduh:', fileName);
 }
+</script>
+
+<button id="tutorLauncher" class="tutor-launcher" type="button">Aktifkan Tutor</button>
+<aside id="tutorPanel" class="tutor-panel" aria-live="polite">
+  <div class="tutor-head">
+    <div class="tutor-avatar" aria-hidden="true">👩‍🏫</div>
+    <div>
+      <div class="tutor-title">Tutor Virtual</div>
+      <div id="tutorProgress" class="tutor-progress">Langkah 1</div>
+    </div>
+  </div>
+  <div id="tutorBubble" class="tutor-bubble">Halo, saya akan membimbing kamu langkah demi langkah.</div>
+  <div id="tutorStatus" class="tutor-status"></div>
+  <div class="tutor-actions">
+    <button id="tutorPrev" class="btn ghost" type="button">Sebelumnya</button>
+    <button id="tutorNext" class="btn" type="button">Berikutnya</button>
+    <button id="tutorRepeat" class="btn ghost" type="button">Ulangi</button>
+    <button id="tutorVoice" class="btn ghost" type="button">Suara: Off</button>
+    <button id="tutorStop" class="btn ghost" type="button">Tutup</button>
+  </div>
+</aside>
+
+<script>
+(function(){
+  const launcher = document.getElementById('tutorLauncher');
+  const panel = document.getElementById('tutorPanel');
+  const bubble = document.getElementById('tutorBubble');
+  const progress = document.getElementById('tutorProgress');
+  const status = document.getElementById('tutorStatus');
+  const btnPrev = document.getElementById('tutorPrev');
+  const btnNext = document.getElementById('tutorNext');
+  const btnRepeat = document.getElementById('tutorRepeat');
+  const btnVoice = document.getElementById('tutorVoice');
+  const btnStop = document.getElementById('tutorStop');
+
+  if(!launcher || !panel || !bubble || !progress || !status || !btnPrev || !btnNext || !btnRepeat || !btnVoice || !btnStop) return;
+
+  const steps = [
+    { slide:'start', target:'button[data-go="menu"]', text:'Langkah 1. Tekan tombol Mulai untuk masuk ke Menu Utama.', event:'click', wait:'Saya menunggu kamu menekan tombol Mulai.' },
+    { slide:'menu', target:'.menu-card[data-go="permasalahan-gambar"]', text:'Langkah 2. Pilih kartu Permasalahan agar kamu melihat kasus pustakawan.', event:'click', wait:'Klik kartu Permasalahan yang sedang disorot.' },
+    { slide:'permasalahan-gambar', target:'#solusiAwalPertemuan1', text:'Langkah 3. Tulis ide solusi awalmu di kotak ini. Tulis minimal beberapa kata.', event:'input', minChars:12, wait:'Isi kolom ide solusi awal. Setelah cukup, tutor lanjut otomatis.' },
+    { slide:'permasalahan-gambar', target:'button[data-go="identitas-kelompok"]', text:'Langkah 4. Jika sudah, tekan Selesaikan untuk lanjut ke Data Kelompok.', event:'click', wait:'Klik tombol Selesaikan untuk berpindah slide.' },
+    { slide:'identitas-kelompok', target:'#namaKelompok', text:'Langkah 5. Isi Nama Kelompok pada kotak input ini.', event:'input', minChars:3, wait:'Isi nama kelompok terlebih dahulu.' },
+    { slide:'identitas-kelompok', target:'#inputNamaAnggota', text:'Langkah 6. Isi nama anggota, pilih peran, lalu tekan tombol INPUT.', event:'secondary-click', targetSecondary:'#btnInputAnggota', wait:'Pastikan kamu menekan tombol INPUT setelah mengisi data.' },
+    { slide:'identitas-kelompok', target:'#lanjutTahap1Btn', text:'Langkah 7. Tekan Lanjut ke Tahap 1 untuk mulai misi klasifikasi himpunan.', event:'click', wait:'Klik tombol Lanjut ke Tahap 1.' },
+
+    { slide:'permasalahan', target:'#startBtn', text:'Langkah 8. Tekan Mulai Misi untuk memulai aktivitas penyelidikan.', event:'click', wait:'Klik Mulai Misi.' },
+    { slide:'permasalahan', target:'#cardsArea', text:'Langkah 9. Perhatikan 3 kartu kriteria (A, B, C) yang harus diklasifikasi.', event:'manual', wait:'Baca isi 3 kartu dulu, lalu tekan Berikutnya.' },
+    { slide:'permasalahan', target:'#zoneYes', text:'Langkah 10. Seret kartu yang termasuk himpunan ke area HIMPUNAN.', event:'manual', wait:'Tarik kartu A/C ke HIMPUNAN sesuai pemahamanmu.' },
+    { slide:'permasalahan', target:'#zoneNo', text:'Langkah 11. Seret kartu yang bukan himpunan ke area BUKAN HIMPUNAN.', event:'manual', wait:'Tarik kartu B ke BUKAN HIMPUNAN.' },
+    { slide:'permasalahan', target:'#zoneYes', text:'Langkah 12. Tutor menunggu sampai ketiga kartu sudah ditempatkan.', event:'condition', wait:'Tempatkan kartu A, B, C terlebih dahulu.', check:function(){ const has = (id) => !!document.querySelector('#zoneYes .chip-' + id + ', #zoneNo .chip-' + id); return has('A') && has('B') && has('C'); } },
+    { slide:'permasalahan', target:'#zoneYes', text:'Langkah 13. Cek kembali: A dan C seharusnya di HIMPUNAN, B di BUKAN HIMPUNAN.', event:'condition', wait:'Perbaiki posisi kartu jika masih terbalik.', check:function(){ return !!document.querySelector('#zoneYes .chip-A') && !!document.querySelector('#zoneYes .chip-C') && !!document.querySelector('#zoneNo .chip-B'); } },
+
+    { slide:'permasalahan', target:'#quiz-card-Q1', text:'Langkah 14. Sekarang masuk Uji Pemahaman: pilih kategori pada pernyataan nomor 1.', event:'condition', wait:'Klik tombol Himpunan/Bukan Himpunan untuk nomor 1.', check:function(){ return !!(window.quizAnswers && window.quizAnswers.Q1); } },
+    { slide:'permasalahan', target:'#quiz-card-Q2', text:'Langkah 15. Lanjut pernyataan nomor 2.', event:'condition', wait:'Pilih jawaban untuk nomor 2.', check:function(){ return !!(window.quizAnswers && window.quizAnswers.Q2); } },
+    { slide:'permasalahan', target:'#quiz-card-Q3', text:'Langkah 16. Lanjut pernyataan nomor 3.', event:'condition', wait:'Pilih jawaban untuk nomor 3.', check:function(){ return !!(window.quizAnswers && window.quizAnswers.Q3); } },
+    { slide:'permasalahan', target:'#quiz-card-Q4', text:'Langkah 17. Lanjut pernyataan nomor 4.', event:'condition', wait:'Pilih jawaban untuk nomor 4.', check:function(){ return !!(window.quizAnswers && window.quizAnswers.Q4); } },
+    { slide:'permasalahan', target:'#quiz-card-Q5', text:'Langkah 18. Selesaikan pernyataan nomor 5.', event:'condition', wait:'Pilih jawaban untuk nomor 5.', check:function(){ return !!(window.quizAnswers && window.quizAnswers.Q5); } },
+    { slide:'permasalahan', target:'#quizCheckBtn', text:'Langkah 19. Tekan Cek Jawaban untuk melihat skor dan pembahasan akhir.', event:'click', wait:'Klik tombol Cek Jawaban.' },
+
+    { slide:'permasalahan', target:'#kesimpulanHimpunan', text:'Langkah 20. Tulis kesimpulanmu tentang himpunan dan bukan himpunan.', event:'input', minChars:40, wait:'Tulis kesimpulan minimal 40 karakter.' },
+    { slide:'permasalahan', target:'button[onclick="simpanKesimpulan()"]', text:'Langkah 21. Tekan Simpan Kesimpulan agar jawaban tersimpan.', event:'click', wait:'Klik Simpan Kesimpulan.' },
+    { slide:'permasalahan', target:'#doneBtn', text:'Langkah 22. Tekan Tandai Selesai untuk menutup Tahap 1.', event:'click', wait:'Klik Tandai Selesai.' },
+    { slide:'permasalahan', target:'#goto-tahap2', text:'Langkah 23. Jika Tahap 1 selesai, lanjutkan ke Tahap 2.', event:'click', wait:'Klik Lanjut Tahap 2.' },
+
+    { slide:'tahap2', target:'#level-1-section', text:'Langkah 24. Sekarang belajar 3 representasi himpunan: Deskripsi, Enumerasi, dan Notasi.', event:'manual', wait:'Baca pengantar level ini dulu, lalu tekan Berikutnya.' },
+    { slide:'tahap2', target:'#matching-container', text:'Langkah 25. Pada Level 1, seret contoh dari kanan ke kiri untuk mencocokkan nama representasi yang benar.', event:'manual', wait:'Contoh kalimat = Deskripsi, daftar anggota = Enumerasi, bentuk A = {x | ...} = Notasi.' },
+    { slide:'tahap2', target:'#btn-hint-1', text:'Langkah 26. Jika bingung, klik Butuh Bantuan untuk melihat petunjuk.', event:'manual', wait:'Opsional: klik bantuan, lalu lanjutkan mencocokkan kartu.' },
+    { slide:'tahap2', target:'#level1-icon', text:'Langkah 27. Tutor menunggu sampai Level 1 selesai.', event:'condition', wait:'Selesaikan semua pencocokan pada Level 1 hingga ikon centang muncul.', check:function(){ const el = document.getElementById('level1-icon'); return !!el && String(el.textContent || '').includes('✓'); } },
+
+    { slide:'tahap2', target:'#level-2-section', text:'Langkah 28. Level 2: pilih buku yang memenuhi kriteria halaman > 100.', event:'manual', wait:'Klik buku yang sesuai kriteria agar terbentuk hasil enumerasi.' },
+    { slide:'tahap2', target:'.book-item[data-name="Buku A"]', text:'Langkah 29. Contoh strategi: cek jumlah halaman tiap buku, lalu pilih hanya yang > 100.', event:'manual', wait:'Bandingkan Buku A/B/C/D, lalu pilih yang memenuhi syarat.' },
+    { slide:'tahap2', target:'#level2-icon', text:'Langkah 30. Tutor menunggu sampai Level 2 selesai.', event:'condition', wait:'Pastikan pilihan buku benar sampai ikon Level 2 berubah centang.', check:function(){ const el = document.getElementById('level2-icon'); return !!el && String(el.textContent || '').includes('✓'); } },
+
+    { slide:'tahap2', target:'#level-3-section', text:'Langkah 31. Level 3: jawab kuis validasi untuk memastikan paham perbedaan representasi.', event:'manual', wait:'Jawab 3 soal, lalu cek jawaban.' },
+    { slide:'tahap2', target:'#btn-submit-quiz', text:'Langkah 32. Tutor menunggu sampai tombol Cek Jawaban kuis aktif.', event:'condition', wait:'Pilih jawaban di semua soal terlebih dahulu.', check:function(){ const btn = document.getElementById('btn-submit-quiz'); return !!btn && !btn.disabled; } },
+    { slide:'tahap2', target:'#btn-submit-quiz', text:'Langkah 33. Tekan Cek Jawaban kuis Level 3.', event:'click', wait:'Klik Cek Jawaban untuk melihat hasil Level 3.' },
+    { slide:'tahap2', target:'#level3-icon', text:'Langkah 34. Tutor menunggu sampai Level 3 selesai.', event:'condition', wait:'Jika belum benar semua, perbaiki jawaban hingga selesai.', check:function(){ const el = document.getElementById('level3-icon'); return !!el && String(el.textContent || '').includes('✓'); } },
+    { slide:'tahap2', target:'#btn-next-tahap3', text:'Langkah 35. Bagus, Tahap 2 selesai. Tekan Lanjut Tahap 3.', event:'click', wait:'Klik tombol Lanjut Tahap 3 untuk melanjutkan.' },
+
+    { slide:'tahap3', target:'#vennGuideLegend', text:'Langkah 36. Baca legenda area diagram Venn agar tahu buku harus ditempatkan ke zona mana.', event:'manual', wait:'Pahami dulu arti A saja, B saja, Irisan, dan Luar.' },
+    { slide:'tahap3', target:'#vennRect', text:'Langkah 37. Seret setiap buku ke area yang sesuai berdasarkan dua kriteria A dan B.', event:'manual', wait:'Cocokkan data halaman dan tahun buku sebelum meletakkan.' },
+    { slide:'tahap3', target:'#statusBox', text:'Langkah 38. Tutor menunggu sampai semua buku berhasil dipetakan.', event:'condition', wait:'Taruh semua 6 buku dengan benar sampai panel pemahaman muncul.', check:function(){ return document.querySelectorAll('#tahap3 .book.locked').length >= 6; } },
+    { slide:'tahap3', target:'#notationPanel', text:'Langkah 39. Setelah semua buku tepat, jawab pertanyaan operasi himpunan pada panel ini.', event:'condition', wait:'Panel operasi akan muncul otomatis ketika pemetaan buku benar.', check:function(){ const panel = document.getElementById('notationPanel'); return !!panel && panel.style.display === 'block'; } },
+    { slide:'tahap3', target:'input[name="q-irisan"]:first-of-type', text:'Langkah 40. Pilih jawaban untuk pertanyaan Irisan (A ∩ B).', event:'radio-group', groupName:'q-irisan', wait:'Jawab pertanyaan 1 tentang zona tengah.' },
+    { slide:'tahap3', target:'input[name="q-gabungan"]:first-of-type', text:'Langkah 41. Pilih jawaban untuk pertanyaan Gabungan (A ∪ B).', event:'radio-group', groupName:'q-gabungan', wait:'Jawab pertanyaan 2 tentang semua zona berwarna.' },
+    { slide:'tahap3', target:'#goto-tahap4', text:'Langkah 42. Jika pemahaman sudah benar, tombol Lanjut Tahap 4 akan aktif.', event:'condition', wait:'Perbaiki jawaban kuis jika tombol belum aktif.', check:function(){ const btn = document.getElementById('goto-tahap4'); return !!btn && !btn.disabled; } },
+    { slide:'tahap3', target:'#goto-tahap4', text:'Langkah 43. Tekan Lanjut Tahap 4.', event:'click', wait:'Klik tombol Lanjut Tahap 4.' },
+    { slide:'tahap4', target:'select[data-book="A"]', text:'Langkah 38. Pilih rak untuk buku pada tabel. Mulai dari Buku A.', event:'change', wait:'Ubah pilihan rak pada Buku A terlebih dahulu.' },
+    { slide:'tahap4', target:'#input_nAB', text:'Langkah 39. Isi nilai kardinalitas n(A ∩ B).', event:'input-number', wait:'Masukkan angka pada n(A ∩ B).' },
+    { slide:'tahap4', target:'#checkBtn', text:'Langkah 40. Tekan Cek Pemilahan & Kardinalitas untuk melihat koreksi.', event:'click', wait:'Klik tombol Cek Pemilahan & Kardinalitas.' },
+    { slide:'tahap4', target:'#namaKelompokT4', text:'Langkah 41. Isi nama kelompok pada bagian Gallery Walk.', event:'input', minChars:3, wait:'Isi nama kelompok untuk komentar Gallery Walk.' },
+    { slide:'tahap4', target:'#komentarKelompokT4', text:'Langkah 42. Tulis komentar konstruktif untuk kelompok lain.', event:'input', minChars:10, wait:'Komentar minimal 10 karakter agar bermakna.' },
+    { slide:'tahap4', target:'#btnKirimKomentarT4', text:'Langkah 43. Tekan Kirim Komentar.', event:'click', wait:'Klik tombol Kirim Komentar.' },
+    { slide:'tahap4', target:'button[data-go="tahap5"]', text:'Langkah 44. Lanjutkan ke Fase 5: Refleksi & Evaluasi.', event:'click', wait:'Klik tombol Lanjut Tahap 5.' },
+    { slide:'tahap5', target:'#tahap5 input[name="q1"]:first-of-type', text:'Langkah 45. Pilih jawaban untuk soal evaluasi nomor 1.', event:'radio-group', groupName:'q1', wait:'Pilih salah satu opsi pada soal nomor 1.' },
+    { slide:'tahap5', target:'#tahap5 input[name="q2"]:first-of-type', text:'Langkah 46. Pilih jawaban untuk soal evaluasi nomor 2.', event:'radio-group', groupName:'q2', wait:'Pilih salah satu opsi pada soal nomor 2.' },
+    { slide:'tahap5', target:'#refleksi6', text:'Langkah 47. Isi refleksi perasaan belajar hari ini.', event:'input', minChars:10, wait:'Tulis refleksi perasaan minimal 10 karakter.' },
+    { slide:'tahap5', target:'#refleksi7', text:'Langkah 48. Isi bagian paling membingungkan menurutmu.', event:'input', minChars:12, wait:'Isi refleksi 7 minimal 12 karakter.' },
+    { slide:'tahap5', target:'#refleksi8', text:'Langkah 49. Isi kesalahan atau hambatan kelompokmu.', event:'input', minChars:12, wait:'Isi refleksi 8 minimal 12 karakter.' },
+    { slide:'tahap5', target:'#refleksi9', text:'Langkah 50. Isi apa yang perlu dipelajari lanjut.', event:'input', minChars:12, wait:'Isi refleksi 9 minimal 12 karakter.' },
+    { slide:'tahap5', target:'#btnDownloadLaporan', text:'Langkah 51. Tekan Download Laporan PDF untuk menyimpan hasil belajar.', event:'click', wait:'Klik Download Laporan PDF. Setelah ini panduan selesai.' }
+  ];
+
+  let active = false;
+  let index = 0;
+  let voiceOn = false;
+  let detachHandlers = [];
+  let highlightedEl = null;
+  let conditionTimer = null;
+  let autoSyncTimer = null;
+  let availableVoices = [];
+
+  function pickBestFemaleVoice(voices) {
+    if (!voices || voices.length === 0) return null;
+    const femaleHints = /(female|woman|perempuan|zira|siti|amelia|susan|linda|sarah)/i;
+    // Priority 1: Indonesian female
+    const idVoices = voices.filter(v => /id[-_]id|indonesia/i.test(v.lang + ' ' + v.name));
+    const idFemale = idVoices.find(v => femaleHints.test(v.name));
+    if (idFemale) return idFemale;
+    // Priority 2: First Indonesian voice
+    if (idVoices[0]) return idVoices[0];
+    // Priority 3: Any female voice
+    const anyFemale = voices.find(v => femaleHints.test(v.name));
+    if (anyFemale) return anyFemale;
+    // Priority 4: First available
+    return voices[0];
+  }
+
+  function pickBestMaleVoice(voices) {
+    if (!voices || voices.length === 0) return null;
+    const maleHints = /(male|man|laki|david|mark|john|robert|google\s+male)/i;
+    // Priority 1: Indonesian male
+    const idVoices = voices.filter(v => /id[-_]id|indonesia/i.test(v.lang + ' ' + v.name));
+    const idMale = idVoices.find(v => maleHints.test(v.name));
+    if (idMale) return idMale;
+    // Priority 2: Non-female Indonesian
+    const idNonFemale = idVoices.find(v => !/female|perempuan|siti|amelia|susan/i.test(v.name));
+    if (idNonFemale) return idNonFemale;
+    // Priority 3: First Indonesian
+    if (idVoices[0]) return idVoices[0];
+    // Priority 4: Any male-labeled voice
+    const anyMale = voices.find(v => maleHints.test(v.name));
+    if (anyMale) return anyMale;
+    // Priority 5: Second voice (likely different)
+    if (voices.length > 1) return voices[1];
+    return voices[0];
+  }
+
+  function initializeTutorVoice() {
+    const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+    availableVoices = voices;
+    // No user choice needed - we automatically use female voice
+  }
+
+  function clearHandlers(){
+    detachHandlers.forEach(fn => { try { fn(); } catch(_){} });
+    detachHandlers = [];
+    if(conditionTimer){
+      clearInterval(conditionTimer);
+      conditionTimer = null;
+    }
+    if(autoSyncTimer){
+      clearInterval(autoSyncTimer);
+      autoSyncTimer = null;
+    }
+  }
+
+  function clearHighlight(){
+    if(highlightedEl) highlightedEl.classList.remove('tutor-target-highlight');
+    highlightedEl = null;
+  }
+
+  function speak(text){
+    if(!voiceOn || !window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const ut = new SpeechSynthesisUtterance(text);
+    const bestMaleVoice = pickBestMaleVoice(availableVoices);
+    if (bestMaleVoice) {
+      ut.voice = bestMaleVoice;
+      ut.lang = bestMaleVoice.lang || 'id-ID';
+    } else {
+      ut.lang = 'id-ID';
+    }
+    ut.rate = 0.97;
+    window.speechSynthesis.speak(ut);
+  }
+
+  function isVisible(el){
+    if(!el) return false;
+    const r = el.getBoundingClientRect();
+    return r.width > 0 && r.height > 0;
+  }
+
+  function getActiveSlideId(){
+    return document.querySelector('main.slides > .slide.active')?.id || '';
+  }
+
+  const slideSequence = Array.from(document.querySelectorAll('main.slides > .slide')).map(s => s.id);
+  function slideRank(id){
+    return slideSequence.indexOf(id || '');
+  }
+
+  function cleanStepText(text){
+    return String(text || '').replace(/^Langkah\s+\d+[\.:]?\s*/i, '').trim();
+  }
+
+  function safeCheck(fn){
+    try { return !!fn(); } catch(_) { return false; }
+  }
+
+  function isStepCompleted(step, stepIndex){
+    if(!step) return false;
+    if(typeof step.check === 'function' && safeCheck(step.check)) return true;
+
+    const target = step.target ? document.querySelector(step.target) : null;
+    const activeRank = slideRank(getActiveSlideId());
+    const stepRank = slideRank(step.slide);
+    const passedSlide = activeRank > -1 && stepRank > -1 && activeRank > stepRank;
+
+    if(step.event === 'input'){
+      const val = target && 'value' in target ? String(target.value || '').trim() : '';
+      return val.length >= (step.minChars || 1);
+    }
+
+    if(step.event === 'input-number'){
+      const val = target && 'value' in target ? String(target.value || '').trim() : '';
+      return val !== '' && !Number.isNaN(Number(val));
+    }
+
+    if(step.event === 'change'){
+      if(!target) return passedSlide;
+      if('value' in target) return String(target.value || '').trim() !== '';
+      return passedSlide;
+    }
+
+    if(step.event === 'radio-group'){
+      const groupName = step.groupName || '';
+      if(!groupName) return passedSlide;
+      return !!document.querySelector(`input[name="${groupName}"]:checked`);
+    }
+
+    if(step.event === 'condition'){
+      return typeof step.check === 'function' ? safeCheck(step.check) : passedSlide;
+    }
+
+    if(step.event === 'manual' || step.event === 'click' || step.event === 'secondary-click'){
+      if(passedSlide) return true;
+      for(let i = stepIndex + 1; i < steps.length; i++){
+        const nextStep = steps[i];
+        if(nextStep.slide !== step.slide) break;
+        if(typeof nextStep.check === 'function' && safeCheck(nextStep.check)) return true;
+      }
+    }
+
+    return false;
+  }
+
+  function findNextIncomplete(startIndex){
+    for(let i = Math.max(0, startIndex); i < steps.length; i++){
+      if(!isStepCompleted(steps[i], i)) return i;
+    }
+    return -1;
+  }
+
+  function moveToRelevantStep(startIndex, announce){
+    const next = findNextIncomplete(startIndex);
+    if(next === -1){
+      stopTutor('Semua aktivitas sudah selesai. Kamu bisa langsung lanjutkan atau cek ulang jawabanmu.');
+      return false;
+    }
+    index = next;
+    renderStep(announce);
+    return true;
+  }
+
+  function renderStep(announce){
+    clearHandlers();
+    clearHighlight();
+
+    const step = steps[index];
+    const displayText = cleanStepText(step.text);
+    progress.textContent = 'Panduan adaptif aktif';
+    bubble.textContent = displayText;
+    status.textContent = step.wait || '';
+
+    if(window.show && step.slide && getActiveSlideId() !== step.slide){
+      try { window.show(step.slide); } catch(_){}
+    }
+
+    setTimeout(() => {
+      const target = document.querySelector(step.target);
+      if(target && isVisible(target)){
+        target.classList.add('tutor-target-highlight');
+        highlightedEl = target;
+        target.scrollIntoView({ behavior:'smooth', block:'center', inline:'nearest' });
+      } else {
+        status.textContent = 'Elemen langkah belum terlihat. Gunakan tombol Berikutnya jika perlu.';
+      }
+      bindAutoAdvance(step, target);
+    }, 200);
+
+    if(announce) speak(displayText);
+    btnPrev.disabled = index === 0;
+    btnNext.textContent = 'Berikutnya';
+
+    autoSyncTimer = setInterval(() => {
+      if(!active) return;
+      if(isStepCompleted(steps[index], index)){
+        moveToRelevantStep(index + 1, true);
+      }
+    }, 900);
+  }
+
+  function bindAutoAdvance(step, target){
+    function finishOrNext(){
+      moveToRelevantStep(index + 1, true);
+    }
+
+    if(step.event === 'click' && target){
+      const onClick = () => finishOrNext();
+      target.addEventListener('click', onClick, { once:true });
+      detachHandlers.push(() => target.removeEventListener('click', onClick));
+
+      if(step.targetSecondary){
+        const secondary = document.querySelector(step.targetSecondary);
+        if(secondary){
+          const onSecondaryClick = () => finishOrNext();
+          secondary.addEventListener('click', onSecondaryClick, { once:true });
+          detachHandlers.push(() => secondary.removeEventListener('click', onSecondaryClick));
+        }
+      }
+    }
+
+    if(step.event === 'secondary-click'){
+      const secondary = step.targetSecondary ? document.querySelector(step.targetSecondary) : null;
+      if(!secondary) return;
+      const onSecondaryClick = () => finishOrNext();
+      secondary.addEventListener('click', onSecondaryClick, { once:true });
+      detachHandlers.push(() => secondary.removeEventListener('click', onSecondaryClick));
+    }
+
+    if(step.event === 'change' && target){
+      const onChange = () => finishOrNext();
+      target.addEventListener('change', onChange, { once:true });
+      detachHandlers.push(() => target.removeEventListener('change', onChange));
+    }
+
+    if(step.event === 'input-number' && target){
+      const onNumber = () => {
+        const val = String(target.value || '').trim();
+        if(val !== '' && !Number.isNaN(Number(val))){
+          target.removeEventListener('input', onNumber);
+          finishOrNext();
+        }
+      };
+      target.addEventListener('input', onNumber);
+      detachHandlers.push(() => target.removeEventListener('input', onNumber));
+      onNumber();
+    }
+
+    if(step.event === 'radio-group'){
+      const groupName = step.groupName || '';
+      if(!groupName) return;
+      const radios = Array.from(document.querySelectorAll(`input[name="${groupName}"]`));
+      if(!radios.length) return;
+      const onRadio = () => {
+        const checked = document.querySelector(`input[name="${groupName}"]:checked`);
+        if(checked){
+          radios.forEach(r => r.removeEventListener('change', onRadio));
+          finishOrNext();
+        }
+      };
+      radios.forEach(r => r.addEventListener('change', onRadio));
+      detachHandlers.push(() => radios.forEach(r => r.removeEventListener('change', onRadio)));
+      onRadio();
+    }
+
+    if(step.event === 'condition'){
+      const checker = typeof step.check === 'function' ? step.check : null;
+      if(!checker) return;
+      const runCheck = () => {
+        if(checker()){
+          if(conditionTimer){
+            clearInterval(conditionTimer);
+            conditionTimer = null;
+          }
+          finishOrNext();
+        }
+      };
+      runCheck();
+      if(!conditionTimer) conditionTimer = setInterval(runCheck, 700);
+    }
+
+    if(step.event === 'input' && target){
+      const minChars = step.minChars || 1;
+      const onInput = () => {
+        const val = (target.value || '').trim();
+        if(val.length >= minChars){
+          target.removeEventListener('input', onInput);
+          finishOrNext();
+        }
+      };
+      target.addEventListener('input', onInput);
+      detachHandlers.push(() => target.removeEventListener('input', onInput));
+      onInput();
+    }
+  }
+
+  function startTutor(){
+    active = true;
+    panel.classList.add('show');
+    launcher.textContent = 'Tutor Aktif';
+    moveToRelevantStep(0, true);
+  }
+
+  function stopTutor(message){
+    active = false;
+    clearHandlers();
+    clearHighlight();
+    panel.classList.remove('show');
+    launcher.textContent = 'Aktifkan Tutor';
+    if(window.speechSynthesis) window.speechSynthesis.cancel();
+    if(message) {
+      bubble.textContent = message;
+      status.textContent = 'Kamu bisa aktifkan lagi tutor kapan pun.';
+    }
+  }
+
+  launcher.addEventListener('click', () => {
+    if(active){
+      panel.classList.toggle('show');
+      if(panel.classList.contains('show')){
+        moveToRelevantStep(index, false);
+      }
+      return;
+    }
+    startTutor();
+  });
+
+  btnPrev.addEventListener('click', () => {
+    if(index > 0){
+      index -= 1;
+      renderStep(true);
+    }
+  });
+
+  btnNext.addEventListener('click', () => {
+    moveToRelevantStep(index + 1, true);
+  });
+
+  btnRepeat.addEventListener('click', () => {
+    speak(cleanStepText(steps[index].text));
+  });
+
+  btnVoice.addEventListener('click', () => {
+    voiceOn = !voiceOn;
+    btnVoice.textContent = 'Suara: ' + (voiceOn ? 'On' : 'Off');
+    if(!voiceOn && window.speechSynthesis) window.speechSynthesis.cancel();
+    if(voiceOn) speak(cleanStepText(steps[index].text));
+  });
+
+  if (window.speechSynthesis) {
+    initializeTutorVoice();
+    window.speechSynthesis.onvoiceschanged = initializeTutorVoice;
+  }
+
+  btnStop.addEventListener('click', () => {
+    stopTutor();
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden && window.speechSynthesis) window.speechSynthesis.cancel();
+  });
+})();
 </script>
 
 </body></html>
