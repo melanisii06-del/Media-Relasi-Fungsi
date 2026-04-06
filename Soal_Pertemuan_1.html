@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Soal Pertemuan 1</title>
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
     --bg:#ffcb64;
@@ -16,7 +16,7 @@
   html,body{
     margin:0;
     min-height:100%;
-    font-family:Arial, sans-serif;
+    font-family:"Times New Roman", Times, serif;
     background:linear-gradient(135deg, #ffcb64 0%, #ffc850 50%, #ffb84d 100%);
     color:var(--accent);
   }
@@ -45,12 +45,14 @@
   }
   h1{
     margin:0 0 8px;
-    font-family:'Bagel Fat One', cursive;
-    font-size:40px;
+    font-family:Cambria, "Times New Roman", serif;
+    font-size:36px;
+    font-weight:700;
   }
   .lead{
     margin:0;
-    font-size:18px;
+    font-family:Cambria, "Times New Roman", serif;
+    font-size:19px;
     color:var(--muted);
   }
   .question-list{
@@ -79,7 +81,7 @@
   }
   .question-text{
     margin:0;
-    font-size:16px;
+    font-size:17px;
     line-height:1.75;
     white-space:pre-line;
   }
@@ -90,7 +92,8 @@
     background:#f4fbff;
     border-left:4px solid var(--info);
     color:#5b4636;
-    font-size:15px;
+    font-size:16px;
+    font-style:italic;
     line-height:1.65;
   }
   .footer-note{
@@ -140,12 +143,50 @@
     font-size:14px;
     line-height:1.6;
   }
+  .download-box{
+    margin-top:16px;
+    padding:16px;
+    border-radius:14px;
+    background:linear-gradient(135deg, #fffdf5 0%, #fff3db 100%);
+    border:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 10px 20px rgba(0,0,0,0.05);
+  }
+  .download-label{
+    margin:0 0 8px;
+    font-weight:700;
+    font-size:15px;
+    color:var(--accent);
+  }
+  .download-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 18px;
+    border-radius:999px;
+    border:none;
+    background:linear-gradient(135deg, #14532d, #15803d);
+    color:#fff;
+    font-weight:700;
+    cursor:pointer;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow:0 8px 18px rgba(21,128,61,0.28);
+  }
+  .download-btn:hover{
+    transform:translateY(-1px);
+    box-shadow:0 12px 22px rgba(21,128,61,0.34);
+  }
+  .download-status{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.6;
+  }
   @media (max-width: 720px){
     .page{padding:14px}
     .card{padding:18px 14px}
-    h1{font-size:30px}
-    .lead{font-size:16px}
-    .question-text{font-size:15px}
+    h1{font-size:32px}
+    .lead{font-size:18px}
+    .question-text{font-size:16px}
   }
 </style>
 </head>
@@ -185,7 +226,112 @@
         <a class="submission-link" href="https://forms.gle/95mnJwRKZre78Zrx5" target="_blank" rel="noopener noreferrer">Kirim Tugas di Sini</a>
         <div class="submission-help">Tautan akan membuka Google Form untuk pengumpulan jawaban.</div>
       </div>
+
+      <div class="download-box">
+        <div class="download-label">Download Soal PDF</div>
+        <div class="submission-help">Unduh ketiga soal dalam satu file PDF untuk dibagikan atau dicetak.</div>
+        <button id="btnDownloadSoalPdf" class="download-btn" type="button">Download 3 Soal (PDF)</button>
+        <div id="downloadStatus" class="download-status"></div>
+      </div>
     </div>
   </div>
+
+<script>
+  (function () {
+    const btn = document.getElementById('btnDownloadSoalPdf');
+    const status = document.getElementById('downloadStatus');
+
+    if (!btn) return;
+
+    function setStatus(message, isError) {
+      if (!status) return;
+      status.textContent = message;
+      status.style.color = isError ? '#b91c1c' : '#6b4b3a';
+    }
+
+    function addWrappedText(doc, text, x, maxWidth, yRef, lineHeight) {
+      const lines = doc.splitTextToSize(text, maxWidth);
+      const pageHeight = doc.internal.pageSize.getHeight();
+      lines.forEach((line) => {
+        if (yRef.value > pageHeight - 20) {
+          doc.addPage();
+          yRef.value = 20;
+        }
+        doc.text(line, x, yRef.value);
+        yRef.value += lineHeight;
+      });
+    }
+
+    btn.addEventListener('click', function () {
+      if (!window.jspdf || !window.jspdf.jsPDF) {
+        setStatus('Gagal: library PDF belum termuat. Coba muat ulang halaman.', true);
+        return;
+      }
+
+      try {
+        setStatus('Sedang membuat PDF...');
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const yRef = { value: 20 };
+        const marginX = 15;
+        const contentWidth = 180;
+
+        const title = (document.querySelector('h1')?.textContent || 'Soal Pertemuan 1').trim();
+        const subtitle = (document.querySelector('.lead')?.textContent || '').trim();
+        const questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+        doc.setFont('times', 'bold');
+        doc.setFontSize(16);
+        doc.text(title, marginX, yRef.value);
+        yRef.value += 8;
+
+        doc.setFont('times', 'normal');
+        doc.setFontSize(11);
+        if (subtitle) {
+          addWrappedText(doc, subtitle, marginX, contentWidth, yRef, 6);
+          yRef.value += 2;
+        }
+
+        const printedDate = new Date().toLocaleDateString('id-ID', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        doc.setFontSize(10);
+        doc.text('Tanggal unduh: ' + printedDate, marginX, yRef.value);
+        yRef.value += 10;
+
+        doc.setFontSize(12);
+        questionItems.forEach((item, index) => {
+          const qText = (item.querySelector('.question-text')?.textContent || '').replace(/\s+/g, ' ').trim();
+          const hint = (item.querySelector('.hint')?.textContent || '').replace(/\s+/g, ' ').trim();
+
+          doc.setFont('times', 'bold');
+          addWrappedText(doc, 'Soal ' + (index + 1), marginX, contentWidth, yRef, 7);
+
+          doc.setFont('times', 'normal');
+          addWrappedText(doc, qText, marginX, contentWidth, yRef, 6);
+
+          if (hint) {
+            yRef.value += 1;
+            doc.setFont('times', 'italic');
+            addWrappedText(doc, hint, marginX, contentWidth, yRef, 6);
+            doc.setFont('times', 'normal');
+          }
+
+          yRef.value += 5;
+        });
+
+        const fileName = 'Soal_Pertemuan_1_' + new Date().toISOString().slice(0, 10) + '.pdf';
+        doc.save(fileName);
+        setStatus('PDF berhasil diunduh: ' + fileName, false);
+      } catch (error) {
+        setStatus('Gagal membuat PDF. Silakan coba lagi.', true);
+        console.error('Error generate PDF soal:', error);
+      }
+    });
+  })();
+</script>
 </body>
 </html>
