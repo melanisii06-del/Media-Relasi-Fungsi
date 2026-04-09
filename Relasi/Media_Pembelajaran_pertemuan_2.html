@@ -6,15 +6,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Media Pembelajaran — Relasi & Fungsi (Final)</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" onerror="this.onerror=null;this.src='tools/libs/html2canvas.min.js'"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" onerror="this.onerror=null;this.src='tools/libs/jspdf.umd.min.js'"></script>
 <style>
 /* --- CSS GLOBAL --- */
 :root{--bg:#ffcb64;--panel:#fff3d9;--accent:#3e2723;--muted:#6b4b3a;--success:#2e7d32;--danger:#c62828}
 html,body{
   height:100%;
   margin:0;
-  font-family:'Poppins',sans-serif;
+  font-family:'Poppins','Segoe UI',Tahoma,sans-serif;
   background:var(--bg);
   color:var(--accent);
 }
@@ -833,6 +833,268 @@ img {
 h1, h2 {
   animation: floating 3s ease-in-out infinite;
 }
+
+/* ======= VIRTUAL TUTOR CSS ======= */
+/* Welcome Modal */
+.tutor-welcome-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10001;
+  animation: fadeIn 0.3s ease;
+}
+
+.tutor-welcome-modal {
+  background: linear-gradient(135deg, #fffdf6 0%, #fff9e6 100%);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 90%;
+  padding: 40px;
+  text-align: center;
+  animation: slideDownModal 0.4s ease;
+  position: relative;
+}
+
+.tutor-welcome-modal h2 {
+  color: var(--accent);
+  font-size: 32px;
+  margin: 0 0 20px 0;
+  animation: none;
+}
+
+.tutor-welcome-avatar {
+  font-size: 80px;
+  margin-bottom: 20px;
+  animation: float 3s ease-in-out infinite;
+}
+
+.tutor-welcome-text {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+
+.tutor-welcome-features {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.tutor-feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+.tutor-feature-item::before {
+  content: '✓';
+  color: var(--success);
+  font-weight: 700;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.tutor-welcome-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.tutor-welcome-actions .btn {
+  flex: 1;
+  max-width: 200px;
+}
+
+.tutor-welcome-actions .btn.ghost {
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+}
+
+/* Tutor Sidebar */
+.tutor-sidebar {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 0;
+  height: 100vh;
+  background: linear-gradient(180deg, #fff3d9 0%, #fffef7 100%);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  overflow-y: auto;
+  transition: width 0.3s ease;
+  border-left: 3px solid #ffcb64;
+}
+
+.tutor-sidebar.show {
+  width: 320px;
+}
+
+.tutor-sidebar-header {
+  padding: 20px 16px;
+  background: linear-gradient(135deg, #ffcb64 0%, #ffb84d 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 3px solid #ffa500;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tutor-sidebar-header-title {
+  font-weight: 700;
+  font-size: 16px;
+  margin: 0;
+}
+
+.tutor-sidebar-close {
+  margin-left: auto;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  opacity: 0.9;
+  transition: opacity 0.2s;
+}
+
+.tutor-sidebar-close:hover {
+  opacity: 1;
+}
+
+.tutor-sidebar-content {
+  padding: 20px 16px;
+}
+
+.tutor-guide-section {
+  margin-bottom: 24px;
+}
+
+.tutor-guide-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tutor-guide-title::before {
+  content: '🔹';
+  font-size: 14px;
+}
+
+.tutor-guide-text {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.tutor-guide-tip {
+  background: #fff9e6;
+  border-left: 4px solid #ffeb3b;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: #444;
+}
+
+.tutor-guide-tip::before {
+  content: '💡 ';
+  font-weight: 700;
+}
+
+.tutor-guide-action {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-family: inherit;
+}
+
+.tutor-guide-action:hover {
+  background: #5c3829;
+  transform: translateY(-2px);
+}
+
+/* Tutor Toggle Button */
+.tutor-toggle-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ffcb64 0%, #ffb84d 100%);
+  color: var(--accent);
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  box-shadow: 0 8px 20px rgba(255, 203, 100, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 999;
+  animation: float 3s ease-in-out infinite;
+}
+
+.tutor-toggle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 28px rgba(255, 203, 100, 0.6);
+}
+
+.tutor-toggle-btn.collapsed {
+  background: var(--accent);
+  color: #ffcb64;
+}
+
+.tutor-toggle-btn.hidden {
+  display: none;
+}
+
+@media (max-width: 920px) {
+  .tutor-sidebar.show {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .tutor-welcome-modal {
+    padding: 30px 20px;
+  }
+  
+  .tutor-welcome-modal h2 {
+    font-size: 24px;
+  }
+  
+  .tutor-welcome-avatar {
+    font-size: 60px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1163,7 +1425,7 @@ h1, h2 {
           </div>
         </div>
       </div>
-      <div class="nav"><button class="btn" data-go="k1">Back</button><button class="btn" data-go="pilih-kegiatan">Next</button></div>
+      <div class="nav"><button class="btn" data-go="k1">Kembali</button><button class="btn" data-go="pilih-kegiatan">Lanjut</button></div>
     </section>
 
     <!-- SLIDE PEMILIHAN KEGIATAN -->
@@ -1357,7 +1619,7 @@ h1, h2 {
         <button class="tool" id="saveImgBtn2">Simpan Gambar</button>
       </div>
 
-      <div class="nav"><button class="btn" data-go="pilih-kegiatan">Back</button><button class="btn" data-go="preview-activities">Next</button></div>
+      <div class="nav"><button class="btn" data-go="pilih-kegiatan">Kembali</button><button class="btn" data-go="preview-activities">Lanjut</button></div>
     </section>
 
     <section class="slide" id="k4">
@@ -1369,7 +1631,31 @@ h1, h2 {
         <div class="small">Diagram kartesius adalah representasi alternatif dari relasi menggunakan koordinat (x,y). Dengan membuat diagram kartesius untuk relasi makanan dan minuman kesukaan, kalian dapat membandingkan berbagai cara menyajikan relasi yang sama.</div>
       </div>
 
-      <p>Menggambar Diagram Kartesius — **pilih mode 'Tambah Titik' atau 'Gambar Bebas'** di bawah ini.</p>
+      <p>Menggambar Diagram Kartesius. Pilih mode <strong>Tambah Titik</strong> atau <strong>Gambar Bebas</strong> di bawah ini.</p>
+
+      <div style="max-width:980px;margin:12px auto 14px auto;padding:12px;border-radius:12px;background:#fffef7;border:2px dashed #ffd199;color:var(--muted)">
+        <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Data Acuan: Pesanan Kantin (sama seperti Diagram Panah)</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:220px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:10px">
+            <div style="font-weight:700;color:var(--accent);margin-bottom:6px">Menu Makanan</div>
+            <ul style="margin:0 0 0 18px"><li>Donat</li><li>Sosis</li><li>Cireng</li></ul>
+          </div>
+          <div style="flex:1;min-width:220px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:10px">
+            <div style="font-weight:700;color:var(--accent);margin-bottom:6px">Menu Minuman</div>
+            <ul style="margin:0 0 0 18px"><li>Es Teh</li><li>Kopi</li><li>Jus Buah</li></ul>
+          </div>
+          <div style="flex:1;min-width:260px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:10px">
+            <div style="font-weight:700;color:var(--accent);margin-bottom:6px">Pesanan Siswa</div>
+            <ul style="margin:0 0 0 18px">
+              <li>Ani: Donat, Es Teh</li>
+              <li>Budi: Sosis, Kopi</li>
+              <li>Citra: Donat, Es Teh</li>
+              <li>Dedi: Sosis, Kopi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <div class="toolbar" id="cartToolbar">
         <button class="tool active" id="pointTool">Tambah Titik</button>
         <button class="tool" id="drawTool">Gambar Bebas</button>
@@ -1415,7 +1701,7 @@ h1, h2 {
         <canvas id="plane2" width="900" height="320"></canvas>
       </div>
 
-      <div class="nav"><button class="btn" data-go="pilih-kegiatan">Back</button><button class="btn" data-go="preview-activities">Next</button></div>
+      <div class="nav"><button class="btn" data-go="pilih-kegiatan">Kembali</button><button class="btn" data-go="preview-activities">Lanjut</button></div>
     </section>
 
     <section class="slide" id="k5">
@@ -1428,10 +1714,32 @@ h1, h2 {
       </div>
 
       <p>Mari menuliskan relasi dalam bentuk pasangan terurut dan tuliskan kesimpulan pembelajaran hari ini.</p>
+      <div style="max-width:980px;margin:12px auto 14px auto;padding:12px;border-radius:12px;background:#fffef7;border:2px dashed #ffd199;color:var(--muted)">
+        <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Data Acuan: Pesanan Kantin (sama seperti Diagram Panah)</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:220px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:10px">
+            <div style="font-weight:700;color:var(--accent);margin-bottom:6px">Menu Makanan</div>
+            <ul style="margin:0 0 0 18px"><li>Donat</li><li>Sosis</li><li>Cireng</li></ul>
+          </div>
+          <div style="flex:1;min-width:220px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:10px">
+            <div style="font-weight:700;color:var(--accent);margin-bottom:6px">Menu Minuman</div>
+            <ul style="margin:0 0 0 18px"><li>Es Teh</li><li>Kopi</li><li>Jus Buah</li></ul>
+          </div>
+          <div style="flex:1;min-width:260px;background:#fff;border:1px solid rgba(0,0,0,0.08);border-radius:10px;padding:10px">
+            <div style="font-weight:700;color:var(--accent);margin-bottom:6px">Pesanan Siswa</div>
+            <ul style="margin:0 0 0 18px">
+              <li>Ani: Donat, Es Teh</li>
+              <li>Budi: Sosis, Kopi</li>
+              <li>Citra: Donat, Es Teh</li>
+              <li>Dedi: Sosis, Kopi</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div style="max-width:920px;margin:10px auto;text-align:center">
         <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px">
-          <textarea id="pairs_food" placeholder="Pasangan terurut makanan (contoh: {(Ali, Nasi)})" class="input-large-half"></textarea>
-          <textarea id="pairs_drink" placeholder="Pasangan terurut minuman (contoh: {(Siti, Teh)})" class="input-large-half"></textarea>
+          <textarea id="pairs_food" placeholder="Pasangan terurut makanan (contoh: {(Ani, Donat), (Budi, Sosis)})" class="input-large-half"></textarea>
+          <textarea id="pairs_drink" placeholder="Pasangan terurut minuman (contoh: {(Ani, Es Teh), (Budi, Kopi)})" class="input-large-half"></textarea>
         </div>
         <div style="margin-top:10px">
           <textarea id="conclusion" placeholder="Kesimpulan pembelajaran hari ini..." class="input-large" style="width:88%;height:160px;"></textarea>
@@ -1439,9 +1747,9 @@ h1, h2 {
       </div>
 
       <div style="display:flex;gap:12px;justify-content:center;margin-top:14px">
-        <button class="btn" data-go="pilih-kegiatan">Back</button>
+        <button class="btn" data-go="pilih-kegiatan">Kembali</button>
         <button class="btn" id="finishBtn">Tandai Selesai</button>
-        <button class="btn" data-go="preview-activities">Next ⟶</button>
+        <button class="btn" data-go="preview-activities">Lanjut ⟶</button>
       </div>
     </section>
 
@@ -1686,6 +1994,45 @@ h1, h2 {
   
 </main>
 
+<!-- ===== VIRTUAL TUTOR ELEMENTS ===== -->
+<!-- Welcome Modal Tutor -->
+<div id="tutorWelcomeOverlay" class="tutor-welcome-overlay" style="display: none;">
+  <div class="tutor-welcome-modal">
+    <div class="tutor-welcome-avatar">👨‍🏫</div>
+    <h2>Halo! 👋 Aku Tutormu</h2>
+    <p class="tutor-welcome-text">
+      Aku di sini untuk membantumu memahami konsep <strong>Relasi & Fungsi</strong> dengan baik. 
+      Sepanjang pembelajaran, aku akan memberikan <strong>panduan, tips, dan penjelasan</strong> untuk setiap aktivitas.
+    </p>
+    
+    <div class="tutor-welcome-features">
+      <div class="tutor-feature-item">Penjelasan untuk setiap slide dan aktivitas</div>
+      <div class="tutor-feature-item">Tips dan strategi pembelajaran</div>
+      <div class="tutor-feature-item">Bantuan saat kamu bingung</div>
+      <div class="tutor-feature-item">Support untuk belajar mandiri</div>
+    </div>
+    
+    <div class="tutor-welcome-actions">
+      <button class="btn ghost" id="tutorSkipBtn">Lewati Tutorial</button>
+      <button class="btn" id="tutorStartBtn">Mari Mulai! 🚀</button>
+    </div>
+  </div>
+</div>
+
+<!-- Tutor Sidebar -->
+<div id="tutorSidebar" class="tutor-sidebar">
+  <div class="tutor-sidebar-header">
+    <h3 class="tutor-sidebar-header-title">👨‍🏫 Panduan Tutor</h3>
+    <span class="tutor-sidebar-close" id="tutorSidebarClose">✕</span>
+  </div>
+  <div class="tutor-sidebar-content" id="tutorGuideContent">
+    <!-- Guide content will be injected here -->
+  </div>
+</div>
+
+<!-- Tutor Toggle Button -->
+<button id="tutorToggleBtn" class="tutor-toggle-btn collapsed" title="Tampilkan Tutor">👨‍🏫</button>
+
 </div></div>
 </div></div>
 
@@ -1734,6 +2081,9 @@ function show(id) {
   document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
   document.getElementById(id)?.classList.add('active');
   document.querySelector('.card')?.scrollTo(0,0);
+  
+  // Emit slideChanged event untuk tutor system
+  window.dispatchEvent(new CustomEvent('slideChanged', { detail: { slideId: id } }));
 }
 window.show = show;
 
@@ -1782,6 +2132,7 @@ function addAnggota() {
 document.addEventListener('DOMContentLoaded', () => {
   // Clear data anggota saat fresh load
   localStorage.removeItem('daftarAnggotaTerdaftar');
+  localStorage.removeItem('selectedActivity');
 
   // =========================================================
   // 1. LOGIKA GLOBAL DAN NAVIGASI
@@ -3008,11 +3359,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. LOGIKA PDF GENERATION & KIRIM KE GURU
     // =========================================================
 
-    const { jsPDF } = window.jspdf;
+    const jsPDFCtor = window.jspdf && window.jspdf.jsPDF;
     
     // Fungsi untuk generate PDF
     async function generatePDFLaporan() {
-        const pdf = new jsPDF({ orientation: 'portrait', unit: 'px', format: [1100, 1400] });
+      if (!jsPDFCtor) {
+        throw new Error('jsPDF library belum dimuat. Periksa koneksi internet atau file lokal tools/libs/jspdf.umd.min.js');
+      }
+      if (typeof html2canvas !== 'function') {
+        throw new Error('html2canvas library belum dimuat. Periksa koneksi internet atau file lokal tools/libs/html2canvas.min.js');
+      }
+      const pdf = new jsPDFCtor({ orientation: 'portrait', unit: 'px', format: [1100, 1400] });
         
         // Slides yang akan di-capture (sesuaikan dengan flow baru)
         const slidesToCapture = [
@@ -3695,17 +4052,311 @@ document.addEventListener('DOMContentLoaded', () => {
 <script src="google-form-helper.js"></script>
 
 <script>
+// ===== VIRTUAL TUTOR SYSTEM =====
+const tutorGuides = {
+  'start': {
+    title: '🎯 Selamat Datang di Pembelajaran',
+    sections: [
+      { heading: 'Apa yang Kita Pelajari?', text: 'Relasi dan Fungsi adalah konsep fundamental dalam matematika. Relasi menjelaskan hubungan antar objek, sedangkan fungsi adalah relasi khusus dengan aturan tertentu.' },
+      { heading: '📋 Alur Pembelajaran', text: 'Kita akan memulai dengan permasalahan nyata (kantin), kemudian mempelajari berbagai cara menyajikan relasi (diagram panah, diagram Kartesius, tabel, dan pasangan terurut).' },
+      { tip: 'Jangan terburu-buru! Pahami setiap konsep dengan baik. Tutor siap membantu kapan saja.' }
+    ]
+  },
+  'menu': {
+    title: '📑 Menu Utama',
+    sections: [
+      { heading: 'Pilihan Pembelajaran', text: 'Di sini kamu bisa memilih permasalahan yang ingin dipelajari. Setiap permasalahan dirancang dengan konteks nyata agar mudah dipahami.' },
+      { tip: 'Klik "Permasalahan" untuk mulai perjalanan belajarmu!' }
+    ]
+  },
+  'permasalahan-foto': {
+    title: '🎬 Orientasi Permasalahan',
+    sections: [
+      { heading: 'Memahami Konteks', text: 'Ini adalah langkah penting! Kita menggunakan contoh Ibu Kantin yang kebingungan menata pesanan. Konteks nyata membantu kita memahami mengapa relasi dan fungsi penting.' },
+      { heading: '💭 Berpikir Kritis', text: 'Sebelum lanjut, tuliskan ide awalmu tentang bagaimana membantu Ibu Kantin. Kamu tidak perlu jawaban yang sempurna, yang penting adalah proses berpikir.' },
+      { heading: '🎯 Misi Kalian', text: 'Tugas kamu adalah menyajikan pesanan dalam berbagai bentuk relasi. Ini akan membantumu melihat kelebihan dan kekurangan setiap representasi.' },
+      { tip: 'Jawab pertanyaan pemantik dengan jujur. Ini membantu guru memahami cara berpikir kamu.' }
+    ]
+  },
+  'identitas-kelompok': {
+    title: '👥 Data Kelompok',
+    sections: [
+      { heading: 'Administrasi Penting', text: 'Isi data kelompok dengan benar. Ini akan digunakan saat menyimpan hasil kerja kalian ke Google Drive.' },
+      { heading: '📋 Peran Kelompok', text: 'Setiap anggota memiliki peran berbeda. Ini penting untuk kolaborasi dan tanggung jawab yang jelas.' },
+      { tip: 'Pastikan semua anggota terisi sebelum melanjutkan ke tahap berikutnya.' }
+    ]
+  },
+  'permasalahan': {
+    title: '🔍 Identifikasi Data',
+    sections: [
+      { heading: 'Kegiatan 1: Pengenalan Data', text: 'Di tahap ini, kamu akan melihat data pesanan dari 6 siswa dengan pilihan makanan dan minuman mereka.' },
+      { heading: '📊 Analisis Data', text: 'Drag-drop item ke himpunan yang sesuai. Ini melatih kemampuanmu dalam mengkategorikan data.' },
+      { tip: 'Perhatikan pola: setiap siswa bisa punya banyak pilihan makanan dan minuman!' }
+    ]
+  },
+  'k1': {
+    title: '📋 Kegiatan 1: Pengenalan Data',
+    sections: [
+      { heading: 'Drag & Drop', text: 'Semua item sudah siap. Drag siswa ke satu himpunan, makanan ke himpunan lain, dan minuman ke himpunan ketiga.' },
+      { heading: '🎯 Tujuan', text: 'Mengelompokkan data dengan penuh pemahaman bahwa matematika dimulai dari data yang terorganisir.' },
+      { tip: 'Jangan khawatir membuat kesalahan. Kamu bisa drag ulang kapan saja!' }
+    ]
+  },
+  'k2': {
+    title: '📝 Kegiatan 2: Memberi Nama Himpunan',
+    sections: [
+      { heading: 'Notasi Himpunan', text: 'Input nama untuk setiap himpunan (Siswa, Makanan, Minuman). Ini mengajarkan notasi matematika formal.' },
+      { heading: '🔤 Penamaan Logic', text: 'Nama yang kamu berikan akan muncul di seluruh diagram. Jadi pilih nama yang jelas dan representatif!' },
+      { tip: 'Gunakan huruf besar untuk nama himpunan. Contoh: "Himpunan Siswa" atau singkat "A", "B", "C".' }
+    ]
+  },
+  'pilih-kegiatan': {
+    title: '🎮 Pilih Aktivitas',
+    sections: [
+      { heading: 'Tiga Cara Berbeda', text: 'Kamu akan mempelajari 3 cara untuk menyajikan relasi: Diagram Panah, Diagram Kartesius, dan Pasangan Terurut.' },
+      { heading: '✏️ Pilihanmu', text: 'Klik salah satu pilihan untuk mulai. Setiap aktivitas bisa diulang berkali-kali hingga kamu mahir.' },
+      { tip: 'Jangan hanya memilih yang gampang! Setiap representasi memiliki keunikan tersendiri.' }
+    ]
+  },
+  'k3': {
+    title: '🎯 Diagram Panah',
+    sections: [
+      { heading: 'Visual yang Jelas', text: 'Diagram panah adalah cara paling visual untuk menunjukkan relasi. Setiap panah = 1 hubungan antara 2 elemen.' },
+      { heading: '🎨 Cara Menggambar', text: '1) Siapkan papan pesanan (akan muncul modal)\n2) Gambar dua oval untuk domain dan kodomain\n3) Gambar panah dari siswa ke makanan|minuman favorit mereka' },
+      { heading: '💡 Insight', text: 'Dari diagram panah, kamu bisa langsung lihat: apakah setiap siswa punya satu favorit, atau banyak? Ini membantu memahami fungsi vs relasi.' },
+      { tip: 'Gunakan modal "Papan Pesanan" sebagai referensi saat menggambar!' }
+    ]
+  },
+  'k4': {
+    title: '📊 Diagram Kartesius',
+    sections: [
+      { heading: 'Koordinat Matematika', text: 'Diagram Kartesius menggunakan sumbu X (domain) dan Y (kodomain). Setiap titik = 1 relasi.' },
+      { heading: '📍 Cara Membuat', text: 'Pilih tools: 1) "Point" untuk menambah titik, 2) "Draw" untuk menggambar garis kapanpun perlu.' },
+      { heading: '🔢 Input Domain/Kodomain', text: 'Masukkan nama siswa dan makanan/minuman. Format: pisahkan dengan koma. Contoh: "Ani, Budi, Citra"' },
+      { tip: 'Gunakan koordinat yang logis supaya diagram terlihat rapi. Jangan tumpang-tindih!' }
+    ]
+  },
+  'k5': {
+    title: '📝 Pasangan Terurut',
+    sections: [
+      { heading: 'Notasi Aljabar', text: 'Pasangan terurut adalah cara paling ringkas dan formal. Ditulis (a, b) di mana a dari domain, b dari kodomain.' },
+      { heading: '📋 Format', text: 'Relasi ditulis sebagai himpunan: {(Ani, Donat), (Budi, Sosis), ...}. Urutan penting! (Ani, Donat) ≠ (Donat, Ani)' },
+      { heading: '🎯 Kesimpulan', text: 'Tuliskan kesimpulanmu tentang perbedaan relasi vs fungsi dari data ini. Sudah siap untuk memahami definisi formal!' },
+      { tip: 'Konsistensi adalah kunci. Jika domain siswa, maka selalu element pertama adalah siswa.' }
+    ]
+  },
+  'penyajian-relasi': {
+    title: '🎨 Penyajian Relasi',
+    sections: [
+      { heading: 'Sintesis Pembelajaran', text: 'Di sini kamu menampilkan semua kegiatan (diagram panah, diagram Kartesius, pasangan terurut) dalam satu tempat.' },
+      { heading: '📊 Analisis Komparatif', text: 'Bandingkan ketiga representasi: Mana yang paling mudah dipahami? Mana yang paling formal? Mana yang paling komunikatif?' },
+      { heading: '💭 Refleksi', text: 'Gunakan kolom "Komentar" untuk menulis refleksi mendalam tentang pembelajaran kamu hari ini.' },
+      { tip: 'Seorang matematikawan harus bisa menjelaskan masalah dalam berbagai cara. Kamu sudah belajar hal itu!' }
+    ]
+  },
+  'evaluasi': {
+    title: '✅ Evaluasi & Refleksi',
+    sections: [
+      { heading: 'Ukur Pemahaman', text: 'Jawab pertanyaan evaluasi dengan jujur. Ini bukan untuk nilai, tapi untuk melihat sejauh mana kamu sudah memahami.' },
+      { heading: '📝 Definisi Relasi', text: 'Relasi adalah himpunan pasangan terurut (a, b) dari dua himpunan. Contoh: relasi kesukaan antara siswa & makanan.' },
+      { heading: '✨ Persiapan Fungsi', text: 'Fungsi adalah relasi KHUSUS di mana setiap elemen domain hanya punya 1 pasangan di kodomain. Kita kuasai ini di pertemuan berikutnya!' },
+      { tip: '🎉 Kamu sudah belajar konsep fundamental! Proses adalah kesuksesan terbesar.' }
+    ]
+  },
+  'soal': {
+    title: '📋 Soal Latihan & Permasalahan Baru',
+    sections: [
+      { heading: 'Aplikasi Nyata', text: 'Latihan soal membantu kamu mengaplikasikan pemahaman pada konteks berbeda. Jangan lompat ke jawaban langsung!' },
+      { heading: '🧩 Strategi', text: '1) Baca soal 2x\n2) Identifikasi domain & kodomain\n3) Gambar atau tuliskan relasi\n4) Verifikasi jawaban' },
+      { heading: '💪 Challenge Mode', text: 'Jika soal terasa mudah, coba modifikasi sendiri: ubah data, ubah konteks, cari pola baru!' },
+      { tip: 'Tulis semua langkah kerjamu. Proses berpikirmu lebih berharga daripada jawaban akhir!' }
+    ]
+  }
+};
+
+class TutorSystem {
+  constructor() {
+    this.tutorWelcomeShown = localStorage.getItem('tutorWelcomeShown') === 'true';
+    this.tutorEnabled = !localStorage.getItem('tutorDisabled') === true;
+    this.currentSlide = '';
+    this.sidebarCollapsed = true;
+    this.init();
+  }
+
+  init() {
+    if (!this.tutorWelcomeShown) {
+      this.showWelcome();
+    }
+    this.setupEventListeners();
+    this.setupSlideObserver();
+  }
+
+  setupEventListeners() {
+    const startBtn = document.getElementById('tutorStartBtn');
+    const skipBtn = document.getElementById('tutorSkipBtn');
+    const toggleBtn = document.getElementById('tutorToggleBtn');
+    const closeBtn = document.getElementById('tutorSidebarClose');
+
+    startBtn?.addEventListener('click', () => this.hideWelcome());
+    skipBtn?.addEventListener('click', () => this.skipTutorial());
+    toggleBtn?.addEventListener('click', () => this.toggleSidebar());
+    closeBtn?.addEventListener('click', () => this.hideSidebar());
+
+    // Close sidebar when clicking outside
+    document.addEventListener('click', (e) => {
+      const sidebar = document.getElementById('tutorSidebar');
+      const toggleBtn = document.getElementById('tutorToggleBtn');
+      if (sidebar && toggleBtn && !sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+        if (this.sidebarCollapsed === false) {
+          this.hideSidebar();
+        }
+      }
+    });
+
+    // Update tutor guide when slide changes
+    window.addEventListener('slideChanged', (e) => {
+      this.currentSlide = e.detail.slideId;
+      this.updateGuideForSlide();
+    });
+  }
+
+  setupSlideObserver() {
+    // Observe slide changes
+    const slidesContainer = document.querySelector('.slides');
+    if (!slidesContainer) return;
+
+    const observer = new MutationObserver(() => {
+      const activeSlide = document.querySelector('.slide.active');
+      if (activeSlide && activeSlide.id !== this.currentSlide) {
+        this.currentSlide = activeSlide.id;
+        this.updateGuideForSlide();
+      }
+    });
+
+    observer.observe(slidesContainer, {
+      childList: false,
+      attributes: true,
+      subtree: true
+    });
+  }
+
+  showWelcome() {
+    const overlay = document.getElementById('tutorWelcomeOverlay');
+    if (overlay) {
+      overlay.style.display = 'flex';
+      localStorage.setItem('tutorWelcomeShown', 'true');
+    }
+  }
+
+  hideWelcome() {
+    const overlay = document.getElementById('tutorWelcomeOverlay');
+    if (overlay) {
+      overlay.style.display = 'none';
+    }
+    this.showSidebar();
+  }
+
+  skipTutorial() {
+    localStorage.setItem('tutorDisabled', 'true');
+    this.tutorEnabled = false;
+    this.hideWelcome();
+    this.hideTutorUI();
+  }
+
+  showSidebar() {
+    const sidebar = document.getElementById('tutorSidebar');
+    if (sidebar) {
+      sidebar.classList.add('show');
+      this.sidebarCollapsed = false;
+      this.updateToggleButton();
+    }
+  }
+
+  hideSidebar() {
+    const sidebar = document.getElementById('tutorSidebar');
+    if (sidebar) {
+      sidebar.classList.remove('show');
+      this.sidebarCollapsed = true;
+      this.updateToggleButton();
+    }
+  }
+
+  toggleSidebar() {
+    if (this.sidebarCollapsed) {
+      this.showSidebar();
+    } else {
+      this.hideSidebar();
+    }
+  }
+
+  updateToggleButton() {
+    const btn = document.getElementById('tutorToggleBtn');
+    if (btn) {
+      if (this.sidebarCollapsed) {
+        btn.classList.add('collapsed');
+        btn.title = 'Tampilkan Tutor';
+      } else {
+        btn.classList.remove('collapsed');
+        btn.title = 'Sembunyikan Tutor';
+      }
+    }
+  }
+
+  updateGuideForSlide() {
+    if (!this.tutorEnabled) return;
+
+    const guide = tutorGuides[this.currentSlide];
+    if (!guide) return;
+
+    const content = document.getElementById('tutorGuideContent');
+    if (!content) return;
+
+    let html = `<div class="tutor-guide-section">
+      <div class="tutor-guide-title">${guide.title}</div>`;
+
+    guide.sections.forEach(section => {
+      if (section.heading && section.text) {
+        html += `
+          <div style="margin-bottom:16px">
+            <div style="font-weight:700;color:var(--accent);margin-bottom:6px;font-size:14px">${section.heading}</div>
+            <div class="tutor-guide-text" style="white-space:pre-wrap">${section.text}</div>
+          </div>`;
+      }
+      if (section.tip) {
+        html += `<div class="tutor-guide-tip">${section.tip}</div>`;
+      }
+    });
+
+    html += `</div>`;
+    content.innerHTML = html;
+
+    // Auto-show sidebar when slide changes (optional)
+    // this.showSidebar();
+  }
+
+  hideTutorUI() {
+    const btn = document.getElementById('tutorToggleBtn');
+    if (btn) btn.classList.add('hidden');
+  }
+}
+
+// Initialize tutor system when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  window.tutorSystem = new TutorSystem();
+});
+
 // Override generatePDFReport agar membuat PDF dari screenshot tampilan siswa
 (function(){
   window.generatePDFReport = async function(){
-    const { jsPDF } = window.jspdf;
-    if(!jsPDF) throw new Error('jsPDF library belum dimuat');
+    const jsPDFCtor = window.jspdf && window.jspdf.jsPDF;
+    if(!jsPDFCtor) throw new Error('jsPDF library belum dimuat. Periksa koneksi internet atau file lokal tools/libs/jspdf.umd.min.js');
+    if(typeof html2canvas !== 'function') throw new Error('html2canvas library belum dimuat. Periksa koneksi internet atau file lokal tools/libs/html2canvas.min.js');
     
     const namaKelompok = document.getElementById('namaKelompok')?.value || 'Kelompok';
     console.log('🎬 Mulai screenshot semua slide...');
     
     try {
-      const pdf = new jsPDF('p', 'mm', 'a4');
+      const pdf = new jsPDFCtor('p', 'mm', 'a4');
       const imgWidth = 210; // A4 width mm
       const pageHeight = 297; // A4 height mm
       let pageCount = 0;
