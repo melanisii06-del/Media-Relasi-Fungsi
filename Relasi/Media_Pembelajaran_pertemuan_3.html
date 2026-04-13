@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Media Pembelajaran — Relasi & Fungsi</title>
+<title>Media Pembelajaran — Relasi & Fungsi | Kertas Tersembunyi</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -823,6 +823,185 @@ table {
   50% { transform: translateY(-8px) rotate(var(--rotation)); }
 }
 
+.mystery-scene {
+  position: relative;
+  min-height: 460px;
+  border-radius: 16px;
+  border: 3px solid #ffd199;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(62,39,35,0.14) 100%),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4), transparent 26%),
+    radial-gradient(circle at 80% 18%, rgba(255,255,255,0.3), transparent 22%),
+    url('../images/kelas-petualangan.png'),
+    linear-gradient(180deg, #fdf6e8 0%, #fff8eb 45%, #f8efe0 100%);
+  background-size: cover, cover, cover, cover, cover;
+  background-position: center, center, center, center, center;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
+}
+
+.mystery-scene::before {
+  content: 'Gambar Petualangan';
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(62,39,35,0.08);
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 3;
+}
+
+.mystery-scene::after {
+  content: '';
+  position: absolute;
+  inset: 18px;
+  border-radius: 12px;
+  border: 2px dashed rgba(62,39,35,0.12);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.mystery-object {
+  position: absolute;
+  border-radius: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.mystery-object:hover {
+  transform: scale(1.04);
+}
+
+.hidden-paper {
+  width: 74px;
+  height: 32px;
+  border: 2px solid #d8c08c;
+  background: linear-gradient(180deg, #fffdf7 0%, #f4e3bf 100%);
+  color: var(--accent);
+  box-shadow: 0 10px 18px rgba(0,0,0,0.12);
+  cursor: pointer;
+  z-index: 4;
+}
+
+.hidden-paper::before {
+  content: '📜';
+  position: absolute;
+  left: 8px;
+  top: 4px;
+  font-size: 16px;
+}
+
+.hidden-paper::after {
+  content: '?';
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  font-size: 14px;
+  color: #9b7b3c;
+}
+
+.hidden-paper.revealed {
+  width: auto;
+  min-width: 148px;
+  height: auto;
+  padding: 10px 12px 10px 40px;
+  cursor: default;
+  background: linear-gradient(180deg, #fff8e8 0%, #ffe9b8 100%);
+}
+
+.hidden-paper.revealed::after {
+  content: '✓';
+  color: var(--success);
+  font-weight: 900;
+}
+
+.hidden-paper-label {
+  display: block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.hidden-paper-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hidden-paper-actions .btn {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+.found-paper-list {
+  display: grid;
+  gap: 10px;
+}
+
+.found-paper-item {
+  background: #fff;
+  border: 2px solid #ffe0a3;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+}
+
+.found-paper-item strong {
+  color: var(--accent);
+}
+
+.found-paper-meta {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.quest-status {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fff9e6;
+  border: 1px solid #ffd199;
+  color: var(--accent);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.paper-map-tile {
+  position: absolute;
+  inset: auto;
+  width: 92px;
+  height: 92px;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.32);
+  border: 1px dashed rgba(62,39,35,0.16);
+  backdrop-filter: blur(1px);
+}
+
+.paper-map-tile.line-1 { left: 10%; top: 18%; transform: rotate(-4deg); }
+.paper-map-tile.line-2 { left: 28%; top: 12%; transform: rotate(7deg); }
+.paper-map-tile.line-3 { right: 14%; top: 20%; transform: rotate(-6deg); }
+.paper-map-tile.line-4 { right: 10%; bottom: 16%; transform: rotate(5deg); }
+.paper-map-tile.line-5 { left: 18%; bottom: 14%; transform: rotate(-8deg); }
+
+.found-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #e8f5e9;
+  color: var(--success);
+  font-size: 11px;
+  font-weight: 700;
+}
+
 .organized-table {
   width: 100%;
   border-collapse: collapse;
@@ -967,6 +1146,12 @@ table {
   }
   .cartesian-grid {
     height: 300px;
+  }
+  .mystery-scene {
+    min-height: 340px;
+  }
+  .hidden-paper {
+    transform: scale(0.92);
   }
 }
 
@@ -1872,11 +2057,31 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
               </div>
             </div>
 
+            <!-- TANTANGAN CEPAT: Berapa Banyak Fungsi? -->
+            <div class="card-lite" id="tantanganCepat" style="background:#fff9f0;border:3px solid #ffb84d;margin-top:20px">
+              <h3 style="color:var(--accent);margin-bottom:12px">🎯 Tantangan Cepat: Berapa Banyak Fungsi yang Bisa Dibuat?</h3>
+              <p style="color:var(--muted);font-size:14px;margin-bottom:12px">
+                <strong>Skenario:</strong> Jika terdapat 5 siswa dan 4 jenis golongan darah (A, B, AB, O), berapa total <strong>fungsi yang berbeda</strong> yang bisa dibuat? 
+                <br/><br/>
+                <em style="font-size:13px">Ingat: Setiap siswa harus memiliki TEPAT SATU golongan darah, dan semua siswa harus terisi.</em>
+              </p>
+              <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
+                <span style="font-weight:700;color:var(--accent)">Total Fungsi:</span>
+                <input id="inputJawabanTantangan" type="text" placeholder="Contoh: 1024" style="max-width:160px;padding:10px;border-radius:8px;border:2px solid #ffd199;font-family:sans-serif;font-size:14px">
+                <button class="btn" id="btnCekTantangan">Cek Jawaban</button>
+                <button class="btn ghost" id="btnResetTantangan">Reset</button>
+              </div>
+              <div id="feedbackTantangan" style="margin-top:8px;font-weight:700;font-size:14px"></div>
+              <p style="color:var(--muted);font-size:12px;margin-top:12px;background:#fffdf6;padding:10px;border-radius:6px;border-left:3px solid #ffb84d">
+                💡 <strong>Hint:</strong> Rumus = (Jumlah Goldar)<sup>Jumlah Siswa</sup> = 4<sup>5</sup>
+              </p>
+            </div>
+
             <!-- Tombol Lanjut -->
             <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
               <button class="btn ghost" data-go="identitas-kelompok">⟵ Kembali</button>
               <button class="btn" id="btnSelesai">Mulai Analisis Data ⟶</button>
-              <button class="btn" data-go="simulator-populasi">Lanjut ke Skenario Populasi ⟶</button>
+              <button class="btn" data-go="verifikasi-diagram">Lanjut ke Diagram Kartesius ⟶</button>
             </div>
 
             <div id="feedbackValidasi" style="margin-top:12px;font-weight:700;text-align:center"></div>
@@ -1884,221 +2089,83 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
         </div>
       </section>
 
-      <!-- Slide: Simulator Skenario Populasi -->
-      <section class="slide" id="simulator-populasi">
-        <div class="panel">
-          <h2>Simulator Skenario Populasi</h2>
-          
-          <p style="color:var(--muted);font-size:13px;margin-bottom:16px"><strong>🎯 Tantangan:</strong> Berapa banyak fungsi yang bisa dibuat? Coba hitung dengan logika kombinasi!</p>
-
-          <div class="card-lite">
-            <h3 style="color:var(--accent);margin-bottom:8px">Skenario 1: Golongan Darah {A, B} & Siswa {Andi, Budi, Citra}</h3>
-            <p style="color:var(--muted);font-size:13px;margin-bottom:12px">📝 Pasangkan manual, hitung berapa kemungkinan:</p>
-
-            <div style="display:flex;gap:20px;flex-wrap:wrap">
-              <div style="flex:1;min-width:220px">
-                <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Nama (Domain)</div>
-                <div id="sim-nama" style="display:flex;flex-direction:column;gap:8px">
-                  <div class="nama-item" data-sim-nama="Andi">Andi</div>
-                  <div class="nama-item" data-sim-nama="Budi">Budi</div>
-                  <div class="nama-item" data-sim-nama="Citra">Citra</div>
-                </div>
-              </div>
-              <div style="flex:1;min-width:220px">
-                <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Golongan Darah (Kodomain)</div>
-                <div id="sim-goldar" style="display:flex;flex-direction:column;gap:8px">
-                  <div class="goldar-item" data-sim-goldar="A">A</div>
-                  <div class="goldar-item" data-sim-goldar="B">B</div>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-lite" style="margin-top:12px">
-              <h3 style="color:var(--accent);margin-bottom:8px">Pasangan Dibuat</h3>
-              <div id="sim-pasangan" style="min-height:72px;padding:10px;background:#fff;border-radius:8px;border:2px dashed rgba(0,0,0,0.1)"></div>
-            </div>
-
-            <div class="card-lite" style="margin-top:12px">
-              <h3 style="color:var(--accent);margin-bottom:8px">Analisis Logika</h3>
-              <p style="color:var(--muted);font-size:14px;margin-bottom:8px">Setiap 1 orang punya 2 pilihan golongan darah. Untuk 3 orang, total kombinasi: <span id="sim-formula" style="font-weight:700;color:var(--accent)">2 × 2 × 2 = 2^3 = 8 kemungkinan</span>.</p>
-            </div>
-          </div>
-
-          <div class="card-lite" style="margin-top:10px">
-            <h3 style="color:var(--accent);margin-bottom:8px">Tantangan Realitas</h3>
-            <p style="color:var(--muted);font-size:14px;margin-bottom:8px">Jika ada 5 siswa dan 4 jenis golongan darah (A, B, AB, O), berapa total variasi data fungsi yang mungkin?</p>
-            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-              <span style="font-weight:700;color:var(--accent)">Jawaban:</span>
-              <input id="sim-jawaban" type="text" placeholder="Masukkan angka" style="max-width:160px">
-              <button class="btn" id="sim-cek">Cek Jawaban</button>
-              <button class="btn ghost" id="sim-reset">Reset</button>
-            </div>
-            <div id="sim-feedback" style="margin-top:8px;font-weight:700"></div>
-          </div>
-
-          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:16px">
-            <button class="btn ghost" data-go="menu">⟵ Kembali</button>
-            <button class="btn ghost" data-go="simulasi-fungsi">⟵ Kembali ke Karakteristik Fungsi</button>
-            <button class="btn" data-go="verifikasi-diagram">Lanjut ke Diagram Kartesius ⟶</button>
-          </div>
-        </div>
-      </section>
-
       <!-- Slide: Verifikasi Fungsi & Solusi - Diagram Kartesius -->
       <section class="slide" id="verifikasi-diagram">
         <div class="panel">
-          <h2>🎯 Verifikasi Fungsi & Solusi</h2>
+          <h2>🔎 Misi Peta Tersembunyi</h2>
           <p style="color:var(--muted);margin-bottom:16px">
-            <strong>Misi:</strong> Rapikan data acak dari Tahap 1 menggunakan Diagram Kartesius Interaktif! 
-            Buktikan bahwa data ini memenuhi syarat fungsi.
+            Temukan secarik kertas yang tersembunyi di dalam gambar. Setelah terbuka, baca nama dan golongan darahnya, lalu masukkan ke diagram kartesius seperti biasa.
           </p>
 
-          <!-- Driving Question (Sticky) -->
           <div class="sticky-question">
-            <strong>Pertanyaan Pemantik Utama:</strong> Bagaimana memastikan setiap data siswa membentuk <em>fungsi</em> yang valid (tidak ada cabang & tidak ada yang kosong)?
+            <strong>Aturan main:</strong> cari kertasnya dulu, buka isinya, lalu baru masukkan data ke diagram. Setiap kertas hanya mewakili satu siswa.
           </div>
 
-          <!-- Hipotesis Awal -->
-          <div class="hypothesis-box">
-            <div style="font-weight:700;color:var(--accent);margin-bottom:8px">Hipotesis Awal</div>
-            <p style="color:var(--muted);font-size:13px;margin:6px 0">Tuliskan dugaan awalmu sebelum menyusun titik di grid.</p>
-            <textarea id="inputHipotesis" class="hypothesis-input" placeholder="Contoh: Setiap nama hanya boleh satu goldar, dan semua nama harus terisi..."></textarea>
-            <div style="display:flex;gap:8px;align-items:center;margin-top:8px;flex-wrap:wrap">
-              <button class="btn" id="btnSaveHipotesis">💾 Simpan Hipotesis</button>
-              <span id="hipotesisStatus" style="font-size:13px;color:var(--muted)"></span>
+          <div class="card-lite" style="margin-top:18px">
+            <h3 style="color:var(--accent);margin-bottom:12px">📊 Diagram Kartesius Interaktif</h3>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
+              Klik grid untuk melihat titik, atau gunakan tombol <strong>Masukkan ke Diagram</strong> pada kertas yang sudah ditemukan.
+            </p>
+
+            <div class="cartesian-grid" id="cartesianGrid"></div>
+
+            <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+              <select id="selectNama" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Poppins',sans-serif">
+                <option value="">Pilih Nama...</option>
+                <option value="Andi">Andi</option>
+                <option value="Budi">Budi</option>
+                <option value="Citra">Citra</option>
+                <option value="Dina">Dina</option>
+                <option value="Eka">Eka</option>
+                <option value="Fatur">Fatur</option>
+                <option value="Gita">Gita</option>
+                <option value="Hendra">Hendra</option>
+              </select>
+              <select id="selectGoldar" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Poppins',sans-serif">
+                <option value="">Pilih Goldar...</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="AB">AB</option>
+                <option value="O">O</option>
+              </select>
+              <button class="btn" id="btnAddPoint">➕ Tambah Titik</button>
+              <button class="btn ghost" id="btnResetGrid">🔄 Reset Grid</button>
+            </div>
+
+            <div style="margin-top:12px;padding:12px;border-radius:10px;background:#fff9e6;border-left:4px solid #ffb84d;color:#3e2723">
+              <strong style="display:block;margin-bottom:6px">💡 Petunjuk singkat</strong>
+              <div class="small">Jika kertas sudah ditemukan, tekan tombol <em>Masukkan ke Diagram</em> agar data langsung berpindah ke diagram kartesius. Setelah semua data masuk, tekan verifikasi.</div>
             </div>
           </div>
 
-          <!-- Split Screen: Data Acak vs Grid Kartesius -->
-          <div style="margin-top:20px;margin-bottom:16px;padding:12px;border-radius:10px;background:#fff3cd;border-left:4px solid #ffcb64;color:#3e2723">
-            <strong style="display:block;margin-bottom:6px">📌 Mengapa Visualisasi Kartesian Penting?</strong>
-            <div class="small">Data yang acak dan tidak teratur sulit dipahami. Dengan mengubah data menjadi titik-titik di diagram kartesius, kalian dapat melihat POLA dengan jelas — mana siswa yang sudah punya pasangan goldar, mana yang belum, dan mana yang "double" (melanggar aturan fungsi). Visualisasi ini membantu kalian memahami syarat-syarat fungsi secara intuitif!</div>
-          </div>
-
-          <!-- Split Screen: Data Acak vs Grid Kartesius -->
-          <div class="split-container">
-            <!-- Sisi Kiri: Data Acak (Before) -->
-            <div class="split-left">
-              <div class="card-lite">
-                <h3 style="color:var(--accent);margin-bottom:12px">📋 Data Acak (Permasalahan Awal)</h3>
-                <div class="messy-data-visual" id="messyDataDisplay">
-                  <div class="messy-data-item" style="--rotation: 5deg;">Andi: ?</div>
-                  <div class="messy-data-item" style="--rotation: -8deg;">Budi: ?</div>
-                  <div class="messy-data-item" style="--rotation: 3deg;">Citra: ?</div>
-                  <div class="messy-data-item" style="--rotation: -5deg;">Dina: ?</div>
-                  <div class="messy-data-item" style="--rotation: 7deg;">Eka: ?</div>
-                  <div class="messy-data-item" style="--rotation: -3deg;">Fatur: ?</div>
-                  <div class="messy-data-item" style="--rotation: 6deg;">Gita: ?</div>
-                  <div class="messy-data-item" style="--rotation: -7deg;">Hendra: ?</div>
-                  <p style="margin-top:16px;color:var(--danger);font-weight:700;font-size:14px">
-                    ⚠️ Data belum terorganisir!
-                  </p>
-                </div>
-              </div>
+          <div class="card-lite" style="margin-top:12px">
+            <h3 style="color:var(--accent);margin-bottom:12px">🗺️ Gambar Petualangan</h3>
+            <div id="mysteryScene" class="mystery-scene">
+              <div class="paper-map-tile line-1"></div>
+              <div class="paper-map-tile line-2"></div>
+              <div class="paper-map-tile line-3"></div>
+              <div class="paper-map-tile line-4"></div>
+              <div class="paper-map-tile line-5"></div>
             </div>
-
-            <!-- Sisi Kanan: Grid Kartesius Interaktif -->
-            <div class="split-right">
-              <div class="card-lite">
-                <h3 style="color:var(--accent);margin-bottom:12px">📊 Diagram Kartesius Interaktif</h3>
-                <p style="font-size:13px;color:var(--muted);margin-bottom:12px">
-                  Klik pada grid untuk menambahkan titik koordinat (Nama, Goldar). 
-                  Setiap nama harus memiliki <strong>tepat satu</strong> golongan darah.
-                </p>
-
-                <!-- Grid Kartesius -->
-                <div class="cartesian-grid" id="cartesianGrid">
-                  <!-- Titik akan ditambahkan secara dinamis -->
-                </div>
-
-                <!-- Kontrol Input Manual -->
-                <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
-                  <select id="selectNama" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Poppins',sans-serif">
-                    <option value="">Pilih Nama...</option>
-                    <option value="Andi">Andi</option>
-                    <option value="Budi">Budi</option>
-                    <option value="Citra">Citra</option>
-                    <option value="Dina">Dina</option>
-                    <option value="Eka">Eka</option>
-                    <option value="Fatur">Fatur</option>
-                    <option value="Gita">Gita</option>
-                    <option value="Hendra">Hendra</option>
-                  </select>
-                  <select id="selectGoldar" style="padding:8px;border-radius:6px;border:2px solid rgba(0,0,0,0.1);font-family:'Poppins',sans-serif">
-                    <option value="">Pilih Goldar...</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="AB">AB</option>
-                    <option value="O">O</option>
-                  </select>
-                  <button class="btn" id="btnAddPoint">➕ Tambah Titik</button>
-                  <button class="btn ghost" id="btnResetGrid">🔄 Reset Grid</button>
-                </div>
-              </div>
+            <div style="font-size:12px;color:var(--muted);margin-top:8px">
+              Tip: untuk memakai gambar kelas Anda, simpan file sebagai <strong>images/kelas-petualangan.png</strong>.
+            </div>
+            <div id="paperQuestStatus" class="quest-status" style="margin-top:12px">
+              Temukan semua kertas tersembunyi untuk membuka daftar pasangan. Setelah itu, gunakan tombol Masukkan ke Diagram.
             </div>
           </div>
 
-          <!-- Testimoni & Clue -->
-          <div class="split-container">
-            <div class="split-left">
-              <div class="chat-card">
-                <h3 style="color:var(--accent);margin-bottom:10px">💬 Testimoni Chat Siswa</h3>
-                <p style="font-size:13px;color:var(--muted);margin-top:0">Baca obrolan singkat ini sebagai petunjuk — tidak ada jawaban langsung.</p>
-                <div class="chat-item"><div class="chat-avatar">A</div><div><strong>Andi:</strong> "Golongan darahku sama dengan Budi. Kita mirip banget!"</div></div>
-                <div class="chat-item"><div class="chat-avatar">B</div><div><strong>Budi:</strong> "Iya, aku dan Andi sama. Hurufnya satu aja."</div></div>
-                <div class="chat-item"><div class="chat-avatar">C</div><div><strong>Citra:</strong> "Aku gabungan dua huruf, jadi agak unik."</div></div>
-                <div class="chat-item"><div class="chat-avatar">D</div><div><strong>Dina:</strong> "Aku bukan A, dan bukan gabungan dua huruf. Masih ada huruf B-nya."</div></div>
-                <div class="chat-item"><div class="chat-avatar">E</div><div><strong>Eka:</strong> "Golongan darahku sama persis dengan Dina."</div></div>
-                <div class="chat-item"><div class="chat-avatar">F</div><div><strong>Fatur:</strong> "Aku satu-satunya yang berbeda sendiri di kelas ini."</div></div>
-                <div class="chat-item"><div class="chat-avatar">G</div><div><strong>Gita:</strong> "Aku juga gabungan, sama seperti Citra."</div></div>
-                <div class="chat-item"><div class="chat-avatar">H</div><div><strong>Hendra:</strong> "Golongan darahku sekelompok dengan Dina dan Eka."</div></div>
-              </div>
-            </div>
-
-            <div class="split-right">
-              <div class="card-lite">
-                <h3 style="color:var(--accent);margin-bottom:10px">🧩 Clue Logika (Puzzle)</h3>
-                <ul class="clue-list">
-                  <li>1) Andi dan Budi: sama persis.</li>
-                  <li>2) Ada 2 siswa bergolongan huruf tunggal A.</li>
-                  <li>3) Citra: gabungan dua huruf.</li>
-                  <li>4) Dina: mengandung B, tapi bukan gabungan.</li>
-                  <li>5) Eka: sama seperti Dina.</li>
-                  <li>6) Fatur: satu-satunya yang tidak berbagi dengan siapapun.</li>
-                  <li>7) Gita: sama seperti Citra.</li>
-                  <li>8) Hendra: sama seperti Dina dan Eka.</li>
-                  <li>9) Komposisi kelas: 2 A, 3 B, 2 AB, 1 O.</li>
-                </ul>
-                <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap">
-                  <button class="btn" id="btnCekKunci">🔎 Cek Dengan Kunci</button>
-                  <button class="btn ghost" id="btnRevealKunci">👀 Lihat Jawaban (Opsional)</button>
-                </div>
-                <div id="kunciResult" style="margin-top:10px;font-weight:700"></div>
-                <div id="kunciTabel" style="margin-top:12px;display:none">
-                  <table class="organized-table">
-                    <thead><tr><th>Nama</th><th>Gol. Darah (Kunci)</th></tr></thead>
-                    <tbody>
-                      <tr><td>Andi</td><td>A</td></tr>
-                      <tr><td>Budi</td><td>A</td></tr>
-                      <tr><td>Citra</td><td>AB</td></tr>
-                      <tr><td>Dina</td><td>B</td></tr>
-                      <tr><td>Eka</td><td>B</td></tr>
-                      <tr><td>Fatur</td><td>O</td></tr>
-                      <tr><td>Gita</td><td>AB</td></tr>
-                      <tr><td>Hendra</td><td>B</td></tr>
-                    </tbody>
-                  </table>
-                  <p style="font-size:12px;color:var(--muted);margin-top:6px">Gunakan hanya jika sudah mencoba menyusun sendiri.</p>
-                </div>
-              </div>
+          <div class="card-lite" style="margin-top:12px">
+            <h3 style="color:var(--accent);margin-bottom:12px">📜 Kertas yang Sudah Ditemukan</h3>
+            <div id="discoveredPaperList" class="found-paper-list">
+              <p style="color:var(--muted);font-size:14px;text-align:center;margin:0">Belum ada kertas yang ditemukan.</p>
             </div>
           </div>
 
-          <!-- Tombol Verifikasi Fungsi -->
-          <div class="verification-box" id="verificationBox">
+          <div class="verification-box" id="verificationBox" style="margin-top:18px">
             <h3 style="margin-bottom:12px;color:var(--accent)">🔍 Verifikasi Syarat Fungsi</h3>
             <p style="font-size:14px;color:var(--muted);margin-bottom:12px">
-              Pastikan semua titik sudah diletakkan dengan benar, lalu tekan tombol verifikasi.
+              Pastikan semua siswa sudah masuk ke diagram kartesius dengan tepat satu golongan darah.
             </p>
             <button class="btn" id="btnVerifikasiFunc" style="font-size:18px;padding:12px 24px">
               ✅ Verifikasi Fungsi
@@ -2107,62 +2174,7 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
             <button class="btn ghost" id="btnRevisi" style="margin-top:8px;display:none">🔄 Revisi Data</button>
           </div>
 
-          <!-- Fitur Predictor (Banyak Fungsi) -->
-          <div class="card-lite" id="predictorSection" style="display:none">
-            <h3 style="color:var(--accent);margin-bottom:12px">🧮 Fitur "Predictor" - Banyak Fungsi</h3>
-            <p style="font-size:14px;color:var(--muted);margin-bottom:12px">
-              Berdasarkan diagram yang kamu buat, ini adalah <strong>1 dari berapa</strong> kemungkinan susunan yang bisa terjadi di kelas ini?
-            </p>
-            <div class="predictor-input">
-              <span style="font-weight:700;color:var(--accent)">Jumlah Fungsi yang Mungkin:</span>
-              <input type="text" id="inputPrediksi" placeholder="Contoh: 65536" />
-              <button class="btn" id="btnCekPrediksi">Cek Jawaban</button>
-            </div>
-            <div id="prediksiResult" style="margin-top:8px;font-weight:700;text-align:center"></div>
-            <p style="font-size:13px;color:var(--muted);margin-top:12px;text-align:center">
-              💡 <strong>Hint:</strong> Rumus = n(Kodomain)<sup>n(Domain)</sup> = 4<sup>8</sup>
-            </p>
-          </div>
-
-          <!-- Narasi Solusi (Analisis C4) -->
-          <div class="card-lite" id="solutionSection" style="display:none">
-            <h3 style="color:var(--accent);margin-bottom:12px">📝 Kesimpulan Solusi</h3>
-            <p style="font-size:14px;color:var(--muted);margin-bottom:12px">
-              <strong>Pertanyaan Pemantik:</strong> "Apakah mungkin kita mengelompokkan siswa berdasarkan golongan darahnya tanpa ada data yang tumpang tindih?"
-            </p>
-            <textarea 
-              class="solution-textarea" 
-              id="inputKesimpulan" 
-              placeholder="Tuliskan kesimpulan Anda di sini...&#10;&#10;Contoh: Ya, melalui konstruksi Fungsi dalam bentuk Diagram Kartesius ini, kita bisa melihat dengan jelas bahwa setiap siswa memiliki tepat satu golongan darah. Ini membuktikan bahwa hubungan ini adalah Fungsi, bukan sekadar Relasi biasa."
-            ></textarea>
-            <div style="margin-top:12px">
-              <button class="btn" id="btnFinalCheck">🎯 Final Check & Kirim</button>
-            </div>
-            <div id="finalCheckResult" style="margin-top:12px;font-weight:700;text-align:center"></div>
-          </div>
-
-          <!-- Catatan Bukti (Evidence Log) -->
-          <div class="card-lite" id="evidenceSection" style="margin-top:16px;display:none">
-            <h3 style="color:var(--accent);margin-bottom:8px">📑 Catatan Bukti</h3>
-            <p style="font-size:13px;color:var(--muted);margin-bottom:6px">Tulis pernyataan, bukti, dan kesimpulanmu.</p>
-            <table class="evidence-table">
-              <thead>
-                <tr><th>Pernyataan</th><th>Bukti</th><th>Kesimpulan</th></tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td><textarea id="evPernyataan" style="width:100%;height:60px;box-sizing:border-box"></textarea></td>
-                  <td><textarea id="evBukti" style="width:100%;height:60px;box-sizing:border-box"></textarea></td>
-                  <td><textarea id="evKesimpulan" style="width:100%;height:60px;box-sizing:border-box"></textarea></td>
-                </tr>
-              </tbody>
-            </table>
-            <button class="btn" id="btnSaveEvidence" style="margin-top:10px">💾 Simpan Catatan Bukti</button>
-            <div id="evidenceFeedback" style="margin-top:8px;font-weight:700"></div>
-          </div>
-
-          <!-- Transformasi Visual (Tabel Rapi) -->
-          <div class="card-lite" id="organizedDataSection" style="display:none">
+          <div class="card-lite" id="organizedDataSection" style="display:none;margin-top:16px">
             <h3 style="color:var(--success);margin-bottom:12px">✅ Data Terorganisir (Hasil Fungsi)</h3>
             <table class="organized-table" id="organizedTable">
               <thead>
@@ -2171,18 +2183,15 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
                   <th>Golongan Darah</th>
                 </tr>
               </thead>
-              <tbody id="organizedTableBody">
-                <!-- Data akan diisi otomatis -->
-              </tbody>
+              <tbody id="organizedTableBody"></tbody>
             </table>
             <p style="margin-top:12px;text-align:center;color:var(--success);font-weight:700">
-              🎉 Selamat! Data acak telah berubah menjadi tabel yang rapi dan terorganisir!
+              🎉 Selamat! Kertas yang tersembunyi berhasil diubah menjadi data yang rapi.
             </p>
           </div>
 
-          <!-- Navigasi -->
           <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:20px">
-            <button class="btn ghost" data-go="simulator-populasi">⟵ Kembali ke Skenario</button>
+            <button class="btn ghost" data-go="simulasi-fungsi">⟵ Kembali</button>
             <button class="btn ghost" data-go="menu">Kembali ke Menu</button>
             <button class="btn" data-go="penyajian-karya">Lanjut ke Penyajian Hasil Karya ⟶</button>
           </div>
@@ -2204,12 +2213,7 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
               Gunakan hasil diagram kartesius yang sudah kalian susun pada tahap sebelumnya.
             </p>
 
-            <textarea id="deskripsiPenyajian" 
-              placeholder="Tuliskan ringkasan singkat hasil kelompokmu... (contoh: Diagram kartesius menunjukkan setiap nama hanya memiliki satu goldar)"
-              style="width:100%;padding:12px;border-radius:8px;border:2px solid #ddd;font-family:Arial;min-height:80px"></textarea>
 
-            <button class="btn" id="btnSimpanPenyajian" style="margin-top:12px">💾 Simpan Penyajian Diagram Kartesius</button>
-            <div id="feedbackPenyajian" style="margin-top:12px"></div>
 
             <!-- AREA DISPLAY PENYAJIAN -->
             <div id="galleryDisplayBox" class="gallery-display-box">
@@ -2219,7 +2223,7 @@ Bayangkan kalau setiap siswa punya 4 pilihan (A, B, AB, O), kira-kira ada berapa
               </div>
               <div class="gallery-content" id="galleryContent">
                 <p style="text-align:center;color:var(--muted);padding:40px 20px">
-                  📦 Klik "Simpan" untuk menampilkan hasil diagram kartesius kalian...
+                  � Diagram kartesius hasil investigasi kelompok...
                 </p>
               </div>
             </div>
@@ -3041,105 +3045,133 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 500);
   });
 
-  // === LOGIKA SIMULATOR POPULASI ===
-  let simSelectedNama = null;
-  const simPairs = { Andi: [], Budi: [], Citra: [] };
-  const simPasanganEl = document.getElementById('sim-pasangan');
-  const simFeedbackEl = document.getElementById('sim-feedback');
-
-  function updateSimPasangan() {
-    if (!simPasanganEl) return;
-    const entries = Object.entries(simPairs).filter(([_, arr]) => Array.isArray(arr) && arr.length > 0);
-    if (entries.length === 0) {
-      simPasanganEl.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center">Belum ada pasangan. Klik nama lalu pilih A atau B.</p>';
-      return;
-    }
-    let html = '';
-    entries.forEach(([nama, arr]) => {
-      arr.forEach(goldar => {
-        html += `<span class="pasangan-badge">${nama} → ${goldar}</span>`;
-      });
-    });
-    simPasanganEl.innerHTML = html;
-  }
-
-  // Nama di simulator
-  document.querySelectorAll('#sim-nama .nama-item').forEach(item => {
-    item.addEventListener('click', function() {
-      document.querySelectorAll('#sim-nama .nama-item').forEach(n => n.classList.remove('selected'));
-      this.classList.add('selected');
-      simSelectedNama = this.getAttribute('data-sim-nama');
-    });
-  });
-
-  // Goldar di simulator
-  document.querySelectorAll('#sim-goldar .goldar-item').forEach(item => {
-    item.addEventListener('click', function() {
-      if (!simSelectedNama) {
-        if (simFeedbackEl) {
-          simFeedbackEl.textContent = 'Pilih nama siswa terlebih dahulu.';
-          simFeedbackEl.style.color = 'var(--danger)';
-        }
-        return;
-      }
-      const goldar = this.getAttribute('data-sim-goldar');
-      // Inisialisasi array jika perlu
-      if (!Array.isArray(simPairs[simSelectedNama])) {
-        simPairs[simSelectedNama] = [];
-      }
-      // Cegah duplikasi, tambahkan agar akumulatif (2 pilihan per nama)
-      if (!simPairs[simSelectedNama].includes(goldar)) {
-        simPairs[simSelectedNama].push(goldar);
-      }
-      updateSimPasangan();
-      document.querySelectorAll('#sim-nama .nama-item').forEach(n => n.classList.remove('selected'));
-      simSelectedNama = null;
-      if (simFeedbackEl) {
-        simFeedbackEl.textContent = 'Pasangan ditambahkan.';
-        simFeedbackEl.style.color = 'var(--success)';
-      }
-    });
-  });
-
-  // Reset simulator
-  document.getElementById('sim-reset')?.addEventListener('click', () => {
-    simPairs.Andi = []; simPairs.Budi = []; simPairs.Citra = [];
-    simSelectedNama = null;
-    updateSimPasangan();
-    document.querySelectorAll('#sim-nama .nama-item').forEach(n => n.classList.remove('selected'));
-    if (simFeedbackEl) {
-      simFeedbackEl.textContent = 'Simulator di-reset.';
-      simFeedbackEl.style.color = 'var(--muted)';
-    }
-  });
-
-  // Cek jawaban tantangan 4^5
-  document.getElementById('sim-cek')?.addEventListener('click', () => {
-    const inp = document.getElementById('sim-jawaban');
+  // === TANTANGAN CEPAT: Berapa Banyak Fungsi? ===
+  document.getElementById('btnCekTantangan')?.addEventListener('click', () => {
+    const inp = document.getElementById('inputJawabanTantangan');
     const val = (inp?.value || '').trim();
+    const feedbackEl = document.getElementById('feedbackTantangan');
+    
     const isNumber = /^\d+$/.test(val);
     if (!isNumber) {
-      if (simFeedbackEl) {
-        simFeedbackEl.textContent = 'Masukkan angka yang valid.';
-        simFeedbackEl.style.color = 'var(--danger)';
-      }
+      feedbackEl.textContent = '⚠️ Masukkan angka yang valid.';
+      feedbackEl.style.color = 'var(--danger)';
       return;
     }
-    if (parseInt(val, 10) === 1024) {
-      if (simFeedbackEl) {
-        simFeedbackEl.textContent = 'Luar biasa! Ternyata ada 1024 variasi data yang mungkin. Sekarang, pilih satu kombinasi yang paling sesuai untuk Diagram Kartesius!';
-        simFeedbackEl.style.color = 'var(--success)';
-      }
+    
+    const jawaban = parseInt(val, 10);
+    const benar = 1024; // 4^5 = 1024
+    
+    if (jawaban === benar) {
+      feedbackEl.innerHTML = '✅ <strong style="color: var(--success)">Sempurna! 4⁵ = 1024 fungsi</strong><br/><span style="font-size: 13px; color: var(--muted)">Ada 1024 cara berbeda untuk memasangkan 5 siswa dengan 4 golongan darah. Ingat konsep ini saat membuat diagram!</span>';
+      feedbackEl.style.color = 'var(--success)';
     } else {
-      if (simFeedbackEl) {
-        simFeedbackEl.textContent = 'Belum tepat. Ingat, jumlah jenis golongan darah^jumlah siswa = 4^5.';
-        simFeedbackEl.style.color = 'var(--danger)';
-      }
+      feedbackEl.innerHTML = '❌ <strong style="color: var(--danger)">Belum tepat.</strong><br/><span style="font-size: 13px; color: var(--muted)">Rumusnya: Golongan Darah<sup>Siswa</sup> = 4<sup>5</sup> = ?</span>';
+      feedbackEl.style.color = 'var(--danger)';
     }
   });
 
-  // Inisialisasi tampilan simulator saat halaman dimuat
-  updateSimPasangan();
+  document.getElementById('btnResetTantangan')?.addEventListener('click', () => {
+    document.getElementById('inputJawabanTantangan').value = '';
+    document.getElementById('feedbackTantangan').textContent = '';
+  });
+
+  // === GAME KERTAS TERSEMBUNYI DI DIAGRAM KARTESIUS ===
+  const hiddenPaperData = [
+    { nama: 'Andi', goldar: 'A', left: '16%', top: '16%' },
+    { nama: 'Budi', goldar: 'A', left: '47%', top: '20%' },
+    { nama: 'Citra', goldar: 'AB', left: '64%', top: '24%' },
+    { nama: 'Dina', goldar: 'B', left: '30%', top: '48%' },
+    { nama: 'Eka', goldar: 'B', left: '54%', top: '44%' },
+    { nama: 'Fatur', goldar: 'O', left: '74%', top: '49%' },
+    { nama: 'Gita', goldar: 'AB', left: '24%', top: '72%' },
+    { nama: 'Hendra', goldar: 'B', left: '67%', top: '74%' }
+  ];
+  const discoveredPaperKeys = new Set();
+  const mysterySceneEl = document.getElementById('mysteryScene');
+  const discoveredPaperListEl = document.getElementById('discoveredPaperList');
+  const paperQuestStatusEl = document.getElementById('paperQuestStatus');
+
+  function renderHiddenPaperQuest() {
+    if (!mysterySceneEl || !discoveredPaperListEl || !paperQuestStatusEl) return;
+
+    mysterySceneEl.querySelectorAll('.hidden-paper').forEach(node => node.remove());
+
+    hiddenPaperData.forEach((paper, index) => {
+      const key = `${paper.nama}-${paper.goldar}`;
+      const paperEl = document.createElement('div');
+      paperEl.className = `mystery-object hidden-paper ${discoveredPaperKeys.has(key) ? 'revealed' : ''}`;
+      paperEl.style.left = paper.left;
+      paperEl.style.top = paper.top;
+      paperEl.dataset.key = key;
+
+      if (discoveredPaperKeys.has(key)) {
+        paperEl.innerHTML = `
+          <span>${paper.nama}</span>
+          <span class="hidden-paper-label">Gol. Darah: ${paper.goldar}</span>
+          <span class="found-badge">Sudah ditemukan</span>
+          <div class="hidden-paper-actions">
+            <button type="button" class="btn" data-use-paper="${key}">Masukkan ke Diagram</button>
+          </div>
+        `;
+      } else {
+        paperEl.innerHTML = `<span style="margin-left:28px">Kertas ${index + 1}</span>`;
+        paperEl.addEventListener('click', () => revealPaper(key));
+      }
+
+      mysterySceneEl.appendChild(paperEl);
+    });
+
+    const foundCount = discoveredPaperKeys.size;
+    paperQuestStatusEl.innerHTML = foundCount === 0
+      ? 'Temukan semua kertas tersembunyi untuk membuka daftar pasangan. Setelah itu, gunakan tombol Masukkan ke Diagram.'
+      : `Kertas ditemukan: <strong>${foundCount}/8</strong>. Klik <strong>Masukkan ke Diagram</strong> pada kertas yang sudah terbuka.`;
+
+    discoveredPaperListEl.innerHTML = '';
+    if (foundCount === 0) {
+      discoveredPaperListEl.innerHTML = '<p style="color:var(--muted);font-size:14px;text-align:center;margin:0">Belum ada kertas yang ditemukan.</p>';
+      return;
+    }
+
+    hiddenPaperData.forEach(paper => {
+      const key = `${paper.nama}-${paper.goldar}`;
+      if (!discoveredPaperKeys.has(key)) return;
+
+      const item = document.createElement('div');
+      item.className = 'found-paper-item';
+      item.innerHTML = `
+        <strong>${paper.nama}</strong>
+        <div class="found-paper-meta">Isi kertas: ${paper.nama} - Golongan darah ${paper.goldar}</div>
+        <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+          <button type="button" class="btn" data-use-paper="${key}">Masukkan ke Diagram</button>
+        </div>
+      `;
+      discoveredPaperListEl.appendChild(item);
+    });
+
+    document.querySelectorAll('[data-use-paper]').forEach(button => {
+      button.addEventListener('click', () => {
+        const [nama, goldar] = button.getAttribute('data-use-paper').split('-');
+        useFoundPaper(nama, goldar);
+      });
+    });
+  }
+
+  function revealPaper(key) {
+    discoveredPaperKeys.add(key);
+    renderHiddenPaperQuest();
+  }
+
+  function useFoundPaper(nama, goldar) {
+    const selectNama = document.getElementById('selectNama');
+    const selectGoldar = document.getElementById('selectGoldar');
+    if (!selectNama || !selectGoldar) return;
+
+    selectNama.value = nama;
+    selectGoldar.value = goldar;
+    document.getElementById('btnAddPoint')?.click();
+  }
+
+  renderHiddenPaperQuest();
 
   // === LOGIKA DIAGRAM KARTESIUS INTERAKTIF ===
   const cartesianData = {}; // {nama: goldar}
@@ -3348,6 +3380,12 @@ document.addEventListener('DOMContentLoaded', () => {
       alert('Pilih nama dan golongan darah terlebih dahulu!');
       return;
     }
+
+    const paperKey = `${nama}-${goldar}`;
+    if (!discoveredPaperKeys.has(paperKey)) {
+      alert('Temukan kertas dengan nama dan golongan darah ini terlebih dahulu sebelum memasukkannya ke diagram.');
+      return;
+    }
     
     if (cartesianData[nama]) {
       alert(`${nama} sudah memiliki golongan darah ${cartesianData[nama]}. Hapus dulu jika ingin mengubah.`);
@@ -3367,8 +3405,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btnResetGrid')?.addEventListener('click', () => {
     if (confirm('Yakin ingin mereset semua titik?')) {
       Object.keys(cartesianData).forEach(key => delete cartesianData[key]);
+      discoveredPaperKeys.clear();
       renderCartesianPoints();
       updateMessyData();
+      renderHiddenPaperQuest();
       
       // Reset semua section
       const verificationBox = document.getElementById('verificationBox');
@@ -4363,8 +4403,6 @@ window.generatePDFReport = async function(){
 };
 
 // ======== FASE 4: PENYAJIAN HASIL KARYA (GALLERY WALK) ========
-const btnSimpanPenyajian = document.getElementById('btnSimpanPenyajian');
-const feedbackPenyajian = document.getElementById('feedbackPenyajian');
 const galleryGrid = document.getElementById('galleryGrid');
 const emptyGallery = document.getElementById('emptyGallery');
 const filterBentuk = document.getElementById('filterBentuk');
@@ -4424,19 +4462,7 @@ function generateGalleryDisplay(bentuk) {
       contentHTML = '<p style="text-align:center;color:var(--muted);padding:40px 20px">📌 Diagram Kartesius belum dibuat. Kerjakan diagram terlebih dahulu.</p>';
     }
   } else {
-    const deskripsi = document.getElementById('deskripsiPenyajian')?.value.trim();
-    if (deskripsi) {
-      contentHTML = `
-        <div class="gallery-text-wrapper">
-          <div class="gallery-text-item">
-            <div class="gallery-text-label">🧾 Alasan Penyajian:</div>
-            <div class="gallery-text-content">${deskripsi}</div>
-          </div>
-        </div>
-      `;
-    } else {
-      contentHTML = '<p style="text-align:center;color:var(--muted);padding:40px 20px">📌 Deskripsi penyajian belum diisi.</p>';
-    }
+    contentHTML = '<p style="text-align:center;color:var(--muted);padding:40px 20px">📦 Diagram kartesius dari investigasi kalian...</p>';
   }
 
   galleryContent.innerHTML = contentHTML;
@@ -4447,47 +4473,12 @@ function generateGalleryDisplay(bentuk) {
   }, 200);
 }
 
-// Simpan pilihan penyajian
-btnSimpanPenyajian?.addEventListener('click', () => {
-  const bentukPenyajian = 'grafik';
-  const deskripsi = document.getElementById('deskripsiPenyajian')?.value.trim();
-
-  const penyajian = {
-    bentuk: bentukPenyajian,
-    deskripsi: deskripsi || '',
-    timestamp: new Date().toLocaleString('id-ID')
-  };
-  
-  localStorage.setItem('penyajianKelompok', JSON.stringify(penyajian));
-
-  generateGalleryDisplay(bentukPenyajian);
-  
-  feedbackPenyajian.innerHTML = `
-    <div class="feedback-box success">
-      ✅ Penyajian diagram kartesius tersimpan.
-      <br><small>Lihat hasil karya kalian di bawah. Kelompok lain bisa memberikan saran!</small>
-    </div>
-  `;
-});
-
-// Auto-restore penyajian saat masuk ke slide penyajian-karya
+// Auto-display penyajian saat masuk ke slide penyajian-karya
 document.addEventListener('click', (ev) => {
   const btn = ev.target.closest('[data-go]');
   if (btn && btn.getAttribute('data-go') === 'penyajian-karya') {
     setTimeout(() => {
-      const savedPenyajian = localStorage.getItem('penyajianKelompok');
-      if (savedPenyajian) {
-        try {
-          const data = JSON.parse(savedPenyajian);
-          const deskripsiField = document.getElementById('deskripsiPenyajian');
-          if (deskripsiField && data.deskripsi) {
-            deskripsiField.value = data.deskripsi;
-          }
-          generateGalleryDisplay('grafik');
-        } catch (e) {
-          console.error('Error restoring penyajian:', e);
-        }
-      }
+      generateGalleryDisplay('grafik');
     }, 100);
   }
 });
