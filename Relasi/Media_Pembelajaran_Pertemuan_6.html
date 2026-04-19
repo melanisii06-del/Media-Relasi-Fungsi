@@ -3081,6 +3081,22 @@ function validateAndShowResult() {
     alert(`⚠️ Korespondensi satu-satu tidak valid!\n\n✓ Jumlah relasi harus sama dengan jumlah anggota kedua himpunan\n✓ Saat ini: Domain=${filledDomain}, Kodomain=${filledCodomain}, Relasi=${relCount}`);
     return;
   }
+
+  // Simpan snapshot diagram saat slide masih aktif/terlihat
+  try {
+    var diagramSVG = document.getElementById('diagramSVG');
+    if (diagramSVG && typeof html2canvas !== 'undefined') {
+      html2canvas(diagramSVG, { backgroundColor: '#f8f8f8', scale: 2 })
+        .then(function(canvas) {
+          localStorage.setItem('diagramPanahImageSnapshot', canvas.toDataURL('image/png'));
+        })
+        .catch(function(err) {
+          console.warn('Gagal menyimpan snapshot diagram:', err);
+        });
+    }
+  } catch (e) {
+    console.warn('Snapshot diagram error:', e);
+  }
   
   // Valid - show next button
   alert(`✓ Selamat! Korespondensi satu-satu Anda valid!\n\nDomain: ${filledDomain} anggota\nKodomain: ${filledCodomain} anggota\nRelasi: ${relCount} pasangan\n\nSilakan lanjut ke slide berikutnya.`);
@@ -3372,8 +3388,8 @@ function tampilkanPenyajianDanKomentar() {
   komentarList.innerHTML = html;
 }
 
-// Simpan pilihan penyajian
-btnSimpanPenyajianKorespondensi?.addEventListener('click', () => {
+// Simpan pilihan penyajian (dengan capture gambar diagram)
+btnSimpanPenyajianKorespondensi?.addEventListener('click', async () => {
   const bentukPenyajian = document.querySelector('input[name="bentukPenyajianKorespondensi"]:checked')?.value;
   const deskripsi = document.getElementById('deskripsiPenyajianKorespondensi')?.value.trim();
   
@@ -3382,32 +3398,7 @@ btnSimpanPenyajianKorespondensi?.addEventListener('click', () => {
     return;
   }
   
-  const penyajian = {
-    bentuk: bentukPenyajian,
-    deskripsi: deskripsi,
-    timestamp: new Date().toLocaleString('id-ID')
-  };
-  
-  localStorage.setItem('penyajianKorespondensiKelompok', JSON.stringify(penyajian));
-  
-  feedbackPenyajianKorespondensi.innerHTML = `
-    <div style="padding:12px;border-radius:8px;background:#d1fae5;border-left:4px solid #10b981;color:#065f46;font-weight:600">
-      ✅ Penyajian tersimpan! Kelompokmu memilih: <strong>${bentukPenyajian}</strong>
-      <br><small>Sekarang kelompok lain bisa memberikan saran di Gallery Walk!</small>
-    </div>
-  `;
-});
-
-// Simpan pilihan penyajian (dengan capture gambar diagram)
-btnSimpanPenyajianKorespondensi?.addEventListener('click', async () => {
-  const bentukPenyajian = document.querySelector('input[name="bentukPenyajianKorespondensi"]:checked')?.value;
-  const deskripsi = document.getElementById('deskripsiPenyajianKorespondensi')?.value.trim();
-  
-  if (!deskripsi || deskripsi.length < 20) {
-    return;
-  }
-  
-  let diagramImage = '';
+  let diagramImage = localStorage.getItem('diagramPanahImageSnapshot') || '';
   try {
     const diagramSVG = document.getElementById('diagramSVG');
     if (diagramSVG && typeof html2canvas !== 'undefined') {
@@ -3426,6 +3417,11 @@ btnSimpanPenyajianKorespondensi?.addEventListener('click', async () => {
   };
   
   localStorage.setItem('penyajianKorespondensiKelompok', JSON.stringify(penyajian));
+  if (diagramImage) {
+    localStorage.setItem('diagramPanahImageSnapshot', diagramImage);
+  }
+
+  feedbackPenyajianKorespondensi.innerHTML = '<div style="padding:12px;border-radius:8px;background:#d1fae5;border-left:4px solid #10b981;color:#065f46;font-weight:600">✅ Penyajian diagram panah berhasil disimpan.</div>';
   tampilkanPenyajianDanKomentar();
 });
 
@@ -4421,11 +4417,11 @@ async function downloadHasil() {
   if(kesimpulanData){
     try{
       const kesimpulan = JSON.parse(kesimpulanData);
-      addText(`Pertanyaan 1 - Apa yang sudah kalian pelajari?: ${kesimpulan.jawaban1 || '-'}`);
+      addText(`1) Berapa banyak pasangan berbeda yang dapat dibentuk dari 4 pemain putra dan 4 pemain putri?: ${kesimpulan.jawaban1 || '-'}`);
       yPos += 5;
-      addText(`Pertanyaan 2 - Bagaimana kalian memahami konsep ini?: ${kesimpulan.jawaban2 || '-'}`);
+      addText(`2) Apa yang kalian pahami tentang korespondensi satu-satu setelah melakukan investigasi ini?: ${kesimpulan.jawaban2 || '-'}`);
       yPos += 5;
-      addText(`Pertanyaan 3 - Berikan contoh dari kehidupan nyata: ${kesimpulan.jawaban3 || '-'}`);
+      addText(`3) Sebutkan contoh lain dari korespondensi satu-satu dalam kehidupan sehari-hari!: ${kesimpulan.jawaban3 || '-'}`);
     }catch(e){
       addText('Data kesimpulan tidak valid');
     }
@@ -4453,11 +4449,12 @@ async function downloadHasil() {
     if(penyajianData){
       try{
         const penyajian = JSON.parse(penyajianData);
-        if(penyajian.diagramImage){
+        var finalDiagramImage = penyajian.diagramImage || localStorage.getItem('diagramPanahImageSnapshot') || '';
+        if(finalDiagramImage){
           checkPageBreak(120);
           doc.text('Gambar Diagram Panah:', margin, yPos);
           yPos += 5;
-          doc.addImage(penyajian.diagramImage, 'PNG', margin + 5, yPos, 160, 100);
+          doc.addImage(finalDiagramImage, 'PNG', margin + 5, yPos, 160, 100);
           yPos += 105;
         } else {
           addText('Gambar diagram panah belum tersimpan. Simpan penyajian terlebih dahulu agar gambar masuk ke PDF.');
@@ -4514,12 +4511,6 @@ async function downloadHasil() {
     addText('Belum mengisi refleksi individu');
   }
   yPos += 10;
-
-  // Footer
-  checkPageBreak(15);
-  doc.setFontSize(9);
-  doc.setFont(undefined, 'italic');
-  doc.text(`Diunduh pada: ${new Date().toLocaleString('id-ID')}`, margin, yPos);
 
   // Save PDF
   doc.save(`Hasil_Pertemuan6_${namaKelompok.replace(/\s+/g, '_')}_${Date.now()}.pdf`);
