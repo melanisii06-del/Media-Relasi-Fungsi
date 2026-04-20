@@ -4,14 +4,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Media Pembelajaran — Relasi & Fungsi (Pertemuan 6)</title>
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+<title>Media Pembelajaran — Relasi & Fungsi (Pertemuan 4)</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 /* --- CSS GLOBAL --- */
-:root{--bg:#ffcb64;--panel:#fff3d9;--accent:#3e2723;--muted:#6b4b3a;--success:#2e7d32;--danger:#c62828}
+:root{--bg:#ffb84d;--panel:#EFEBE9;--accent:#5D4037;--muted:#6D4C41;--success:#8D6E63;--danger:#BF360C}
 html,body{
   height:100%;
   margin:0;
@@ -32,7 +32,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.08), transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.3), transparent 50%);
   z-index: -1;
   pointer-events: none;
 }
@@ -82,20 +82,20 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
 
 /* Fase 3 PBL Styles */
 .email-box{
-  background:linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-  border:3px solid #2196f3;
+  background:linear-gradient(135deg, #EFEBE9 0%, #D7CCC8 100%);
+  border:3px solid #8D6E63;
   border-radius:16px;
   padding:20px;
   margin:20px auto;
   max-width:720px;
-  box-shadow:0 8px 20px rgba(33,150,243,0.3);
+  box-shadow:0 8px 20px rgba(141,110,99,0.3);
 }
 .email-header{
-  border-bottom:2px dashed #2196f3;
+  border-bottom:2px dashed #8D6E63;
   padding-bottom:12px;
   margin-bottom:16px;
   font-size:14px;
-  color:#1976d2;
+  color:#5D4037;
 }
 .email-body{
   font-family:Arial,sans-serif;
@@ -112,7 +112,7 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
 }
 .tarif-info{
   background:#fff;
-  border:2px solid #4caf50;
+  border:2px solid #8D6E63;
   border-radius:12px;
   padding:16px;
   margin-top:16px;
@@ -120,23 +120,23 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
 .sticky-info{
   position:sticky;
   top:20px;
-  background:#e8f5e9;
-  border:3px solid #4caf50;
+  background:#EFEBE9;
+  border:3px solid #8D6E63;
   border-radius:14px;
   padding:16px;
-  box-shadow:0 6px 16px rgba(76,175,80,0.3);
+  box-shadow:0 6px 16px rgba(141,110,99,0.3);
 }
 .know-need-box{
   background:#fff;
-  border:2px dashed #9e9e9e;
+  border:2px dashed #A1887F;
   border-radius:12px;
   padding:16px;
   margin:16px 0;
 }
 .know-need-box h4{
   margin-top:0;
-  color:#1976d2;
-  border-bottom:2px solid #e3f2fd;
+  color:#5D4037;
+  border-bottom:2px solid #EFEBE9;
   padding-bottom:8px;
 }
 .durasi-row{
@@ -157,12 +157,12 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
   box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 .hasil-kelompok-card:hover{
-  border-color:#2196f3;
+  border-color:#FF9800;
   box-shadow:0 6px 16px rgba(33,150,243,0.2);
 }
 .badge{
   display:inline-block;
-  background:#4caf50;
+  background:#FF9800;
   color:#fff;
   padding:4px 12px;
   border-radius:20px;
@@ -253,7 +253,7 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
   border-color:#00bcd4;
 }
 .dot.selected{
-  background:#1976d2;
+  background:#E65100;
   box-shadow:0 0 0 4px rgba(25,118,210,0.2);
 }
 .codomain .dot.selected{
@@ -348,7 +348,7 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
 .gallery-card:hover{
   transform: translateY(-4px);
   box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-  border-color: #4caf50;
+  border-color: #FF9800;
 }
 .gallery-card-header{
   display: flex;
@@ -430,7 +430,7 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
   margin-top: 8px;
 }
 .comment-item{
-  border-left: 3px solid #4caf50;
+  border-left: 3px solid #FF9800;
   padding: 8px;
   margin: 6px 0;
   background: #f5f5f5;
@@ -439,7 +439,7 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
 }
 .comment-author{
   font-weight: bold;
-  color: #2e7d32;
+  color: #E65100;
   margin-bottom: 4px;
   display: flex;
   justify-content: space-between;
@@ -502,7 +502,6 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
   filter: grayscale(0%);
 }
 #reflectionQ1,
-#reflectionQ2,
 #reflectionQ3,
 #reflectionMessage{
   border: 2px solid #e1bee7;
@@ -514,7 +513,6 @@ h1{font-size:44px;margin:6px 0;color:var(--accent)}
   box-sizing: border-box;
 }
 #reflectionQ1:focus,
-#reflectionQ2:focus,
 #reflectionQ3:focus,
 #reflectionMessage:focus{
   outline: none;
@@ -542,7 +540,7 @@ h1, h2 {
 /* Loading spinner */
 .loading-spinner {
   border: 4px solid #f3f3f3;
-  border-top: 4px solid #2196f3;
+  border-top: 4px solid #FF9800;
   border-radius: 50%;
   width: 40px;
   height: 40px;
@@ -572,6 +570,88 @@ label:has(input[type="radio"]:checked) {
   font-weight: bold;
 }
 
+/* Tutor Virtual */
+.tutor-launcher{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:10001;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  padding:10px 16px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+.tutor-launcher:hover{opacity:.92}
+
+.tutor-panel{
+  position:fixed;
+  right:16px;
+  bottom:72px;
+  width:360px;
+  max-width:calc(100vw - 24px);
+  background:linear-gradient(180deg,var(--panel),#fff7e6);
+  border:2px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  box-shadow:0 14px 30px rgba(0,0,0,.22);
+  padding:12px;
+  z-index:10001;
+  display:none;
+}
+.tutor-panel.show{display:block}
+.tutor-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tutor-avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#fff;
+  border:2px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  animation:tutorFloat 2.2s ease-in-out infinite;
+}
+.tutor-title{font-size:14px;font-weight:700;color:var(--accent)}
+.tutor-progress{font-size:12px;color:var(--muted)}
+.tutor-bubble{
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  border-left:4px solid var(--accent);
+  color:var(--accent);
+  font-size:13px;
+  line-height:1.5;
+  min-height:74px;
+}
+.tutor-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tutor-actions .btn{font-size:13px;padding:8px 10px;border-radius:9px}
+.tutor-status{margin-top:8px;font-size:12px;color:var(--muted)}
+
+.tutor-target-highlight{
+  outline:4px solid #fbc02d !important;
+  outline-offset:2px;
+  animation:tutorPulse 1.15s ease-in-out infinite;
+  border-radius:8px;
+}
+
+@keyframes tutorFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes tutorPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(251,192,45,.18)}
+  50%{box-shadow:0 0 0 8px rgba(251,192,45,.04)}
+}
+
+@media (max-width:700px){
+  .tutor-panel{right:8px;left:8px;bottom:70px;width:auto}
+  .tutor-launcher{right:8px;bottom:10px}
+}
+
 @media (max-width:920px){ 
   .card{padding:12px} 
   h1{font-size:32px} 
@@ -581,7 +661,7 @@ label:has(input[type="radio"]:checked) {
 <body>
 
 <div class="wrapper"><div class="card">
-  <div class="header"><h1>Media Pembelajaran Relasi & Fungsi</h1><div class="lead">Pertemuan 6 — Interaktif — kerjakan dari Start → Permasalahan</div></div>
+  <div class="header"><h1>Media Pembelajaran Relasi & Fungsi</h1><div class="lead">Pertemuan 4 — Interaktif — kerjakan dari Start → Permasalahan</div></div>
 
   <main class="slides">
 
@@ -592,11 +672,7 @@ label:has(input[type="radio"]:checked) {
         <p class="lead">Media Pembelajaran: Relasi & Fungsi<br>Pertemuan 4</p>
         <button class="btn" data-go="menu">Mulai</button>
         <!-- Tombol Download untuk Testing -->
-        <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(0,0,0,0.1)">
-          <p style="font-size:12px;color:#666;margin-bottom:8px">🧪 Testing Download:</p>
-          <button class="btn" id="testDownloadBtn" style="background:#2196F3;font-size:14px">📥 Download Hasil PDF</button>
-        </div>
-      </div>
+        
     </section>
 
     <!-- SLIDE 2: Menu Utama -->
@@ -631,37 +707,21 @@ label:has(input[type="radio"]:checked) {
   </div>
   
   <p style="color:var(--muted);font-size:14px;line-height:1.6;margin:8px 0">
-    Kota Sejahtera baru meluncurkan layanan sewa sepeda listrik <strong>"Si Biru"</strong> di Alun-alun. Sayangnya, banyak turis yang <strong>komplain di media sosial</strong>!
+    Kota Sejahtera membuka layanan sewa sepeda listrik <strong>"Si Biru"</strong>. Banyak turis komplain karena merasa biaya sewa tidak jelas.
   </p>
 
-  <!-- KOMPLAIN MEDIA SOSIAL -->
   <div style="background:#f5f5f5;border:2px solid #e0e0e0;border-radius:10px;padding:14px;margin:12px 0;font-family:Arial,sans-serif">
-    <div style="font-weight:bold;color:#1976d2;margin-bottom:10px">📱 Komplain Turis di Twitter:</div>
-    
-    <div style="padding:10px;background:#fff;border-radius:8px;margin-bottom:8px;border-left:3px solid #f44336">
-      <div style="font-size:13px;color:#666">@turis_bingung • 2 jam lalu</div>
-      <div style="color:#333;margin-top:4px">"Sewa sepeda Si Biru cuma 10 menit kok bayar Rp7.000?! Kemahalan! 😡"</div>
-    </div>
-
-    <div style="padding:10px;background:#fff;border-radius:8px;margin-bottom:8px;border-left:3px solid #ff9800">
-      <div style="font-size:13px;color:#666">@backpacker_id • 3 jam lalu</div>
-      <div style="color:#333;margin-top:4px">"Kenapa bayar Rp5.000 padahal sepeda belum dipakai? Aneh banget sistemnya!"</div>
-    </div>
-
-    <div style="padding:10px;background:#fff;border-radius:8px;margin-bottom:8px;border-left:3px solid #2196f3">
-      <div style="font-size:13px;color:#666">@traveler_indo • 5 jam lalu</div>
-      <div style="color:#333;margin-top:4px">"Mau sewa 1 jam tapi gak tahu berapa biayanya. Tidak ada info yang jelas di lokasi!"</div>
-    </div>
-
-    <div style="padding:10px;background:#e8f5e9;border-radius:8px;border-left:3px solid #4caf50">
-      <div style="font-size:13px;color:#666">@pemkot_sejahtera • 1 jam lalu</div>
-      <div style="color:#333;margin-top:4px">"Mohon maaf atas ketidaknyamanannya. Tim kami sedang mencari solusi terbaik. 🙏"</div>
-    </div>
+    <div style="font-weight:bold;color:#5D4037;margin-bottom:8px">📱 Ringkasan Komplain Turis:</div>
+    <ul style="margin:0 0 0 20px;padding:0;color:#333;font-size:14px;line-height:1.6">
+      <li>Sewa sebentar tapi bayar terasa mahal.</li>
+      <li>Sudah bayar, tapi bingung biaya itu untuk apa.</li>
+      <li>Di lokasi tidak ada penjelasan biaya yang jelas.</li>
+    </ul>
   </div>
 
   <!-- INFO TARIF -->
-  <div style="background:#fffde7;border:2px solid #fbc02d;border-radius:8px;padding:12px;margin:12px 0">
-    <div style="font-weight:700;color:#f57f17;margin-bottom:8px">ℹ️ Info Sistem Tarif (dari aplikasi):</div>
+  <div style="background:#EFEBE9;border:2px solid #8D6E63;border-radius:8px;padding:12px;margin:12px 0">
+    <div style="font-weight:700;color:#5D4037;margin-bottom:8px">ℹ️ Info Sistem Tarif (dari aplikasi):</div>
     <ul style="margin:6px 0 0 20px;color:#424242;font-size:14px">
       <li>Biaya Unlock (Aktivasi): <strong>Rp5.000</strong></li>
       <li>Biaya Perjalanan: <strong>Rp2.000 per 10 menit</strong></li>
@@ -672,14 +732,14 @@ label:has(input[type="radio"]:checked) {
   </div>
 
   <!-- TUGAS ANALISIS -->
-  <div style="background:#e3f2fd;border-radius:10px;padding:14px;margin:16px 0">
-    <div style="font-weight:700;color:#1565c0;margin-bottom:10px">
+  <div style="background:#EFEBE9;border-radius:10px;padding:14px;margin:16px 0">
+    <div style="font-weight:700;color:#5D4037;margin-bottom:10px">
       🤔 Diskusikan dalam Kelompok:
     </div>
     <ol style="color:var(--muted);font-size:14px;line-height:1.7;margin:6px 0 0 20px">
-      <li><strong>Mengapa</strong> turis-turis ini bingung dan komplain?</li>
-      <li><strong>Informasi apa</strong> yang sebenarnya turis butuhkan tapi tidak tersedia?</li>
-      <li><strong>Apa yang perlu kalian ketahui/pelajari dulu</strong> sebelum bisa membantu menyelesaikan masalah ini?</li>
+      <li>Mengapa turis merasa biaya sewa membingungkan?</li>
+      <li>Informasi biaya apa yang belum mereka dapatkan?</li>
+      <li>Hal apa yang perlu dipelajari dulu agar bisa memberi solusi?</li>
     </ol>
   </div>
 
@@ -689,12 +749,12 @@ label:has(input[type="radio"]:checked) {
       💡 Analisis Awal Kelompok Kalian:
     </label>
     <textarea id="analisisAwalPermasalahan" 
-              placeholder="Tuliskan hasil diskusi kelompok kalian tentang 3 pertanyaan di atas...
+              placeholder="Tuliskan hasil diskusi kelompok kalian.
 
 Contoh:
-- Turis bingung karena tidak tahu total biaya yang harus dibayar
-- Mereka butuh informasi yang jelas tentang...
-- Kami perlu memahami dulu cara kerja sistem tarif ini sebelum bisa membuat solusi
+- Turis bingung karena biaya belum dijelaskan dengan sederhana.
+- Mereka butuh informasi total biaya sebelum menyewa.
+- Kami perlu memahami cara menghitung tarif agar bisa memberi solusi.
               " 
               style="width:100%;min-height:120px;padding:14px;border-radius:10px;border:2px solid rgba(0,0,0,0.1);background:#fff;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box">
     </textarea>
@@ -704,7 +764,7 @@ Contoh:
   </div>
 
   <p style="margin-top:16px;padding:12px;background:#fff9e6;border-radius:8px;color:var(--accent);font-weight:600;font-size:14px">
-    ⏭️ Setelah diskusi, kalian akan melakukan <strong>INVESTIGASI</strong> untuk memahami pola sistem tarif ini, lalu mencari cara terbaik untuk menjelaskannya kepada turis!
+    ⏭️ Setelah diskusi, kalian akan masuk tahap <strong>INVESTIGASI</strong> untuk mengumpulkan data biaya dari beberapa durasi.
   </p>
 
 </div>
@@ -770,13 +830,6 @@ Contoh:
             <div id="anggotaContainer">
               <div style="display:flex;gap:8px;margin-bottom:8px">
                 <input type="text" class="anggota-input" placeholder="Nama anggota 1" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
-                <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:180px">
-                  <option value="Ketua Kelompok">Ketua Kelompok</option>
-                  <option value="Wakil Ketua">Wakil Ketua</option>
-                  <option value="Sekretaris">Sekretaris</option>
-                  <option value="Anggota Aktif">Anggota Aktif</option>
-                  <option value="Anggota">Anggota</option>
-                </select>
                 <button class="btn ghost" onclick="removeAnggota(this)" style="min-width:40px">−</button>
               </div>
             </div>
@@ -817,93 +870,48 @@ Contoh:
             </div>
           </div>
           <div class="email-body">
-            <p>Halo anak-anak pintar!</p>
-            <p>Kota kita baru meluncurkan layanan sewa sepeda listrik bernama <strong>"Si Biru"</strong> di Alun-alun untuk memudahkan turis berkeliling. Namun, kami mengalami masalah serius!</p>
-            
-            <div class="komplain-box">
-              <strong style="color:#e65100">😕 Komplain dari Turis:</strong>
-              <ul style="margin:8px 0 0 20px">
-                <li>"Kenapa saya harus bayar Rp5.000 padahal sepeda belum saya pakai?"</li>
-                <li>"Berapa sih total biaya kalau saya sewa 1 jam?"</li>
-                <li>"Lebih murah mana: sewa 2x masing-masing 20 menit, atau 1x selama 40 menit?"</li>
-                <li>"Saya bingung! Tidak ada penjelasan yang jelas!"</li>
-              </ul>
-            </div>
-
-            <p>Kami ingin memasang <strong>papan informasi harga</strong> yang jelas di 5 titik rental. Tapi masalahnya:</p>
-            <ul style="margin:8px 0 0 20px">
-              <li>Titik A: Untuk turis yang suka melihat <strong>tabel/angka</strong></li>
-              <li>Titik B: Untuk turis yang suka melihat <strong>gambar/grafik</strong></li>
-              <li>Titik C: Untuk turis yang ingin <strong>menghitung sendiri</strong> (butuh rumus)</li>
-              <li>Titik D & E: Bentuk lain yang memudahkan pemahaman</li>
-            </ul>
+            <p><strong>Masalah:</strong> Turis bingung dengan biaya sewa sepeda listrik "Si Biru".</p>
+            <p><strong>Bantuan Kalian:</strong> Tolong bantu cek data biaya untuk beberapa durasi pemakaian.</p>
 
             <div class="tarif-info">
               <div style="font-weight:bold;color:#2e7d32;margin-bottom:10px;font-size:16px">🚴 Informasi Tarif Si Biru:</div>
               <div style="display:flex;gap:20px;flex-wrap:wrap">
                 <div style="flex:1;min-width:200px">
                   <div style="font-size:14px;color:#666">🔓 Biaya Unlock (Aktivasi):</div>
-                  <div style="font-size:24px;font-weight:bold;color:#2e7d32">Rp5.000</div>
+                  <div style="font-size:24px;font-weight:bold;color:#5D4037">Rp5.000</div>
                 </div>
                 <div style="flex:1;min-width:200px">
                   <div style="font-size:14px;color:#666">⏱️ Biaya Perjalanan:</div>
-                  <div style="font-size:24px;font-weight:bold;color:#1976d2">Rp2.000 / 10 menit</div>
+                  <div style="font-size:24px;font-weight:bold;color:#8D6E63">Rp2.000 / 10 menit</div>
                 </div>
               </div>
             </div>
 
-            <p style="margin-top:16px;font-weight:bold;color:#d32f2f">Bisakah kelompok kalian membantu kami mendesain papan informasi yang jelas dan mudah dipahami?</p>
-            <p style="margin:0;font-style:italic;color:#666">Terima kasih atas bantuan kalian! 🙏</p>
+            <p style="margin:0;font-style:italic;color:#666">Terima kasih! 📊</p>
           </div>
         </div>
 
         <!-- TAHAP 1: KNOW - NEED TO KNOW - LEARN -->
         <div class="fase-step">
           <h3>📋 Tahap 1: Apa yang Kita Ketahui & Butuhkan?</h3>
-          <p style="margin:8px 0;color:#666">Diskusikan dalam kelompok dan isi kolom-kolom di bawah:</p>
+          <p style="margin:8px 0;color:#666">Diskusikan dalam kelompok, lalu isi dua kolom berikut:</p>
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px">
             <!-- KNOW -->
             <div class="know-need-box">
               <h4>✅ KNOW - Apa yang sudah kita ketahui?</h4>
-              <textarea id="knowInput" placeholder="Tuliskan semua informasi yang SUDAH kamu ketahui dari email walikota...
-
-Contoh:
-- Ada biaya unlock Rp5.000
-- Ada biaya per 10 menit Rp2.000
-- Turis bingung dengan sistem harga
-- dll..." style="width:100%;min-height:150px;padding:12px;border-radius:8px;border:1.5px solid #9e9e9e;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+              <textarea id="knowInput" placeholder="Tuliskan informasi yang sudah diketahui..." style="width:100%;min-height:100px;padding:12px;border-radius:8px;border:1.5px solid #9e9e9e;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
             </div>
 
             <!-- NEED TO KNOW -->
             <div class="know-need-box">
               <h4>❓ NEED TO KNOW - Apa yang perlu kita cari tahu?</h4>
-              <textarea id="needInput" placeholder="Tuliskan pertanyaan atau informasi yang PERLU dicari tahu untuk menyelesaikan masalah...
-
-Contoh:
-- Berapa total biaya untuk berbagai durasi?
-- Apa pola kenaikan biayanya?
-- Bentuk penyajian apa yang paling jelas?
-- dll..." style="width:100%;min-height:150px;padding:12px;border-radius:8px;border:1.5px solid #9e9e9e;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
+              <textarea id="needInput" placeholder="Tuliskan yang perlu dicari tahu..." style="width:100%;min-height:100px;padding:12px;border-radius:8px;border:1.5px solid #9e9e9e;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
             </div>
           </div>
 
-          <!-- LEARN -->
-          <div class="know-need-box" style="margin-top:16px">
-            <h4>🔍 LEARN - Bagaimana cara kita mencari tahu?</h4>
-            <p style="margin:8px 0;color:#666;font-size:14px">Buat rencana investigasi kelompok kalian:</p>
-            <textarea id="learnInput" placeholder="Tuliskan strategi/langkah-langkah yang akan kalian lakukan...
-
-Contoh:
-1. Hitung biaya untuk beberapa durasi berbeda
-2. Buat tabel/catatan hasil perhitungan
-3. Cari pola dari data yang terkumpul
-4. Diskusikan bentuk penyajian yang paling cocok
-5. dll..." style="width:100%;min-height:120px;padding:12px;border-radius:8px;border:1.5px solid #9e9e9e;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
-          </div>
-
           <div style="text-align:center;margin-top:16px">
-            <button class="btn" id="simpanKNLBtn" style="background:#1976d2">Simpan & Lanjut ke Investigasi</button>
+            <button class="btn" id="simpanKNLBtn" style="background:#8D6E63">Simpan & Lanjut ke Investigasi</button>
           </div>
         </div>
 
@@ -914,14 +922,14 @@ Contoh:
           <div style="display:grid;grid-template-columns:300px 1fr;gap:20px">
             <!-- STICKY INFO -->
             <div class="sticky-info">
-              <div style="font-weight:bold;color:#2e7d32;margin-bottom:12px;font-size:16px">📌 Info Tarif</div>
+              <div style="font-weight:bold;color:#5D4037;margin-bottom:12px;font-size:16px">📌 Info Tarif</div>
               <div style="background:#fff;padding:10px;border-radius:8px;margin-bottom:8px">
                 <div style="font-size:13px;color:#666">Biaya Unlock:</div>
-                <div style="font-size:20px;font-weight:bold;color:#2e7d32">Rp5.000</div>
+                <div style="font-size:20px;font-weight:bold;color:#5D4037">Rp5.000</div>
               </div>
               <div style="background:#fff;padding:10px;border-radius:8px">
                 <div style="font-size:13px;color:#666">Biaya per 10 menit:</div>
-                <div style="font-size:20px;font-weight:bold;color:#1976d2">Rp2.000</div>
+                <div style="font-size:20px;font-weight:bold;color:#8D6E63">Rp2.000</div>
               </div>
               <div style="margin-top:12px;padding:10px;background:#fff9e6;border-radius:8px;font-size:12px;color:#666">
                 💡 <strong>Tips:</strong> Unlock adalah biaya awal yang selalu dibayar, lalu ditambah biaya perjalanan sesuai durasi.
@@ -942,26 +950,15 @@ Contoh:
                 </div>
 
                 <!-- MINI GRAPH REAL-TIME -->
-                <div style="background:#f5f5f5;padding:12px;border-radius:12px;border:2px dashed #2196f3;text-align:center">
-                  <div style="font-weight:bold;color:#1976d2;margin-bottom:8px;font-size:13px">📈 Grafik Real-Time</div>
+                <div style="background:#f5f5f5;padding:12px;border-radius:12px;border:2px dashed #8D6E63;text-align:center">
+                  <div style="font-weight:bold;color:#5D4037;margin-bottom:8px;font-size:13px">📈 Grafik Real-Time</div>
                   <canvas id="miniGrafikInvestigasi" width="280" height="220" style="border:1px solid #e0e0e0;border-radius:8px;max-width:100%;background:#fff"></canvas>
                   <div style="margin-top:8px;font-size:11px;color:#666">Auto-update saat Anda input data</div>
                 </div>
               </div>
 
-              <div style="margin-top:20px;padding:16px;background:#e8f5e9;border-radius:12px;border:2px dashed #4caf50">
-                <h4 style="margin-top:0;color:#2e7d32">🤔 Diskusi Kelompok:</h4>
-                <div style="color:#666;font-size:14px;margin-bottom:12px">
-                  <p><strong>1. Apa pola yang kalian temukan dari data di atas?</strong></p>
-                  <textarea id="polaDiskusi" placeholder="Tuliskan pola yang kalian perhatikan..." style="width:100%;min-height:80px;padding:10px;border-radius:8px;border:1.5px solid #4caf50;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
-                  
-                  <p style="margin-top:16px"><strong>2. Kelompok kalian akan pilih cara APA untuk menjelaskan ke turis? Mengapa?</strong></p>
-                  <textarea id="pilihanCaraDiskusi" placeholder="Contoh: Kami pilih grafik karena turis bisa langsung melihat pola kenaikan biaya secara visual..." style="width:100%;min-height:80px;padding:10px;border-radius:8px;border:1.5px solid #4caf50;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
-                </div>
-              </div>
-
               <div style="text-align:center;margin-top:16px">
-                <button class="btn" id="simpanInvestigasiBtn" style="background:#4caf50">Simpan Hasil Investigasi</button>
+                <button class="btn" id="simpanInvestigasiBtn" style="background:#8D6E63">Lanjut ke Verifikasi</button>
               </div>
             </div>
           </div>
@@ -972,12 +969,12 @@ Contoh:
           <h3>🔍 Tahap 3: Cek & Konfirmasi Temuan Kalian</h3>
           
           <!-- LAYER 1: AUTO-VALIDATION -->
-          <div style="background:#fff;padding:20px;border-radius:12px;border:2px solid #2196f3;margin-bottom:20px">
-            <h4 style="margin-top:0;color:#1976d2">✅ Cek Kebenaran Data Kalian</h4>
+          <div style="background:#fff;padding:20px;border-radius:12px;border:2px solid #8D6E63;margin-bottom:20px">
+            <h4 style="margin-top:0;color:#5D4037">✅ Cek Kebenaran Data Kalian</h4>
             <p style="color:#666;font-size:14px">Sistem akan mengecek apakah data yang kalian input sudah benar dan mengikuti pola yang seharusnya.</p>
             
             <div style="text-align:center;margin:16px 0">
-              <button class="btn" id="cekJawabanBtn" style="background:#2196f3;font-size:16px;padding:12px 30px">🔍 Cek Jawaban Saya</button>
+              <button class="btn" id="cekJawabanBtn" style="background:#8D6E63;font-size:16px;padding:12px 30px">🔍 Cek Jawaban Saya</button>
             </div>
 
             <div id="feedbackContainer" style="margin-top:16px">
@@ -986,8 +983,8 @@ Contoh:
           </div>
 
           <!-- LAYER 2: REAL-TIME GRAPH VISUALIZATION -->
-          <div id="visualizationLayer" style="display:none;background:#fff;padding:20px;border-radius:12px;border:2px solid #ff9800;margin-bottom:20px">
-            <h4 style="margin-top:0;color:#f57c00">📊 Visualisasi Data Kalian</h4>
+          <div id="visualizationLayer" style="display:none;background:#fff;padding:20px;border-radius:12px;border:2px solid #8D6E63;margin-bottom:20px">
+            <h4 style="margin-top:0;color:#5D4037">📊 Visualisasi Data Kalian</h4>
             <p style="color:#666;font-size:14px">Lihat bagaimana data yang kalian input membentuk pola grafik:</p>
             
             <div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">
@@ -995,8 +992,8 @@ Contoh:
                 <canvas id="grafikInvestigasi" width="400" height="300" style="border:1px solid #e0e0e0;border-radius:8px;max-width:100%"></canvas>
               </div>
               <div style="flex:1;min-width:250px">
-                <div style="background:#fff3e0;padding:16px;border-radius:10px;border:1.5px solid #ff9800">
-                  <h5 style="margin-top:0;color:#f57c00">💡 Perhatikan:</h5>
+                <div style="background:#EFEBE9;padding:16px;border-radius:10px;border:1.5px solid #8D6E63">
+                  <h5 style="margin-top:0;color:#5D4037">💡 Perhatikan:</h5>
                   <ul style="margin:0;padding-left:20px;color:#666;font-size:14px;line-height:1.8">
                     <li>Apakah titik-titik membentuk <strong>garis lurus</strong>?</li>
                     <li>Dimana garis memotong sumbu Y?</li>
@@ -1008,82 +1005,27 @@ Contoh:
           </div>
 
           <!-- LAYER 3: QUIZ CONFIRMATION -->
-          <div id="quizLayer" style="display:none;background:#fff;padding:20px;border-radius:12px;border:2px solid #4caf50;margin-bottom:20px">
-            <h4 style="margin-top:0;color:#2e7d32">🎯 Kuis Konfirmasi Pemahaman</h4>
-            <p style="color:#666;font-size:14px;margin-bottom:20px">Jawab pertanyaan berikut untuk memastikan kalian memahami pola yang ditemukan:</p>
+          <div id="quizLayer" style="display:none;background:#fff;padding:20px;border-radius:12px;border:2px solid #8D6E63;margin-bottom:20px">
+            <h4 style="margin-top:0;color:#5D4037">🎯 Cek Pemahaman Kalian</h4>
+            <p style="color:#666;font-size:14px;margin-bottom:16px">Jawab pertanyaan ini untuk memastikan kalian sudah memahami polanya:</p>
             
-            <!-- Quiz 1: Identify Components -->
-            <div style="background:#f1f8e9;padding:16px;border-radius:10px;margin-bottom:16px;border:1.5px solid #4caf50">
-              <p style="margin-top:0;font-weight:bold;color:#2e7d32">1. Berapa biaya TETAP yang harus dibayar di awal?</p>
-              <input type="number" id="quiz1Answer" placeholder="Masukkan angka..." style="width:200px;padding:10px;border-radius:6px;border:1.5px solid #4caf50;font-size:14px">
+            <!-- Quiz 1 Saja -->
+            <div style="background:#EFEBE9;padding:16px;border-radius:10px;margin-bottom:16px;border:1.5px solid #8D6E63">
+              <p style="margin-top:0;font-weight:bold;color:#5D4037">Jika seseorang naik sepeda selama <strong>50 menit</strong>, berapa total biaya yang harus dibayar? (Ingat: Rp5.000 unlock + Rp2.000 per 10 menit)</p>
+              <input type="number" id="quiz1Answer" placeholder="Masukkan angka..." style="width:200px;padding:10px;border-radius:6px;border:1.5px solid #8D6E63;font-size:14px">
               <span style="margin-left:10px;color:#666">Rupiah</span>
               <div id="quiz1Feedback" style="margin-top:8px"></div>
             </div>
 
-            <!-- Quiz 2: Identify Variable Component -->
-            <div style="background:#f1f8e9;padding:16px;border-radius:10px;margin-bottom:16px;border:1.5px solid #4caf50">
-              <p style="margin-top:0;font-weight:bold;color:#2e7d32">2. Setiap 10 menit, biaya bertambah berapa rupiah?</p>
-              <input type="number" id="quiz2Answer" placeholder="Masukkan angka..." style="width:200px;padding:10px;border-radius:6px;border:1.5px solid #4caf50;font-size:14px">
-              <span style="margin-left:10px;color:#666">Rupiah</span>
-              <div id="quiz2Feedback" style="margin-top:8px"></div>
-            </div>
-
-            <!-- Quiz 3: Predict -->
-            <div style="background:#f1f8e9;padding:16px;border-radius:10px;margin-bottom:16px;border:1.5px solid #4caf50">
-              <p style="margin-top:0;font-weight:bold;color:#2e7d32">3. Jika seseorang naik sepeda selama <strong>50 menit</strong>, berapa total biaya yang harus dibayar?</p>
-              <input type="number" id="quiz3Answer" placeholder="Masukkan angka..." style="width:200px;padding:10px;border-radius:6px;border:1.5px solid #4caf50;font-size:14px">
-              <span style="margin-left:10px;color:#666">Rupiah</span>
-              <div id="quiz3Feedback" style="margin-top:8px"></div>
-            </div>
-
-            <!-- Quiz 4: Abstract to Formula -->
-            <div style="background:#f1f8e9;padding:16px;border-radius:10px;margin-bottom:16px;border:1.5px solid #4caf50">
-              <p style="margin-top:0;font-weight:bold;color:#2e7d32">4. Jika kita sebut waktu dengan huruf <code>t</code> (dalam menit) dan biaya dengan <code>B</code>, rumus yang tepat adalah:</p>
-              <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
-                <label style="display:flex;align-items:center;padding:10px 16px;background:#fff;border:2px solid #e0e0e0;border-radius:8px;cursor:pointer;transition:all 0.3s">
-                  <input type="radio" name="quiz4" value="A" style="margin-right:8px">
-                  <span>B = 5000t + 2000</span>
-                </label>
-                <label style="display:flex;align-items:center;padding:10px 16px;background:#fff;border:2px solid #e0e0e0;border-radius:8px;cursor:pointer;transition:all 0.3s">
-                  <input type="radio" name="quiz4" value="B" style="margin-right:8px">
-                  <span>B = 2000 + 5000t</span>
-                </label>
-                <label style="display:flex;align-items:center;padding:10px 16px;background:#fff;border:2px solid #e0e0e0;border-radius:8px;cursor:pointer;transition:all 0.3s">
-                  <input type="radio" name="quiz4" value="C" style="margin-right:8px">
-                  <span>B = 200t + 5000</span>
-                </label>
-                <label style="display:flex;align-items:center;padding:10px 16px;background:#fff;border:2px solid #e0e0e0;border-radius:8px;cursor:pointer;transition:all 0.3s">
-                  <input type="radio" name="quiz4" value="D" style="margin-right:8px">
-                  <span>B = 5000 + 7000t</span>
-                </label>
-              </div>
-              <div id="quiz4Feedback" style="margin-top:12px"></div>
-            </div>
-
             <div style="text-align:center;margin-top:20px">
-              <button class="btn" id="submitQuizBtn" style="background:#4caf50;font-size:16px;padding:12px 30px">Cek Semua Jawaban Kuis</button>
+              <button class="btn" id="submitQuizBtn" style="background:#8D6E63;font-size:16px;padding:12px 30px">Cek Jawaban</button>
             </div>
-          </div>
-
-          <!-- BONUS CHALLENGE (untuk diferensiasi siswa cepat) -->
-          <div id="bonusChallenge" style="display:none;background:linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);padding:20px;border-radius:12px;color:#fff;margin-bottom:20px;box-shadow:0 6px 16px rgba(156,39,176,0.3)">
-            <h4 style="margin-top:0;color:#fff">🏆 Tantangan Bonus (Opsional)</h4>
-            <p style="font-size:14px;margin-bottom:16px">Untuk kelompok yang sudah selesai lebih cepat:</p>
-            
-            <div style="background:rgba(255,255,255,0.15);padding:16px;border-radius:10px;margin-bottom:12px">
-              <p style="margin-top:0;font-weight:bold">💎 Misalkan ada promo: "Setiap rental di atas 1 jam, gratis 10 menit pertama!"</p>
-              <p style="margin-bottom:0;font-size:14px">Bagaimana rumus biaya akan berubah? Diskusikan dan tuliskan ide kelompok kalian!</p>
-            </div>
-            
-            <textarea id="bonusAnswer" placeholder="Tuliskan ide kelompok kalian di sini..." style="width:100%;min-height:100px;padding:12px;border-radius:8px;border:none;font-family:Arial,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box"></textarea>
-            
-            <button class="btn ghost" id="submitBonusBtn" style="margin-top:12px;border-color:#fff;color:#fff;background:rgba(255,255,255,0.1)">Kirim Jawaban Bonus</button>
           </div>
 
         </div>
 
         <!-- KONFIRMASI KONSEP -->
-        <div id="konfirmasiKonsep" style="display:none;margin-top:30px;padding:24px;background:linear-gradient(135deg, #4caf50 0%, #2e7d32 100%);border-radius:16px;color:#fff;box-shadow:0 8px 20px rgba(76,175,80,0.4)">
+        <div id="konfirmasiKonsep" style="display:none;margin-top:30px;padding:24px;background:linear-gradient(135deg, #8D6E63 0%, #5D4037 100%);border-radius:16px;color:#fff;box-shadow:0 8px 20px rgba(141,110,99,0.4)">
           <h3 style="margin-top:0;color:#fff">✅ KONSEP YANG KALIAN TEMUKAN</h3>
           <p style="font-size:16px;line-height:1.7">
             Selamat! Kalian telah menemukan konsep <strong>FUNGSI LINEAR</strong>!
@@ -1105,7 +1047,7 @@ Contoh:
         <!-- NAVIGASI -->
         <div style="display:flex;gap:12px;justify-content:center;margin-top:30px">
           <button class="btn ghost" data-go="identitas-kelompok">⟵ Kembali</button>
-          <button class="btn" id="lanjutFase4Btn" data-go="fase4-pilih" style="display:none;background:#2e7d32">Lanjut ke Fase 4: Penyajian Fungsi ⟶</button>
+          <button class="btn" id="lanjutFase4Btn" data-go="fase4-pilih" style="display:none;background:#5D4037">Lanjut ke Fase 4: Pilih Bentuk Penyajian ⟶</button>
         </div>
 
       </div>
@@ -1117,7 +1059,7 @@ Contoh:
       <div style="max-width:1000px;margin:0 auto">
         <div class="header">
           <h1>Fase 4: Menyajikan Fungsi</h1>
-          <div class="lead">Pilih 1 bentuk penyajian dan buat hasil untuk membantu Walikota!</div>
+          <div class="lead">Pilih salah satu bentuk penyajian dan buat hasil untuk membantu Walikota!</div>
         </div>
 
         <div style="padding:20px">
@@ -1125,81 +1067,53 @@ Contoh:
             <h3 style="margin-top:0;color:#2e7d32"> Tugas Kelompok Kalian</h3>
             <p style="margin:0;color:#333;font-size:15px">
               Sekarang kalian sudah menemukan rumus: <strong>B = 200t + 5000</strong><br>
-              Pilih <strong>1 bentuk penyajian</strong> yang paling efektif untuk menjelaskan rumus ini kepada turis yang bingung!
+              Pilih <strong>1 dari 5 bentuk penyajian</strong> yang paling efektif untuk menjelaskan rumus ini kepada turis yang bingung!
             </p>
           </div>
 
-          <h3 style="text-align:center;color:#1976d2;margin-bottom:20px">Pilih Bentuk Penyajian Kalian</h3>
+          <h3 style="text-align:center;color:#1976d2;margin-bottom:20px">Pilih Bentuk Penyajian</h3>
 
-          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:16px;margin-bottom:30px">
-            
-            <!-- KARTU 1: DIAGRAM PANAH -->
-            <div class="bentuk-card" data-bentuk="panah" style="cursor:pointer;background:#fff;border:2px solid #e0e0e0;border-radius:12px;padding:16px;transition:all 0.3s;text-align:center;user-select:none">
-              <div style="font-size:40px;margin-bottom:8px">➜</div>
-              <h4 style="margin:8px 0;color:#333">Diagram Panah</h4>
-              <p style="margin:8px 0;font-size:13px;color:#666">Tampilkan relasi input → output dengan panah</p>
-              <div style="margin-top:12px;padding:12px;background:#f5f5f5;border-radius:8px;text-align:left;font-size:12px;color:#666">
-                <strong>Cocok untuk:</strong> Menunjukkan pasangan nilai secara visual
-              </div>
-              <button class="btn bentuk-btn" data-go="fase4-panah" style="margin-top:12px;width:100%;background:#1976d2">Pilih Bentuk Ini</button>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:30px">
+            <div class="bentuk-card" data-bentuk="panah" style="cursor:pointer;background:#fff;border:2px solid #1976d2;border-radius:12px;padding:18px;transition:all 0.3s;text-align:center;user-select:none;box-shadow:0 8px 18px rgba(25,118,210,0.12)">
+              <div style="font-size:42px;margin-bottom:8px">➡️</div>
+              <h4 style="margin:8px 0;color:#333;font-size:18px">Diagram Panah</h4>
+              <p style="margin:8px 0;font-size:14px;color:#666;line-height:1.5">Tunjukkan hubungan input dan output dengan panah</p>
+              <button class="btn bentuk-btn" data-go="fase4-panah" style="margin-top:14px;width:100%;background:#1976d2;font-weight:bold">Pilih Diagram Panah</button>
             </div>
 
-            <!-- KARTU 2: HIMPUNAN PASANGAN BERURUTAN -->
-            <div class="bentuk-card" data-bentuk="pasangan" style="cursor:pointer;background:#fff;border:2px solid #e0e0e0;border-radius:12px;padding:16px;transition:all 0.3s;text-align:center;user-select:none">
-              <div style="font-size:40px;margin-bottom:8px">{(x,y)}</div>
-              <h4 style="margin:8px 0;color:#333">Himpunan Pasangan Berurutan</h4>
-              <p style="margin:8px 0;font-size:13px;color:#666">Tuliskan pasangan (durasi, biaya)</p>
-              <div style="margin-top:12px;padding:12px;background:#f5f5f5;border-radius:8px;text-align:left;font-size:12px;color:#666">
-                <strong>Cocok untuk:</strong> Bentuk formal & ringkas
-              </div>
-              <button class="btn bentuk-btn" data-go="fase4-pasangan" style="margin-top:12px;width:100%;background:#f57c00">Pilih Bentuk Ini</button>
+            <div class="bentuk-card" data-bentuk="pasangan" style="cursor:pointer;background:#fff;border:2px solid #f57c00;border-radius:12px;padding:18px;transition:all 0.3s;text-align:center;user-select:none;box-shadow:0 8px 18px rgba(245,124,0,0.12)">
+              <div style="font-size:42px;margin-bottom:8px">{ }</div>
+              <h4 style="margin:8px 0;color:#333;font-size:18px">Pasangan Berurutan</h4>
+              <p style="margin:8px 0;font-size:14px;color:#666;line-height:1.5">Tuliskan data dalam bentuk pasangan (x, y)</p>
+              <button class="btn bentuk-btn" data-go="fase4-pasangan" style="margin-top:14px;width:100%;background:#f57c00;font-weight:bold">Pilih Pasangan Berurutan</button>
             </div>
 
-            <!-- KARTU 3: PERSAMAAN FUNGSI -->
-            <div class="bentuk-card" data-bentuk="persamaan" style="cursor:pointer;background:#fff;border:2px solid #e0e0e0;border-radius:12px;padding:16px;transition:all 0.3s;text-align:center;user-select:none">
-              <div style="font-size:40px;margin-bottom:8px">f(x)=</div>
-              <h4 style="margin:8px 0;color:#333">Persamaan Fungsi</h4>
-              <p style="margin:8px 0;font-size:13px;color:#666">Tuliskan rumus fungsi secara matematis</p>
-              <div style="margin-top:12px;padding:12px;background:#f5f5f5;border-radius:8px;text-align:left;font-size:12px;color:#666">
-                <strong>Cocok untuk:</strong> Menunjukkan hubungan secara aljabar
-              </div>
-              <button class="btn bentuk-btn" data-go="fase4-persamaan" style="margin-top:12px;width:100%;background:#9c27b0">Pilih Bentuk Ini</button>
+            <div class="bentuk-card" data-bentuk="persamaan" style="cursor:pointer;background:#fff;border:2px solid #9c27b0;border-radius:12px;padding:18px;transition:all 0.3s;text-align:center;user-select:none;box-shadow:0 8px 18px rgba(156,39,176,0.12)">
+              <div style="font-size:42px;margin-bottom:8px">f(x)</div>
+              <h4 style="margin:8px 0;color:#333;font-size:18px">Persamaan Fungsi</h4>
+              <p style="margin:8px 0;font-size:14px;color:#666;line-height:1.5">Tulis rumus fungsi yang mewakili biaya</p>
+              <button class="btn bentuk-btn" data-go="fase4-persamaan" style="margin-top:14px;width:100%;background:#9c27b0;font-weight:bold">Pilih Persamaan Fungsi</button>
             </div>
 
-            <!-- KARTU 4: TABEL -->
-            <div class="bentuk-card" data-bentuk="tabel" style="cursor:pointer;background:#fff;border:2px solid #e0e0e0;border-radius:12px;padding:16px;transition:all 0.3s;text-align:center;user-select:none">
-              <div style="font-size:40px;margin-bottom:8px">📋</div>
-              <h4 style="margin:8px 0;color:#333">Tabel</h4>
-              <p style="margin:8px 0;font-size:13px;color:#666">Susun data durasi dan biaya dalam tabel</p>
-              <div style="margin-top:12px;padding:12px;background:#f5f5f5;border-radius:8px;text-align:left;font-size:12px;color:#666">
-                <strong>Cocok untuk:</strong> Melihat pola dari data numerik
-              </div>
-              <button class="btn bentuk-btn" data-go="fase4-tabel" style="margin-top:12px;width:100%;background:#e91e63">Pilih Bentuk Ini</button>
+            <div class="bentuk-card" data-bentuk="tabel" style="cursor:pointer;background:#fff;border:2px solid #e91e63;border-radius:12px;padding:18px;transition:all 0.3s;text-align:center;user-select:none;box-shadow:0 8px 18px rgba(233,30,99,0.12)">
+              <div style="font-size:42px;margin-bottom:8px">📋</div>
+              <h4 style="margin:8px 0;color:#333;font-size:18px">Tabel</h4>
+              <p style="margin:8px 0;font-size:14px;color:#666;line-height:1.5">Susun data durasi dan biaya secara teratur</p>
+              <button class="btn bentuk-btn" data-go="fase4-tabel" style="margin-top:14px;width:100%;background:#e91e63;font-weight:bold">Pilih Tabel</button>
             </div>
 
-            <!-- KARTU 5: GRAFIK -->
-            <div class="bentuk-card" data-bentuk="grafik" style="cursor:pointer;background:#fff;border:2px solid #e0e0e0;border-radius:12px;padding:16px;transition:all 0.3s;text-align:center;user-select:none">
-              <div style="font-size:40px;margin-bottom:8px">📈</div>
-              <h4 style="margin:8px 0;color:#333">Grafik</h4>
-              <p style="margin:8px 0;font-size:13px;color:#666">Gambar titik-titik dan garis di bidang koordinat</p>
-              <div style="margin-top:12px;padding:12px;background:#f5f5f5;border-radius:8px;text-align:left;font-size:12px;color:#666">
-                <strong>Cocok untuk:</strong> Menunjukkan pola secara visual
-              </div>
-              <button class="btn bentuk-btn" data-go="fase4-grafik" style="margin-top:12px;width:100%;background:#00bcd4">Pilih Bentuk Ini</button>
+            <div class="bentuk-card" data-bentuk="grafik" style="cursor:pointer;background:#fff;border:2px solid #00bcd4;border-radius:12px;padding:18px;transition:all 0.3s;text-align:center;user-select:none;box-shadow:0 8px 18px rgba(0,188,212,0.12)">
+              <div style="font-size:42px;margin-bottom:8px">📈</div>
+              <h4 style="margin:8px 0;color:#333;font-size:18px">Diagram Kartesius</h4>
+              <p style="margin:8px 0;font-size:14px;color:#666;line-height:1.5">Gambar titik-titik dan garis fungsi pada bidang koordinat</p>
+              <button class="btn bentuk-btn" data-go="fase4-grafik" style="margin-top:14px;width:100%;background:#00bcd4;font-weight:bold">Pilih Diagram Kartesius</button>
             </div>
 
           </div>
 
-          <!-- TIPS -->
-          <div style="background:#fff3e0;padding:16px;border-radius:12px;border:2px dashed #ff9800;margin-bottom:20px">
-            <h4 style="margin-top:0;color:#f57c00"> Tips Memilih:</h4>
-            <ul style="margin:8px 0;color:#666;font-size:14px;line-height:1.8">
-              <li><strong>Diagram panah:</strong> Jika ingin menonjolkan pasangan input-output</li>
-              <li><strong>Himpunan pasangan berurutan:</strong> Jika ingin bentuk formal & ringkas</li>
-              <li><strong>Persamaan fungsi:</strong> Jika ingin menuliskan rumus matematis</li>
-              <li><strong>Tabel:</strong> Jika ingin melihat pola dari data numerik</li>
-              <li><strong>Grafik:</strong> Jika ingin melihat pola secara visual</li>
-            </ul>
+          <!-- INFO SINGKAT -->
+          <div style="background:#e8f5e9;padding:16px;border-radius:12px;border-left:4px solid #4caf50;margin-bottom:20px">
+            <p style="margin:0;color:#2e7d32;font-size:14px">💡 Pilih salah satu bentuk penyajian yang menurut kelompok paling mudah dipahami turis.</p>
           </div>
 
           <!-- NAVIGASI -->
@@ -1641,108 +1555,27 @@ Contoh:
           <div class="lead">Evaluasi diri dan refleksi mendalam tentang pembelajaran hari ini</div>
         </div>
 
-        <div style="padding:20px;background:#fff;border-radius:12px;border:2px solid #7b1fa2">
+        <div style="padding:20px;background:#fff;border-radius:12px;border:2px solid #8D6E63">
           
           <!-- Info box -->
-          <div style="padding:12px;background:#f3e5f5;border-left:4px solid #7b1fa2;border-radius:8px;margin-bottom:20px">
-            <div style="font-size:13px;color:#4a148c;line-height:1.5">
+          <div style="padding:12px;background:#EFEBE9;border-left:4px solid #8D6E63;border-radius:8px;margin-bottom:20px">
+            <div style="font-size:13px;color:#5D4037;line-height:1.5">
               💭 Luangkan waktu untuk merefleksikan apa yang sudah kamu pelajari. Ini adalah bagian penting dari proses pembelajaran!
             </div>
           </div>
 
-          <!-- PART A: SELF-ASSESSMENT -->
+          <!-- REFLEKSI SINGKAT -->
           <div style="margin-bottom:24px">
-            <h3 style="color:#7b1fa2;margin-top:0;border-bottom:2px solid #e1bee7;padding-bottom:8px">Part A: Penilaian Diri</h3>
-            <p style="font-size:13px;color:#666;margin:12px 0">Berikan penilaian Anda terhadap pernyataan berikut (1 = Sangat Tidak Setuju, 5 = Sangat Setuju):</p>
+            <h3 style="color:#5D4037;margin-top:0;border-bottom:2px solid #D7CCC8;padding-bottom:8px">Refleksi Pembelajaran</h3>
             
-            <!-- Statement 1 -->
-            <div style="margin-bottom:16px;padding:12px;background:#fafafa;border-radius:8px">
-              <div style="font-size:14px;margin-bottom:8px;color:#333">
-                1. Saya memahami konsep relasi dan fungsi dengan baik
-              </div>
-              <div id="rating1" class="rating-group" style="display:flex;gap:6px;cursor:pointer">
-                <span class="rating-star" data-rating="1" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="2" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="3" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="4" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="5" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-              </div>
-            </div>
-
-            <!-- Statement 2 -->
-            <div style="margin-bottom:16px;padding:12px;background:#fafafa;border-radius:8px">
-              <div style="font-size:14px;margin-bottom:8px;color:#333">
-                2. Saya bisa membuat 5 bentuk penyajian relasi/fungsi dengan baik
-              </div>
-              <div id="rating2" class="rating-group" style="display:flex;gap:6px;cursor:pointer">
-                <span class="rating-star" data-rating="1" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="2" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="3" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="4" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="5" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-              </div>
-            </div>
-
-            <!-- Statement 3 -->
-            <div style="margin-bottom:16px;padding:12px;background:#fafafa;border-radius:8px">
-              <div style="font-size:14px;margin-bottom:8px;color:#333">
-                3. Saya bisa memberikan feedback konstruktif pada karya teman
-              </div>
-              <div id="rating3" class="rating-group" style="display:flex;gap:6px;cursor:pointer">
-                <span class="rating-star" data-rating="1" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="2" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="3" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="4" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="5" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-              </div>
-            </div>
-
-            <!-- Statement 4 -->
-            <div style="margin-bottom:16px;padding:12px;background:#fafafa;border-radius:8px">
-              <div style="font-size:14px;margin-bottom:8px;color:#333">
-                4. Saya percaya diri menghadapi soal tentang relasi dan fungsi
-              </div>
-              <div id="rating4" class="rating-group" style="display:flex;gap:6px;cursor:pointer">
-                <span class="rating-star" data-rating="1" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="2" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="3" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="4" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-                <span class="rating-star" data-rating="5" style="font-size:28px;color:#ddd;transition:color 0.2s">★</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- PART B: REFLECTION QUESTIONS -->
-          <div style="margin-bottom:24px">
-            <h3 style="color:#7b1fa2;margin-top:0;border-bottom:2px solid #e1bee7;padding-bottom:8px">Part B: Pertanyaan Refleksi</h3>
-            
-            <!-- Q1 -->
+            <!-- Q1: Pemahaman -->
             <div style="margin-bottom:16px">
-              <label style="display:block;margin-bottom:6px;font-size:14px;color:#333;font-weight:bold">1. Bentuk penyajian mana yang paling mudah kamu gunakan? Mengapa?</label>
-              <textarea id="reflectionQ1" placeholder="Tuliskan jawaban Anda..." style="width:100%;padding:10px;border-radius:8px;border:2px solid #e1bee7;font-size:14px;min-height:80px;resize:vertical;font-family:Arial,sans-serif;box-sizing:border-box;font-family:Arial,sans-serif"></textarea>
-              <div style="text-align:right;font-size:12px;color:#999;margin-top:4px"><span id="q1Count">0</span>/150 karakter</div>
+              <label style="display:block;margin-bottom:6px;font-size:14px;color:#333;font-weight:bold">1. Apa yang sudah kamu pahami tentang fungsi linear?</label>
+              <textarea id="reflectionQ1" placeholder="Tuliskan pemahaman Anda..." style="width:100%;padding:10px;border-radius:8px;border:2px solid #D7CCC8;font-size:14px;min-height:70px;resize:vertical;font-family:Arial,sans-serif;box-sizing:border-box"></textarea>
+              <div style="text-align:right;font-size:12px;color:#999;margin-top:4px"><span id="q1Count">0</span>/100 karakter</div>
             </div>
 
-            <!-- Q2 -->
-            <div style="margin-bottom:16px">
-              <label style="display:block;margin-bottom:6px;font-size:14px;color:#333;font-weight:bold">2. Apa tantangan terbesar yang kamu hadapi? Bagaimana kamu mengatasinya?</label>
-              <textarea id="reflectionQ2" placeholder="Tuliskan jawaban Anda..." style="width:100%;padding:10px;border-radius:8px;border:2px solid #e1bee7;font-size:14px;min-height:80px;resize:vertical;font-family:Arial,sans-serif;box-sizing:border-box;font-family:Arial,sans-serif"></textarea>
-              <div style="text-align:right;font-size:12px;color:#999;margin-top:4px"><span id="q2Count">0</span>/150 karakter</div>
-            </div>
-
-            <!-- Q3 -->
-            <div style="margin-bottom:16px">
-              <label style="display:block;margin-bottom:6px;font-size:14px;color:#333;font-weight:bold">3. Bagaimana konsep relasi & fungsi bisa kamu gunakan dalam kehidupan sehari-hari?</label>
-              <textarea id="reflectionQ3" placeholder="Tuliskan jawaban Anda..." style="width:100%;padding:10px;border-radius:8px;border:2px solid #e1bee7;font-size:14px;min-height:80px;resize:vertical;font-family:Arial,sans-serif;box-sizing:border-box;font-family:Arial,sans-serif"></textarea>
-              <div style="text-align:right;font-size:12px;color:#999;margin-top:4px"><span id="q3Count">0</span>/150 karakter</div>
-            </div>
-          </div>
-
-          <!-- PART C: EMOTIONAL CLOSURE -->
-          <div style="margin-bottom:24px">
-            <h3 style="color:#7b1fa2;margin-top:0;border-bottom:2px solid #e1bee7;padding-bottom:8px">Part C: Penutup</h3>
-            
-            <!-- Enjoyment rating -->
+            <!-- Enjoyment Emoji -->
             <div style="margin-bottom:16px;padding:12px;background:#fafafa;border-radius:8px">
               <div style="font-size:14px;margin-bottom:12px;color:#333;font-weight:bold">
                 Seberapa menyenangkan pembelajaran hari ini?
@@ -1755,13 +1588,6 @@ Contoh:
                 <span class="emoji-rating" data-emoji="😄" data-rating="5" style="font-size:40px;transition:transform 0.2s">😄</span>
               </div>
               <div style="text-align:center;margin-top:8px;font-size:12px;color:#999" id="selectedEmojiText"></div>
-            </div>
-
-            <!-- Optional message -->
-            <div style="margin-bottom:16px">
-              <label style="display:block;margin-bottom:6px;font-size:14px;color:#333;font-weight:bold">Pesan untuk guru (opsional):</label>
-              <textarea id="reflectionMessage" placeholder="Tuliskan pesan Anda (jika ada)..." style="width:100%;padding:10px;border-radius:8px;border:2px solid #e1bee7;font-size:14px;min-height:60px;resize:vertical;font-family:Arial,sans-serif;box-sizing:border-box;font-family:Arial,sans-serif"></textarea>
-              <div style="text-align:right;font-size:12px;color:#999;margin-top:4px"><span id="msgCount">0</span>/100 karakter</div>
             </div>
           </div>
 
@@ -1789,22 +1615,244 @@ Contoh:
             <button class="btn" data-go="menu" style="background:#4caf50;margin-top:12px">🏠 Kembali ke Menu Utama</button>
           </div>
         </div>
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(0,0,0,0.1)">
+          <p style="font-size:12px;color:#666;margin-bottom:8px">🧪 Download:</p>
+          <button class="btn" id="testDownloadBtn" style="background:#f34b212a;font-size:14px">📥 Download Hasil PDF</button>
+        </div>
+      </div>
       </div>
     </section>
 
 </main>
 </div></div>
 
+<button id="tutorLauncher" class="tutor-launcher" type="button">Aktifkan Tutor</button>
+<aside id="tutorPanel" class="tutor-panel" aria-live="polite">
+  <div class="tutor-head">
+    <div class="tutor-avatar" aria-hidden="true">👩‍🏫</div>
+    <div>
+      <div class="tutor-title">Tutor Virtual</div>
+      <div id="tutorProgress" class="tutor-progress">Langkah 1</div>
+    </div>
+  </div>
+  <div id="tutorBubble" class="tutor-bubble">Halo, saya akan membimbing kamu langkah demi langkah.</div>
+  <div id="tutorStatus" class="tutor-status">Klik Aktifkan Tutor untuk mulai panduan.</div>
+  <div class="tutor-actions">
+    <button id="tutorPrev" class="btn ghost" type="button">Sebelumnya</button>
+    <button id="tutorNext" class="btn" type="button">Berikutnya</button>
+    <button id="tutorRepeat" class="btn ghost" type="button">Ulangi</button>
+    <button id="tutorVoice" class="btn ghost" type="button">Suara: Off</button>
+    <button id="tutorStop" class="btn ghost" type="button">Tutup</button>
+  </div>
+</aside>
+
 <script>
 // Navigasi antar slide
+function navigateToSlide(targetId, options){
+  if(!targetId) return;
+  const opts = options || {};
+  document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
+  const targetSlide = document.getElementById(targetId);
+  if(targetSlide){
+    targetSlide.classList.add('active');
+    if(opts.scrollTop){
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    if(typeof updateTutorForSlide === 'function'){
+      updateTutorForSlide(targetId);
+    }
+  }
+}
+window.navigateToSlide = navigateToSlide;
+
 document.querySelectorAll('[data-go]').forEach(btn => {
   btn.addEventListener('click', function() {
     const targetId = this.getAttribute('data-go');
-    document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
-    const targetSlide = document.getElementById(targetId);
-    if(targetSlide) targetSlide.classList.add('active');
+    navigateToSlide(targetId, { scrollTop: true });
   });
 });
+
+// Tutor virtual ala pertemuan 1
+var tutorState = {
+  active: false,
+  stepIndex: 0,
+  highlightedEl: null,
+  voiceOn: false,
+  voices: []
+};
+
+var tutorSteps = [
+  { slide: 'start', target: 'button[data-go="menu"]', text: 'Tekan Mulai untuk masuk ke menu utama.', status: 'Langkah awal pembelajaran.' },
+  { slide: 'menu', target: '.menu-card[data-go="permasalahan-foto"]', text: 'Pilih kartu Permasalahan agar alur belajar dimulai dari konteks masalah.', status: 'Masuk ke orientasi masalah.' },
+  { slide: 'permasalahan-foto', target: '#analisisAwalPermasalahan', text: 'Baca kasus, lalu tulis analisis awal kelompok pada kotak jawaban.', status: 'Isi ide awal sebelum lanjut.' },
+  { slide: 'identitas-kelompok', target: '#namaKelompok', text: 'Isi nama kelompok dan data anggota, lalu lanjutkan ke fase investigasi.', status: 'Pastikan data kelompok sudah benar.' },
+  { slide: 'fase3-pbl', target: '#simpanInvestigasiBtn', text: 'Isi data investigasi biaya, simpan, lalu lakukan verifikasi jawaban.', status: 'Kerjakan tahap investigasi sampai tombol lanjut aktif.' },
+  { slide: 'fase4-grafik', target: '#saveCartesianBtn', text: 'Susun diagram kartesius dan simpan gambar hasil kerja kelompok.', status: 'Simpan bukti visual sebelum ke galeri.' },
+  { slide: 'fase4-galeri', target: '#commentText', text: 'Berikan komentar konstruktif pada hasil kelompok lain di Gallery Walk.', status: 'Komentar harus jelas dan membangun.' },
+  { slide: 'fase5-refleksi', target: '#submitReflectionBtn', text: 'Isi refleksi pembelajaran lalu tekan Selesaikan Pembelajaran.', status: 'Tahap akhir sebelum unduh hasil.' }
+];
+
+function getActiveSlideId(){
+  var active = document.querySelector('.slide.active');
+  return active ? active.id : 'start';
+}
+
+function clearTutorHighlight(){
+  if(tutorState.highlightedEl){
+    tutorState.highlightedEl.classList.remove('tutor-target-highlight');
+    tutorState.highlightedEl = null;
+  }
+}
+
+function stopTutorSpeech(){
+  if(window.speechSynthesis){
+    window.speechSynthesis.cancel();
+  }
+}
+
+function pickTutorVoice(voices){
+  if(!voices || voices.length === 0) return null;
+  for(var i = 0; i < voices.length; i++){
+    var text = String((voices[i].lang || '') + ' ' + (voices[i].name || '')).toLowerCase();
+    if(text.indexOf('id') >= 0 || text.indexOf('indonesia') >= 0){
+      return voices[i];
+    }
+  }
+  return voices[0];
+}
+
+function speakTutor(text){
+  if(!tutorState.voiceOn || !window.speechSynthesis || !text) return;
+  stopTutorSpeech();
+  var utter = new SpeechSynthesisUtterance(text);
+  var voice = pickTutorVoice(tutorState.voices);
+  if(voice) utter.voice = voice;
+  utter.lang = voice && voice.lang ? voice.lang : 'id-ID';
+  utter.rate = 1;
+  utter.pitch = 1;
+  window.speechSynthesis.speak(utter);
+}
+
+function findTutorStepBySlide(slideId){
+  for(var i = 0; i < tutorSteps.length; i++){
+    if(tutorSteps[i].slide === slideId) return i;
+  }
+  return -1;
+}
+
+function renderTutorStep(){
+  var panel = document.getElementById('tutorPanel');
+  if(!panel || !panel.classList.contains('show')){
+    clearTutorHighlight();
+    return;
+  }
+
+  var bubble = document.getElementById('tutorBubble');
+  var progress = document.getElementById('tutorProgress');
+  var status = document.getElementById('tutorStatus');
+  if(!bubble || !progress || !status || tutorSteps.length === 0) return;
+
+  var step = tutorSteps[tutorState.stepIndex] || tutorSteps[0];
+  progress.textContent = 'Langkah ' + (tutorState.stepIndex + 1) + ' dari ' + tutorSteps.length;
+  bubble.textContent = step.text;
+  status.textContent = step.status || '';
+
+  clearTutorHighlight();
+  if(step.target){
+    var target = document.querySelector(step.target);
+    if(target){
+      target.classList.add('tutor-target-highlight');
+      tutorState.highlightedEl = target;
+    }
+  }
+
+  speakTutor(step.text + ' ' + (step.status || ''));
+}
+
+function updateTutorForSlide(slideId){
+  if(!tutorState.active) return;
+  var idx = findTutorStepBySlide(slideId);
+  if(idx >= 0){
+    tutorState.stepIndex = idx;
+  }
+  renderTutorStep();
+}
+
+function initTutorVirtual(){
+  var launcher = document.getElementById('tutorLauncher');
+  var panel = document.getElementById('tutorPanel');
+  var btnPrev = document.getElementById('tutorPrev');
+  var btnNext = document.getElementById('tutorNext');
+  var btnRepeat = document.getElementById('tutorRepeat');
+  var btnVoice = document.getElementById('tutorVoice');
+  var btnStop = document.getElementById('tutorStop');
+  if(!launcher || !panel || !btnPrev || !btnNext || !btnRepeat || !btnVoice || !btnStop) return;
+
+  if(window.speechSynthesis){
+    tutorState.voices = window.speechSynthesis.getVoices() || [];
+    window.speechSynthesis.onvoiceschanged = function(){
+      tutorState.voices = window.speechSynthesis.getVoices() || [];
+    };
+  }
+
+  launcher.addEventListener('click', function(){
+    tutorState.active = !tutorState.active;
+    if(tutorState.active){
+      panel.classList.add('show');
+      launcher.textContent = 'Tutor Aktif';
+      var idx = findTutorStepBySlide(getActiveSlideId());
+      tutorState.stepIndex = idx >= 0 ? idx : 0;
+      renderTutorStep();
+    } else {
+      panel.classList.remove('show');
+      launcher.textContent = 'Aktifkan Tutor';
+      clearTutorHighlight();
+      stopTutorSpeech();
+    }
+  });
+
+  btnPrev.addEventListener('click', function(){
+    if(!tutorState.active) return;
+    tutorState.stepIndex = (tutorState.stepIndex - 1 + tutorSteps.length) % tutorSteps.length;
+    var step = tutorSteps[tutorState.stepIndex];
+    if(step && step.slide) navigateToSlide(step.slide, { scrollTop: true });
+    renderTutorStep();
+  });
+
+  btnNext.addEventListener('click', function(){
+    if(!tutorState.active) return;
+    tutorState.stepIndex = (tutorState.stepIndex + 1) % tutorSteps.length;
+    var step = tutorSteps[tutorState.stepIndex];
+    if(step && step.slide) navigateToSlide(step.slide, { scrollTop: true });
+    renderTutorStep();
+  });
+
+  btnRepeat.addEventListener('click', function(){
+    if(!tutorState.active) return;
+    renderTutorStep();
+  });
+
+  btnVoice.addEventListener('click', function(){
+    tutorState.voiceOn = !tutorState.voiceOn;
+    btnVoice.textContent = tutorState.voiceOn ? 'Suara: On' : 'Suara: Off';
+    if(!tutorState.voiceOn){
+      stopTutorSpeech();
+    } else {
+      var step = tutorSteps[tutorState.stepIndex] || tutorSteps[0];
+      speakTutor(step.text + ' ' + (step.status || ''));
+    }
+  });
+
+  btnStop.addEventListener('click', function(){
+    tutorState.active = false;
+    panel.classList.remove('show');
+    launcher.textContent = 'Aktifkan Tutor';
+    clearTutorHighlight();
+    stopTutorSpeech();
+  });
+}
+
+initTutorVirtual();
 
 // Fungsi tambah anggota
 // Fungsi Mulai Fresh - Hapus semua data
@@ -1857,7 +1905,7 @@ document.getElementById('addAnggotaBtn').addEventListener('click', function(){
   newRow.style.cssText = 'display:flex;gap:8px;margin-bottom:8px';
   newRow.innerHTML = `
     <input type="text" class="anggota-input" placeholder="Nama anggota" style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1)">
-    <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Bagel Fat One',cursive;font-size:14px;min-width:180px">
+    <select class="tanggung-jawab-select" style="padding:10px;border-radius:8px;border:1px solid rgba(0,0,0,0.1);font-family:'Poppins',sans-serif;font-size:14px;min-width:180px">
       <option value="Ketua Kelompok">Ketua Kelompok</option>
       <option value="Wakil Ketua">Wakil Ketua</option>
       <option value="Sekretaris">Sekretaris</option>
@@ -1959,16 +2007,15 @@ let fase3Data = {
 document.getElementById('simpanKNLBtn')?.addEventListener('click', function(){
   const know = document.getElementById('knowInput').value.trim();
   const need = document.getElementById('needInput').value.trim();
-  const learn = document.getElementById('learnInput').value.trim();
 
-  if(!know || !need || !learn){
-    alert('Silakan isi semua kolom Know, Need to Know, dan Learn!');
+  if(!know || !need){
+    alert('Silakan isi kolom Know dan Need to Know terlebih dahulu!');
     return;
   }
 
   fase3Data.know = know;
   fase3Data.need = need;
-  fase3Data.learn = learn;
+  fase3Data.learn = '';
 
   // Tampilkan section investigasi
   document.getElementById('investigasiSection').style.display = 'block';
@@ -1979,7 +2026,7 @@ document.getElementById('simpanKNLBtn')?.addEventListener('click', function(){
   // Initialize durasi rows
   initDurasiRows();
 
-  alert('✅ Rencana investigasi tersimpan! Sekarang mulai hitung biaya untuk berbagai durasi.');
+  alert('✅ Data awal tersimpan! Sekarang mulai hitung biaya untuk berbagai durasi.');
 });
 
 // Initialize durasi input rows
@@ -2170,17 +2217,6 @@ document.getElementById('simpanInvestigasiBtn')?.addEventListener('click', funct
     alert('Silakan isi minimal 4 pasangan durasi dan biaya dengan benar!');
     return;
   }
-  
-  const pola = document.getElementById('polaDiskusi').value.trim();
-  const pilihanCara = document.getElementById('pilihanCaraDiskusi').value.trim();
-  
-  if(!pola || !pilihanCara){
-    alert('Silakan isi diskusi tentang pola dan pilihan cara penyajian!');
-    return;
-  }
-  
-  fase3Data.pola = pola;
-  fase3Data.pilihanCara = pilihanCara;
   
   // Simpan ke localStorage
   localStorage.setItem('fase3_investigasi', JSON.stringify(fase3Data));
@@ -2424,59 +2460,21 @@ function drawGraph(){
 // LAYER 3: QUIZ CONFIRMATION
 document.getElementById('submitQuizBtn')?.addEventListener('click', function(){
   const q1 = parseInt(document.getElementById('quiz1Answer').value);
-  const q2 = parseInt(document.getElementById('quiz2Answer').value);
-  const q3 = parseInt(document.getElementById('quiz3Answer').value);
-  const q4 = document.querySelector('input[name="quiz4"]:checked')?.value;
-  
+  const expected = 5000 + (50 / 10) * 2000; // Rp15.000
   let allCorrect = true;
-  
-  // Quiz 1: Biaya tetap = 5000
+
+  // Single quiz: prediksi total biaya 50 menit
   const f1 = document.getElementById('quiz1Feedback');
-  if(q1 === 5000){
-    f1.innerHTML = '<span style="color:#4caf50">✅ Benar!</span>';
+  if(q1 === expected){
+    f1.innerHTML = '<span style="color:#4caf50">✅ Benar! (Unlock Rp5.000 + 5×Rp2.000 = Rp15.000)</span>';
   } else {
-    f1.innerHTML = '<span style="color:#f44336">❌ Salah. Hint: Biaya unlock...</span>';
-    allCorrect = false;
-  }
-  
-  // Quiz 2: Biaya per 10 menit = 2000
-  const f2 = document.getElementById('quiz2Feedback');
-  if(q2 === 2000){
-    f2.innerHTML = '<span style="color:#4caf50">✅ Benar!</span>';
-  } else {
-    f2.innerHTML = '<span style="color:#f44336">❌ Salah. Hint: Cek info tarif...</span>';
-    allCorrect = false;
-  }
-  
-  // Quiz 3: Prediksi 50 menit = 5000 + (50/10)*2000 = 15000
-  const f3 = document.getElementById('quiz3Feedback');
-  const expected = 5000 + (50/10) * 2000;
-  if(q3 === expected){
-    f3.innerHTML = '<span style="color:#4caf50">✅ Benar! (Unlock Rp5.000 + 5×Rp2.000 = Rp15.000)</span>';
-  } else {
-    f3.innerHTML = `<span style="color:#f44336">❌ Salah. Jawaban yang benar: Rp${expected.toLocaleString()}</span>`;
-    allCorrect = false;
-  }
-  
-  // Quiz 4: Rumus = C (200t + 5000)
-  const f4 = document.getElementById('quiz4Feedback');
-  if(q4 === 'C'){
-    f4.innerHTML = '<span style="color:#4caf50">✅ Benar! B = 200t + 5000 (dengan t dalam menit)</span>';
-  } else {
-    f4.innerHTML = '<span style="color:#f44336">❌ Salah. Ingat: Rp200/menit (karena Rp2000/10menit) + biaya tetap Rp5000</span>';
+    f1.innerHTML = `<span style="color:#f44336">❌ Salah. Jawaban yang benar: Rp${expected.toLocaleString()}</span>`;
     allCorrect = false;
   }
   
   if(allCorrect){
     scaffoldingProgress.quizPassed = true;
     
-    // Tampilkan bonus challenge
-    setTimeout(() => {
-      document.getElementById('bonusChallenge').style.display = 'block';
-      document.getElementById('bonusChallenge').scrollIntoView({behavior: 'smooth', block: 'start'});
-    }, 1000);
-    
-    // Tampilkan konfirmasi konsep
     setTimeout(() => {
       document.getElementById('konfirmasiKonsep').style.display = 'block';
       document.getElementById('konfirmasiKonsep').scrollIntoView({behavior: 'smooth', block: 'center'});
@@ -2485,27 +2483,10 @@ document.getElementById('submitQuizBtn')?.addEventListener('click', function(){
       document.getElementById('lanjutFase4Btn').style.display = 'inline-block';
       
       alert('🎉 LUAR BIASA! Semua quiz benar. Kalian telah menguasai konsep Fungsi Linear!');
-    }, 2000);
+    }, 500);
   } else {
     alert('Beberapa jawaban masih salah. Pelajari feedback dan coba lagi! 💪');
   }
-});
-
-// Submit bonus (opsional)
-document.getElementById('submitBonusBtn')?.addEventListener('click', function(){
-  const answer = document.getElementById('bonusAnswer').value.trim();
-  if(!answer){
-    alert('Silakan tuliskan ide kelompok kalian terlebih dahulu!');
-    return;
-  }
-  
-  // Simpan jawaban bonus
-  fase3Data.bonus = answer;
-  localStorage.setItem('fase3_final', JSON.stringify(fase3Data));
-  
-  alert('🏆 Jawaban bonus tersimpan! Guru akan mereview ide kreatif kalian.');
-  document.getElementById('submitBonusBtn').disabled = true;
-  document.getElementById('submitBonusBtn').textContent = '✅ Terkirim';
 });
 
 
@@ -2520,14 +2501,9 @@ document.querySelectorAll('.bentuk-btn').forEach(btn => {
       // Store selected bentuk in localStorage
       const bentuk = this.closest('.bentuk-card').getAttribute('data-bentuk');
       localStorage.setItem('fase4_bentuk_pilihan', bentuk);
-      
+
       // Navigate to bentuk slide
-      document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active'));
-      const targetSlide = document.getElementById(targetId);
-      if(targetSlide) targetSlide.classList.add('active');
-      
-      // Scroll to top
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      navigateToSlide(targetId, { scrollTop: true });
     }
   });
 });
@@ -2579,8 +2555,11 @@ function getDotCenter(dot){
   };
 }
 
+// Tombol ini hanya mengantar ke halaman pemilihan bentuk penyajian.
+
 function drawArrow(fromDot, toDot){
   if(!arrowSvg) return;
+  initArrowSvg();
   const from = getDotCenter(fromDot);
   const to = getDotCenter(toDot);
 
@@ -2620,6 +2599,7 @@ function resetDiagramPanah(){
   arrowConnections.forEach(conn => conn.line.remove());
   arrowConnections = [];
   clearSelectedDomain();
+  localStorage.removeItem('fase4_panah_image');
 }
 
 function hapusGarisTerakhir(){
@@ -2851,6 +2831,7 @@ function addPoint(){
   }
   points.push(pos);
   drawCartesian();
+  saveCartesianPreviewIfAny();
 }
 
 function toggleFreeDraw(){
@@ -2865,11 +2846,13 @@ function undoAction(){
   if(strokes.length > 0){
     strokes.pop();
     redrawStrokes();
+    saveCartesianPreviewIfAny();
     return;
   }
   if(points.length > 0){
     points.pop();
     drawCartesian();
+    saveCartesianPreviewIfAny();
   }
 }
 
@@ -2878,6 +2861,7 @@ function clearAll(){
   strokes = [];
   clearDrawLayer();
   drawCartesian();
+  localStorage.removeItem('fase4_grafik_image');
 }
 
 function redrawStrokes(){
@@ -2912,6 +2896,22 @@ function saveCartesian(){
   }
 }
 
+function saveCartesianPreviewIfAny(){
+  if(!gridCanvas || !drawCanvas) return;
+  const hasContent = points.length > 0 || strokes.length > 0;
+  if(!hasContent) {
+    localStorage.removeItem('fase4_grafik_image');
+    return;
+  }
+  const temp = document.createElement('canvas');
+  temp.width = gridCanvas.width;
+  temp.height = gridCanvas.height;
+  const tctx = temp.getContext('2d');
+  tctx.drawImage(gridCanvas, 0, 0);
+  tctx.drawImage(drawCanvas, 0, 0);
+  localStorage.setItem('fase4_grafik_image', temp.toDataURL('image/png'));
+}
+
 if(gridCanvas && drawCanvas){
   resizeCartesianCanvas();
   drawCartesian();
@@ -2940,6 +2940,7 @@ if(gridCanvas && drawCanvas){
   window.addEventListener('mouseup', () => {
     if(isDrawing){
       isDrawing = false;
+      saveCartesianPreviewIfAny();
     }
   });
 
@@ -3108,7 +3109,7 @@ function validateFormulaWithData(){
 
 function validateWithInvestigationData(parsed){
   // Use investigation data from Fase 3
-  const investigationData = localStorage.getItem('fase3_investigation_data');
+  const investigationData = localStorage.getItem('fase3_investigasi');
   let dataPoints = [];
   
   if(investigationData){
@@ -3320,7 +3321,7 @@ function exportTableAsImage(){
 
 function populateFromInvestigation(){
   // Try to get data from Fase 3 investigation
-  const investigationData = localStorage.getItem('fase3_investigation_data');
+  const investigationData = localStorage.getItem('fase3_investigasi');
   let dataPoints = [];
   
   if(investigationData){
@@ -3397,8 +3398,89 @@ const downloadAllInfo = document.getElementById('downloadAllInfo');
 let currentCommentTarget = null;
 let selectedRating = 0;
 
+function buildTabelSvgFromData(dataRows){
+  const rows = Array.isArray(dataRows) ? dataRows : [];
+  if(!rows.length) return null;
+  const rowHeight = 30;
+  const width = 360;
+  const height = 70 + (rows.length * rowHeight);
+  const bodyRows = rows.map((row, idx) => {
+    const y = 70 + (idx * rowHeight);
+    const fill = idx % 2 === 0 ? '#ffffff' : '#f7f7f7';
+    return `
+      <rect x="0" y="${y}" width="${width}" height="${rowHeight}" fill="${fill}" stroke="#dddddd" />
+      <text x="90" y="${y + 20}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">${String(row.x ?? '')}</text>
+      <text x="270" y="${y + 20}" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#333">${String(row.y ?? '')}</text>
+    `;
+  }).join('');
+
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+      <rect width="100%" height="100%" fill="#ffffff" />
+      <text x="180" y="22" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#222">Tabel Fungsi</text>
+      <rect x="0" y="40" width="180" height="30" fill="#e3f2fd" stroke="#cccccc" />
+      <rect x="180" y="40" width="180" height="30" fill="#e3f2fd" stroke="#cccccc" />
+      <text x="90" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">x (Durasi)</text>
+      <text x="270" y="60" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#333">y (Biaya)</text>
+      ${bodyRows}
+    </svg>
+  `;
+
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg.trim())}`;
+}
+
+function syncWorksForGallery(){
+  if(!localStorage.getItem('fase4_panah_image') && arrowSvg && arrowConnections.length > 0){
+    const vb = arrowSvg.getAttribute('viewBox') || '0 0 800 320';
+    const parts = vb.split(' ').map(Number);
+    const w = parts[2] || 800;
+    const h = parts[3] || 320;
+    const svg = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="${vb}" width="${w}" height="${h}">
+        <rect width="100%" height="100%" fill="#ffffff" />
+        ${arrowSvg.innerHTML}
+      </svg>
+    `;
+    localStorage.setItem('fase4_panah_image', `data:image/svg+xml;utf8,${encodeURIComponent(svg.trim())}`);
+  }
+
+  if(!localStorage.getItem('fase4_grafik_image')){
+    saveCartesianPreviewIfAny();
+  }
+
+  if(!localStorage.getItem('fase4_tabel_image')){
+    const tabelDataRaw = localStorage.getItem('fase4_tabel_data');
+    if(tabelDataRaw){
+      try {
+        const tabelData = JSON.parse(tabelDataRaw);
+        const tabelSvg = buildTabelSvgFromData(tabelData);
+        if(tabelSvg){
+          localStorage.setItem('fase4_tabel_image', tabelSvg);
+        }
+      } catch(e) {
+        console.warn('Gagal membuat fallback tabel image:', e);
+      }
+    }
+  }
+
+  if(!localStorage.getItem('fase4_persamaan_output')){
+    const formulaNow = perumusanOutput?.textContent?.trim();
+    if(formulaNow && formulaNow !== '-'){
+      localStorage.setItem('fase4_persamaan_output', formulaNow);
+    }
+  }
+
+  if(!localStorage.getItem('fase4_pasangan_output')){
+    const pasanganNow = pasanganOutput?.textContent?.trim();
+    if(pasanganNow && pasanganNow !== '{ }'){
+      localStorage.setItem('fase4_pasangan_output', pasanganNow);
+    }
+  }
+}
+
 // Load user's saved works
 function loadUserWorks(){
+  syncWorksForGallery();
   const userWorks = {};
   
   // Load from localStorage
@@ -3491,7 +3573,6 @@ async function downloadAllResults(){
 
   const kelompokData = localStorage.getItem('pertemuan6_kelompok');
   const investigasiData = localStorage.getItem('fase3_investigasi');
-  const investigasiFinal = localStorage.getItem('fase3_final');
   const bentukPilihan = localStorage.getItem('fase4_bentuk_pilihan');
   const panahImage = localStorage.getItem('fase4_panah_image');
   const pasanganOutput = localStorage.getItem('fase4_pasangan_output');
@@ -3500,8 +3581,31 @@ async function downloadAllResults(){
   const tabelData = localStorage.getItem('fase4_tabel_data');
   const grafikImage = localStorage.getItem('fase4_grafik_image');
   const galleryComments = localStorage.getItem('gallery_comments');
-  const reflectionData = localStorage.getItem('reflection_data');
-  const reflectionTime = localStorage.getItem('reflection_completion_time');
+  const reflectionDataRaw = localStorage.getItem('reflection_data');
+
+  // Fallback ke input yang sedang ada di form (jika belum sempat tersimpan)
+  const reflectionFromForm = {
+    responses: {
+      q1: document.getElementById('reflectionQ1')?.value?.trim() || ''
+    },
+    enjoyment: (typeof reflectionData !== 'undefined' && reflectionData?.enjoyment) ? reflectionData.enjoyment : 0
+  };
+
+  // Ambil input investigasi terbaru dari form agar PDF tetap sesuai data terakhir di layar
+  const investigasiFromForm = {
+    know: document.getElementById('knowInput')?.value?.trim() || '',
+    need: document.getElementById('needInput')?.value?.trim() || '',
+    durasiList: []
+  };
+  const durasiInputsForPdf = document.querySelectorAll('.durasi-input');
+  const biayaInputsForPdf = document.querySelectorAll('.biaya-input');
+  durasiInputsForPdf.forEach((input, i) => {
+    const durasi = parseInt(input.value, 10);
+    const biaya = parseInt(biayaInputsForPdf[i]?.value, 10);
+    if(!isNaN(durasi) && !isNaN(biaya)){
+      investigasiFromForm.durasiList.push({ durasi, biaya });
+    }
+  });
 
   const { jsPDF } = jspdf;
   const doc = new jsPDF();
@@ -3581,18 +3685,42 @@ async function downloadAllResults(){
 
   // Section 2: Investigasi
   addTitle('2. INVESTIGASI FASE 3', 14);
-  if(investigasiFinal){
+  addText('Aturan investigasi: Kelompok menentukan sendiri durasi yang dihitung, minimal 4 durasi berbeda.');
+
+  let investigasiGabungan = { know: '', need: '', learn: '', durasiList: [] };
+  if(investigasiData){
     try{
-      const final = JSON.parse(investigasiFinal);
-      addText(`Himpunan A: ${final.himpunanA || '-'}`);
-      addText(`Himpunan B: ${final.himpunanB || '-'}`);
-      addText(`Relasi: ${final.relasi || '-'}`);
-      addText(`Kalimat Relasi: ${final.kalimat || '-'}`);
+      const investigasi = JSON.parse(investigasiData);
+      investigasiGabungan = {
+        know: investigasi.know || '',
+        need: investigasi.need || '',
+        learn: investigasi.learn || '',
+        durasiList: Array.isArray(investigasi.durasiList) ? investigasi.durasiList : []
+      };
     }catch(e){
       addText('Data investigasi tidak valid');
     }
-  }else{
+  }
+
+  if(investigasiFromForm.know) investigasiGabungan.know = investigasiFromForm.know;
+  if(investigasiFromForm.need) investigasiGabungan.need = investigasiFromForm.need;
+  if(investigasiFromForm.durasiList.length > 0) investigasiGabungan.durasiList = investigasiFromForm.durasiList;
+
+  if(!investigasiGabungan.know && !investigasiGabungan.need && investigasiGabungan.durasiList.length === 0){
     addText('Belum menyelesaikan investigasi');
+  } else {
+    addText(`Know: ${investigasiGabungan.know || '-'}`);
+    addText(`Need to Know: ${investigasiGabungan.need || '-'}`);
+
+    if(Array.isArray(investigasiGabungan.durasiList) && investigasiGabungan.durasiList.length > 0){
+      yPos += 3;
+      addText('Data durasi-biaya siswa:');
+      investigasiGabungan.durasiList.forEach((item, idx) => {
+        addText(`  ${idx + 1}. ${item.durasi} menit -> Rp${Number(item.biaya).toLocaleString('id-ID')}`);
+      });
+    } else {
+      addText('Belum ada data durasi-biaya yang tersimpan.');
+    }
   }
   yPos += 10;
 
@@ -3608,76 +3736,84 @@ async function downloadAllResults(){
   addText(`Bentuk yang dipilih: ${bentukLabels[bentukPilihan] || 'Belum memilih'}`);
   yPos += 5;
 
-  // Diagram Panah
-  checkPageBreak(30);
-  doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
-  doc.text('a. Diagram Panah', margin, yPos);
-  yPos += 8;
-  if(panahImage){
-    addImage(panahImage, 70);
-  }else{
-    addText('Belum membuat diagram panah');
-  }
-  yPos += 5;
+  // Prioritaskan bentuk yang dipilih siswa + data terbaru
+  const currentTableData = (typeof collectTableData === 'function') ? collectTableData() : [];
 
-  // Pasangan Berurutan
-  checkPageBreak(20);
-  doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
-  doc.text('b. Pasangan Berurutan', margin, yPos);
-  yPos += 8;
-  if(pasanganOutput){
-    addText(pasanganOutput);
-  }else{
-    addText('Belum membuat pasangan berurutan');
-  }
-  yPos += 5;
+  if(bentukPilihan === 'tabel' || (!bentukPilihan && (tabelImage || tabelData || currentTableData.length > 0))){
+    checkPageBreak(30);
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    doc.text('Hasil Tabel', margin, yPos);
+    yPos += 8;
 
-  // Persamaan Fungsi
-  checkPageBreak(20);
-  doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
-  doc.text('c. Persamaan Fungsi', margin, yPos);
-  yPos += 8;
-  if(persamaanOutput){
-    addText(persamaanOutput);
-  }else{
-    addText('Belum membuat persamaan fungsi');
-  }
-  yPos += 5;
-
-  // Tabel
-  checkPageBreak(30);
-  doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
-  doc.text('d. Tabel', margin, yPos);
-  yPos += 8;
-  if(tabelImage){
-    addImage(tabelImage, 60);
-  }else if(tabelData){
-    try{
-      const tabel = JSON.parse(tabelData);
-      addText(`Domain: ${(tabel.domain || []).join(', ')}`);
-      addText(`Kodomain: ${(tabel.kodomain || []).join(', ')}`);
-    }catch(e){
+    if(tabelImage){
+      addImage(tabelImage, 60);
+    }else if(currentTableData.length > 0){
+      addText('Data tabel saat ini (belum diunduh gambar):');
+      currentTableData.forEach((row, idx) => {
+        addText(`  ${idx + 1}. x=${row.x}, y=${row.y}`);
+      });
+    }else if(tabelData){
+      try{
+        const parsed = JSON.parse(tabelData);
+        parsed.forEach((row, idx) => {
+          addText(`  ${idx + 1}. x=${row.x}, y=${row.y}`);
+        });
+      }catch(e){
+        addText('Data tabel tidak dapat dibaca');
+      }
+    }else{
       addText('Belum membuat tabel');
     }
-  }else{
-    addText('Belum membuat tabel');
+    yPos += 5;
   }
-  yPos += 5;
 
-  // Diagram Kartesius
-  checkPageBreak(30);
-  doc.setFontSize(12);
-  doc.setFont(undefined, 'bold');
-  doc.text('e. Diagram Kartesius', margin, yPos);
-  yPos += 8;
-  if(grafikImage){
-    addImage(grafikImage, 70);
-  }else{
-    addText('Belum membuat diagram kartesius');
+  if(bentukPilihan === 'grafik' || (!bentukPilihan && grafikImage)){
+    checkPageBreak(30);
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    doc.text('Hasil Diagram Kartesius', margin, yPos);
+    yPos += 8;
+    if(grafikImage){
+      addImage(grafikImage, 70);
+    }else{
+      addText('Belum menyimpan gambar grafik. Klik tombol Simpan Gambar pada slide grafik.');
+    }
+    yPos += 5;
+  }
+
+  if(bentukPilihan === 'panah' && panahImage){
+    checkPageBreak(30);
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    doc.text('Hasil Diagram Panah', margin, yPos);
+    yPos += 8;
+    addImage(panahImage, 70);
+    yPos += 5;
+  }
+
+  if(bentukPilihan === 'pasangan' && pasanganOutput){
+    checkPageBreak(20);
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    doc.text('Hasil Pasangan Berurutan', margin, yPos);
+    yPos += 8;
+    addText(pasanganOutput);
+    yPos += 5;
+  }
+
+  if(bentukPilihan === 'persamaan' && persamaanOutput){
+    checkPageBreak(20);
+    doc.setFontSize(12);
+    doc.setFont(undefined, 'bold');
+    doc.text('Hasil Persamaan Fungsi', margin, yPos);
+    yPos += 8;
+    addText(persamaanOutput);
+    yPos += 5;
+  }
+
+  if(!bentukPilihan && !tabelImage && !grafikImage && !panahImage && !pasanganOutput && !persamaanOutput && currentTableData.length === 0){
+    addText('Belum ada hasil bentuk penyajian yang tersimpan.');
   }
   yPos += 10;
 
@@ -3685,11 +3821,20 @@ async function downloadAllResults(){
   addTitle('4. KOMENTAR GALLERY WALK', 14);
   if(galleryComments){
     try{
-      const comments = JSON.parse(galleryComments);
-      if(comments.length > 0){
-        comments.forEach((c, i) => {
-          addText(`Komentar ${i+1}: ${c.comment}`);
-          addText(`Rating: ${'★'.repeat(c.rating)}`);
+      const commentsObj = JSON.parse(galleryComments);
+      const flatComments = [];
+
+      Object.keys(commentsObj || {}).forEach(key => {
+        const list = commentsObj[key];
+        if(Array.isArray(list)){
+          list.forEach(c => flatComments.push({ key, ...c }));
+        }
+      });
+
+      if(flatComments.length > 0){
+        flatComments.forEach((c, i) => {
+          addText(`Komentar ${i + 1} (${c.key}): ${c.text || '-'}`);
+          addText(`Asal: ${c.fromKelompok || '-'} | Rating: ${Number(c.rating) || 0}/5`);
           yPos += 3;
         });
       }else{
@@ -3705,15 +3850,13 @@ async function downloadAllResults(){
 
   // Section 5: Refleksi
   addTitle('5. REFLEKSI', 14);
-  if(reflectionData){
+  const reflectionSource = reflectionDataRaw || (reflectionFromForm.responses.q1 ? JSON.stringify(reflectionFromForm) : null);
+  if(reflectionSource){
     try{
-      const reflection = JSON.parse(reflectionData);
-      addText(`Penilaian Fase 3: ${'★'.repeat(reflection.fase3Rating || 0)}`);
-      addText(`Tanggapan Fase 3: ${reflection.fase3Response || '-'}`);
-      addText(`Penilaian Fase 4: ${'★'.repeat(reflection.fase4Rating || 0)}`);
-      addText(`Tanggapan Fase 4: ${reflection.fase4Response || '-'}`);
-      addText(`Yang Paling Disukai: ${reflection.enjoyment || '-'}`);
-      addText(`Pesan untuk Guru: ${reflection.message || '-'}`);
+      const reflection = JSON.parse(reflectionSource);
+      addText(`Pemahaman siswa: ${reflection.responses?.q1 || '-'}`);
+      addText(`Hal yang masih membingungkan: ${reflection.responses?.q2 || '-'}`);
+      addText(`Kesenangan pembelajaran: ${reflection.enjoyment ? `${reflection.enjoyment}/5` : '-'}`);
     }catch(e){
       addText('Data refleksi tidak valid');
     }
@@ -3722,14 +3865,8 @@ async function downloadAllResults(){
   }
   yPos += 10;
 
-  // Footer
-  checkPageBreak(15);
-  doc.setFontSize(9);
-  doc.setFont(undefined, 'italic');
-  doc.text(`Waktu penyelesaian: ${reflectionTime || new Date().toLocaleString('id-ID')}`, margin, yPos);
-
   // Save PDF
-  doc.save(`hasil_pembelajaran_${Date.now()}.pdf`);
+  doc.save('hasil_pembelajaran.pdf');
 
   if(downloadAllInfo){
     downloadAllInfo.style.display = 'block';
@@ -4043,86 +4180,17 @@ document.addEventListener('DOMContentLoaded', function(){
 
 // ============ FASE 5: REFLEKSI PEMBELAJARAN ============
 let reflectionData = {
-  ratings: {1: 0, 2: 0, 3: 0, 4: 0},
-  responses: {q1: '', q2: '', q3: ''},
-  enjoyment: 0,
-  message: ''
+  responses: {q1: ''},
+  enjoyment: 0
 };
-
-// Handle rating stars for self-assessment
-document.querySelectorAll('.rating-group').forEach(group => {
-  const stars = group.querySelectorAll('.rating-star');
-  const groupId = group.id;
-  const statementNum = parseInt(groupId.replace('rating', ''));
-  
-  stars.forEach(star => {
-    star.addEventListener('click', function(){
-      const rating = parseInt(this.dataset.rating);
-      reflectionData.ratings[statementNum] = rating;
-      
-      // Update visual
-      stars.forEach((s, idx) => {
-        if(idx < rating){
-          s.classList.add('active');
-        } else {
-          s.classList.remove('active');
-        }
-      });
-    });
-    
-    star.addEventListener('mouseenter', function(){
-      const rating = parseInt(this.dataset.rating);
-      stars.forEach((s, idx) => {
-        if(idx < rating){
-          s.style.color = '#ffa726';
-        } else {
-          s.style.color = '#ddd';
-        }
-      });
-    });
-  });
-  
-  group.addEventListener('mouseleave', function(){
-    // Reset to actual rating
-    const actualRating = reflectionData.ratings[statementNum];
-    stars.forEach((s, idx) => {
-      if(idx < actualRating){
-        s.style.color = '#ffa726';
-      } else {
-        s.style.color = '#ddd';
-      }
-    });
-  });
-});
 
 // Handle reflection questions character count
 const q1Input = document.getElementById('reflectionQ1');
-const q2Input = document.getElementById('reflectionQ2');
-const q3Input = document.getElementById('reflectionQ3');
-const msgInput = document.getElementById('reflectionMessage');
 
 q1Input?.addEventListener('input', function(){
-  if(this.value.length > 150) this.value = this.value.substring(0, 150);
+  if(this.value.length > 100) this.value = this.value.substring(0, 100);
   document.getElementById('q1Count').textContent = this.value.length;
   reflectionData.responses.q1 = this.value;
-});
-
-q2Input?.addEventListener('input', function(){
-  if(this.value.length > 150) this.value = this.value.substring(0, 150);
-  document.getElementById('q2Count').textContent = this.value.length;
-  reflectionData.responses.q2 = this.value;
-});
-
-q3Input?.addEventListener('input', function(){
-  if(this.value.length > 150) this.value = this.value.substring(0, 150);
-  document.getElementById('q3Count').textContent = this.value.length;
-  reflectionData.responses.q3 = this.value;
-});
-
-msgInput?.addEventListener('input', function(){
-  if(this.value.length > 100) this.value = this.value.substring(0, 100);
-  document.getElementById('msgCount').textContent = this.value.length;
-  reflectionData.message = this.value;
 });
 
 // Handle emoji rating
@@ -4151,15 +4219,10 @@ document.querySelectorAll('.emoji-rating').forEach(emoji => {
 
 // Submit reflection
 document.getElementById('submitReflectionBtn')?.addEventListener('click', function(){
-  // Validation
-  if(reflectionData.ratings[1] === 0 || reflectionData.ratings[2] === 0 || 
-     reflectionData.ratings[3] === 0 || reflectionData.ratings[4] === 0){
-    alert('Silakan lengkapi semua penilaian diri Anda!');
-    return;
-  }
-  
-  if(!reflectionData.responses.q1.trim() || !reflectionData.responses.q2.trim() || !reflectionData.responses.q3.trim()){
-    alert('Silakan jawab semua pertanyaan refleksi!');
+  reflectionData.responses.q1 = q1Input?.value?.trim() || '';
+
+  if(!reflectionData.responses.q1){
+    alert('Silakan jawab pertanyaan refleksi!');
     return;
   }
   
@@ -4178,16 +4241,12 @@ document.getElementById('submitReflectionBtn')?.addEventListener('click', functi
 });
 
 function showCompletionSummary(){
-  // Calculate average rating
-  const avgRating = (reflectionData.ratings[1] + reflectionData.ratings[2] + 
-                     reflectionData.ratings[3] + reflectionData.ratings[4]) / 4;
-  
   const summaryHTML = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div style="text-align:center;padding:12px;background:#fff3e0;border-radius:8px">
         <div style="font-size:28px;margin-bottom:4px">📚</div>
-        <div style="font-size:13px;font-weight:bold;color:#e65100">Rata-rata Pemahaman</div>
-        <div style="font-size:20px;color:#bf360c;font-weight:bold;margin-top:4px">${avgRating.toFixed(1)}/5 ${'★'.repeat(Math.round(avgRating))}</div>
+        <div style="font-size:13px;font-weight:bold;color:#e65100">Refleksi Pemahaman</div>
+        <div style="font-size:13px;color:#bf360c;font-weight:bold;margin-top:4px">${(reflectionData.responses.q1 || '-').slice(0, 60)}${(reflectionData.responses.q1 || '').length > 60 ? '...' : ''}</div>
       </div>
       <div style="text-align:center;padding:12px;background:#e3f2fd;border-radius:8px">
         <div style="font-size:28px;margin-bottom:4px">😊</div>
@@ -4196,7 +4255,7 @@ function showCompletionSummary(){
       </div>
       <div style="text-align:center;padding:12px;background:#f3e5f5;border-radius:8px">
         <div style="font-size:28px;margin-bottom:4px">✓</div>
-        <div style="font-size:13px;font-weight:bold;color:#4a148c">5 Bentuk Penyajian</div>
+        <div style="font-size:13px;font-weight:bold;color:#4a148c">Bentuk Penyajian</div>
         <div style="font-size:16px;color:#7b1fa2;font-weight:bold;margin-top:4px">SELESAI</div>
       </div>
       <div style="text-align:center;padding:12px;background:#e8f5e9;border-radius:8px">
@@ -4230,4 +4289,3 @@ function showCompletionSummary(){
 </script>
 </body>
 </html>
-
