@@ -25,15 +25,15 @@ function gisLoaded() {
 <script src="https://accounts.google.com/gsi/client" onload="gisLoaded()" async defer></script>
 <style>
 :root{
-  --bg:#e8dcc8;
-  --panel:#e0d0ba;
-  --accent:#6b5542;
-  --muted:#958770;
-  --success:#9ac2a8;
-  --danger:#d4a8a8;
-  --info:#a8c5d8;
-  --warning:#d8bd95;
-  --nav-brown:#6b5542;
+  --bg:#ffcb64;
+  --panel:#fff3d9;
+  --accent:#3e2723;
+  --muted:#6b4b3a;
+  --success:#2e7d32;
+  --danger:#c62828;
+  --info:#ffb74d;
+  --warning:#fbc02d;
+  --nav-brown:#fff3d9;
 }
 
 html,body{
@@ -45,7 +45,7 @@ html,body{
 }
 
 body {
-  background: linear-gradient(135deg, #e8dcc8 0%, #e0d0ba 50%, #d8c4ad 100%);
+  background: var(--bg);
 }
 
 /* Modal overlay untuk Google Form */
@@ -80,13 +80,13 @@ body {
   right: 20px;
   font-size: 32px;
   font-weight: bold;
-  color: #999;
+  color: #3e2723;
   cursor: pointer;
   transition: color 0.2s;
 }
 
 #gformModalClose:hover {
-  color: #333;
+  color: #3e2723;
 }
 
 .gform-title {
@@ -97,7 +97,7 @@ body {
 }
 
 .gform-message {
-  color: #555;
+  color: #3e2723;
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 30px;
@@ -126,7 +126,7 @@ body {
 .gform-close-btn {
   display: inline-block;
   background: #ccc;
-  color: #333;
+  color: #3e2723;
   padding: 12px 30px;
   font-size: 16px;
   border-radius: 8px;
@@ -155,18 +155,6 @@ body {
   }
 }
 
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.08), transparent 50%);
-  z-index: -1;
-  pointer-events: none;
-}
-
 .wrapper{
   min-height:100vh;
   display:flex;
@@ -179,7 +167,7 @@ body::before {
 .card{
   width:1100px;
   max-width:98%;
-  background:#e8dcc8;
+  background:linear-gradient(180deg,var(--panel),#fff7e6);
   border-radius:18px;
   box-shadow:0 18px 40px rgba(0,0,0,.12);
   overflow:hidden;
@@ -191,10 +179,8 @@ body::before {
 
 .header{
   text-align:center;
-  padding:20px 10px;
-  background:#f5e6d3;
-  border-bottom:5px solid #6b5542;
-  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  padding:18px;
+  background:transparent;
   flex-shrink: 0;
   z-index: 100;
 }
@@ -225,27 +211,29 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 .center{display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:100px}
 
 .btn{
-  background:#6b5542;
-  color:#f5f0e8;
+  background:var(--accent);
+  color:white;
   border:none;
-  padding:10px 20px;
+  padding:10px 14px;
   border-radius:12px;
   cursor:pointer;
-  font-size:16px;
-  transition: all 0.3s ease;
-  font-family:'Poppins',sans-serif;
+  font-size:15px;
+  font-weight:500;
+  transition:all 0.2s ease;
+  user-select:none;
 }
 .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-  background:#5a4535;
+  opacity:0.9;
+  transform:translateY(-1px);
+  box-shadow:0 4px 8px rgba(0,0,0,0.15);
 }
-.btn.ghost{background:transparent;color:#6b5542;border:2px solid #6b5542}
+.btn:active{transform:translateY(0);box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.btn.ghost{background:transparent;color:var(--accent);border:2px solid var(--accent)}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
 
 .card-lite{
-  background:#f5efe8;
-  border:2px dashed #8b6b5a;
+  background:linear-gradient(180deg,#fff8e6,#fff3d9);
+  border:2px dashed rgba(0,0,0,0.06);
   border-radius:14px;
   padding:14px;
   margin:10px 0;
@@ -260,6 +248,15 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 .card-lite p {
   color:#2a2420;
 }
+
+/* Sinkronisasi cepat untuk blok inline hardcoded agar nuansa tetap konsisten seperti Pertemuan 1 */
+[style*="background:#e8dcc8"]{background:#fff8e6 !important;}
+[style*="background:#f5e6d3"]{background:#fff3d9 !important;}
+[style*="background:#f5efe8"]{background:#fff7e6 !important;}
+[style*="border-left:4px solid #a8c5d8"]{border-left-color:var(--info) !important;}
+[style*="border-left:4px solid #d4a574"]{border-left-color:var(--warning) !important;}
+[style*="border-left:4px solid #b89968"]{border-left-color:var(--warning) !important;}
+[style*="border:2px dashed #b89968"]{border-color:var(--warning) !important;}
 
 /* Styling untuk pilihan penyajian */
 .penyajian-option {
@@ -276,7 +273,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 
 .penyajian-option:hover {
   background: #fffbf0;
-  border-color: #6b5542;
+  border-color: #3e2723;
   transform: translateY(-2px);
 }
 
@@ -288,12 +285,12 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 
 .penyajian-option input[type="radio"]:checked + span {
   font-weight: 700;
-  color: #6b5542;
+  color: #3e2723;
 }
 
 .penyajian-option span {
   font-size: 16px;
-  color: #6b5542;
+  color: #3e2723;
   transition: all 0.2s ease;
 }
 
@@ -311,7 +308,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 
 .diagram-input-row:hover {
   background: #efe9df;
-  border-color: #9a7d6d;
+  border-color: #3e2723;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
@@ -326,7 +323,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 
 .diagram-input-row input:focus {
   outline: none;
-  border-color: #6b5542;
+  border-color: #3e2723;
   background: #fffef2;
 }
 
@@ -334,7 +331,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
   display:inline-block;
   width: 24px;
   height: 24px;
-  background: #6b5542;
+  background: #3e2723;
   border: 4px solid #2a2420;
   border-radius: 50%;
   cursor: grab;
@@ -366,7 +363,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 /* Styling untuk komentar */
 .komentar-item {
   background: #f9f9f9;
-  border-left: 4px solid #6b5542;
+  border-left: 4px solid #3e2723;
   padding: 12px;
   margin-bottom: 12px;
   border-radius: 8px;
@@ -382,7 +379,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 
 .komentar-kelompok {
   font-weight: 700;
-  color: #6b5542;
+  color: #3e2723;
   font-size: 14px;
 }
 
@@ -392,7 +389,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 }
 
 .komentar-isi {
-  color: #333;
+  color: #3e2723;
   line-height: 1.5;
   font-family: Arial, sans-serif;
   font-size: 14px;
@@ -410,7 +407,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 }
 
 .scenario-box{
-  background:#a08870;
+  background:linear-gradient(180deg,#fff8e6,#fff3d9);
   border-left:4px solid var(--accent);
   border-radius:8px;
   padding:16px;
@@ -433,21 +430,21 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
 }
 
 .feedback-box.success{
-  background:#c8d8c8;
-  color:#4a6b55;
-  border-left:4px solid #9ac2a8;
+  background:#e8f5e9;
+  color:#2e7d32;
+  border-left:4px solid #2e7d32;
 }
 
 .feedback-box.warning{
-  background:#e0d0ba;
-  color:#6b5542;
-  border-left:4px solid #b89968;
+  background:#fff8e6;
+  color:#3e2723;
+  border-left:4px solid #fbc02d;
 }
 
 .feedback-box.info{
-  background:#c8d8e0;
-  color:#556b7a;
-  border-left:4px solid #a8c5d8;
+  background:#fff3d9;
+  color:#3e2723;
+  border-left:4px solid #fbc02d;
 }
 
 @keyframes fadeIn {
@@ -759,7 +756,7 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
   border: none;
   font-size: 28px;
   cursor: pointer;
-  color: #666;
+  color: #3e2723;
   padding: 0;
   width: 30px;
   height: 30px;
@@ -960,6 +957,88 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
   flex-wrap: wrap;
 }
 
+/* Tutor Virtual */
+.tutor-launcher{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:10001;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  padding:10px 16px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+.tutor-launcher:hover{opacity:.92}
+
+.tutor-panel{
+  position:fixed;
+  right:16px;
+  bottom:72px;
+  width:350px;
+  max-width:calc(100vw - 24px);
+  background:linear-gradient(180deg,var(--panel),#fff7e6);
+  border:2px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  box-shadow:0 14px 30px rgba(0,0,0,.22);
+  padding:12px;
+  z-index:10001;
+  display:none;
+}
+.tutor-panel.show{display:block}
+.tutor-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tutor-avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#fff;
+  border:2px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  animation:tutorFloat 2.2s ease-in-out infinite;
+}
+.tutor-title{font-size:14px;font-weight:700;color:var(--accent)}
+.tutor-progress{font-size:12px;color:var(--muted)}
+.tutor-bubble{
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  border-left:4px solid var(--accent);
+  color:var(--accent);
+  font-size:13px;
+  line-height:1.5;
+  min-height:74px;
+}
+.tutor-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tutor-actions .btn{font-size:13px;padding:8px 10px;border-radius:9px}
+.tutor-status{margin-top:8px;font-size:12px;color:var(--muted)}
+
+.tutor-target-highlight{
+  outline:4px solid #fbc02d !important;
+  outline-offset:2px;
+  animation:tutorPulse 1.15s ease-in-out infinite;
+  border-radius:8px;
+}
+
+@keyframes tutorFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes tutorPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(251,192,45,.18)}
+  50%{box-shadow:0 0 0 8px rgba(251,192,45,.04)}
+}
+
+@media (max-width:700px){
+  .tutor-panel{right:8px;left:8px;bottom:70px;width:auto}
+  .tutor-launcher{right:8px;bottom:10px}
+}
+
 @keyframes floating {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-12px); }
@@ -1021,23 +1100,23 @@ h1, h2 {
             </ul>
           </div>
 
-          <div class="scenario-box" style="background:#e3f2fd;border-left:4px solid #2196f3">
-            <h3 style="color:#2a2420;margin-top:0">📚 Alur Pembelajaran</h3>
+          <div class="scenario-box" style="background:#fff8e6;border-left:4px solid #fbc02d">
+            <h3 style="color:#3e2723;margin-top:0">📚 Alur Pembelajaran</h3>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px">
-              <div style="background:#f9f5f0;padding:12px;border-radius:8px;border:2px solid #6b5542">
-                <p style="margin:0;font-weight:700;color:#6b5542;font-size:14px">📍 Fase 1-2: Orientasi</p>
+              <div style="background:#fff3d9;padding:12px;border-radius:8px;border:2px solid #3e2723">
+                <p style="margin:0;font-weight:700;color:#3e2723;font-size:14px">📍 Fase 1-2: Orientasi</p>
                 <p style="margin:4px 0 0 0;font-size:13px;color:#2a2420">Permasalahan & Identitas</p>
               </div>
-              <div style="background:#f9f5f0;padding:12px;border-radius:8px;border:2px solid #6b5542">
-                <p style="margin:0;font-weight:700;color:#6b5542;font-size:14px">🔍 Fase 3: Investigasi</p>
+              <div style="background:#fff3d9;padding:12px;border-radius:8px;border:2px solid #3e2723">
+                <p style="margin:0;font-weight:700;color:#3e2723;font-size:14px">🔍 Fase 3: Investigasi</p>
                 <p style="margin:4px 0 0 0;font-size:13px;color:#2a2420">Penemuan & Analisis Konsep</p>
               </div>
-              <div style="background:#f9f5f0;padding:12px;border-radius:8px;border:2px solid #6b5542">
-                <p style="margin:0;font-weight:700;color:#6b5542;font-size:14px">🎨 Fase 4: Penyajian</p>
+              <div style="background:#fff3d9;padding:12px;border-radius:8px;border:2px solid #3e2723">
+                <p style="margin:0;font-weight:700;color:#3e2723;font-size:14px">🎨 Fase 4: Penyajian</p>
                 <p style="margin:4px 0 0 0;font-size:13px;color:#2a2420">Visualisasi & Kesimpulan</p>
               </div>
-              <div style="background:#c8f0d4;padding:12px;border-radius:8px;border:2px solid #4caf50">
-                <p style="margin:0;font-weight:700;color:#2e7d32;font-size:14px">🎉 Ringkasan Akhir</p>
+              <div style="background:#fff8e6;padding:12px;border-radius:8px;border:2px solid #fbc02d">
+                <p style="margin:0;font-weight:700;color:#3e2723;font-size:14px">🎉 Ringkasan Akhir</p>
                 <p style="margin:4px 0 0 0;font-size:13px;color:#2a2420">Download PDF & Kirim ke Guru</p>
               </div>
             </div>
@@ -1045,7 +1124,7 @@ h1, h2 {
 
           <div class="footer-nav" style="gap:10px;flex-wrap:wrap">
             <button class="btn" onclick="show('orientasi-permasalahan')" style="flex:1;min-width:200px;padding:14px;font-size:18px">Mulai Pembelajaran ⟶</button>
-            <button class="btn ghost" onclick="show('diagram-panah')" style="background:#4caf50;color:white;flex:1;min-width:200px;padding:14px;font-size:16px;font-weight:700" title="Langsung ke Diagram Panah untuk test">🎯 Quick Test: Diagram Panah</button>
+            <button class="btn ghost" onclick="show('diagram-panah')" style="background:#3e2723;color:white;flex:1;min-width:200px;padding:14px;font-size:16px;font-weight:700" title="Langsung ke Diagram Panah untuk test">🎯 Quick Test: Diagram Panah</button>
           </div>
         </div>
       </section>
@@ -1057,7 +1136,7 @@ h1, h2 {
           <p class="lead" style="color:#2a2420">Perhatikan permasalahan berikut lalu tekan "Lanjut ke Identitas Kelompok" untuk melanjutkan.</p>
 
           <div style="text-align:center;margin:24px 0;overflow:hidden">
-            <img src="../badminton.png" alt="Ilustrasi Turnamen Badminton" style="max-width:400px;width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;box-shadow:0 6px 20px rgba(0,0,0,0.18);transform:rotate(-90deg);max-height:400px">
+            <img src="../badminton.png" alt="Ilustrasi Turnamen Badminton" style="max-width:400px;width:100%;height:auto;border-radius:12px;display:block;margin:0 auto;box-shadow:0 6px 20px rgba(0,0,0,0.18);max-height:400px;transform:rotate(90deg)">
           </div>
 
           <div style="background:#fff3d9;border-left:4px solid #d4a574;border-radius:10px;padding:16px;margin:14px auto;max-width:760px;text-align:left">
@@ -1286,12 +1365,12 @@ h1, h2 {
           </div>
 
           <div id="pengertianBenar" style="display:none;margin-top:20px">
-            <div class="scenario-box" style="background:#c8d8c8;border-left:4px solid #4caf50">
-              <h3 style="color:#2a2420;margin-top:0">✅ Pengertian Korespondensi Satu-Satu (Definisi Benar)</h3>
-              <p style="color:#2a2420;font-size:15px;margin:8px 0;line-height:1.8;background:#e8dcc8;padding:12px;border-radius:6px">
+            <div class="scenario-box" style="background:#fff8e6;border-left:4px solid #2e7d32">
+              <h3 style="color:#3e2723;margin-top:0">✅ Pengertian Korespondensi Satu-Satu (Definisi Benar)</h3>
+              <p style="color:#2a2420;font-size:15px;margin:8px 0;line-height:1.8;background:#fff3d9;padding:12px;border-radius:6px">
                 <strong>Korespondensi satu-satu</strong> adalah relasi antara dua himpunan dimana <strong>setiap anggota himpunan pertama dipasangkan dengan TEPAT satu anggota himpunan kedua</strong>, dan <strong>sebaliknya setiap anggota himpunan kedua juga dipasangkan dengan TEPAT satu anggota himpunan pertama</strong>.
               </p>
-              <div style="background:#f9f5f0;padding:12px;border-radius:6px;margin:12px 0">
+              <div style="background:#fff7e6;padding:12px;border-radius:6px;margin:12px 0">
                 <p style="color:#2a2420;font-size:14px;margin:4px 0"><strong>Ciri-ciri:</strong></p>
                 <ul style="color:#2a2420;font-size:14px;margin:8px 0;padding-left:20px">
                   <li>Setiap anggota A berpasangan dengan TEPAT SATU anggota B</li>
@@ -1360,58 +1439,58 @@ h1, h2 {
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:20px 0">
             <!-- Himpunan A -->
-            <div style="background:#e0d0c8;border-radius:8px;padding:16px">
-              <h3 style="color:#8b6b5a;margin-top:0;text-align:center">👨 Pemain Putra (Himpunan A)</h3>
+            <div style="background:#fff8e6;border-radius:8px;padding:16px">
+              <h3 style="color:#3e2723;margin-top:0;text-align:center">👨 Pemain Putra (Himpunan A)</h3>
               <div id="daftarPutra" style="display:flex;flex-direction:column;gap:8px">
-                <button class="atlet-btn" data-atlet="Andi" onclick="clickAtletPutra('Andi')" style="background:#b89888;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
+                <button class="atlet-btn" data-atlet="Andi" onclick="clickAtletPutra('Andi')" style="background:#3e2723;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
                   👨 Andi
                 </button>
-                <button class="atlet-btn" data-atlet="Budi" onclick="clickAtletPutra('Budi')" style="background:#b89888;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
+                <button class="atlet-btn" data-atlet="Budi" onclick="clickAtletPutra('Budi')" style="background:#3e2723;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
                   👨 Budi
                 </button>
-                <button class="atlet-btn" data-atlet="Citra" onclick="clickAtletPutra('Citra')" style="background:#b89888;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
+                <button class="atlet-btn" data-atlet="Citra" onclick="clickAtletPutra('Citra')" style="background:#3e2723;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
                   👨 Citra
                 </button>
-                <button class="atlet-btn" data-atlet="Dani" onclick="clickAtletPutra('Dani')" style="background:#b89888;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
+                <button class="atlet-btn" data-atlet="Dani" onclick="clickAtletPutra('Dani')" style="background:#3e2723;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
                   👨 Dani
                 </button>
               </div>
             </div>
 
             <!-- Himpunan B -->
-            <div style="background:#d8c8d8;border-radius:8px;padding:16px">
-              <h3 style="color:#7a6585;margin-top:0;text-align:center">👩 Pemain Putri (Himpunan B)</h3>
+            <div style="background:#fff3d9;border-radius:8px;padding:16px">
+              <h3 style="color:#3e2723;margin-top:0;text-align:center">👩 Pemain Putri (Himpunan B)</h3>
               <div id="daftarPutri" style="display:flex;flex-direction:column;gap:8px">
-                <button class="atlet-btn-putri" data-atlet="Evi" onclick="clickAtletPutri('Evi')" style="background:#a8909b;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
+                <button class="atlet-btn-putri" data-atlet="Evi" onclick="clickAtletPutri('Evi')" style="background:#6b4b3a;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
                   👩 Evi
                 </button>
-                <button class="atlet-btn-putri" data-atlet="Fani" onclick="clickAtletPutri('Fani')" style="background:#a8909b;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
+                <button class="atlet-btn-putri" data-atlet="Fani" onclick="clickAtletPutri('Fani')" style="background:#6b4b3a;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
                   👩 Fani
                 </button>
-                <button class="atlet-btn-putri" data-atlet="Gita" onclick="clickAtletPutri('Gita')" style="background:#a8909b;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
+                <button class="atlet-btn-putri" data-atlet="Gita" onclick="clickAtletPutri('Gita')" style="background:#6b4b3a;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
                   👩 Gita
                 </button>
-                <button class="atlet-btn-putri" data-atlet="Hana" onclick="clickAtletPutri('Hana')" style="background:#a8909b;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
+                <button class="atlet-btn-putri" data-atlet="Hana" onclick="clickAtletPutri('Hana')" style="background:#6b4b3a;color:#f5f0e8;padding:12px;border:none;border-radius:6px;cursor:pointer;font-weight:700;transition:all 0.3s">
                   👩 Hana
                 </button>
               </div>
             </div>
           </div>
 
-          <div style="background:#f5e6d3;border-left:4px solid #d4a574;padding:16px;border-radius:8px;margin:20px 0">
+          <div style="background:#fff3d9;border-left:4px solid #fbc02d;padding:16px;border-radius:8px;margin:20px 0">
             <p style="margin:0;color:#2a2420;font-weight:700">
               📊 Status Pasangan: <span id="statusPasangan">0/4 pemain putra sudah berpasangan</span>
             </p>
           </div>
 
-          <div style="background:#f1f1f1;border-radius:8px;padding:16px;margin:20px 0">
+          <div style="background:#fff8f0;border-radius:8px;padding:16px;margin:20px 0">
             <h3 style="color:var(--accent);margin-top:0">👥 Hasil Pasangan Sementara</h3>
-            <div id="hasilPasangan" style="min-height:80px;background:#e8dcc8;padding:12px;border-radius:6px;border:2px dashed #b89968">
+            <div id="hasilPasangan" style="min-height:80px;background:#fff8e6;padding:12px;border-radius:6px;border:2px dashed #fbc02d">
               <p style="color:#999;text-align:center;margin:0">Belum ada pasangan. Klik atlet untuk memulai!</p>
             </div>
           </div>
 
-          <button class="btn" id="btnLanjutAnalisis" onclick="show('analisis-pola')" style="width:100%;padding:12px">Lanjut: Analisis & Perhitungan ⟶</button>
+          <button class="btn" id="btnLanjutAnalisis" onclick="show('perumusan-pengertian')" style="width:100%;padding:12px">Lanjut: Perumusan Pengertian ⟶</button>
 
           <div class="footer-nav">
             <button class="btn ghost" onclick="show('identitas-kelompok')">⟵ Kembali</button>
@@ -1425,18 +1504,28 @@ h1, h2 {
           <h2>✏️ Fase 3.4: Perumusan Pengertian Korespondensi Satu-Satu</h2>
           <p style="color:#2a2420;margin-bottom:20px">Berdasarkan hasil matching yang kalian lakukan, sekarang tulislah dengan kata-kata kalian sendiri: <strong>Apa itu Korespondensi Satu-Satu?</strong></p>
 
-          <div class="scenario-box" style="background:#c8d8c8;border-left:4px solid #9ac2a8">
+          <div class="scenario-box" style="background:#fff8e6;border-left:4px solid #2e7d32">
             <h3 style="color:#2a2420;margin-top:0">📌 Hasil Matching Kalian</h3>
-            <div id="ringkasanMatching" style="background:#e8dcc8;padding:12px;border-radius:6px;margin:12px 0"></div>
+            <div id="ringkasanMatching" style="background:#fff3d9;padding:12px;border-radius:6px;margin:12px 0"></div>
             <p style="color:#2a2420;font-size:14px;margin:8px 0"><strong>Pengamatan:</strong> Setiap pemain putra berpasangan dengan TEPAT SATU pemain putri, dan tidak ada pemain yang berpasangan dengan lebih dari satu orang. Ini adalah karakteristik Korespondensi Satu-Satu!</p>
           </div>
 
-          <div class="scenario-box" style="background:#f3e5f5;border-left:4px solid #9c27b0">
-            <h3 style="color:#2a2420;margin-top:0">❓ Pertanyaan Perumusan</h3>
+          <div class="scenario-box" style="background:#fff8e6;border-left:4px solid #fbc02d">
+            <h3 style="color:#3e2723;margin-top:0">❓ Pertanyaan Perumusan</h3>
             
             <div style="margin:16px 0">
-              <p style="margin:8px 0;color:#2a2420;font-size:15px;font-weight:700">1. Berdasarkan hasil matching kalian, tuliskan pengertian Korespondensi Satu-Satu dengan bahasa kalian sendiri:</p>
-              <textarea id="pengertianSiswa" placeholder="Contoh: Korespondensi satu-satu adalah relasi di mana setiap anggota dari himpunan A berpasangan dengan... dan sebaliknya..." style="width:100%;padding:12px;border-radius:8px;border:2px solid #d1d5db;font-family:Arial,sans-serif;font-size:14px;box-sizing:border-box;min-height:100px"></textarea>
+              <p style="margin:8px 0;color:#2a2420;font-size:15px;font-weight:700">1. Pilih pengertian yang paling tepat tentang Korespondensi Satu-Satu:</p>
+              <div style="display:flex;flex-direction:column;gap:10px;margin:8px 0">
+                <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:14px">
+                  <input type="radio" name="pengertianPilihan" value="Relasi yang memasangkan setiap anggota himpunan A dengan tepat satu anggota himpunan B, dan sebaliknya."> Relasi yang memasangkan setiap anggota himpunan A dengan tepat satu anggota himpunan B, dan sebaliknya.
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:14px">
+                  <input type="radio" name="pengertianPilihan" value="Relasi di mana satu anggota A boleh berpasangan dengan banyak anggota B."> Relasi di mana satu anggota A boleh berpasangan dengan banyak anggota B.
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:8px;cursor:pointer;font-size:14px">
+                  <input type="radio" name="pengertianPilihan" value="Relasi yang tidak memerlukan jumlah anggota A dan B sama."> Relasi yang tidak memerlukan jumlah anggota A dan B sama.
+                </label>
+              </div>
             </div>
 
             <div style="margin:16px 0">
@@ -1507,12 +1596,12 @@ h1, h2 {
             </div>
           </div>
 
-          <div class="scenario-box" style="background:#fff3e0;border-left:4px solid #ff9800">
-            <h3 style="color:#2a2420;margin-top:0">🧮 Rumus Perhitungan</h3>
+          <div class="scenario-box" style="background:#fff8e6;border-left:4px solid #fbc02d">
+            <h3 style="color:#3e2723;margin-top:0">🧮 Rumus Perhitungan</h3>
             <p style="margin:8px 0;color:#2a2420;font-size:16px">
               Total kemungkinan pasangan = Pilihan 1 × Pilihan 2 × Pilihan 3 × Pilihan 4
             </p>
-            <p style="margin:8px 0;color:#2a2420;font-size:16px;background:#f9f5f0;padding:12px;border-radius:6px;font-weight:700">
+            <p style="margin:8px 0;color:#2a2420;font-size:16px;background:#fff7e6;padding:12px;border-radius:6px;font-weight:700">
               = 4 × 3 × 2 × 1 = ?
             </p>
             <p style="margin:8px 0;color:#2a2420;font-size:16px;font-weight:700">
@@ -1520,7 +1609,7 @@ h1, h2 {
             </p>
           </div>
 
-          <div style="margin:20px 0;padding:16px;background:#f5f5f5;border-radius:8px">
+          <div style="margin:20px 0;padding:16px;background:#fff8f0;border-radius:8px">
             <h3 style="color:var(--accent);margin-top:0">📝 Pertanyaan Final</h3>
             <p style="margin:8px 0;color:#2a2420;font-size:16px;font-weight:700">Berapa total kemungkinan pasangan yang dapat dibentuk?</p>
             <input type="text" id="totalPasangan" placeholder="Masukkan angka" style="width:100%;padding:12px;border-radius:8px;border:2px solid #d1d5db;font-size:15px;box-sizing:border-box;margin-top:8px">
@@ -1545,11 +1634,11 @@ h1, h2 {
           <h2>🎨 Fase 4.1: Diagram Panah Interaktif - Buatkan Relasi Kalian!</h2>
           <p style="color:#2a2420;margin-bottom:20px">Isikan nama anggota himpunan A dan B, kemudian tarik garis untuk menunjukkan korespondensi satu-satu (setiap anggota A berpasangan dengan TEPAT SATU anggota B).</p>
 
-          <div class="scenario-box" style="background:#e3f2fd;border-left:4px solid #2196f3">
-            <h3 style="color:#2a2420;margin-top:0">📊 Buat Diagram Panah Kalian Sendiri</h3>
+          <div class="scenario-box" style="background:#fff8e6;border-left:4px solid #fbc02d">
+            <h3 style="color:#3e2723;margin-top:0">📊 Buat Diagram Panah Kalian Sendiri</h3>
             
             <!-- Canvas untuk diagram interaktif -->
-            <div id="diagramContainer" style="background:#e8dcc8;padding:20px;border-radius:8px;margin:12px 0">
+            <div id="diagramContainer" style="background:#fff3d9;padding:20px;border-radius:8px;margin:12px 0">
               
               <!-- Main Container dengan SVG di tengah dan Input di kiri-kanan -->
               <div style="display:flex;gap:12px;align-items:flex-start;position:relative;flex-wrap:wrap;justify-content:center">
@@ -1685,17 +1774,38 @@ h1, h2 {
             
             <div style="margin:16px 0">
               <p style="margin:8px 0;color:#2a2420;font-size:15px;font-weight:700">1. Berapa banyak pasangan berbeda yang dapat dibentuk dari 4 pemain putra dan 4 pemain putri?</p>
-              <textarea id="jawabanKesimpulan1" placeholder="Tuliskan jawabanmu..." style="width:100%;padding:14px;border-radius:8px;border:3px solid #6b5542;font-family:Arial,sans-serif;font-size:16px;box-sizing:border-box;min-height:90px;background:#ffffff;color:#2a2420;line-height:1.5"></textarea>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan1" value="12"> 12 pasangan</label>
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan1" value="16"> 16 pasangan</label>
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan1" value="24"> 24 pasangan</label>
+              </div>
             </div>
 
             <div style="margin:16px 0">
               <p style="margin:8px 0;color:#2a2420;font-size:15px;font-weight:700">2. Apa yang kalian pahami tentang korespondensi satu-satu setelah melakukan investigasi ini?</p>
-              <textarea id="jawabanKesimpulan2" placeholder="Tuliskan pemahamanmu..." style="width:100%;padding:14px;border-radius:8px;border:3px solid #6b5542;font-family:Arial,sans-serif;font-size:16px;box-sizing:border-box;min-height:110px;background:#ffffff;color:#2a2420;line-height:1.5"></textarea>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+                <label style="display:flex;align-items:flex-start;gap:8px"><input type="radio" name="kesimpulan2" value="Setiap anggota A berpasangan tepat satu anggota B, dan setiap anggota B juga tepat satu anggota A."> Setiap anggota A berpasangan tepat satu anggota B, dan setiap anggota B juga tepat satu anggota A.</label>
+                <label style="display:flex;align-items:flex-start;gap:8px"><input type="radio" name="kesimpulan2" value="Satu anggota A bisa berpasangan dengan banyak anggota B."> Satu anggota A bisa berpasangan dengan banyak anggota B.</label>
+                <label style="display:flex;align-items:flex-start;gap:8px"><input type="radio" name="kesimpulan2" value="Korespondensi satu-satu tidak perlu pasangan tetap."> Korespondensi satu-satu tidak perlu pasangan tetap.</label>
+              </div>
             </div>
 
             <div style="margin:16px 0">
               <p style="margin:8px 0;color:#2a2420;font-size:15px;font-weight:700">3. Sebutkan contoh lain dari korespondensi satu-satu dalam kehidupan sehari-hari!</p>
-              <textarea id="jawabanKesimpulan3" placeholder="Contoh: Setiap orang dengan KTP-nya..." style="width:100%;padding:14px;border-radius:8px;border:3px solid #6b5542;font-family:Arial,sans-serif;font-size:16px;box-sizing:border-box;min-height:110px;background:#ffffff;color:#2a2420;line-height:1.5"></textarea>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan3" value="Setiap orang dengan satu NIK pada KTP."> Setiap orang dengan satu NIK pada KTP.</label>
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan3" value="Siswa dengan banyak mata pelajaran."> Siswa dengan banyak mata pelajaran.</label>
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan3" value="Satu alamat email dipakai banyak orang."> Satu alamat email dipakai banyak orang.</label>
+              </div>
+            </div>
+
+            <div style="margin:16px 0">
+              <p style="margin:8px 0;color:#2a2420;font-size:15px;font-weight:700">4. Bagaimana perasaanmu setelah belajar pada pertemuan kali ini?</p>
+              <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan4" value="Senang dan lebih paham konsep korespondensi satu-satu."> Senang dan lebih paham konsep korespondensi satu-satu.</label>
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan4" value="Cukup paham, tapi masih perlu latihan lagi."> Cukup paham, tapi masih perlu latihan lagi.</label>
+                <label style="display:flex;align-items:center;gap:8px"><input type="radio" name="kesimpulan4" value="Masih bingung dan perlu bimbingan tambahan."> Masih bingung dan perlu bimbingan tambahan.</label>
+              </div>
             </div>
           </div>
 
@@ -2001,6 +2111,26 @@ h1, h2 {
   </div>
 </div>
 
+  <button id="tutorLauncher" class="tutor-launcher" type="button">Aktifkan Tutor</button>
+  <aside id="tutorPanel" class="tutor-panel" aria-live="polite">
+    <div class="tutor-head">
+      <div class="tutor-avatar" aria-hidden="true">👩‍🏫</div>
+      <div>
+        <div class="tutor-title">Tutor Virtual</div>
+        <div id="tutorProgress" class="tutor-progress">Panduan aktif</div>
+      </div>
+    </div>
+    <div id="tutorBubble" class="tutor-bubble">Halo, saya akan membantu langkah demi langkah di pertemuan ini.</div>
+    <div id="tutorStatus" class="tutor-status">Klik Aktifkan Tutor untuk mulai panduan.</div>
+    <div class="tutor-actions">
+      <button id="tutorPrev" class="btn ghost" type="button">Sebelumnya</button>
+      <button id="tutorNext" class="btn" type="button">Berikutnya</button>
+      <button id="tutorRepeat" class="btn ghost" type="button">Ulangi</button>
+      <button id="tutorVoice" class="btn ghost" type="button">Suara: Off</button>
+      <button id="tutorStop" class="btn ghost" type="button">Tutup</button>
+    </div>
+  </aside>
+
 <script>
 // ============================================
 // GLOBAL VARIABLES & INITIALIZATION
@@ -2019,6 +2149,183 @@ var diagramInteraktif = {
 };
 var draggingFromPoint = null;
 var currentDragLine = null;
+
+// Tutor virtual
+var tutorState = {
+  active: false,
+  stepIndex: 0,
+  highlightedEl: null
+};
+var tutorVoiceOn = false;
+var tutorVoices = [];
+
+var tutorSteps = [
+  { slide: 'start', target: '#start .btn', text: 'Mulai dari tombol Mulai Pembelajaran untuk masuk ke alur utama.', status: 'Langkah awal pertemuan.' },
+  { slide: 'identitas-kelompok', target: '#btnSimpanKelompok', text: 'Isi data kelompok terlebih dahulu lalu tekan Simpan Data Kelompok.', status: 'Pastikan nama kelompok dan anggota sudah terisi.' },
+  { slide: 'eksplorasi-interaktif', target: '#hasilPasangan', text: 'Pasangkan pemain putra dan putri sampai status pasangan 4/4.', status: 'Setiap pemain hanya boleh satu pasangan.' },
+  { slide: 'perumusan-pengertian', target: '#feedbackPengertian', text: 'Pilih pengertian yang tepat, centang ciri-ciri benar, lalu validasi.', status: 'Tombol lanjut muncul setelah jawaban benar.' },
+  { slide: 'analisis-pola', target: '#feedbackAnalisis', text: 'Isi analisis pola sampai mendapatkan total 24, lalu cek jawaban.', status: 'Gunakan urutan 4 x 3 x 2 x 1.' },
+  { slide: 'diagram-panah', target: '#diagramSVG', text: 'Buat diagram panah, lalu validasi korespondensi satu-satu.', status: 'Setelah valid, lanjut ke Gallery Walk.' },
+  { slide: 'penyajian-hasil-karya', target: '#btnSimpanPenyajianKorespondensi', text: 'Simpan penyajian diagram panah agar tampil dan bisa dikomentari.', status: 'Tambahkan deskripsi singkat penyajian.' },
+  { slide: 'kesimpulan-kelompok', target: '#feedbackKesimpulan', text: 'Jawab semua pilihan kesimpulan lalu simpan hasil kelompok.', status: 'Setelah tersimpan, hasil siap diunduh PDF.' }
+];
+
+function clearTutorHighlight() {
+  if (tutorState.highlightedEl) {
+    tutorState.highlightedEl.classList.remove('tutor-target-highlight');
+    tutorState.highlightedEl = null;
+  }
+}
+
+function renderTutorStep() {
+  var bubble = document.getElementById('tutorBubble');
+  var progress = document.getElementById('tutorProgress');
+  var status = document.getElementById('tutorStatus');
+  if (!bubble || !progress || !status || tutorSteps.length === 0) return;
+
+  var step = tutorSteps[tutorState.stepIndex] || tutorSteps[0];
+  progress.textContent = 'Langkah ' + (tutorState.stepIndex + 1) + ' dari ' + tutorSteps.length;
+  bubble.textContent = step.text;
+  status.textContent = step.status || '';
+
+  clearTutorHighlight();
+  if (step.target) {
+    var target = document.querySelector(step.target);
+    if (target) {
+      target.classList.add('tutor-target-highlight');
+      tutorState.highlightedEl = target;
+    }
+  }
+
+  if (tutorVoiceOn) {
+    speakTutor(step.text + ' ' + (step.status || ''));
+  }
+}
+
+function stopTutorSpeech() {
+  if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+  }
+}
+
+function pickTutorVoice(voices) {
+  if (!voices || voices.length === 0) return null;
+  var idVoice = null;
+  for (var i = 0; i < voices.length; i++) {
+    var v = voices[i];
+    var text = String((v.lang || '') + ' ' + (v.name || '')).toLowerCase();
+    if (text.indexOf('id') >= 0 || text.indexOf('indonesia') >= 0) {
+      idVoice = v;
+      if (text.indexOf('female') >= 0 || text.indexOf('woman') >= 0 || text.indexOf('perempuan') >= 0) {
+        return v;
+      }
+    }
+  }
+  return idVoice || voices[0];
+}
+
+function speakTutor(text) {
+  if (!tutorVoiceOn || !window.speechSynthesis || !text) return;
+  stopTutorSpeech();
+  var utter = new SpeechSynthesisUtterance(text);
+  var voice = pickTutorVoice(tutorVoices);
+  if (voice) utter.voice = voice;
+  utter.lang = voice && voice.lang ? voice.lang : 'id-ID';
+  utter.rate = 1;
+  utter.pitch = 1;
+  window.speechSynthesis.speak(utter);
+}
+
+function findTutorStepBySlide(slideId) {
+  for (var i = 0; i < tutorSteps.length; i++) {
+    if (tutorSteps[i].slide === slideId) return i;
+  }
+  return -1;
+}
+
+function updateTutorForSlide(slideId) {
+  if (!tutorState.active) return;
+  var idx = findTutorStepBySlide(slideId);
+  if (idx >= 0) {
+    tutorState.stepIndex = idx;
+    renderTutorStep();
+  }
+}
+
+function initTutorVirtual() {
+  var launcher = document.getElementById('tutorLauncher');
+  var panel = document.getElementById('tutorPanel');
+  var btnPrev = document.getElementById('tutorPrev');
+  var btnNext = document.getElementById('tutorNext');
+  var btnRepeat = document.getElementById('tutorRepeat');
+  var btnVoice = document.getElementById('tutorVoice');
+  var btnStop = document.getElementById('tutorStop');
+  if (!launcher || !panel || !btnPrev || !btnNext || !btnRepeat || !btnVoice || !btnStop) return;
+
+  if (window.speechSynthesis) {
+    tutorVoices = window.speechSynthesis.getVoices() || [];
+    window.speechSynthesis.onvoiceschanged = function() {
+      tutorVoices = window.speechSynthesis.getVoices() || [];
+    };
+  }
+
+  launcher.addEventListener('click', function() {
+    tutorState.active = !tutorState.active;
+    if (tutorState.active) {
+      panel.classList.add('show');
+      launcher.textContent = 'Tutor Aktif';
+      var activeSlide = document.querySelector('.slide.active');
+      var idx = activeSlide ? findTutorStepBySlide(activeSlide.id) : 0;
+      tutorState.stepIndex = idx >= 0 ? idx : 0;
+      renderTutorStep();
+    } else {
+      panel.classList.remove('show');
+      launcher.textContent = 'Aktifkan Tutor';
+      clearTutorHighlight();
+      stopTutorSpeech();
+    }
+  });
+
+  btnPrev.addEventListener('click', function() {
+    if (!tutorState.active) return;
+    tutorState.stepIndex = (tutorState.stepIndex - 1 + tutorSteps.length) % tutorSteps.length;
+    var step = tutorSteps[tutorState.stepIndex];
+    if (step && step.slide) show(step.slide);
+    renderTutorStep();
+  });
+
+  btnNext.addEventListener('click', function() {
+    if (!tutorState.active) return;
+    tutorState.stepIndex = (tutorState.stepIndex + 1) % tutorSteps.length;
+    var step = tutorSteps[tutorState.stepIndex];
+    if (step && step.slide) show(step.slide);
+    renderTutorStep();
+  });
+
+  btnRepeat.addEventListener('click', function() {
+    if (!tutorState.active) return;
+    renderTutorStep();
+  });
+
+  btnVoice.addEventListener('click', function() {
+    tutorVoiceOn = !tutorVoiceOn;
+    btnVoice.textContent = tutorVoiceOn ? 'Suara: On' : 'Suara: Off';
+    if (tutorVoiceOn && tutorState.active) {
+      var step = tutorSteps[tutorState.stepIndex] || tutorSteps[0];
+      speakTutor(step.text + ' ' + (step.status || ''));
+    } else {
+      stopTutorSpeech();
+    }
+  });
+
+  btnStop.addEventListener('click', function() {
+    tutorState.active = false;
+    panel.classList.remove('show');
+    launcher.textContent = 'Aktifkan Tutor';
+    clearTutorHighlight();
+    stopTutorSpeech();
+  });
+}
 
 // ============================================
 // NAVIGATION FUNCTIONS
@@ -2091,6 +2398,7 @@ function prevSlide() {
 
 document.addEventListener('DOMContentLoaded', function() {
   console.log('DOM Content Loaded');
+  initTutorVirtual();
   
   // FRESH LOAD: Clear identitas kelompok data
   localStorage.removeItem('daftarAnggotaTerdaftar');
@@ -2360,22 +2668,18 @@ function pilihCiri(checkbox) {
 }
 
 function cekPengertianSiswa() {
-  var pengertian = document.getElementById('pengertianSiswa').value.trim();
+  var pengertianSelected = document.querySelector('input[name="pengertianPilihan"]:checked');
   var feedback = document.getElementById('feedbackPengertian');
   feedback.innerHTML = '';
 
-  // Validasi: pengertian harus ada
-  if (!pengertian) {
-    feedback.innerHTML = '<p style="color:#c17070">❌ Tuliskan pengertian dengan kata-katamu sendiri ya!</p>';
+  // Validasi: pilihan pengertian harus dipilih
+  if (!pengertianSelected) {
+    feedback.innerHTML = '<p style="color:#c17070">❌ Pilih salah satu jawaban pengertian terlebih dahulu!</p>';
     return;
   }
 
-  // Validasi: minimal harus mengandung kata kunci
-  var katakunci = ['satu', 'tepat', 'berpasang', 'setiap', 'himpunan'];
-  var ketemu = katakunci.some(kata => pengertian.toLowerCase().includes(kata));
-
-  if (!ketemu) {
-    feedback.innerHTML = '<p style="color:#d4a574">⚠️ Pengertianmu sudah ada, tapi coba gunakan kata kunci: "satu", "tepat", "berpasangan", "setiap anggota", "himpunan"</p>';
+  if (!pengertianSelected.value.includes('tepat satu')) {
+    feedback.innerHTML = '<p style="color:#d4a574">⚠️ Coba cek lagi. Kunci korespondensi satu-satu adalah setiap anggota berpasangan dengan TEPAT SATU anggota.</p>';
     return;
   }
 
@@ -2392,7 +2696,7 @@ function cekPengertianSiswa() {
   feedback.innerHTML = '<p style="color:#7ab89a">✅ Sempurna! Pengertianmu sudah tepat!</p><p style="color:#6fa889;margin-top:8px"><strong>Kesimpulan:</strong> Korespondensi satu-satu adalah relasi yang memasangkan setiap anggota himpunan A dengan TEPAT SATU anggota himpunan B, dan sebaliknya.</p>';
   
   // Simpan hasil
-  localStorage.setItem('pengertianSiswa_' + namaKelompok, pengertian);
+  localStorage.setItem('pengertianSiswa_' + namaKelompok, pengertianSelected.value);
   
   // Tampilkan tombol lanjut
   document.getElementById('btnLanjutAnalisis2').style.display = 'block';
@@ -2415,6 +2719,7 @@ window.addEventListener('DOMContentLoaded', () => {
 var originalShow = show;
 show = function(id) {
   originalShow(id);
+  updateTutorForSlide(id);
   
   // Saat ke slide perumusan, update ringkasan
   if (id === 'perumusan-pengertian') {
@@ -3088,7 +3393,31 @@ function validateAndShowResult() {
     if (diagramSVG && typeof html2canvas !== 'undefined') {
       html2canvas(diagramSVG, { backgroundColor: '#f8f8f8', scale: 2 })
         .then(function(canvas) {
-          localStorage.setItem('diagramPanahImageSnapshot', canvas.toDataURL('image/png'));
+          var imageData = canvas.toDataURL('image/png');
+          localStorage.setItem('diagramPanahImageSnapshot', imageData);
+
+          // Otomatis siapkan data penyajian agar gambar langsung tampil di Gallery Walk
+          var penyajianTersimpan = {};
+          try {
+            penyajianTersimpan = JSON.parse(localStorage.getItem('penyajianKorespondensiKelompok') || '{}');
+          } catch (parseErr) {
+            penyajianTersimpan = {};
+          }
+
+          var deskripsiTersimpan = penyajianTersimpan.deskripsi ||
+            'Diagram panah sudah divalidasi sebagai korespondensi satu-satu.';
+
+          var penyajianAuto = {
+            bentuk: 'diagram-panah',
+            deskripsi: deskripsiTersimpan,
+            diagramImage: imageData,
+            timestamp: new Date().toLocaleString('id-ID')
+          };
+          localStorage.setItem('penyajianKorespondensiKelompok', JSON.stringify(penyajianAuto));
+
+          if (typeof tampilkanPenyajianDanKomentar === 'function') {
+            tampilkanPenyajianDanKomentar();
+          }
         })
         .catch(function(err) {
           console.warn('Gagal menyimpan snapshot diagram:', err);
@@ -3239,14 +3568,19 @@ function generatePermutations(arr) {
 
 // 4.4: Simpan Kesimpulan
 function simpanKesimpulan() {
-  var jawaban1 = document.getElementById('jawabanKesimpulan1').value.trim();
-  var jawaban2 = document.getElementById('jawabanKesimpulan2').value.trim();
-  var jawaban3 = document.getElementById('jawabanKesimpulan3').value.trim();
+  var jawaban1El = document.querySelector('input[name="kesimpulan1"]:checked');
+  var jawaban2El = document.querySelector('input[name="kesimpulan2"]:checked');
+  var jawaban3El = document.querySelector('input[name="kesimpulan3"]:checked');
+  var jawaban4El = document.querySelector('input[name="kesimpulan4"]:checked');
+  var jawaban1 = jawaban1El ? jawaban1El.value : '';
+  var jawaban2 = jawaban2El ? jawaban2El.value : '';
+  var jawaban3 = jawaban3El ? jawaban3El.value : '';
+  var jawaban4 = jawaban4El ? jawaban4El.value : '';
   
   var feedback = document.getElementById('feedbackKesimpulan');
   
-  if (!jawaban1 || !jawaban2 || !jawaban3) {
-    feedback.textContent = '⚠️ Mohon isi semua pertanyaan refleksi!';
+  if (!jawaban1 || !jawaban2 || !jawaban3 || !jawaban4) {
+    feedback.textContent = '⚠️ Mohon pilih semua jawaban kesimpulan!';
     feedback.className = 'feedback-box warning';
     feedback.style.display = 'block';
     return;
@@ -3257,6 +3591,7 @@ function simpanKesimpulan() {
     jawaban1: jawaban1,
     jawaban2: jawaban2,
     jawaban3: jawaban3,
+    jawaban4: jawaban4,
     timestamp: new Date().toISOString()
   };
   
@@ -3452,39 +3787,12 @@ btnKirimKomentarKorespondensi?.addEventListener('click', () => {
   // Reset input
   document.getElementById('komentarPeerReviewKorespondensi').value = '';
   
-  // Tampilkan komentar
-  tampilkanKomentarKorespondensi();
+  // Tampilkan ulang kartu penyajian + komentar
+  tampilkanPenyajianDanKomentar();
   
   // Notifikasi sukses
   alert(`✅ Saran dari "${namaKelompok}" berhasil dikirim!`);
 });
-
-  // Update tampilkan call setelah komentar dikirim
-  btnKirimKomentarKorespondensi?.addEventListener('click', () => {
-    const namaKelompok = document.getElementById('namaKelompokKomentarKorespondensi')?.value.trim();
-    const komentar = document.getElementById('komentarPeerReviewKorespondensi')?.value.trim();
-  
-    if (!namaKelompok || !komentar || komentar.length < 15) return;
-  
-    daftarKomentarKorespondensi.push({
-      kelompok: namaKelompok,
-      komentar: komentar,
-      waktu: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
-    });
-    localStorage.setItem('komentarPeerReviewKorespondensi', JSON.stringify(daftarKomentarKorespondensi));
-    document.getElementById('komentarPeerReviewKorespondensi').value = '';
-    tampilkanPenyajianDanKomentar();
-  });
-
-// Load komentar saat halaman dibuka
-if (komentarListKorespondensi) {
-  tampilkanKomentarKorespondensi();
-}
-
-// Load penyajian dan komentar saat halaman dibuka
-if (komentarListKorespondensi) {
-  tampilkanPenyajianDanKomentar();
-}
 
 // Load penyajian dan komentar saat halaman dibuka
 if (komentarListKorespondensi) {
@@ -4422,6 +4730,8 @@ async function downloadHasil() {
       addText(`2) Apa yang kalian pahami tentang korespondensi satu-satu setelah melakukan investigasi ini?: ${kesimpulan.jawaban2 || '-'}`);
       yPos += 5;
       addText(`3) Sebutkan contoh lain dari korespondensi satu-satu dalam kehidupan sehari-hari!: ${kesimpulan.jawaban3 || '-'}`);
+      yPos += 5;
+      addText(`4) Bagaimana perasaanmu setelah belajar pada pertemuan kali ini?: ${kesimpulan.jawaban4 || '-'}`);
     }catch(e){
       addText('Data kesimpulan tidak valid');
     }
