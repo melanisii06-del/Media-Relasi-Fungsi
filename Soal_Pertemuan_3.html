@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soal Pertemuan 3</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#ffcb64;
+    --panel:#fff7e8;
+    --accent:#3e2723;
+    --muted:#6b4b3a;
+    --info:#0284c7;
+  }
+  html,body{
+    margin:0;
+    min-height:100%;
+    font-family:"Times New Roman", Times, serif;
+    background:linear-gradient(135deg, #ffcb64 0%, #ffc850 50%, #ffb84d 100%);
+    color:var(--accent);
+  }
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35), transparent 40%);
+    pointer-events:none;
+  }
+  .page{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 18px 42px;
+    box-sizing:border-box;
+  }
+  .card{
+    background:linear-gradient(180deg, #fffaf0 0%, var(--panel) 100%);
+    border-radius:20px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.12);
+    padding:28px 22px;
+  }
+  .header{
+    text-align:center;
+    margin-bottom:22px;
+  }
+  h1{
+    margin:0 0 8px;
+    font-family:Cambria, "Times New Roman", serif;
+    font-size:36px;
+    font-weight:700;
+  }
+  .lead{
+    margin:0;
+    font-family:Cambria, "Times New Roman", serif;
+    font-size:19px;
+    color:var(--muted);
+  }
+  .question-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .question-item{
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.08);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 8px 18px rgba(0,0,0,0.05);
+  }
+  .question-no{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:36px;
+    height:36px;
+    border-radius:999px;
+    background:linear-gradient(135deg, #0284c7, #38bdf8);
+    color:#fff;
+    font-weight:700;
+    margin-bottom:12px;
+  }
+  .question-text{
+    margin:0;
+    font-size:17px;
+    line-height:1.75;
+    white-space:pre-line;
+  }
+  .hint{
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:12px;
+    background:#f4fbff;
+    border-left:4px solid var(--info);
+    color:#5b4636;
+    font-size:16px;
+    font-style:italic;
+    line-height:1.65;
+  }
+  .diagram-box{
+    margin-top:14px;
+    padding:12px;
+    border-radius:12px;
+    border:1px solid rgba(0,0,0,0.12);
+    background:#fff;
+    overflow:auto;
+  }
+  .arrow-diagram{
+    width:240px;
+    max-width:100%;
+    height:auto;
+    display:block;
+    margin:0 auto;
+  }
+  .footer-note{
+    margin-top:22px;
+    padding:14px 16px;
+    border-radius:14px;
+    background:#fff;
+    border:1px dashed rgba(0,0,0,0.12);
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.65;
+  }
+  .submission-box,
+  .download-box{
+    margin-top:16px;
+    padding:16px;
+    border-radius:14px;
+    border:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 10px 20px rgba(0,0,0,0.05);
+  }
+  .submission-box{
+    background:linear-gradient(135deg, #ffffff 0%, #fff4d6 100%);
+  }
+  .download-box{
+    background:linear-gradient(135deg, #fffdf5 0%, #fff3db 100%);
+  }
+  .submission-label,
+  .download-label{
+    margin:0 0 8px;
+    font-weight:700;
+    font-size:15px;
+    color:var(--accent);
+  }
+  .submission-link,
+  .download-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 18px;
+    border-radius:999px;
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .submission-link{
+    background:linear-gradient(135deg, #0284c7, #0ea5e9);
+    box-shadow:0 8px 18px rgba(2,132,199,0.28);
+  }
+  .download-btn{
+    border:none;
+    cursor:pointer;
+    background:linear-gradient(135deg, #14532d, #15803d);
+    box-shadow:0 8px 18px rgba(21,128,61,0.28);
+    font-family:"Times New Roman", Times, serif;
+    font-size:16px;
+  }
+  .submission-link:hover,
+  .download-btn:hover{
+    transform:translateY(-1px);
+  }
+  .submission-help,
+  .download-status{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.6;
+  }
+  @media (max-width: 720px){
+    .page{padding:14px}
+    .card{padding:18px 14px}
+    h1{font-size:32px}
+    .lead{font-size:18px}
+    .question-text{font-size:16px}
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="header">
+        <h1>Soal Pertemuan 3</h1>
+        <p class="lead">Relasi dan Fungsi</p>
+      </div>
+
+      <div class="question-list">
+        <div class="question-item">
+          <div class="question-no">1</div>
+          <p class="question-text">Hasna dan Rifki sedang berdebat mengenai diagram panah yang disajikan oleh gurunya di kelas. Menurut Rifki, diagram panah tersebut merupakan suatu fungsi. Menurut Hasna, diagram panah tersebut bukan merupakan suatu fungsi. Menurutmu, pendapat mana yang benar? Jelaskan mengapa kamu setuju dengan pendapat Hasna atau Rifki.</p>
+          <div class="diagram-box" aria-label="Diagram panah soal nomor 1">
+            <svg class="arrow-diagram" viewBox="0 0 240 140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram panah: A ke 1, B ke 2, D ke 2, C tidak memiliki panah">
+              <defs>
+                <marker id="arrowHead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L10,4 L0,8 z" fill="#111"/>
+                </marker>
+              </defs>
+
+              <ellipse cx="58" cy="70" rx="36" ry="58" fill="none" stroke="#111" stroke-width="2"/>
+              <ellipse cx="183" cy="70" rx="36" ry="58" fill="none" stroke="#111" stroke-width="2"/>
+
+              <circle cx="70" cy="46" r="3.8" fill="#111"/>
+              <circle cx="70" cy="68" r="3.8" fill="#111"/>
+              <circle cx="70" cy="90" r="3.8" fill="#111"/>
+              <circle cx="70" cy="112" r="3.8" fill="#111"/>
+
+              <circle cx="171" cy="40" r="3.8" fill="#111"/>
+              <circle cx="171" cy="62" r="3.8" fill="#111"/>
+              <circle cx="171" cy="84" r="3.8" fill="#111"/>
+              <circle cx="171" cy="106" r="3.8" fill="#111"/>
+
+              <text x="52" y="49" font-size="14" font-family="Times New Roman, Times, serif">A</text>
+              <text x="52" y="71" font-size="14" font-family="Times New Roman, Times, serif">B</text>
+              <text x="52" y="93" font-size="14" font-family="Times New Roman, Times, serif">C</text>
+              <text x="52" y="115" font-size="14" font-family="Times New Roman, Times, serif">D</text>
+
+              <text x="178" y="43" font-size="14" font-family="Times New Roman, Times, serif">1</text>
+              <text x="178" y="65" font-size="14" font-family="Times New Roman, Times, serif">2</text>
+              <text x="178" y="87" font-size="14" font-family="Times New Roman, Times, serif">3</text>
+              <text x="178" y="109" font-size="14" font-family="Times New Roman, Times, serif">4</text>
+
+              <line x1="75" y1="46" x2="165" y2="40" stroke="#111" stroke-width="2" marker-end="url(#arrowHead)"/>
+              <line x1="75" y1="68" x2="165" y2="62" stroke="#111" stroke-width="2" marker-end="url(#arrowHead)"/>
+              <line x1="75" y1="112" x2="165" y2="62" stroke="#111" stroke-width="2" marker-end="url(#arrowHead)"/>
+            </svg>
+          </div>
+          <div class="hint">Petunjuk: syarat fungsi adalah setiap anggota domain memiliki tepat satu pasangan di kodomain. Perhatikan elemen yang tidak memiliki panah atau memiliki lebih dari satu panah.</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-no">2</div>
+          <p class="question-text">Raisa, Zidan, dan Fadli adalah admin sosial media kelas VIIIA. Jenis konten yang akan diunggah adalah pendidikan dan hiburan. Setiap admin bertanggung jawab mengunggah tepat satu jenis konten, dan satu jenis konten dapat dipilih oleh lebih dari satu admin. Agar konten yang diunggah tidak monoton, wali kelas ingin mengetahui seluruh kemungkinan pembagian jenis konten yang dapat terjadi. Bantulah wali kelas untuk menentukan banyaknya kemungkinan variasi konten tersebut.</p>
+          <div class="hint">Petunjuk: modelkan sebagai pemetaan dari himpunan admin ke himpunan jenis konten, lalu tentukan banyak kemungkinan fungsi yang terbentuk.</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-no">3</div>
+          <p class="question-text">Tiga kelompok siswa kelas VIIIE akan melakukan presentasi, yaitu kelompok A, kelompok B, dan kelompok C. Sekolah menyediakan 2 ruang presentasi, yaitu ruang 1 dan ruang 2. Pembagian yang direncanakan adalah: kelompok A menempati ruang 1, kelompok B menempati ruang 2, dan kelompok C menempati ruang 2 serta ruang 1. Analisislah apakah rencana pembagian ruang tersebut merupakan fungsi. Jika bukan fungsi, perbaikilah pembagian ruang agar menjadi fungsi, kemudian sajikan hasil perbaikan ke dalam diagram Kartesius.</p>
+          <div class="hint">Petunjuk: setiap kelompok hanya boleh dipasangkan ke satu ruang agar memenuhi definisi fungsi.</div>
+        </div>
+      </div>
+
+      <div class="footer-note">Catatan: file ini khusus untuk Soal Pertemuan 3. Jika dipanggil lewat iframe dari file utama, konten soal tetap bisa diperbarui tanpa mengubah menu utama.</div>
+
+      <div class="submission-box">
+        <div class="submission-label">Link Pengumpulan Tugas</div>
+        <div class="submission-help">Silakan kumpulkan jawaban tugas melalui tombol di bawah ini.</div>
+        <a class="submission-link" href="https://forms.gle/95mnJwRKZre78Zrx5" target="_blank" rel="noopener noreferrer">Kirim Tugas di Sini</a>
+        <div class="submission-help">Tautan akan membuka Google Form untuk pengumpulan jawaban.</div>
+      </div>
+
+      <div class="download-box">
+        <div class="download-label">Download Soal PDF</div>
+        <div class="submission-help">Unduh ketiga soal dalam satu file PDF untuk dibagikan atau dicetak.</div>
+        <button id="btnDownloadSoalPdf" class="download-btn" type="button">Download 3 Soal (PDF)</button>
+        <div id="downloadStatus" class="download-status"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  (function () {
+    const btn = document.getElementById('btnDownloadSoalPdf');
+    const status = document.getElementById('downloadStatus');
+
+    if (!btn) return;
+
+    function setStatus(message, isError) {
+      if (!status) return;
+      status.textContent = message;
+      status.style.color = isError ? '#b91c1c' : '#6b4b3a';
+    }
+
+    function addWrappedText(doc, text, x, maxWidth, yRef, lineHeight) {
+      const lines = doc.splitTextToSize(text, maxWidth);
+      const pageHeight = doc.internal.pageSize.getHeight();
+      lines.forEach((line) => {
+        if (yRef.value > pageHeight - 20) {
+          doc.addPage();
+          yRef.value = 20;
+        }
+        doc.text(line, x, yRef.value);
+        yRef.value += lineHeight;
+      });
+    }
+
+    btn.addEventListener('click', function () {
+      if (!window.jspdf || !window.jspdf.jsPDF) {
+        setStatus('Gagal: library PDF belum termuat. Coba muat ulang halaman.', true);
+        return;
+      }
+
+      try {
+        setStatus('Sedang membuat PDF...');
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const yRef = { value: 20 };
+        const marginX = 15;
+        const contentWidth = 180;
+
+        const title = (document.querySelector('h1')?.textContent || 'Soal Pertemuan 3').trim();
+        const subtitle = (document.querySelector('.lead')?.textContent || '').trim();
+        const questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+        doc.setFont('times', 'bold');
+        doc.setFontSize(16);
+        doc.text(title, marginX, yRef.value);
+        yRef.value += 8;
+
+        doc.setFont('times', 'normal');
+        doc.setFontSize(11);
+        if (subtitle) {
+          addWrappedText(doc, subtitle, marginX, contentWidth, yRef, 6);
+          yRef.value += 2;
+        }
+
+        const printedDate = new Date().toLocaleDateString('id-ID', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        doc.setFontSize(10);
+        doc.text('Tanggal unduh: ' + printedDate, marginX, yRef.value);
+        yRef.value += 10;
+
+        doc.setFontSize(12);
+        questionItems.forEach((item, index) => {
+          const qText = (item.querySelector('.question-text')?.textContent || '').replace(/\s+/g, ' ').trim();
+          const hint = (item.querySelector('.hint')?.textContent || '').replace(/\s+/g, ' ').trim();
+
+          doc.setFont('times', 'bold');
+          addWrappedText(doc, 'Soal ' + (index + 1), marginX, contentWidth, yRef, 7);
+
+          doc.setFont('times', 'normal');
+          addWrappedText(doc, qText, marginX, contentWidth, yRef, 6);
+
+          if (hint) {
+            yRef.value += 1;
+            doc.setFont('times', 'italic');
+            addWrappedText(doc, hint, marginX, contentWidth, yRef, 6);
+            doc.setFont('times', 'normal');
+          }
+
+          yRef.value += 5;
+        });
+
+        const fileName = 'Soal_Pertemuan_3_' + new Date().toISOString().slice(0, 10) + '.pdf';
+        doc.save(fileName);
+        setStatus('PDF berhasil diunduh: ' + fileName, false);
+      } catch (error) {
+        setStatus('Gagal membuat PDF. Silakan coba lagi.', true);
+        console.error('Error generate PDF soal:', error);
+      }
+    });
+  })();
+</script>
+</body>
+</html>

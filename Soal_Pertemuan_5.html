@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soal Pertemuan 5</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#ffcb64;
+    --panel:#fff7e8;
+    --accent:#3e2723;
+    --muted:#6b4b3a;
+    --info:#0284c7;
+  }
+  html,body{
+    margin:0;
+    min-height:100%;
+    font-family:"Times New Roman", Times, serif;
+    background:linear-gradient(135deg, #ffcb64 0%, #ffc850 50%, #ffb84d 100%);
+    color:var(--accent);
+  }
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at 20% 20%, rgba(255,255,255,0.35), transparent 40%);
+    pointer-events:none;
+  }
+  .page{
+    max-width:1100px;
+    margin:0 auto;
+    padding:28px 18px 42px;
+    box-sizing:border-box;
+  }
+  .card{
+    background:linear-gradient(180deg, #fffaf0 0%, var(--panel) 100%);
+    border-radius:20px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.12);
+    padding:28px 22px;
+  }
+  .header{
+    text-align:center;
+    margin-bottom:22px;
+  }
+  h1{
+    margin:0 0 8px;
+    font-family:Cambria, "Times New Roman", serif;
+    font-size:36px;
+    font-weight:700;
+  }
+  .lead{
+    margin:0;
+    font-family:Cambria, "Times New Roman", serif;
+    font-size:19px;
+    color:var(--muted);
+  }
+  .question-list{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .question-item{
+    background:#fff;
+    border:1px solid rgba(0,0,0,0.08);
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 8px 18px rgba(0,0,0,0.05);
+  }
+  .question-no{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:36px;
+    height:36px;
+    border-radius:999px;
+    background:linear-gradient(135deg, #0284c7, #38bdf8);
+    color:#fff;
+    font-weight:700;
+    margin-bottom:12px;
+  }
+  .question-text{
+    margin:0;
+    font-size:17px;
+    line-height:1.75;
+    white-space:pre-line;
+  }
+  .hint{
+    margin-top:12px;
+    padding:12px 14px;
+    border-radius:12px;
+    background:#f4fbff;
+    border-left:4px solid var(--info);
+    color:#5b4636;
+    font-size:16px;
+    font-style:italic;
+    line-height:1.65;
+  }
+  .footer-note{
+    margin-top:22px;
+    padding:14px 16px;
+    border-radius:14px;
+    background:#fff;
+    border:1px dashed rgba(0,0,0,0.12);
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.65;
+  }
+  .submission-box,
+  .download-box{
+    margin-top:16px;
+    padding:16px;
+    border-radius:14px;
+    border:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 10px 20px rgba(0,0,0,0.05);
+  }
+  .submission-box{
+    background:linear-gradient(135deg, #ffffff 0%, #fff4d6 100%);
+  }
+  .download-box{
+    background:linear-gradient(135deg, #fffdf5 0%, #fff3db 100%);
+  }
+  .submission-label,
+  .download-label{
+    margin:0 0 8px;
+    font-weight:700;
+    font-size:15px;
+    color:var(--accent);
+  }
+  .submission-link,
+  .download-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:12px 18px;
+    border-radius:999px;
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .submission-link{
+    background:linear-gradient(135deg, #0284c7, #0ea5e9);
+    box-shadow:0 8px 18px rgba(2,132,199,0.28);
+  }
+  .download-btn{
+    border:none;
+    cursor:pointer;
+    background:linear-gradient(135deg, #14532d, #15803d);
+    box-shadow:0 8px 18px rgba(21,128,61,0.28);
+    font-family:"Times New Roman", Times, serif;
+    font-size:16px;
+  }
+  .submission-link:hover,
+  .download-btn:hover{
+    transform:translateY(-1px);
+  }
+  .submission-help,
+  .download-status{
+    margin-top:10px;
+    color:var(--muted);
+    font-size:14px;
+    line-height:1.6;
+  }
+  @media (max-width: 720px){
+    .page{padding:14px}
+    .card{padding:18px 14px}
+    h1{font-size:32px}
+    .lead{font-size:18px}
+    .question-text{font-size:16px}
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="card">
+      <div class="header">
+        <h1>Soal Pertemuan 5</h1>
+        <p class="lead">Relasi dan Fungsi</p>
+      </div>
+
+      <div class="question-list">
+        <div class="question-item">
+          <div class="question-no">1</div>
+          <p class="question-text">Tarif parkir di sebuah Mall di Bandung berlaku sebagai berikut: kendaraan roda dua dikenakan tarif Rp. 2.000 untuk jam pertama, dan bertambah Rp. 1.000 untuk setiap jam berikutnya. Untuk kendaraan roda empat dikenakan tarif Rp. 3.000 untuk jam pertama, dan bertambah Rp. 2.000 untuk setiap jam berikutnya. Analisislah kebenaran dari pernyataan di bawah ini!
+
+a. Jika seseorang memarkirkan kendaraan roda dua selama 5 jam, maka biaya yang harus dibayarkan adalah Rp. 10.000.
+b. Jika seseorang memarkirkan kendaraan roda empat selama 7 jam, maka biaya yang harus dibayarkan adalah Rp. 17.000.</p>
+          <div class="hint">Petunjuk: hitung tarif jam pertama lalu tambahkan biaya untuk jam berikutnya sesuai aturan masing-masing kendaraan.</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-no">2</div>
+          <p class="question-text">Diketahui fungsi f(x) = 2x - 3 dengan daerah asal {x | -3 &lt; x &le; 2, x bilangan bulat}. Analisislah apakah himpunan berikut merupakan daerah hasil dari fungsi tersebut: {-7, -5, -3, -1, 1}. Jelaskan alasanmu.</p>
+          <div class="hint">Petunjuk: tentukan anggota domain, hitung nilai fungsi untuk setiap x, lalu bandingkan dengan himpunan daerah hasil yang diberikan.</div>
+        </div>
+
+        <div class="question-item">
+          <div class="question-no">3</div>
+          <p class="question-text">Platform TikTok memberikan reward berupa koin harian kepada pengguna yang menonton video. Untuk koin tetap (untuk 10 menit pertama) yaitu 500 koin dan ada penambahan koin untuk menit selanjutnya sebesar 10 koin per menit. Ketika weekend, Aslan memutuskan untuk scroll TikTok saja di rumah. Ia scroll TikTok selama 1 jam setengah. Analisislah koin yang akan Aslan dapatkan dari aktivitas tersebut, serta sajikanlah dalam bentuk diagram Kartesius.</p>
+          <div class="hint">Petunjuk: tentukan lama waktu dalam menit, pisahkan 10 menit pertama dan menit selanjutnya, lalu bentuk pasangan data untuk diagram Kartesius.</div>
+        </div>
+      </div>
+
+      <div class="footer-note">Catatan: file ini khusus untuk Soal Pertemuan 5. Jika dipanggil lewat iframe dari file utama, konten soal tetap bisa diperbarui tanpa mengubah menu utama.</div>
+
+      <div class="submission-box">
+        <div class="submission-label">Link Pengumpulan Tugas</div>
+        <div class="submission-help">Silakan kumpulkan jawaban tugas melalui tombol di bawah ini.</div>
+        <a class="submission-link" href="https://forms.gle/95mnJwRKZre78Zrx5" target="_blank" rel="noopener noreferrer">Kirim Tugas di Sini</a>
+        <div class="submission-help">Tautan akan membuka Google Form untuk pengumpulan jawaban.</div>
+      </div>
+
+      <div class="download-box">
+        <div class="download-label">Download Soal PDF</div>
+        <div class="submission-help">Unduh ketiga soal dalam satu file PDF untuk dibagikan atau dicetak.</div>
+        <button id="btnDownloadSoalPdf" class="download-btn" type="button">Download 3 Soal (PDF)</button>
+        <div id="downloadStatus" class="download-status"></div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  (function () {
+    const btn = document.getElementById('btnDownloadSoalPdf');
+    const status = document.getElementById('downloadStatus');
+
+    if (!btn) return;
+
+    function setStatus(message, isError) {
+      if (!status) return;
+      status.textContent = message;
+      status.style.color = isError ? '#b91c1c' : '#6b4b3a';
+    }
+
+    function addWrappedText(doc, text, x, maxWidth, yRef, lineHeight) {
+      const lines = doc.splitTextToSize(text, maxWidth);
+      const pageHeight = doc.internal.pageSize.getHeight();
+      lines.forEach((line) => {
+        if (yRef.value > pageHeight - 20) {
+          doc.addPage();
+          yRef.value = 20;
+        }
+        doc.text(line, x, yRef.value);
+        yRef.value += lineHeight;
+      });
+    }
+
+    btn.addEventListener('click', function () {
+      if (!window.jspdf || !window.jspdf.jsPDF) {
+        setStatus('Gagal: library PDF belum termuat. Coba muat ulang halaman.', true);
+        return;
+      }
+
+      try {
+        setStatus('Sedang membuat PDF...');
+
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF('p', 'mm', 'a4');
+        const yRef = { value: 20 };
+        const marginX = 15;
+        const contentWidth = 180;
+
+        const title = (document.querySelector('h1')?.textContent || 'Soal Pertemuan 5').trim();
+        const subtitle = (document.querySelector('.lead')?.textContent || '').trim();
+        const questionItems = Array.from(document.querySelectorAll('.question-item'));
+
+        doc.setFont('times', 'bold');
+        doc.setFontSize(16);
+        doc.text(title, marginX, yRef.value);
+        yRef.value += 8;
+
+        doc.setFont('times', 'normal');
+        doc.setFontSize(11);
+        if (subtitle) {
+          addWrappedText(doc, subtitle, marginX, contentWidth, yRef, 6);
+          yRef.value += 2;
+        }
+
+        const printedDate = new Date().toLocaleDateString('id-ID', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        doc.setFontSize(10);
+        doc.text('Tanggal unduh: ' + printedDate, marginX, yRef.value);
+        yRef.value += 10;
+
+        doc.setFontSize(12);
+        questionItems.forEach((item, index) => {
+          const qText = (item.querySelector('.question-text')?.textContent || '').replace(/\s+/g, ' ').trim();
+          const hint = (item.querySelector('.hint')?.textContent || '').replace(/\s+/g, ' ').trim();
+
+          doc.setFont('times', 'bold');
+          addWrappedText(doc, 'Soal ' + (index + 1), marginX, contentWidth, yRef, 7);
+
+          doc.setFont('times', 'normal');
+          addWrappedText(doc, qText, marginX, contentWidth, yRef, 6);
+
+          if (hint) {
+            yRef.value += 1;
+            doc.setFont('times', 'italic');
+            addWrappedText(doc, hint, marginX, contentWidth, yRef, 6);
+            doc.setFont('times', 'normal');
+          }
+
+          yRef.value += 5;
+        });
+
+        const fileName = 'Soal_Pertemuan_5_' + new Date().toISOString().slice(0, 10) + '.pdf';
+        doc.save(fileName);
+        setStatus('PDF berhasil diunduh: ' + fileName, false);
+      } catch (error) {
+        setStatus('Gagal membuat PDF. Silakan coba lagi.', true);
+        console.error('Error generate PDF soal:', error);
+      }
+    });
+  })();
+</script>
+</body>
+</html>
