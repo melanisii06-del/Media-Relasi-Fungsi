@@ -1315,6 +1315,17 @@ h1, h2 {
       <div style="background:var(--panel);padding:16px;border-radius:10px;border-left:4px solid var(--accent);margin-top:20px">
         <h3 style="color:var(--accent);margin-top:0;font-size:16px">🎨 Gallery Walk - Beri Komentar Antar Kelompok</h3>
         <p style="font-size:13px;color:var(--muted);margin:8px 0">Kunjungi hasil pekerjaan kelompok lain dan berikan komentar konstruktif:</p>
+
+        <div style="margin:12px 0;background:#fff;padding:12px;border-radius:8px;border:1px solid rgba(0,0,0,0.08)">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+            <strong style="font-size:13px;color:var(--accent)">🖼️ Preview Karya untuk Gallery</strong>
+            <button class="btn ghost" id="btnUpdateGalleryImageT4" style="padding:6px 10px;font-size:12px">Perbarui Gambar</button>
+          </div>
+          <div id="galleryImageStatusT4" style="font-size:12px;color:#666;margin-bottom:8px">Belum ada gambar tersimpan.</div>
+          <div id="galleryImagePreviewWrapT4" style="display:none;background:#f8f8f8;border-radius:8px;padding:8px;text-align:center">
+            <img id="galleryImagePreviewT4" alt="Preview karya tahap 4" style="max-width:100%;border-radius:6px;border:1px solid #e0e0e0">
+          </div>
+        </div>
         
         <div style="margin:12px 0">
           <label style="display:block;margin-bottom:6px;font-weight:bold;font-size:13px;color:var(--accent)">Nama Kelompok Anda:</label>
@@ -1469,6 +1480,9 @@ window.selectQuizAnswer = function(quizId, answer) {
     }
     window.quizAnswers[quizId] = answer;
     
+    // SAVE via StorageManager
+    if(window.storage) window.storage.save('quiz_answers', window.quizAnswers);
+    
     // Find card element
     const card = document.getElementById('quiz-card-' + quizId);
     if(!card) {
@@ -1579,12 +1593,107 @@ window.selectQuizAnswer = function(quizId, answer) {
  document.body.addEventListener('click', (ev) => {
    const btn = ev.target.closest('[data-go]');
    if(!btn) return;
+
+   // Guard: ignore accidental navigation click while/after drag gestures.
+   if (window.__isDraggingGesture || (window.__suppressNavUntil && Date.now() < window.__suppressNavUntil)) {
+     ev.preventDefault();
+     ev.stopPropagation();
+     return;
+   }
+
    ev.preventDefault();
    const targetId = btn.getAttribute('data-go');
    if(!targetId) return;
+   
+   // SAVE CURRENT SLIDE
+   try {
+     if(window.storage) window.storage.save('currentSlide', targetId);
+   } catch(e){}
+   
    try { window.show(targetId); } catch(e){ console.error('Navigasi gagal ke', targetId, e); }
  });
 
+// ===== STORAGE MANAGER - SIMPAN DATA OTOMATIS =====
+window.StorageManager = {
+  dataKeys: [
+    'kelompokData', 'solusiAwalPertemuan1', 'kesimpulanHimpunan',
+    'placed_tahap1', 'quiz_answers', 'tahap2_level', 'tahap2_book_selection', 'tahap3_placed',
+    'tahap3_quiz', 'tahap4_selections', 'tahap4_kardinalitas', 'currentSlide', 'daftarAnggotaTerdaftar'
+  ],
+
+  save: function(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      console.log(`✅ [Storage] Saved: ${key}`);
+    } catch(e) {
+      console.warn(`⚠️ [Storage] Gagal menyimpan ${key}:`, e.message);
+    }
+  },
+
+  load: function(key, defaultValue = null) {
+    try {
+      const data = localStorage.getItem(key);
+      if(data === null) return defaultValue;
+      return JSON.parse(data);
+    } catch(e) {
+      console.warn(`⚠️ [Storage] Gagal load ${key}:`, e.message);
+      return defaultValue;
+    }
+  },
+
+  remove: function(key) {
+    try {
+      localStorage.removeItem(key);
+      console.log(`🗑️ [Storage] Removed: ${key}`);
+    } catch(e) {
+      console.warn(`⚠️ [Storage] Gagal hapus ${key}:`, e.message);
+    }
+  },
+
+  clear: function() {
+    try {
+      this.dataKeys.forEach(key => localStorage.removeItem(key));
+      console.log('🔄 [Storage] Semua data dihapus');
+    } catch(e) {
+      console.warn(`⚠️ [Storage] Gagal clear:`, e.message);
+    }
+  },
+
+  exportToJSON: function() {
+    const backup = {};
+    this.dataKeys.forEach(key => {
+      const value = localStorage.getItem(key);
+      if(value) backup[key] = JSON.parse(value);
+    });
+    return backup;
+  },
+
+  importFromJSON: function(jsonData) {
+    try {
+      Object.keys(jsonData).forEach(key => {
+        localStorage.setItem(key, JSON.stringify(jsonData[key]));
+      });
+      console.log('✅ [Storage] Data restore berhasil');
+    } catch(e) {
+      console.warn(`⚠️ [Storage] Gagal restore:`, e.message);
+    }
+  }
+};
+window.storage = window.StorageManager;
+
+// Restore slide terakhir saat page load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const lastSlide = window.storage.load('currentSlide', 'start');
+    if(lastSlide && lastSlide !== 'start') {
+      const slideEl = document.getElementById(lastSlide);
+      if(slideEl) {
+        console.log(`📍 Restore slide: ${lastSlide}`);
+        window.show(lastSlide);
+      }
+    }
+  }, 200);
+});
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -1616,8 +1725,61 @@ document.addEventListener('DOMContentLoaded', () => {
   const hiddenKardInfo = document.getElementById('hiddenKardinalitasInfo');
   if (hiddenKardInfo) hiddenKardInfo.style.display = 'none';
 
-  // FRESH LOAD: Clear identitas kelompok data
-  localStorage.removeItem('daftarAnggotaTerdaftar');
+  // (Previously cleared group identity on fresh load.)
+  // Keep existing `daftarAnggotaTerdaftar` in storage so group data persists across reloads.
+
+  // ===== AUTO-RESTORE DATA FROM STORAGE =====
+  // Restore solusi awal
+  const solusiAwalEl = document.getElementById('solusiAwalPertemuan1');
+  if(solusiAwalEl) {
+    const savedSolusi = window.storage.load('solusiAwalPertemuan1', '');
+    if(savedSolusi) {
+      solusiAwalEl.value = savedSolusi;
+      console.log('✅ Restored solusi awal');
+    }
+    // Auto-save on input (with debounce)
+    let saveTimeout;
+    solusiAwalEl.addEventListener('input', () => {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        window.storage.save('solusiAwalPertemuan1', solusiAwalEl.value);
+      }, 1000);
+    });
+  }
+
+  // Restore kesimpulan
+  const kesimpulanEl = document.getElementById('kesimpulanHimpunan');
+  if(kesimpulanEl) {
+    const savedKesimpulan = window.storage.load('kesimpulanHimpunan', '');
+    if(savedKesimpulan) {
+      kesimpulanEl.value = savedKesimpulan;
+      console.log('✅ Restored kesimpulan');
+    }
+    // Auto-save on input (with debounce)
+    let saveTimeout;
+    kesimpulanEl.addEventListener('input', () => {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        window.storage.save('kesimpulanHimpunan', kesimpulanEl.value);
+      }, 1000);
+    });
+  }
+
+  // Restore quiz answers
+  const savedQuizAnswers = window.storage.load('quiz_answers', {});
+  if(Object.keys(savedQuizAnswers).length > 0) {
+    window.quizAnswers = savedQuizAnswers;
+    console.log('✅ Restored quiz answers:', savedQuizAnswers);
+    // Re-render UI untuk restored answers
+    setTimeout(() => {
+      Object.keys(savedQuizAnswers).forEach(qid => {
+        const card = document.getElementById('quiz-card-' + qid);
+        if(card && savedQuizAnswers[qid]) {
+          window.selectQuizAnswer(qid, savedQuizAnswers[qid]);
+        }
+      });
+    }, 500);
+  }
 
   // ========== IDENTITAS KELOMPOK SYSTEM (Input/Preview) ==========
   const deskripsiPeranMap = {
@@ -1635,6 +1797,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.saveDataAnggota = function(anggotaList) {
     localStorage.setItem('daftarAnggotaTerdaftar', JSON.stringify(anggotaList));
+    // SAVE via StorageManager
+    if(window.storage) window.storage.save('daftarAnggotaTerdaftar', anggotaList);
     renderPreviewAnggota();
   };
 
@@ -1659,6 +1823,9 @@ document.addEventListener('DOMContentLoaded', () => {
     anggotaList.splice(idx, 1);
     saveDataAnggota(anggotaList);
   };
+
+  // Show saved anggota preview on load
+  try { renderPreviewAnggota(); } catch(e) { /* ignore if elements not present yet */ }
 
   // Event listener untuk peran selection
   const selectPenanggungJawab = document.getElementById('selectPenanggungJawab');
@@ -1747,11 +1914,15 @@ window.safeOn = function(selOrId, ev, fn){
     const kelompokData = { nama: namaKelompok, anggota: anggota };
     console.log('Data Kelompok:', kelompokData);
     localStorage.setItem('kelompokData', JSON.stringify(kelompokData));
+    if(window.storage) window.storage.save('kelompokData', kelompokData);
 
-    // Simpan solusi awal jika ada
+    // Simpan solusi awal terbaru; jika dikosongkan, hapus data lama
     const solusiAwal = document.getElementById('solusiAwalPertemuan1')?.value.trim();
     if (solusiAwal) {
       localStorage.setItem('solusiAwalPertemuan1', solusiAwal);
+      if(window.storage) window.storage.save('solusiAwalPertemuan1', solusiAwal);
+    } else {
+      localStorage.removeItem('solusiAwalPertemuan1');
     }
 
     // Lanjut ke Tahap 1
@@ -1826,6 +1997,26 @@ window.show = show;
   // true mapping: A -> yes, B -> no, C -> yes
   const correctMap = { A: 'yes', B: 'no', C: 'yes' };
   const placed = {}; // id -> zone ('yes'/'no')
+  
+  // Restore placed data dari storage
+  const savedPlaced = window.storage ? window.storage.load('placed_tahap1', {}) : {};
+  if(Object.keys(savedPlaced).length > 0) {
+    Object.assign(placed, savedPlaced);
+    console.log('✅ Restored placed_tahap1:', placed);
+  }
+
+  // Recreate visual chips for restored placements
+  try {
+    setTimeout(() => {
+      Object.keys(placed).forEach(id => {
+        const zone = placed[id];
+        const cardEl = document.querySelector(`.kartu-draggable[data-id="${id}"]`);
+        // call placeCard to rebuild chip + evaluate + summary (it will also re-save)
+        try { placeCard(id, zone, cardEl); } catch(e) { console.warn('Restore placeCard failed', id, e); }
+      });
+      updateSummary();
+    }, 120);
+  } catch(e) { /* ignore if UI not ready */ }
 
   if (modal) {
     modal.setAttribute('aria-hidden', 'true');
@@ -1925,6 +2116,10 @@ window.show = show;
     if(!target.querySelector(`.chip-${id}`)) target.appendChild(chip);
 
     placed[id] = zone;
+    
+    // SAVE via StorageManager
+    if(window.storage) window.storage.save('placed_tahap1', placed);
+    
     evaluatePlacement(id, zone, chip);
     updateSummary();
   }
@@ -2066,7 +2261,9 @@ window.show = show;
 document.addEventListener('DOMContentLoaded', () => {
   // slide control
   const slides = Array.from(document.querySelectorAll('#slides-t2 .slide'));
-  let idx = 0;
+  // RESTORE: Load saved level index
+  let idx = window.storage ? window.storage.load('tahap2_level', 0) : 0;
+  
   const updateSlide = () => {
     slides.forEach((s,i)=>s.classList.toggle('active', i===idx));
     const levelLabel = document.getElementById('levelLabel');
@@ -2081,6 +2278,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (nextBtn) {
       nextBtn.disabled = true;
     }
+    // SAVE: Store current level
+    if(window.storage) window.storage.save('tahap2_level', idx);
   };
 
   // prev/next top buttons (prev goes back)
@@ -2092,6 +2291,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (nextBtn) {
     nextBtn.addEventListener('click', ()=>{ if(idx<slides.length-1){ idx++; updateSlide(); }});
   }
+  
+  // Initial update
+  updateSlide();
 
   // NAV buttons inside levels
   const goto2 = document.getElementById('goto2');
@@ -2154,6 +2356,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const correctOrder = ['Buku','dengan jumlah','halaman','lebih dari','100'];
   let assembled = [];
 
+  // Restore assembled pieces from storage if present
+  try {
+    const saved = window.storage ? window.storage.load('tahap2_assembled', []) : [];
+    if(Array.isArray(saved) && saved.length > 0) assembled = saved.slice();
+  } catch(e) { console.warn('Restore tahap2_assembled failed', e); }
+
   if(!assembly || !fb || pieces.length === 0) return;
 
   // helper: render feedback area
@@ -2172,6 +2380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fb.style.display = 'none';
     // re-enable pieces if any were removed
     document.querySelectorAll('#level-2 .piece').forEach(p => p.style.opacity = '');
+    try { if(window.storage) window.storage.save('tahap2_assembled', assembled); } catch(e){}
   }
 
   // add piece node into assembly
@@ -2189,8 +2398,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if(src) src.style.opacity = '';
       // clear feedback when changed
       if(fb) { fb.style.display = 'none'; fb.innerHTML = ''; fb.className = 'feedback'; }
+      try { if(window.storage) window.storage.save('tahap2_assembled', assembled); } catch(e){}
     });
     assembly.appendChild(node);
+    try { if(window.storage) window.storage.save('tahap2_assembled', assembled); } catch(e){}
   }
 
   // check assembled order and give detailed feedback
@@ -2236,6 +2447,7 @@ document.addEventListener('DOMContentLoaded', () => {
           assembled.push(item);
           appendPieceNode(item);
         });
+        try { if(window.storage) window.storage.save('tahap2_assembled', assembled); } catch(e){}
         showFeedback(`<div style="font-weight:700;color:var(--success)">🔎 Susunan Benar Ditampilkan</div>
                       <div style="margin-top:6px;color:#264d14">${correctOrder.join(' ')}</div>`, 'ok');
         const goto3btn = document.getElementById('goto3');
@@ -2259,6 +2471,7 @@ document.addEventListener('DOMContentLoaded', () => {
       appendPieceNode(text);
       // hide/gray source piece to indicate used
       p.style.opacity = '0.4';
+      try { if(window.storage) window.storage.save('tahap2_assembled', assembled); } catch(e){}
       validateAssembly();
     });
     p.addEventListener('keydown', e=>{ if(e.key==='Enter' || e.key===' ') p.click(); });
@@ -2277,6 +2490,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // gray the piece
       const src = Array.from(document.querySelectorAll('#level-2 .piece')).find(x=>x.textContent.trim()===text.trim());
       if(src) src.style.opacity = '0.4';
+      try { if(window.storage) window.storage.save('tahap2_assembled', assembled); } catch(e){}
       validateAssembly();
     });
   }
@@ -2480,7 +2694,18 @@ document.addEventListener('DOMContentLoaded', () => {
   if(!statusBox || books.length === 0 || zones.length === 0) return;
 
   let dragging = null;
+  function markDragStart() {
+    window.__isDraggingGesture = true;
+    window.__suppressNavUntil = Date.now() + 600;
+  }
+  function markDragEnd() {
+    window.__isDraggingGesture = false;
+    window.__suppressNavUntil = Date.now() + 120;
+  }
   books.forEach(b => b.dataset.initialContent = b.innerHTML);
+  
+  // RESTORE: Load tahap3 placed state
+  const savedTahap3 = window.storage ? window.storage.load('tahap3_placed', {}) : {};
 
   function computeZone(bookEl){
     const halaman = Number(bookEl.dataset.halaman);
@@ -2506,16 +2731,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   books.forEach(b=>{
     b.addEventListener('dragstart', e=>{
+      markDragStart();
       dragging = b; b.classList.add('dragging'); b.setAttribute('aria-grabbed','true'); b._origParent = b.parentElement;
     });
-    b.addEventListener('dragend', ()=>{ if(dragging){ dragging.classList.remove('dragging'); dragging.setAttribute('aria-grabbed','false'); } dragging = null; });
+    b.addEventListener('dragend', ()=>{
+      if(dragging){ dragging.classList.remove('dragging'); dragging.setAttribute('aria-grabbed','false'); }
+      dragging = null;
+      markDragEnd();
+    });
     b.addEventListener('click', ()=>{ if(b.classList.contains('locked')) return; books.forEach(x=>x.classList.remove('selected')); b.classList.add('selected'); statusBox.textContent = b.querySelector('strong').textContent + ' dipilih. Ketuk area untuk menaruh.'; });
   });
 
   zones.forEach(z=>{
     z.addEventListener('dragover', e=>{ e.preventDefault(); z.classList.add('highlight'); });
     z.addEventListener('dragleave', e=>{ z.classList.remove('highlight'); });
-    z.addEventListener('drop', e=>{ e.preventDefault(); z.classList.remove('highlight'); const book = dragging || container.querySelector('.book.selected'); if(!book || book.classList.contains('locked')) return; handleDrop(book, z); book.classList.remove('selected'); });
+    z.addEventListener('drop', e=>{ e.preventDefault(); z.classList.remove('highlight'); const book = dragging || container.querySelector('.book.selected'); if(!book || book.classList.contains('locked')) return; handleDrop(book, z); book.classList.remove('selected'); markDragEnd(); });
     z.addEventListener('click', ()=>{ const book = container.querySelector('.book.selected'); if(book && !book.classList.contains('locked')){ handleDrop(book, z); book.classList.remove('selected'); } });
   });
 
@@ -2535,6 +2765,18 @@ document.addEventListener('DOMContentLoaded', () => {
       book.innerHTML = `<span class="book-badge-content">${book.dataset.id}</span>`;
       statusBox.textContent = 'Benar: Buku ' + book.dataset.id + ' ditempatkan.';
       zone.classList.add('highlight'); setTimeout(()=>zone.classList.remove('highlight'),700);
+      
+      // SAVE: Record this placement
+      if(window.storage) {
+        const tahap3State = window.storage.load('tahap3_placed', {});
+        tahap3State[book.dataset.id] = {
+          zone: targetZone,
+          left: book.style.left,
+          top: book.style.top
+        };
+        window.storage.save('tahap3_placed', tahap3State);
+      }
+      
       checkCompletion();
     } else {
       zone.classList.add('wrong'); setTimeout(()=>zone.classList.remove('wrong'),500);
@@ -2574,6 +2816,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // NEW: Radio-based quiz with visual highlights
   let irisanCorrect = false;
   let gabunganCorrect = false;
+  let selectedIrisan = null;
+  let selectedGabungan = null;
+  const tahap3QuizKey = 'tahap3_quiz';
+
+  function saveTahap3QuizState() {
+    if(!window.storage) return;
+    window.storage.save(tahap3QuizKey, {
+      irisan: selectedIrisan,
+      gabungan: selectedGabungan
+    });
+  }
   
   // Update book list display when venn is completed
   function updateBookDisplay() {
@@ -2596,6 +2849,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
   irisanInputs.forEach(input => {
     input.addEventListener('change', () => {
+      selectedIrisan = input.value;
+
       // Visual feedback on selection
       const label = input.closest('label');
       const allLabels = container.querySelectorAll('input[name="q-irisan"]');
@@ -2623,7 +2878,9 @@ document.addEventListener('DOMContentLoaded', () => {
         irisanCorrect = true;
         label.style.background = '#e8f5e9';
         label.style.borderColor = '#4caf50';
-        label.innerHTML = input.outerHTML + '<span style="flex:1;"><strong>Halaman &gt; 100 DAN tahun &gt; 2018</strong> (KEDUA syarat terpenuhi) ✓</span>';
+        input.checked = true;
+        const irisanText = label.querySelector('span');
+        if (irisanText) irisanText.innerHTML = '<strong>Halaman &gt; 100 DAN tahun &gt; 2018</strong> (KEDUA syarat terpenuhi) ✓';
         
         feedbackIrisan.innerHTML = '<strong style="color:#2e7d32;">✓ Benar!</strong> Zona tengah disebut <strong>IRISAN (A ∩ B)</strong> karena memenuhi KEDUA kriteria.';
         feedbackIrisan.style.background = '#e8f5e9';
@@ -2652,6 +2909,8 @@ document.addEventListener('DOMContentLoaded', () => {
           feedbackIrisan.style.display = 'none';
         }, 3000);
       }
+
+      saveTahap3QuizState();
     });
   });
   
@@ -2661,6 +2920,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
   gabunganInputs.forEach(input => {
     input.addEventListener('change', () => {
+      selectedGabungan = input.value;
+
       // Visual feedback on selection
       const label = input.closest('label');
       const allLabels = container.querySelectorAll('input[name="q-gabungan"]');
@@ -2693,7 +2954,9 @@ document.addEventListener('DOMContentLoaded', () => {
         gabunganCorrect = true;
         label.style.background = '#e8f5e9';
         label.style.borderColor = '#4caf50';
-        label.innerHTML = input.outerHTML + '<span style="flex:1;"><strong>GABUNGAN (A ∪ B)</strong> - Memenuhi MINIMAL SATU syarat ✓</span>';
+        input.checked = true;
+        const gabunganText = label.querySelector('span');
+        if (gabunganText) gabunganText.innerHTML = '<strong>GABUNGAN (A ∪ B)</strong> - Memenuhi MINIMAL SATU syarat ✓';
         
         feedbackGabungan.innerHTML = '<strong style="color:#2e7d32;">✓ Sempurna!</strong> Gabungan semua zona adalah <strong>GABUNGAN (A ∪ B)</strong> karena memenuhi <strong>MINIMAL SATU</strong> kriteria.';
         feedbackGabungan.style.background = '#e8f5e9';
@@ -2722,6 +2985,8 @@ document.addEventListener('DOMContentLoaded', () => {
           feedbackGabungan.style.display = 'none';
         }, 3000);
       }
+
+      saveTahap3QuizState();
     });
   });
   
@@ -2837,12 +3102,61 @@ document.addEventListener('DOMContentLoaded', () => {
   // Tampilkan komentar saat load
   tampilkanKomentarT4();
 
+  // ===== RESTORE TAHAP 3 STATE =====
+  // Restore book placements saat page load
+  setTimeout(() => {
+    if(Object.keys(savedTahap3).length > 0) {
+      books.forEach(book => {
+        const saved = savedTahap3[book.dataset.id];
+        if(saved) {
+          // Find correct zone
+          const zone = zones.find(z => z.dataset.zone === saved.zone);
+          if(zone) {
+            zone.appendChild(book);
+            book.classList.add('locked','in-venn');
+            book.draggable = false;
+            book.style.position = 'absolute';
+            book.style.left = saved.left;
+            book.style.top = saved.top;
+            book.innerHTML = `<span class="book-badge-content">${book.dataset.id}</span>`;
+            console.log(`✅ Restored Tahap 3: ${book.dataset.id} → ${saved.zone}`);
+          }
+        }
+      });
+      checkCompletion();
+    }
+
+    // Restore quiz answers for notation panel
+    const savedTahap3Quiz = window.storage ? window.storage.load(tahap3QuizKey, {}) : {};
+    if(savedTahap3Quiz && (savedTahap3Quiz.irisan || savedTahap3Quiz.gabungan)) {
+      selectedIrisan = savedTahap3Quiz.irisan || null;
+      selectedGabungan = savedTahap3Quiz.gabungan || null;
+
+      if(savedTahap3Quiz.irisan) {
+        const irisanInput = container.querySelector(`input[name="q-irisan"][value="${savedTahap3Quiz.irisan}"]`);
+        if(irisanInput) {
+          irisanInput.checked = true;
+          irisanInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+
+      if(savedTahap3Quiz.gabungan) {
+        const gabunganInput = container.querySelector(`input[name="q-gabungan"][value="${savedTahap3Quiz.gabungan}"]`);
+        if(gabunganInput) {
+          gabunganInput.checked = true;
+          gabunganInput.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+      }
+    }
+  }, 300); // Delay agar DOM siap
+
 })();
  // ...existing code...
  (function(){
   // Early return if Tahap 4 elements don't exist
   const inputTable = document.getElementById('inputTable');
   if(!inputTable) return;
+  const GALLERY_IMAGE_KEY_T4 = 'galleryImageT4';
   
   const BOOKS_DATA = [
     { id: 'A', hal: 120, thn: 2020 },
@@ -2862,6 +3176,71 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!inA && inB) return 'B'; 
     return 'LUAR'; 
   }
+
+  function renderGalleryImageT4() {
+    const imageEl = document.getElementById('galleryImagePreviewT4');
+    const wrapEl = document.getElementById('galleryImagePreviewWrapT4');
+    const statusEl = document.getElementById('galleryImageStatusT4');
+    if (!imageEl || !wrapEl || !statusEl) return;
+
+    const savedImage = window.__galleryImageT4 || localStorage.getItem(GALLERY_IMAGE_KEY_T4);
+    if (savedImage) {
+      imageEl.src = savedImage;
+      wrapEl.style.display = 'block';
+      statusEl.textContent = 'Preview karya berhasil dimuat dari penyimpanan.';
+      statusEl.style.color = '#2e7d32';
+      return;
+    }
+
+    wrapEl.style.display = 'none';
+    statusEl.textContent = 'Belum ada gambar tersimpan. Klik "Cek Pemilahan & Kardinalitas" atau "Perbarui Gambar".';
+    statusEl.style.color = '#666';
+  }
+
+  async function captureGalleryImageT4() {
+    const statusEl = document.getElementById('galleryImageStatusT4');
+    const source = document.querySelector('#tahap4 .rack-area');
+
+    if (!source || typeof html2canvas !== 'function') {
+      if (statusEl) {
+        statusEl.textContent = 'Gagal menangkap gambar: area atau library capture tidak tersedia.';
+        statusEl.style.color = '#c62828';
+      }
+      return;
+    }
+
+    if (statusEl) {
+      statusEl.textContent = 'Memperbarui gambar karya...';
+      statusEl.style.color = '#e65100';
+    }
+
+    try {
+      const canvas = await html2canvas(source, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: '#ffffff'
+      });
+      const dataUrl = canvas.toDataURL('image/png', 0.95);
+      window.__galleryImageT4 = dataUrl;
+      localStorage.setItem(GALLERY_IMAGE_KEY_T4, dataUrl);
+      renderGalleryImageT4();
+    } catch (error) {
+      if (statusEl) {
+        statusEl.textContent = 'Gagal menangkap gambar. Coba ulangi setelah pemilahan selesai.';
+        statusEl.style.color = '#c62828';
+      }
+      console.warn('captureGalleryImageT4 error:', error);
+    }
+  }
+
+  const btnUpdateGalleryImageT4 = document.getElementById('btnUpdateGalleryImageT4');
+  if (btnUpdateGalleryImageT4) {
+    btnUpdateGalleryImageT4.addEventListener('click', () => {
+      captureGalleryImageT4();
+    });
+  }
+
+  renderGalleryImageT4();
 
   // Pilihan Rak
   const RAK_OPTIONS = {
@@ -2891,6 +3270,25 @@ document.addEventListener('DOMContentLoaded', () => {
       document.getElementById('statusBox').classList.remove('feedback', 'correct', 'wrong');
       // Reset status kardinalitas
       document.querySelectorAll('[id^="status_n"]').forEach(el => el.textContent = '');
+      
+      // SAVE: Record this selection
+      if(window.storage) {
+        const tahap4State = window.storage.load('tahap4_selections', {});
+        tahap4State[bookId] = targetRakKey;
+        window.storage.save('tahap4_selections', tahap4State);
+      }
+    });
+  });
+  
+  // Add event listeners untuk kardinalitas inputs
+  const kardinalitasInputs = document.querySelectorAll('.kardinalitas-number');
+  kardinalitasInputs.forEach(input => {
+    input.addEventListener('input', (e) => {
+      if(window.storage) {
+        const tahap4Kardinalitas = window.storage.load('tahap4_kardinalitas', {});
+        tahap4Kardinalitas[e.target.id] = e.target.value;
+        window.storage.save('tahap4_kardinalitas', tahap4Kardinalitas);
+      }
     });
   });
   
@@ -3029,6 +3427,9 @@ document.addEventListener('DOMContentLoaded', () => {
       
       statusBox.innerHTML = finalStatusText + '<br><br>' + feedbackHTML;
       statusBox.style.display = 'block';
+
+      // Auto-update preview karya untuk Gallery Walk setelah hasil dihitung.
+      captureGalleryImageT4();
     });
   }
  // ...existing code...
@@ -3065,6 +3466,35 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   
+  // ===== RESTORE TAHAP 4 STATE =====
+  // Restore book selections & kardinalitas
+  setTimeout(() => {
+    // Restore book placements (dropdown selections)
+    const tahap4Selections = window.storage ? window.storage.load('tahap4_selections', {}) : {};
+    if(Object.keys(tahap4Selections).length > 0) {
+      Object.entries(tahap4Selections).forEach(([bookId, rakKey]) => {
+        const select = document.querySelector(`select[data-book="${bookId}"]`);
+        if(select) {
+          select.value = rakKey;
+          moveBookBadge(bookId, rakKey);
+          console.log(`✅ Restored Tahap 4: ${bookId} → ${rakKey}`);
+        }
+      });
+    }
+
+    // Restore kardinalitas inputs
+    const tahap4Kardinalitas = window.storage ? window.storage.load('tahap4_kardinalitas', {}) : {};
+    if(Object.keys(tahap4Kardinalitas).length > 0) {
+      Object.entries(tahap4Kardinalitas).forEach(([inputId, value]) => {
+        const input = document.getElementById(inputId);
+        if(input) {
+          input.value = value;
+          console.log(`✅ Restored Kardinalitas: ${inputId} = ${value}`);
+        }
+      });
+    }
+  }, 300); // Delay agar DOM siap
+
 })();
 // ...existing code...
 // Fungsi untuk menyimpan progress siswa
@@ -3273,6 +3703,9 @@ window.simpanKesimpulan = function() {
   // Simpan ke localStorage
   localStorage.setItem('kesimpulanHimpunan', kesimpulan);
   localStorage.setItem('kesimpulanHimpunan_timestamp', new Date().toLocaleString('id-ID'));
+  
+  // SAVE via StorageManager
+  if(window.storage) window.storage.save('kesimpulanHimpunan', kesimpulan);
   
   feedback.innerHTML = '<span style="color:#4caf50;font-weight:bold">✅ Kesimpulan tersimpan!</span>';
   
@@ -3581,6 +4014,69 @@ window.generatePDFReport = async function(){
   // ===== LEVEL 2: BOOK SELECTION =====
   const bookItems = document.querySelectorAll('.book-item');
   let selectedBooks = [];
+  const tahap2SelectionKey = 'tahap2_book_selection';
+
+  function syncLevel2UI() {
+    const enumResult = document.getElementById('enum-result');
+    if (enumResult) {
+      enumResult.textContent = selectedBooks.length > 0 ? `{ ${selectedBooks.join(', ')} }` : '{ ... }';
+    }
+
+    bookItems.forEach(book => {
+      const isSelected = selectedBooks.includes(book.dataset.name);
+      if (isSelected) {
+        book.classList.add('selected');
+        book.style.transform = 'scale(1.1)';
+        book.style.boxShadow = '0 8px 20px rgba(76,175,80,0.4), 0 0 0 3px #4caf50';
+      } else {
+        book.classList.remove('selected');
+        book.style.transform = 'scale(1)';
+        book.style.boxShadow = '0 4px 10px rgba(0,0,0,0.15)';
+      }
+    });
+  }
+
+  function saveLevel2State() {
+    if(window.storage) {
+      window.storage.save(tahap2SelectionKey, {
+        selectedBooks: selectedBooks.slice(),
+        completed: level2Complete
+      });
+    }
+  }
+
+  try {
+    const savedLevel2 = window.storage ? window.storage.load(tahap2SelectionKey, null) : null;
+    if (savedLevel2 && Array.isArray(savedLevel2.selectedBooks)) {
+      selectedBooks = savedLevel2.selectedBooks.slice();
+    }
+  } catch(e) {
+    console.warn('Restore tahap2_book_selection failed', e);
+  }
+
+  syncLevel2UI();
+  
+  try {
+    const correctBooks = Array.from(bookItems).filter(b => b.dataset.valid === 'true');
+    const allCorrectSelected = correctBooks.every(b => b.classList.contains('selected'));
+    const noWrongSelected = Array.from(bookItems).filter(b => b.dataset.valid === 'false').every(b => !b.classList.contains('selected'));
+    if (allCorrectSelected && noWrongSelected && selectedBooks.length === 2) {
+      const fb = document.getElementById('feedback-level2');
+      if (fb) {
+        fb.innerHTML = '✅ <strong>Benar!</strong> Enumerasi: {Buku A, Buku C} - kedua buku memiliki halaman > 100';
+        fb.style.background = '#e8f5e9';
+        fb.style.color = '#2e7d32';
+        fb.style.border = '2px solid #4caf50';
+      }
+      level2Complete = true;
+      updateProgress();
+      lockLevelComplete(2);
+      bookItems.forEach(b => b.style.pointerEvents = 'none');
+      unlockLevel(3);
+    }
+  } catch(e) {
+    console.warn('Tahap2 restore complete-state failed', e);
+  }
   
   bookItems.forEach(book => {
     book.addEventListener('click', () => {
@@ -3601,12 +4097,8 @@ window.generatePDFReport = async function(){
       }
       
       // Update enum result
-      const enumResult = document.getElementById('enum-result');
-      if (selectedBooks.length > 0) {
-        enumResult.textContent = `{ ${selectedBooks.join(', ')} }`;
-      } else {
-        enumResult.textContent = '{ ... }';
-      }
+      syncLevel2UI();
+      saveLevel2State();
       
       // Check if correct (must select exactly Buku A and Buku C)
       const correctBooks = Array.from(bookItems).filter(b => b.dataset.valid === 'true');
@@ -3623,6 +4115,7 @@ window.generatePDFReport = async function(){
         level2Complete = true;
         updateProgress();
         lockLevelComplete(2);
+        saveLevel2State();
         
         // Disable further clicks
         bookItems.forEach(b => b.style.pointerEvents = 'none');
@@ -3631,6 +4124,8 @@ window.generatePDFReport = async function(){
           unlockLevel(3);
         }, 1500);
       }
+
+      saveLevel2State();
     });
   });
   
@@ -3761,9 +4256,9 @@ if (btnTestDownload) {
 function createStudentResultPDF() {
   try {
     const kelompokData = localStorage.getItem('kelompokData');
-    const solusiAwal = localStorage.getItem('solusiAwalPertemuan1');
+    const solusiAwal = (document.getElementById('solusiAwalPertemuan1')?.value || '').trim();
     const progressTahap2 = localStorage.getItem('progressTahap2');
-    const kesimpulanHimpunan = localStorage.getItem('kesimpulanHimpunan');
+    const kesimpulanHimpunan = (document.getElementById('kesimpulanHimpunan')?.value || '').trim();
     const penyajianHimpunan1 = localStorage.getItem('penyajianHimpunan1');
     const saranHimpunan1 = localStorage.getItem('saranHimpunan1');
 
@@ -4022,7 +4517,7 @@ function snapshotAktivitasLaporan() {
         skorBenar: quizCorrectCount,
         totalSoal: Object.keys(quizData).length
       },
-      kesimpulan: localStorage.getItem('kesimpulanHimpunan') || safeValue('#kesimpulanHimpunan') || '(belum diisi)'
+      kesimpulan: safeValue('#kesimpulanHimpunan')
     },
     tahap2: {
       level1Selesai: safeText('#level1-icon').includes('✓'),
@@ -4154,7 +4649,6 @@ function generateLaporanLengkap() {
   function addText(text, size = 10, indent = 0) {
     const normalized = normalizePdfText(text);
     if(!normalized || normalized.trim() === '') {
-      addText('(Belum diisi)', size, indent);
       return;
     }
     checkPageBreak(size + 3);
@@ -4215,9 +4709,9 @@ function generateLaporanLengkap() {
 
   // === 2. SOLUSI AWAL PERMASALAHAN ===
   addTitle('2. SOLUSI AWAL PERMASALAHAN', 16);
-  const solusiAwal = localStorage.getItem('solusiAwalPertemuan1');
+  const solusiAwal = (document.getElementById('solusiAwalPertemuan1')?.value || '').trim();
   addSubtitle('Bagaimana kelompokmu akan menyelesaikan masalah pustakawan?');
-  addText(solusiAwal || 'Belum diisi', 10, 5);
+  addText(solusiAwal, 10, 5);
   yPos += 8;
 
   // === 3. BUKTI AKTIVITAS TAHAP 1 ===
@@ -4230,11 +4724,15 @@ function generateLaporanLengkap() {
   addSubtitle('Uji Pemahaman (5 Pernyataan):');
   if (evidence.tahap1.quiz.detail.length > 0) {
     evidence.tahap1.quiz.detail.forEach((item) => {
-      addText(
-        `${item.id}: Jawaban siswa = ${item.jawabanSiswa}, Kunci = ${item.jawabanBenar}, Status = ${item.benar ? 'Benar' : 'Belum Tepat'}`,
-        10,
-        5
-      );
+      if (item.jawabanSiswa === '(belum dijawab)') {
+        addText(`${item.id}: Belum dijawab`, 10, 5);
+      } else {
+        addText(
+          `${item.id}: Jawaban siswa = ${item.jawabanSiswa}, Status = ${item.benar ? 'Benar' : 'Belum Tepat'}`,
+          10,
+          5
+        );
+      }
     });
     addText(`Skor: ${evidence.tahap1.quiz.skorBenar}/${evidence.tahap1.quiz.totalSoal}`, 10, 5);
   } else {
@@ -4257,7 +4755,11 @@ function generateLaporanLengkap() {
   addText(evidence.tahap2.bukuDipilih.length ? evidence.tahap2.bukuDipilih.join(', ') : '(tidak terdeteksi pilihan aktif)', 10, 5);
   addSubtitle('Jawaban Quiz Level 3:');
   evidence.tahap2.quizLevel3.forEach((item) => {
-    addText(`Soal ${item.soal}: ${item.value} (${item.benar ? 'Benar' : 'Belum Tepat'})`, 10, 5);
+    if (item.value === '(belum dijawab)') {
+      addText(`Soal ${item.soal}: Belum dijawab`, 10, 5);
+    } else {
+      addText(`Soal ${item.soal}: ${item.value} (${item.benar ? 'Benar' : 'Belum Tepat'})`, 10, 5);
+    }
   });
   addText('Feedback terakhir: ' + (evidence.tahap2.feedbackLevel3 || '(belum ada feedback)'), 10, 5);
   yPos += 8;
@@ -4817,6 +5319,7 @@ function generateLaporanLengkap() {
     if(document.hidden && window.speechSynthesis) window.speechSynthesis.cancel();
   });
 })();
+
 </script>
 
 </body></html>
