@@ -1093,13 +1093,6 @@ h1, h2 {
           <h2>👋 Selamat Datang di Pertemuan 6!</h2>
           <p style="color:#2a2420;font-size:18px;margin:16px 0">Hari ini kita akan mempelajari tentang <strong>Korespondensi Satu-satu</strong> — dan menghitung banyaknya korespondensi satu-satu</p>
 
-          <div class="scenario-box">
-            <h3 style="color:var(--accent);margin-top:0">🎯 Tujuan Pembelajaran</h3>
-            <ul style="font-size:16px;line-height:1.8;color:#2a2420">
-              <li>Siswa (A) dapat menganalisis (HOTS - C4) karakteristik permasalahan kontekstual yang berkaitan dengan korespondensi satu-satu serta menentukan banyaknya korespondensi satu-satu yang mungkin terjadi antara dua himpunan, kemudian menyajikan (B - Keterampilan) hasil konstruksinya secara kreatif (Karakter) dalam bentuk diagram panah dan himpunan pasangan berurutan menggunakan Web Media Pembelajaran (ICT) dengan tepat (D), serta menunjukkan sikap disiplin dan tanggung jawab (Karakter) dalam mengerjakan tugas.</li>
-            </ul>
-          </div>
-
           <div class="scenario-box" style="background:#fff8e6;border-left:4px solid #fbc02d">
             <h3 style="color:#3e2723;margin-top:0">📚 Alur Pembelajaran</h3>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px">
@@ -3928,7 +3921,10 @@ function generateSessionId() {
 function initializeSession() {
   sessionData.startTime = new Date();
   saveSessionToStorage();
-  document.getElementById('recordingIndicator').style.display = 'flex';
+  var recordingIndicator = document.getElementById('recordingIndicator');
+  if (recordingIndicator) {
+    recordingIndicator.style.display = 'flex';
+  }
   recordActivity('SESSION_START', 'Memulai pembelajaran');
 }
 
@@ -5241,8 +5237,48 @@ function loadGDriveConfig() {
 
 // Upload PDF to Google Drive
 function uploadToGoogleDrive() {
+  const startGoogleDriveUpload = () => {
+    // Check if API is configured
+    if (GOOGLE_CLIENT_ID === 'YOUR_CLIENT_ID_HERE.apps.googleusercontent.com' || 
+        GOOGLE_API_KEY === 'YOUR_API_KEY_HERE') {
+      // Show setup modal
+      showGDriveSetup();
+      return;
+    }
+
+    if (!gapiInited || !gisInited) {
+      alert('⚠️ Google API belum siap. Silakan refresh halaman dan coba lagi.');
+      return;
+    }
+
+    // Request access token
+    tokenClient.callback = async (resp) => {
+      if (resp.error !== undefined) {
+        throw (resp);
+      }
+      accessToken = resp.access_token;
+      await performUpload();
+    };
+
+    if (accessToken === null) {
+      // Prompt the user to select a Google Account and ask for consent
+      tokenClient.requestAccessToken({ prompt: 'consent' });
+    } else {
+      // Skip display of account chooser and consent dialog
+      tokenClient.requestAccessToken({ prompt: '' });
+    }
+  };
+
   if (!currentPdfBlob) {
-    alert('⚠️ Tidak ada file PDF. Silakan generate PDF terlebih dahulu.');
+    generatePDFForGDrive(function(pdfBlob) {
+      if (!pdfBlob) {
+        alert('⚠️ Gagal generate PDF. Silakan coba lagi.');
+        return;
+      }
+
+      currentPdfBlob = pdfBlob;
+      startGoogleDriveUpload();
+    });
     return;
   }
   
@@ -5432,7 +5468,10 @@ window.addEventListener('load', function() {
   if (!sessionData.startTime) {
     initializeSession();
   } else {
-    document.getElementById('recordingIndicator').style.display = 'flex';
+    var recordingIndicator = document.getElementById('recordingIndicator');
+    if (recordingIndicator) {
+      recordingIndicator.style.display = 'flex';
+    }
   }
   
   // Initialize Google API
