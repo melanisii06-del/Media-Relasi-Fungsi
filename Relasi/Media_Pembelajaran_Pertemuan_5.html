@@ -234,6 +234,88 @@ h3{font-size:20px;color:var(--accent);margin:10px 0}
   color:#78350f;
 }
 
+/* Tutor Virtual */
+.tutor-launcher{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:10001;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:999px;
+  padding:10px 16px;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+}
+.tutor-launcher:hover{opacity:.92}
+
+.tutor-panel{
+  position:fixed;
+  right:16px;
+  bottom:72px;
+  width:360px;
+  max-width:calc(100vw - 24px);
+  background:linear-gradient(180deg,var(--panel),#fff7e6);
+  border:2px solid rgba(0,0,0,.08);
+  border-radius:14px;
+  box-shadow:0 14px 30px rgba(0,0,0,.22);
+  padding:12px;
+  z-index:10001;
+  display:none;
+}
+.tutor-panel.show{display:block}
+.tutor-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tutor-avatar{
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#fff;
+  border:2px solid var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:26px;
+  animation:tutorFloat 2.2s ease-in-out infinite;
+}
+.tutor-title{font-size:14px;font-weight:700;color:var(--accent)}
+.tutor-progress{font-size:12px;color:var(--muted)}
+.tutor-bubble{
+  background:#fff;
+  border-radius:10px;
+  padding:10px;
+  border-left:4px solid var(--accent);
+  color:var(--accent);
+  font-size:13px;
+  line-height:1.5;
+  min-height:74px;
+}
+.tutor-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.tutor-actions .btn{font-size:13px;padding:8px 10px;border-radius:9px}
+.tutor-status{margin-top:8px;font-size:12px;color:var(--muted)}
+
+.tutor-target-highlight{
+  outline:4px solid #fbc02d !important;
+  outline-offset:2px;
+  animation:tutorPulse 1.15s ease-in-out infinite;
+  border-radius:8px;
+}
+
+@keyframes tutorFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-4px)}
+}
+@keyframes tutorPulse{
+  0%,100%{box-shadow:0 0 0 0 rgba(251,192,45,.18)}
+  50%{box-shadow:0 0 0 8px rgba(251,192,45,.04)}
+}
+
+@media (max-width:700px){
+  .tutor-panel{right:8px;left:8px;bottom:70px;width:auto}
+  .tutor-launcher{right:8px;bottom:10px}
+}
+
 /* Styling untuk pilihan penyajian */
 .penyajian-option {
   display: flex;
@@ -1214,7 +1296,7 @@ h1, h2 {
           <div class="scenario-box" style="background:#e8f5e9;border-left:4px solid #4caf50;margin-top:20px;text-align:center;">
             <h3 style="color:#2e7d32;margin-top:0;">📤 Kirim Hasil Pembelajaran</h3>
             <p style="color:var(--muted);margin:8px 0;font-size:14px;">Kirim hasil pengerjaan Anda ke guru dalam format PDF melalui Google Form</p>
-            <button class="btn" onclick="generatePDFReport()" style="padding:14px 30px;font-size:16px;margin:10px auto;">
+            <button class="btn" onclick="downloadPDFAndOpenForm()" style="padding:14px 30px;font-size:16px;margin:10px auto;">
               📤 Kirim Hasil ke Guru
             </button>
             <p style="font-size:12px;color:#666;margin-top:10px;">
@@ -1233,17 +1315,485 @@ h1, h2 {
   </div>
 </div>
 
+    <button id="tutorLauncher" class="tutor-launcher" type="button">Aktifkan Tutor</button>
+    <aside id="tutorPanel" class="tutor-panel" aria-live="polite">
+      <div class="tutor-head">
+        <div class="tutor-avatar" aria-hidden="true">👩‍🏫</div>
+        <div>
+          <div class="tutor-title">Tutor Virtual</div>
+          <div id="tutorProgress" class="tutor-progress">Langkah 1</div>
+        </div>
+      </div>
+      <div id="tutorBubble" class="tutor-bubble">Halo, saya akan membimbing kamu langkah demi langkah.</div>
+      <div id="tutorStatus" class="tutor-status">Klik Aktifkan Tutor untuk mulai panduan.</div>
+      <div class="tutor-actions">
+        <button id="tutorPrev" class="btn ghost" type="button">Sebelumnya</button>
+        <button id="tutorNext" class="btn" type="button">Berikutnya</button>
+        <button id="tutorRepeat" class="btn ghost" type="button">Ulangi</button>
+        <button id="tutorVoice" class="btn ghost" type="button">Suara: Off</button>
+        <button id="tutorStop" class="btn ghost" type="button">Tutup</button>
+      </div>
+    </aside>
+
 <script>
+// Tutor virtual ala pertemuan 1
+var tutorState = {
+  active: false,
+  stepIndex: 0,
+  highlightedEl: null,
+  voiceOn: false,
+  voices: []
+};
+
+var tutorSteps = [
+  { slide: 'start', target: 'button[onclick*="permasalahan-foto"]', text: 'Mulai dari tombol Mulai Pembelajaran untuk masuk ke masalah utama.', status: 'Latihan awal tetap bisa diakses setelah memahami konteks.' },
+  { slide: 'latihan-hitung-jarak', target: '#btnCekJawaban', text: 'Isi tabel jarak lalu cek jawaban untuk melihat pola fungsi linear.', status: 'Gunakan rumus f(x)=4000x+5000.' },
+  { slide: 'permasalahan-foto', target: '#observasiData', text: 'Baca masalah utama dan tulis observasi awal kelompok.', status: 'Pastikan observasi berisi pola data yang terlihat.' },
+  { slide: 'identitas-kelompok', target: '#btnInputAnggota', text: 'Isi identitas kelompok dan input anggota beserta perannya.', status: 'Simpan anggota sebelum lanjut penyelidikan.' },
+  { slide: 'skenario', target: '#btnValidasiInvestigasi', text: 'Lakukan investigasi lalu klik validasi untuk mengecek hipotesis fungsi.', status: 'Periksa koefisien dan konstanta dengan teliti.' },
+  { slide: 'scratchpad', target: '#btnCekPuzzle', text: 'Gunakan scratchpad untuk merekonstruksi rumus hingga semua baris valid.', status: 'Jika sudah benar, lanjut ke validasi tabel.' },
+  { slide: 'analisisKomponen', target: '#distanceSlider', text: 'Analisis komponen rumus dengan slider jarak untuk melihat perubahan biaya.', status: 'Amati peran koefisien dan konstanta.' },
+  { slide: 'penyajian-rumus', target: '#btnSimpanGrafik', text: 'Plot titik, gambar garis, lalu simpan grafik untuk Gallery Walk.', status: 'Setelah simpan, beri komentar konstruktif.' },
+  { slide: 'evaluasi', target: '#btnSimpanRefleksi', text: 'Kerjakan evaluasi dan simpan refleksi untuk menutup pembelajaran.', status: 'Lengkapi jawaban sebelum kirim hasil ke guru.' }
+];
+
+function getActiveSlideId(){
+  var active = document.querySelector('.slide.active');
+  return active ? active.id : 'start';
+}
+
+function clearTutorHighlight(){
+  if(tutorState.highlightedEl){
+    tutorState.highlightedEl.classList.remove('tutor-target-highlight');
+    tutorState.highlightedEl = null;
+  }
+}
+
+function stopTutorSpeech(){
+  if(window.speechSynthesis){
+    window.speechSynthesis.cancel();
+  }
+}
+
+function pickTutorVoice(voices){
+  if(!voices || voices.length === 0) return null;
+  for(var i = 0; i < voices.length; i++){
+    var text = String((voices[i].lang || '') + ' ' + (voices[i].name || '')).toLowerCase();
+    if(text.indexOf('id') >= 0 || text.indexOf('indonesia') >= 0){
+      return voices[i];
+    }
+  }
+  return voices[0];
+}
+
+function speakTutor(text){
+  if(!tutorState.voiceOn || !window.speechSynthesis || !text) return;
+  stopTutorSpeech();
+  var utter = new SpeechSynthesisUtterance(text);
+  var voice = pickTutorVoice(tutorState.voices);
+  if(voice) utter.voice = voice;
+  utter.lang = voice && voice.lang ? voice.lang : 'id-ID';
+  utter.rate = 1;
+  utter.pitch = 1;
+  window.speechSynthesis.speak(utter);
+}
+
+function findTutorStepBySlide(slideId){
+  for(var i = 0; i < tutorSteps.length; i++){
+    if(tutorSteps[i].slide === slideId) return i;
+  }
+  return -1;
+}
+
+function renderTutorStep(){
+  var panel = document.getElementById('tutorPanel');
+  if(!panel || !panel.classList.contains('show')){
+    clearTutorHighlight();
+    return;
+  }
+
+  var bubble = document.getElementById('tutorBubble');
+  var progress = document.getElementById('tutorProgress');
+  var status = document.getElementById('tutorStatus');
+  if(!bubble || !progress || !status || tutorSteps.length === 0) return;
+
+  var step = tutorSteps[tutorState.stepIndex] || tutorSteps[0];
+  progress.textContent = 'Langkah ' + (tutorState.stepIndex + 1) + ' dari ' + tutorSteps.length;
+  bubble.textContent = step.text;
+  status.textContent = step.status || '';
+
+  clearTutorHighlight();
+  if(step.target){
+    var target = document.querySelector(step.target);
+    if(target){
+      target.classList.add('tutor-target-highlight');
+      tutorState.highlightedEl = target;
+    }
+  }
+
+  speakTutor(step.text + ' ' + (step.status || ''));
+}
+
+function updateTutorForSlide(slideId){
+  if(!tutorState.active) return;
+  var idx = findTutorStepBySlide(slideId);
+  if(idx >= 0){
+    tutorState.stepIndex = idx;
+  }
+  renderTutorStep();
+}
+
+function initTutorVirtual(){
+  var launcher = document.getElementById('tutorLauncher');
+  var panel = document.getElementById('tutorPanel');
+  var btnPrev = document.getElementById('tutorPrev');
+  var btnNext = document.getElementById('tutorNext');
+  var btnRepeat = document.getElementById('tutorRepeat');
+  var btnVoice = document.getElementById('tutorVoice');
+  var btnStop = document.getElementById('tutorStop');
+  if(!launcher || !panel || !btnPrev || !btnNext || !btnRepeat || !btnVoice || !btnStop) return;
+
+  if(window.speechSynthesis){
+    tutorState.voices = window.speechSynthesis.getVoices() || [];
+    window.speechSynthesis.onvoiceschanged = function(){
+      tutorState.voices = window.speechSynthesis.getVoices() || [];
+    };
+  }
+
+  launcher.addEventListener('click', function(){
+    tutorState.active = !tutorState.active;
+    if(tutorState.active){
+      panel.classList.add('show');
+      launcher.textContent = 'Tutor Aktif';
+      var idx = findTutorStepBySlide(getActiveSlideId());
+      tutorState.stepIndex = idx >= 0 ? idx : 0;
+      renderTutorStep();
+    } else {
+      panel.classList.remove('show');
+      launcher.textContent = 'Aktifkan Tutor';
+      clearTutorHighlight();
+      stopTutorSpeech();
+    }
+  });
+
+  btnPrev.addEventListener('click', function(){
+    if(!tutorState.active) return;
+    tutorState.stepIndex = (tutorState.stepIndex - 1 + tutorSteps.length) % tutorSteps.length;
+    var step = tutorSteps[tutorState.stepIndex];
+    if(step && step.slide) show(step.slide);
+    renderTutorStep();
+  });
+
+  btnNext.addEventListener('click', function(){
+    if(!tutorState.active) return;
+    tutorState.stepIndex = (tutorState.stepIndex + 1) % tutorSteps.length;
+    var step = tutorSteps[tutorState.stepIndex];
+    if(step && step.slide) show(step.slide);
+    renderTutorStep();
+  });
+
+  btnRepeat.addEventListener('click', function(){
+    if(!tutorState.active) return;
+    renderTutorStep();
+  });
+
+  btnVoice.addEventListener('click', function(){
+    tutorState.voiceOn = !tutorState.voiceOn;
+    btnVoice.textContent = tutorState.voiceOn ? 'Suara: On' : 'Suara: Off';
+    if(!tutorState.voiceOn){
+      stopTutorSpeech();
+    } else {
+      var step = tutorSteps[tutorState.stepIndex] || tutorSteps[0];
+      speakTutor(step.text + ' ' + (step.status || ''));
+    }
+  });
+
+  btnStop.addEventListener('click', function(){
+    tutorState.active = false;
+    panel.classList.remove('show');
+    launcher.textContent = 'Aktifkan Tutor';
+    clearTutorHighlight();
+    stopTutorSpeech();
+  });
+}
+
 function show(id) {
   document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
   document.getElementById(id)?.classList.add('active');
   window.scrollTo(0, 0);
+  updateTutorForSlide(id);
 }
+
+function setupGrafikKartesius() {
+  if (window.__grafikKartesiusSetupDone) return;
+
+  const canvasKartesius = document.getElementById('canvasKartesius');
+  const ctxKartesius = canvasKartesius?.getContext('2d');
+  const btnTambahTitik = document.getElementById('btnTambahTitik');
+  const btnPlotTitik = document.getElementById('btnPlotTitik');
+  const btnGambarGaris = document.getElementById('btnGambarGaris');
+  const btnResetCanvas = document.getElementById('btnResetCanvas');
+  const btnSimpanGrafik = document.getElementById('btnSimpanGrafik');
+  const btnKirimKomentarRumus = document.getElementById('btnKirimKomentarRumus');
+  const feedbackPenyajianRumus = document.getElementById('feedbackPenyajianRumus');
+  const komentarListRumus = document.getElementById('komentarListRumus');
+  const previewGrafikTersimpan = document.getElementById('previewGrafikTersimpan');
+  const imgGrafikTersimpan = document.getElementById('imgGrafikTersimpan');
+
+  if (!canvasKartesius || !ctxKartesius) return;
+
+  window.__grafikKartesiusSetupDone = true;
+
+  let titikPlotted = [];
+
+  function initCanvas() {
+    const width = canvasKartesius.width;
+    const height = canvasKartesius.height;
+
+    ctxKartesius.clearRect(0, 0, width, height);
+    ctxKartesius.fillStyle = '#fafafa';
+    ctxKartesius.fillRect(0, 0, width, height);
+
+    ctxKartesius.strokeStyle = '#e0e0e0';
+    ctxKartesius.lineWidth = 1;
+    for (let i = 0; i <= 10; i++) {
+      ctxKartesius.beginPath();
+      ctxKartesius.moveTo(50 + i * 50, 20);
+      ctxKartesius.lineTo(50 + i * 50, height - 40);
+      ctxKartesius.stroke();
+
+      ctxKartesius.beginPath();
+      ctxKartesius.moveTo(50, 20 + i * 34);
+      ctxKartesius.lineTo(width - 20, 20 + i * 34);
+      ctxKartesius.stroke();
+    }
+
+    ctxKartesius.strokeStyle = '#333';
+    ctxKartesius.lineWidth = 2;
+    ctxKartesius.beginPath();
+    ctxKartesius.moveTo(50, height - 40);
+    ctxKartesius.lineTo(width - 20, height - 40);
+    ctxKartesius.stroke();
+
+    ctxKartesius.beginPath();
+    ctxKartesius.moveTo(50, 20);
+    ctxKartesius.lineTo(50, height - 40);
+    ctxKartesius.stroke();
+
+    ctxKartesius.fillStyle = '#333';
+    ctxKartesius.font = 'bold 12px Arial';
+    ctxKartesius.fillText('Jarak (km)', width / 2 - 30, height - 10);
+    ctxKartesius.save();
+    ctxKartesius.translate(15, height / 2);
+    ctxKartesius.rotate(-Math.PI / 2);
+    ctxKartesius.fillText('Tarif (Rp)', -40, 0);
+    ctxKartesius.restore();
+
+    ctxKartesius.font = '10px Arial';
+    ctxKartesius.fillStyle = '#666';
+    for (let i = 0; i <= 10; i++) {
+      ctxKartesius.fillText(i, 45 + i * 50, height - 25);
+      const yVal = (10 - i) * 5000;
+      ctxKartesius.fillText(yVal / 1000 + 'k', 10, 25 + i * 34);
+    }
+  }
+
+  function redrawPoints() {
+    initCanvas();
+
+    ctxKartesius.fillStyle = '#2196f3';
+    titikPlotted.forEach(point => {
+      const canvasX = 50 + (point.x * 50);
+      const canvasY = (canvasKartesius.height - 40) - (point.y / 5000 * 34);
+
+      ctxKartesius.beginPath();
+      ctxKartesius.arc(canvasX, canvasY, 5, 0, Math.PI * 2);
+      ctxKartesius.fill();
+
+      ctxKartesius.fillStyle = '#000';
+      ctxKartesius.font = '10px Arial';
+      ctxKartesius.fillText('(' + point.x + ', ' + point.y + ')', canvasX + 8, canvasY - 8);
+      ctxKartesius.fillStyle = '#2196f3';
+    });
+  }
+
+  btnTambahTitik?.addEventListener('click', () => {
+    const container = document.getElementById('inputTitikContainer');
+    const newRow = document.createElement('div');
+    newRow.style.cssText = 'display:flex;gap:8px;align-items:center';
+    newRow.innerHTML = `
+      <input type="number" class="titik-x" placeholder="Jarak (x)" style="flex:1;padding:8px;border-radius:6px;border:1.5px solid #ddd;font-size:14px">
+      <input type="number" class="titik-y" placeholder="Tarif (y)" style="flex:1;padding:8px;border-radius:6px;border:1.5px solid #ddd;font-size:14px">
+      <button class="btn ghost" onclick="hapusBarisTitik(this)" style="padding:6px 12px;font-size:13px">🗑️</button>
+    `;
+    container.appendChild(newRow);
+  });
+
+  btnPlotTitik?.addEventListener('click', () => {
+    const inputsX = document.querySelectorAll('.titik-x');
+    const inputsY = document.querySelectorAll('.titik-y');
+
+    titikPlotted = [];
+    inputsX.forEach((inputX, idx) => {
+      const x = parseFloat(inputX.value);
+      const y = parseFloat(inputsY[idx].value);
+
+      if (!isNaN(x) && !isNaN(y)) {
+        titikPlotted.push({ x, y });
+      }
+    });
+
+    if (titikPlotted.length === 0) {
+      alert('⚠️ Masukkan minimal 1 titik yang valid!');
+      return;
+    }
+
+    redrawPoints();
+
+    if (feedbackPenyajianRumus) {
+      feedbackPenyajianRumus.innerHTML = '<div class="feedback-box success">✅ Titik-titik berhasil diplot! Sekarang klik "Gambar Garis" untuk menghubungkannya.</div>';
+    }
+  });
+
+  btnGambarGaris?.addEventListener('click', () => {
+    if (titikPlotted.length < 2) {
+      alert('⚠️ Plot minimal 2 titik terlebih dahulu!');
+      return;
+    }
+
+    titikPlotted.sort((a, b) => a.x - b.x);
+    redrawPoints();
+
+    ctxKartesius.strokeStyle = '#4caf50';
+    ctxKartesius.lineWidth = 2;
+    ctxKartesius.beginPath();
+
+    titikPlotted.forEach((point, idx) => {
+      const canvasX = 50 + (point.x * 50);
+      const canvasY = (canvasKartesius.height - 40) - (point.y / 5000 * 34);
+
+      if (idx === 0) {
+        ctxKartesius.moveTo(canvasX, canvasY);
+      } else {
+        ctxKartesius.lineTo(canvasX, canvasY);
+      }
+    });
+
+    ctxKartesius.stroke();
+
+    if (feedbackPenyajianRumus) {
+      feedbackPenyajianRumus.innerHTML = '<div class="feedback-box success">✅ Garis linear berhasil digambar! Sekarang klik "Simpan Grafik".</div>';
+    }
+  });
+
+  btnResetCanvas?.addEventListener('click', () => {
+    titikPlotted = [];
+    initCanvas();
+    if (feedbackPenyajianRumus) {
+      feedbackPenyajianRumus.innerHTML = '';
+    }
+  });
+
+  btnSimpanGrafik?.addEventListener('click', () => {
+    if (titikPlotted.length === 0) {
+      alert('⚠️ Plot titik dan gambar garis terlebih dahulu!');
+      return;
+    }
+
+    const penjelasan = document.getElementById('penjelasanGrafik')?.value.trim() || '';
+    const grafikDataUrl = canvasKartesius.toDataURL('image/png');
+
+    const grafikData = {
+      image: grafikDataUrl,
+      penjelasan: penjelasan,
+      titik: titikPlotted,
+      timestamp: new Date().toLocaleString('id-ID')
+    };
+
+    localStorage.setItem('grafikKartesiusKelompok', JSON.stringify(grafikData));
+
+    if (feedbackPenyajianRumus) {
+      feedbackPenyajianRumus.innerHTML = `
+        <div class="feedback-box success">
+          ✅ Grafik berhasil disimpan!
+          <br><small>Sekarang kelompok lain bisa melihat dan memberikan komentar di Gallery Walk!</small>
+        </div>
+      `;
+    }
+
+    if (previewGrafikTersimpan && imgGrafikTersimpan) {
+      imgGrafikTersimpan.src = grafikDataUrl;
+      previewGrafikTersimpan.style.display = 'block';
+    }
+  });
+
+  btnKirimKomentarRumus?.addEventListener('click', () => {
+    const namaKelompok = document.getElementById('namaKelompokKomentarRumus')?.value.trim();
+    const komentar = document.getElementById('komentarPeerReviewRumus')?.value.trim();
+
+    if (!namaKelompok) {
+      alert('⚠️ Tulis nama kelompokmu dulu!');
+      return;
+    }
+
+    if (!komentar || komentar.length < 15) {
+      alert('⚠️ Komentar terlalu singkat! Berikan saran yang membangun (minimal 15 karakter)');
+      return;
+    }
+
+    const komentarBaru = {
+      kelompok: namaKelompok,
+      komentar: komentar,
+      waktu: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+    };
+
+    let daftarKomentarRumus = [];
+    try {
+      daftarKomentarRumus = JSON.parse(localStorage.getItem('komentarPeerReviewRumus') || '[]');
+    } catch (e) {}
+
+    daftarKomentarRumus.push(komentarBaru);
+    localStorage.setItem('komentarPeerReviewRumus', JSON.stringify(daftarKomentarRumus));
+
+    const komentarInput = document.getElementById('komentarPeerReviewRumus');
+    if (komentarInput) komentarInput.value = '';
+
+    if (komentarListRumus) {
+      if (daftarKomentarRumus.length === 0) {
+        komentarListRumus.innerHTML = '<p style="color:var(--muted);font-style:italic">Belum ada komentar. Jadilah yang pertama!</p>';
+      } else {
+        komentarListRumus.innerHTML = daftarKomentarRumus.map(k => `
+          <div class="komentar-item">
+            <div class="komentar-header">
+              <span class="komentar-kelompok">👥 ${k.kelompok}</span>
+              <span class="komentar-waktu">${k.waktu}</span>
+            </div>
+            <div class="komentar-isi">${k.komentar}</div>
+          </div>
+        `).join('');
+      }
+    }
+  });
+
+  initCanvas();
+
+  const saved = localStorage.getItem('grafikKartesiusKelompok');
+  if (saved && previewGrafikTersimpan && imgGrafikTersimpan) {
+    try {
+      const data = JSON.parse(saved);
+      imgGrafikTersimpan.src = data.image;
+      previewGrafikTersimpan.style.display = 'block';
+    } catch (e) {}
+  }
+}
+
+document.addEventListener('DOMContentLoaded', setupGrafikKartesius);
 
 // Global untuk menyimpan rumus yang ditemukan siswa
 let discoveredFormula = { coef: null, const: null };
 
 document.addEventListener('DOMContentLoaded', () => {
+  initTutorVirtual();
   
   // ======== FASE 3: MEMBIMBING PENYELIDIKAN (INVESTIGASI GUIDED) ========
   const btnValidasiInvestigasi = document.getElementById('btnValidasiInvestigasi');
@@ -1370,6 +1920,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const hasil = koef * data.x + konst;
       const row = document.querySelector(`tr[data-x="${data.x}"]`);
 
+  if (!window.__grafikKartesiusSetupDone) {
   // ======== FASE 4: PENYAJIAN HASIL KARYA (GALLERY WALK - DIAGRAM KARTESIUS) ========
   const canvasKartesius = document.getElementById('canvasKartesius');
   const ctxKartesius = canvasKartesius?.getContext('2d');
@@ -1607,6 +2158,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (canvasKartesius) {
     initCanvas();
     loadGrafikTersimpan();
+  }
   }
 
   // Load komentar dari localStorage
@@ -2352,6 +2904,8 @@ window.generatePDFReport = async function(){
     alert('Fitur PDF belum tersedia. Coba muat ulang halaman.');
     return;
   }
+
+  const feedbackDownload = document.getElementById('feedbackDownload');
 
   if (feedbackDownload) {
     feedbackDownload.textContent = '⏳ Mempersiapkan laporan PDF...';
