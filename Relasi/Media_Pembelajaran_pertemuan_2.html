@@ -2577,11 +2577,30 @@ document.addEventListener('DOMContentLoaded', () => {
       gallerySubtitle.textContent = `Bentuk: ${bentukLabels[bentuk] || bentuk}`;
       
       let contentHTML = '';
+
+      // Pastikan gambar karya otomatis tersimpan meski siswa lupa menekan tombol "Simpan Gambar".
+      const syncGalleryImageFromCanvas = (canvasId, storageKey) => {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas || typeof canvas.toDataURL !== 'function') return null;
+        try {
+          const imgData = canvas.toDataURL('image/png');
+          localStorage.setItem(storageKey, imgData);
+          return imgData;
+        } catch (err) {
+          console.warn('Gagal sync gambar canvas untuk gallery:', canvasId, err);
+          return null;
+        }
+      };
       
       if (bentuk === 'diagram-panah') {
         // Ambil gambar canvas dari K3 (Diagram Panah)
-        const canvasImg1 = localStorage.getItem('canvasImage_drawCanvas1');
-        const canvasImg2 = localStorage.getItem('canvasImage_drawCanvas2');
+        let canvasImg1 = localStorage.getItem('canvasImage_drawCanvas1');
+        let canvasImg2 = localStorage.getItem('canvasImage_drawCanvas2');
+
+        if ((!canvasImg1 || !canvasImg2) && completion.k3) {
+          if (!canvasImg1) canvasImg1 = syncGalleryImageFromCanvas('drawCanvas1', 'canvasImage_drawCanvas1');
+          if (!canvasImg2) canvasImg2 = syncGalleryImageFromCanvas('drawCanvas2', 'canvasImage_drawCanvas2');
+        }
         
         if (canvasImg1 || canvasImg2) {
           contentHTML = '<div class="gallery-image-wrapper">';
@@ -2608,8 +2627,13 @@ document.addEventListener('DOMContentLoaded', () => {
       } 
       else if (bentuk === 'diagram-kartesius') {
         // Ambil gambar canvas dari K4 (Diagram Kartesius)
-        const plane1Img = localStorage.getItem('canvasImage_plane1');
-        const plane2Img = localStorage.getItem('canvasImage_plane2');
+        let plane1Img = localStorage.getItem('canvasImage_plane1');
+        let plane2Img = localStorage.getItem('canvasImage_plane2');
+
+        if ((!plane1Img || !plane2Img) && completion.k4) {
+          if (!plane1Img) plane1Img = syncGalleryImageFromCanvas('plane1', 'canvasImage_plane1');
+          if (!plane2Img) plane2Img = syncGalleryImageFromCanvas('plane2', 'canvasImage_plane2');
+        }
         
         if (plane1Img || plane2Img) {
           contentHTML = '<div class="gallery-image-wrapper">';
@@ -2881,14 +2905,20 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         eraseBtn1.addEventListener('click', () => { 
           strokes1 = []; rightHits1 = new Set();
-          redrawDraw1(); 
+          redrawDraw1();
+          localStorage.removeItem('canvasImage_drawCanvas1');
             drawBtn1.classList.remove('active');
             eraseBtn1.classList.add('active');
         });
         undoBtn1.addEventListener('click', () => { 
           strokes1.pop(); 
           recomputeRightHits1();
-          redrawDraw1(); 
+          redrawDraw1();
+          if (strokes1.length > 0) {
+            localStorage.setItem('canvasImage_drawCanvas1', drawCanvas1.toDataURL('image/png'));
+          } else {
+            localStorage.removeItem('canvasImage_drawCanvas1');
+          }
         });
         saveImgBtn1.addEventListener('click', () => { 
             const imgData = drawCanvas1.toDataURL();
@@ -2928,6 +2958,7 @@ document.addEventListener('DOMContentLoaded', () => {
               const hit = detectTargetHit1(absX, absY);
               if(hit) rightHits1.add(hit);
             }
+            localStorage.setItem('canvasImage_drawCanvas1', drawCanvas1.toDataURL('image/png'));
             completion.k3 = 1;
             updateProgress();
           }
@@ -3051,13 +3082,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         eraseBtn2.addEventListener('click', () => { 
             strokes2 = []; 
-            redrawDraw2(); 
+          redrawDraw2();
+          localStorage.removeItem('canvasImage_drawCanvas2');
             drawBtn2.classList.remove('active');
             eraseBtn2.classList.add('active');
         });
         undoBtn2.addEventListener('click', () => { 
             strokes2.pop(); 
-            redrawDraw2(); 
+            redrawDraw2();
+            if (strokes2.length > 0) {
+              localStorage.setItem('canvasImage_drawCanvas2', drawCanvas2.toDataURL('image/png'));
+            } else {
+              localStorage.removeItem('canvasImage_drawCanvas2');
+            }
         });
         saveImgBtn2.addEventListener('click', () => { 
             const imgData = drawCanvas2.toDataURL();
@@ -3087,6 +3124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawCanvas2.addEventListener('pointerup', () => {
             if (isDrawing2) {
                 isDrawing2 = false;
+            localStorage.setItem('canvasImage_drawCanvas2', drawCanvas2.toDataURL('image/png'));
                 completion.k3 = 1;
                 updateProgress();
             }
@@ -3205,6 +3243,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                      completion.k4 = 0;
                 }
+             const planeStorageKey = idx === 0 ? 'canvasImage_plane1' : 'canvasImage_plane2';
+             localStorage.setItem(planeStorageKey, pl.toDataURL('image/png'));
                 updateProgress();
             }
         });
@@ -3323,6 +3363,8 @@ document.addEventListener('DOMContentLoaded', () => {
         planeState[0].points = []; planeState[0].paths = []; 
         planeState[1].points = []; planeState[1].paths = []; 
         redrawPlane(0); redrawPlane(1); 
+      localStorage.removeItem('canvasImage_plane1');
+      localStorage.removeItem('canvasImage_plane2');
         completion.k4 = 0; updateProgress(); 
     });
     document.getElementById('undoCanvas')?.addEventListener('click', () => { 
@@ -3331,6 +3373,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (s.paths.length) { s.paths.pop(); redrawPlane(i); break; } 
             else if (s.points.length) { s.points.pop(); redrawPlane(i); break; } 
         } 
+      planes.forEach((pl, i) => {
+        if (!pl) return;
+        const hasContent = planeState[i].points.length > 0 || planeState[i].paths.length > 0;
+        const key = i === 0 ? 'canvasImage_plane1' : 'canvasImage_plane2';
+        if (hasContent) {
+          localStorage.setItem(key, pl.toDataURL('image/png'));
+        } else {
+          localStorage.removeItem(key);
+        }
+      });
         completion.k4 = (planeState[0].points.length > 0 || planeState[0].paths.length > 0 || planeState[1].points.length > 0 || planeState[1].paths.length > 0) ? 1 : 0;
         updateProgress();
     });
